@@ -1,0 +1,11 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: mja.mail::lang.controllers.mail.title
+form: $/mja/mail/models/email/fields.yaml
+modelClass: Mja\Mail\Models\Email
+defaultRedirect: mja/mail/mail
+
+preview:
+    title: mja.mail::lang.controllers.mail.preview

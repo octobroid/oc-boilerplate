@@ -1,0 +1,14 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    views:
+        label: mja.mail::lang.models.email.code
+        conditions: code in (:filtered)
+
+    bounced:
+        label: mja.mail::lang.models.email.show_bounced
+        type: checkbox
+        conditions: sent = 0

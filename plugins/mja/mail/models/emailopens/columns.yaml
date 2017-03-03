@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    id:
+        label: mja.mail::lang.models.emailopens.id
+        invisible: true
+
+    ip_address:
+        label: mja.mail::lang.models.emailopens.ip
+
+    created_at:
+        label: mja.mail::lang.models.emailopens.created_at

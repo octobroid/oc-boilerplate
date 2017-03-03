@@ -1,0 +1,7 @@
+fields:
+
+    ip_address:
+        label: mja.mail::lang.models.emailopens.ip
+
+    created_at:
+        label: mja.mail::lang.models.emailopens.created_at

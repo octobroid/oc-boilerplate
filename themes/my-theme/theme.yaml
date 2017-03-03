@@ -1,0 +1,43 @@
+name: My Theme
+description:
+author:
+homepage:
+form:
+    tabs:
+        fields:
+            site_name:
+                label: Site Name
+                comment: The website name as it should appear on the front-end
+                span: auto
+                tab: Site
+            site_slogan:
+                label: Site Slogan
+                span: auto
+                tab: Site
+            site_description:
+                label: Site Description
+                type: textarea
+                size: tiny
+                span: auto
+                tab: Site
+            top_notice:
+                label: Top Notice
+                type: text
+                span: auto
+                tab: Site
+            social_facebook:
+                label: Facebook Url
+                span: auto
+                tab: Social Media
+            social_twitter:
+                label: Twitter Url
+                span: auto
+                tab: Social Media
+            social_instagram:
+                label: Instagram Url
+                span: auto
+                tab: Social Media
+            social_youtube:
+                label: YouTube Url
+                span: auto
+                tab: Social Media

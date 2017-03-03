@@ -1,0 +1,58 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    type:
+        label: rainlab.sitemap::lang.item.type
+        type: dropdown
+
+    url:
+        label: rainlab.sitemap::lang.item.url
+
+    reference:
+        label: rainlab.sitemap::lang.item.reference
+        type: dropdown
+        cssClass: input-sidebar-control
+
+    cmsPage:
+        label: rainlab.sitemap::lang.item.cms_page
+        comment: rainlab.sitemap::lang.item.cms_page_comment
+        type: dropdown
+        cssClass: input-sidebar-control
+
+    nesting:
+        label: rainlab.sitemap::lang.item.allow_nested_items
+        comment: rainlab.sitemap::lang.item.allow_nested_items_comment
+        type: checkbox
+        default: true
+
+    priority:
+        span: left
+        label: rainlab.sitemap::lang.item.priority
+        type: dropdown
+        options:
+            '0.1': '0.1'
+            '0.2': '0.2'
+            '0.3': '0.3'
+            '0.4': '0.4'
+            '0.5': '0.5'
+            '0.6': '0.6'
+            '0.7': '0.7'
+            '0.8': '0.8'
+            '0.9': '0.9'
+            '1.0': '1.0'
+
+    changefreq:
+        span: right
+        label: rainlab.sitemap::lang.item.changefreq
+        type: dropdown
+        options:
+            always: rainlab.sitemap::lang.item.always
+            hourly: rainlab.sitemap::lang.item.hourly
+            daily: rainlab.sitemap::lang.item.daily
+            weekly: rainlab.sitemap::lang.item.weekly
+            monthly: rainlab.sitemap::lang.item.monthly
+            yearly: rainlab.sitemap::lang.item.yearly
+            never: rainlab.sitemap::lang.item.never

@@ -1,0 +1,11 @@
+name: 'Main Menu'
+items:
+    -
+        title: 'Home'
+        type: cms-page
+        code: ''
+        reference: home
+        viewBag:
+            isExternal: '0'
+            isHidden: '0'
+            cssClass: ''

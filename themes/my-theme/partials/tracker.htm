@@ -1,0 +1,18 @@
+[googleTracker]
+
+==
+
+{% component 'googleTracker' %}
+
+<script>
+	{% if user %}
+	// GA User Identification
+	ga('set', 'userId', '{{ user.email }}');
+
+	// Zopim User Identification
+	// $zopim(function() {
+	//     $zopim.livechat.setName('{{ user.name }}');
+	//     $zopim.livechat.setEmail('{{ user.email }}');
+	// });
+	{% endif %}
+</script>

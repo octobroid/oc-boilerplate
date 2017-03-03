@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    stretch: true
+    cssClass: tabs-no-inset
+
+    fields:
+        items:
+            stretch: true
+            tab: rainlab.sitemap::lang.plugin.name
+            type: RainLab\Sitemap\FormWidgets\SitemapItems

@@ -1,0 +1,14 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('mja/mail/mail') ?>"><?= e(trans('mja.mail::lang.controllers.mail.title')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if ($this->hide_hints !== true): ?>
+    <div class="padded-container container-flush">
+        <?= $this->makeHintPartial('mja_mail_hint', 'hint') ?>
+    </div>
+<?php endif ?>
+
+<?= $this->listRender() ?>

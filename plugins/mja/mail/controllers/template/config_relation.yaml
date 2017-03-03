@@ -1,0 +1,15 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+opens:
+
+    label: mja.mail::lang.models.email.tab_opens
+    readOnly: true
+    view:
+        list: $/mja/mail/models/emailopens/columns.yaml
+        defaultSort:
+            column: created_at
+            direction: desc
+    manage:
+        form: $/mja/mail/models/emailopens/fields.yaml

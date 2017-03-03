@@ -1,0 +1,22 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: mja.mail::lang.controllers.mail.mails_sent
+list: $/mja/mail/models/email/columns.yaml
+modelClass: Mja\Mail\Models\Email
+recordUrl: mja/mail/mail/preview/:id
+
+noRecordsMessage: backend::lang.list.no_records
+showSetup: true
+recordsPerPage: 20
+filter: config_filter.yaml
+
+defaultSort:
+    column: id
+    direction: desc
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

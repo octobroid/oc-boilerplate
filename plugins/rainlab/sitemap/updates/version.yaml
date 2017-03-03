@@ -1,0 +1,11 @@
+1.0.1: First version of Sitemap
+1.0.2:
+    - Create definitions table
+    - create_definitions_table.php
+1.0.3: Minor improvements to the code.
+1.0.4: Fixes issue where correct headers not being sent.
+1.0.5: Minor back-end styling fix.
+1.0.6: Minor fix to internal API.
+1.0.7: Added access premissions.
+1.0.8: Minor styling updates.
+

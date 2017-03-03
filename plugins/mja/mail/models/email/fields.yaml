@@ -1,0 +1,60 @@
+fields:
+
+    subject:
+        label: mja.mail::lang.models.email.subject
+
+    body:
+        label: mja.mail::lang.models.email.body
+        type: richeditor
+        size: giant
+
+    sender:
+        label: mja.mail::lang.models.email.sender
+        type: emailgrid
+        span: left
+
+    reply_to:
+        label: mja.mail::lang.models.email.reply_to
+        type: emailgrid
+        span: right
+
+tabs:
+    fields:
+
+        to@preview:
+            label: mja.mail::lang.models.email.to_email
+            tab: mja.mail::lang.models.email.tab_emails
+            type: emailgrid
+
+        cc@preview:
+            label: mja.mail::lang.models.email.cc_emails
+            tab: mja.mail::lang.models.email.tab_emails
+            type: emailgrid
+
+        bcc@preview:
+            label: mja.mail::lang.models.email.bcc_emails
+            tab: mja.mail::lang.models.email.tab_emails
+            type: emailgrid
+
+        opens@preview:
+            label:
+            tab: mja.mail::lang.models.email.tab_opens
+            type: partial
+            path: relation_opens
+
+        response@preview:
+            label: mja.mail::lang.models.email.response
+            tab: mja.mail::lang.models.email.tab_response
+            type: richeditor
+
+secondaryTabs:
+    fields:
+
+        code:
+            label: mja.mail::lang.models.email.code
+
+        created_at:
+            label: mja.mail::lang.models.email.created_at
+
+        updated_at:
+            label: mja.mail::lang.models.email.updated_at

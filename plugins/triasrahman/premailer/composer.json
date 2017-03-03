@@ -1,0 +1,13 @@
+{
+    "name": "triasrahman/premailer",
+    "description": "Email CSS inliner plugin for OctoberCMS.",
+    "require": {
+        "tijsverkoyen/css-to-inline-styles": "^1.5"
+    },
+    "authors": [
+        {
+            "name": "Trias Nur Rahman",
+            "email": "contact@triasrahman.com"
+        }
+    ]
+}

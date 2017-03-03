@@ -1,0 +1,20 @@
+{
+  "name": "my-app",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.*",
+    "jquery": "2.*",
+    "fastclick": "1.*",
+    "font-awesome": "4.*"
+  }
+}

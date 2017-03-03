@@ -1,0 +1,28 @@
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item control-chart" data-control="chart-pie">
+            <ul>
+                <li data-color="#95b753"><?= e(trans('mja.mail::lang.controllers.mail.stats_sent')) ?> <span><?= $sent ?></span></li>
+                <li data-color="#e5a91a"><?= e(trans('mja.mail::lang.controllers.mail.stats_bounced')) ?> <span><?= $bounced ?></span></li>
+            </ul>
+        </div>
+
+        <div class="scoreboard-item control-chart" data-control="chart-bar">
+            <ul>
+                <?php foreach ($emails as $email): ?>
+                    <li><?= $email->code ?> <span><?= $email->emailsByCode() ?></span></li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+
+        <div class="scoreboard-item title-value">
+            <h4><?= e(trans('mja.mail::lang.controllers.mail.stats_total_sent')) ?></h4>
+            <p><?= $sent+$bounced ?></p>
+        </div>
+
+        <div class="scoreboard-item title-value">
+            <h4><?= e(trans('mja.mail::lang.controllers.mail.stats_total_opens')) ?></h4>
+            <p><?= $opens ?></p>
+        </div>
+    </div>
+</div>

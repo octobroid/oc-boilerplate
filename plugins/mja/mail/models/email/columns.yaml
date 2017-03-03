@@ -1,0 +1,49 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    id:
+        label: mja.mail::lang.models.email.id
+        invisible: true
+
+    code:
+        label: mja.mail::lang.models.email.code
+        searchable: true
+
+    to:
+        label: mja.mail::lang.models.email.to_email
+        valueFrom: to_email
+        searchable: true
+        sortable: false
+
+    cc:
+        label: mja.mail::lang.models.email.cc_emails
+        valueFrom: cc_emails
+        invisible: true
+        searchable: true
+        sortable: false
+
+    bcc:
+        label: mja.mail::lang.models.email.bcc_emails
+        valueFrom: bcc_emails
+        invisible: true
+        searchable: true
+        sortable: false
+
+    subject:
+        label: mja.mail::lang.models.email.subject
+        invisible: true
+        searchable: true
+
+    sent:
+        label: mja.mail::lang.models.email.sent
+        type: partial
+        path: $/mja/mail/models/email/_sent.htm
+        sortable: false
+
+    times_opened:
+        label: mja.mail::lang.models.email.times_opened
+        type: number
+        sortable: false

@@ -1,0 +1,66 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('mja/mail/mail') ?>"><?= e(trans('mja.mail::lang.controllers.mail.title')) ?></a></li>
+        <li><a href="<?= Backend::url('mja/mail/mail') ?>"><?= e(trans('mja.mail::lang.controllers.mail.mails_sent')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <?php Block::put('form-contents') ?>
+        <div class="layout">
+
+            <div class="scoreboard">
+                <div data-control="toolbar">
+                    <div class="scoreboard-item title-value">
+                        <h4><?= e(trans('mja.mail::lang.models.email.id')) ?></h4>
+                        <p>#<?= $formModel->id ?></p>
+                    </div>
+                    <div class="scoreboard-item title-value">
+                        <h4><?= e(trans('mja.mail::lang.models.email.sent')) ?></h4>
+                        <p class="<?= $formModel->sent ? 'positive' : 'negative' ?>"><?= $formModel->sent ? e(trans('mja.mail::lang.models.email.yes')) : e(trans('mja.mail::lang.models.email.no')) ?></p>
+                    </div>
+                    <div class="scoreboard-item title-value">
+                        <h4><?= e(trans('mja.mail::lang.models.email.times_opened')) ?></h4>
+                        <p><?= $formModel->times_opened ?></p>
+                        <p class="description"><?= e(trans('mja.mail::lang.models.email.times_opened_desc')) ?></p>
+                    </div>
+
+                    <?php if (count($formModel->opens) > 0): ?>
+                        <div class="scoreboard-item title-value">
+                            <h4><?= e(trans('mja.mail::lang.models.email.last_opened')) ?></h4>
+                            <p><?= $formModel->last_opened ?></p>
+                            <p class="description"><?= $formModel->opens->last()->created_at ?></p>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+
+            <div class="layout-row">
+                <?= $this->formRender(['section' => 'outside', 'preview' => true]) ?>
+                <?= $this->formRender(['section' => 'primary', 'preview' => true]) ?>
+            </div>
+
+            <div class="form-buttons">
+                <a href="<?= Backend::url('mja/mail/mail') ?>" class="btn btn-default oc-icon-chevron-left"><?= e(trans('mja.mail::lang.controllers.mail.return')) ?></a>
+            </div>
+
+        </div>
+    <?php Block::endPut() ?>
+
+    <?php Block::put('form-sidebar') ?>
+        <div class="hide-tabs"><?= $this->formRender(['section' => 'secondary', 'preview' => true]) ?></div>
+    <?php Block::endPut() ?>
+
+    <?php Block::put('body') ?>
+        <?= Form::open(['class'=>'layout stretch']) ?>
+            <?= $this->makeLayout('form-with-sidebar') ?>
+        <?= Form::close() ?>
+    <?php Block::endPut() ?>
+
+<?php else: ?>
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('mja/mail/mail') ?>" class="btn btn-default oc-icon-chevron-left"><?= e(trans('mja.mail::lang.controllers.mail.return')) ?></a></p>
+<?php endif ?>
+

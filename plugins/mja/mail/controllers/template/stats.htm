@@ -1,0 +1,26 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('mja/mail/mail') ?>"><?= e(trans('mja.mail::lang.controllers.mail.title')) ?></a></li>
+        <li><a href="<?= Backend::url('mja/mail/template') ?>"><?= e(trans('mja.mail::lang.controllers.template.title')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<div class="layout">
+    <h2><?= e(trans('mja.mail::lang.controllers.template.opens')) ?></h2>
+    <p><?= e(trans('mja.mail::lang.controllers.template.opens_desc')) ?></p>
+    <div class="report-widget" style="background-color:transparent">
+        <div
+            data-control="chart-line"
+            data-time-mode="weeks"
+            data-chart-options="xaxis: {mode: 'time'}"
+            class="height-200"
+        >
+            <span
+                data-chart="dataset"
+                data-set-color="#008dc9"
+                data-set-data="<?php foreach ($lastWeek as $obj): ?>[<?= $obj->ts->timestamp * 1000 ?>,<?= $obj->count ?>]<?php if ($obj->ts !== $lastTs): ?>,<?php endif ?><?php endforeach ?>"
+                data-set-name="<?= e(trans('mja.mail::lang.controllers.template.opens')) ?>"></span>
+        </div>
+    </div>
+</div>

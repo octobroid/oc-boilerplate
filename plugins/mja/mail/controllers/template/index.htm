@@ -1,0 +1,8 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('mja/mail/mail') ?>"><?= e(trans('mja.mail::lang.controllers.mail.title')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?= $this->listRender() ?>

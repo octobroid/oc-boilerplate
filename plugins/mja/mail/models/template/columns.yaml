@@ -1,0 +1,32 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    id:
+        label: mja.mail::lang.models.template.id
+        invisible: true
+
+    code:
+        label: mja.mail::lang.models.template.code
+
+    times_sent:
+        label: mja.mail::lang.models.template.sent
+        type: number
+        sortable: false
+
+    times_opened:
+        label: mja.mail::lang.models.template.opens
+        type: number
+        sortable: false
+
+    last_sent:
+        label: mja.mail::lang.models.template.last_send
+        type: datetime
+        sortable: false
+
+    last_open:
+        label: mja.mail::lang.models.template.last_open
+        type: datetime
+        sortable: false

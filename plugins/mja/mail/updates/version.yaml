@@ -1,0 +1,26 @@
+1.0.0:
+    - First version of MJA.Mail Plugin
+    - create_email_log_table.php
+    - create_email_opens_table.php
+1.0.1:
+    - Added Hungarian translation; Thanks @gergo85
+1.0.2:
+    - Fixed weird database saving bug; Code style improvements by @gergo85
+1.0.3:
+    - Added permissions; Thanks @gergo85
+1.0.4:
+    - Fixed jsonable field bug; Thanks @flip4bytes
+1.0.5:
+    - Code column is now nullable
+    - make_code_column_nullable.php
+1.0.6:
+    - Body column is now nullable
+    - make_body_column_nullable.php
+1.0.7:
+    - Fixed #14; thanks @flip4bytes
+1.0.8:
+    - Minor improvements; thanks to @mplodowski
+1.0.9:
+    - Fixed table creation query for newer MySQL versions.
+1.1.0:
+    - Major bugfix for emails sent with 3rd party provider.
