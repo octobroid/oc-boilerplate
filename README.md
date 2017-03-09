@@ -17,7 +17,7 @@
 1. Clone to your base project directory.
 
 	```
-	git clone https://bitbuket.org/vhiearch/october-boilerplate.git <project-name>
+	git clone https://bitbucket.org/vhiearch/october-boilerplate.git <project-name>
 	```
 
 2. Don't forget to remove `.git` folder, create your own repository.
