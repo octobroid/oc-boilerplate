@@ -91,7 +91,6 @@ All frontend libraries are managed using **bower**. These packages are installed
 1. [Bootstrap](https://getbootstrap.com)
 1. [jQuery](http://jquery.com)
 1. [Font Awesome](https://fortawesome.github.io/Font-Awesome)
-1. [Parsley JS](http://parsleyjs.org)
 1. [FastClick](https://github.com/ftlabs/fastclick)
 
 To install additional library, run the command:
