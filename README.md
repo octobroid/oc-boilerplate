@@ -17,7 +17,7 @@
 1. Clone to your base project directory.
 
 	```
-	git clone https://bitbucket.org/vhiearch/october-boilerplate.git <project-name>
+	git clone https://github.com/octobroid/oc-boilerplate.git <project-name>
 	```
 
 2. Don't forget to remove `.git` folder, create your own repository.
@@ -47,7 +47,7 @@
 	php artisan october:up
 	```
 
-6. Install frontend library (it's optional, folder `bower_components` exists by default).
+6. Install frontend library.
 
 	```
 	bower install
