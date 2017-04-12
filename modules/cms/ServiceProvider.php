@@ -63,7 +63,8 @@ class ServiceProvider extends ModuleServiceProvider
     protected function registerComponents()
     {
         ComponentManager::instance()->registerComponents(function ($manager) {
-            $manager->registerComponent('Cms\Classes\ViewBag', 'viewBag');
+            $manager->registerComponent('Cms\Components\ViewBag', 'viewBag');
+            $manager->registerComponent('Cms\Components\Resources', 'resources');
         });
     }
 
@@ -129,7 +130,7 @@ class ServiceProvider extends ModuleServiceProvider
                         'cms.manage_layouts',
                         'cms.manage_partials'
                     ],
-                    'order'       => 10,
+                    'order'       => 100,
                     'sideMenu' => [
                         'pages' => [
                             'label'        => 'cms::lang.page.menu_label',
@@ -186,7 +187,7 @@ class ServiceProvider extends ModuleServiceProvider
                     'iconSvg'     => 'modules/cms/assets/images/media-icon.svg',
                     'url'         => Backend::url('cms/media'),
                     'permissions' => ['media.*'],
-                    'order'       => 20
+                    'order'       => 200
                 ]
             ]);
         });
@@ -274,7 +275,7 @@ class ServiceProvider extends ModuleServiceProvider
                     'description' => 'cms::lang.theme.settings_menu_description',
                     'category'    => SettingsManager::CATEGORY_CMS,
                     'icon'        => 'icon-picture-o',
-                    'url'         => Backend::URL('cms/themes'),
+                    'url'         => Backend::url('cms/themes'),
                     'permissions' => ['cms.manage_themes'],
                     'order'       => 200
                 ],

@@ -143,13 +143,13 @@ class NavigationManager
     /**
      * Registers a callback function that defines menu items.
      * The callback function should register menu items by calling the manager's
-     * registerMenuItems() function. The manager instance is passed to the
-     * callback function as an argument. Usage:
-     * <pre>
-     *   BackendMenu::registerCallback(function($manager){
-     *       $manager->registerMenuItems([...]);
-     *   });
-     * </pre>
+     * `registerMenuItems` method. The manager instance is passed to the callback
+     * function as an argument. Usage:
+     *
+     *     BackendMenu::registerCallback(function($manager){
+     *         $manager->registerMenuItems([...]);
+     *     });
+     *
      * @param callable $callback A callable function.
      */
     public function registerCallback(callable $callback)
@@ -247,7 +247,7 @@ class NavigationManager
     public function addSideMenuItems($owner, $code, array $definitions)
     {
         foreach ($definitions as $sideCode => $definition) {
-            $this->addSideMenuItem($owner, $code, $sideCode, $definition);
+            $this->addSideMenuItem($owner, $code, $sideCode, (array) $definition);
         }
     }
 

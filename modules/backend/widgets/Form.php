@@ -75,7 +75,7 @@ class Form extends WidgetBase
     //
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $defaultAlias = 'form';
 
@@ -121,7 +121,7 @@ class Form extends WidgetBase
     protected $widgetManager;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function init()
     {
@@ -155,7 +155,7 @@ class Form extends WidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function loadAssets()
     {
@@ -216,10 +216,12 @@ class Form extends WidgetBase
         $this->prepareVars();
 
         /*
-         * Apply preview mode to widgets
+         * Force preview mode on all widgets
          */
-        foreach ($this->formWidgets as $widget) {
-            $widget->previewMode = $this->previewMode;
+        if ($this->previewMode) {
+            foreach ($this->formWidgets as $widget) {
+                $widget->previewMode = $this->previewMode;
+            }
         }
 
         return $this->makePartial($targetPartial, $extraVars);

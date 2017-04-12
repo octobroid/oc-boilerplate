@@ -31,28 +31,38 @@ class RichEditor extends FormWidgetBase
      */
     public $toolbarButtons = null;
 
+    /**
+     * @var boolean If true, the editor is set to read-only mode
+     */
+    public $readOnly = false;
+
     //
     // Object properties
     //
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $defaultAlias = 'richeditor';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function init()
     {
+        if ($this->formField->disabled) {
+            $this->readOnly = true;
+        }
+
         $this->fillFromConfig([
             'fullPage',
+            'readOnly',
             'toolbarButtons',
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function render()
     {
@@ -70,6 +80,7 @@ class RichEditor extends FormWidgetBase
         $this->vars['fullPage'] = $this->fullPage;
         $this->vars['stretch'] = $this->formField->stretch;
         $this->vars['size'] = $this->formField->size;
+        $this->vars['readOnly'] = $this->readOnly;
         $this->vars['name'] = $this->getFieldName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['toolbarButtons'] = $this->evalToolbarButtons();
@@ -110,7 +121,7 @@ class RichEditor extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function loadAssets()
     {

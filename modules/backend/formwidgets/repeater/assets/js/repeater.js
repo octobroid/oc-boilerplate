@@ -33,21 +33,28 @@
     Repeater.DEFAULTS = {
         sortableHandle: '.repeater-item-handle',
         sortableContainer: 'ul.field-repeater-items',
-        titleFrom: null
+        titleFrom: null,
+        maxItems: null
     }
 
     Repeater.prototype.init = function() {
         this.bindSorting()
 
+        this.$el.on('ajaxDone', '> .field-repeater-items > .field-repeater-item > .repeater-item-remove > [data-repeater-remove]', this.proxy(this.onRemoveItemSuccess))
+        this.$el.on('ajaxDone', '> .field-repeater-add-item > [data-repeater-add]', this.proxy(this.onAddItemSuccess))
         this.$el.on('click', '> ul > li > .repeater-item-collapse .repeater-item-collapse-one', this.proxy(this.toggleCollapse))
 
         this.$el.one('dispose-control', this.proxy(this.dispose))
+
+        this.togglePrompt()
     }
 
     Repeater.prototype.dispose = function() {
         this.$sortable.sortable('destroy')
 
-        this.$el.off('click', '> ul > li > .repeater-item-collapse .repeater-item-collapse-one', this.proxy(this.toggleCollapse))
+        this.$el.off('ajaxDone', '> .field-repeater-items > .field-repeater-item > .repeater-item-remove > [data-repeater-remove]', this.proxy(this.onRemoveItemSuccess))
+        this.$el.off('ajaxDone', '> .field-repeater-add-item > [data-repeater-add]', this.proxy(this.onAddItemSuccess))
+        this.$el.off('click', '> .field-repeater-items > .field-repeater-item > .repeater-item-collapse .repeater-item-collapse-one', this.proxy(this.toggleCollapse))
 
         this.$el.off('dispose-control', this.proxy(this.dispose))
         this.$el.removeData('oc.repeater')
@@ -73,11 +80,31 @@
         this.$sortable.sortable(sortableOptions)
     }
 
+    Repeater.prototype.onRemoveItemSuccess = function(ev) {
+        $(ev.target).closest('.field-repeater-item').remove()
+        this.togglePrompt()
+    }
+
+    Repeater.prototype.onAddItemSuccess = function(ev) {
+        this.togglePrompt()
+    }
+
+    Repeater.prototype.togglePrompt = function () {
+        if (this.options.maxItems && this.options.maxItems > 0) {
+            var repeatedItems = this.$el.find('> .field-repeater-items > .field-repeater-item').length,
+                $addItemBtn = this.$el.find('> .field-repeater-add-item')
+
+            $addItemBtn.toggle(repeatedItems < this.options.maxItems)
+        }
+    }
+
     Repeater.prototype.toggleCollapse = function(ev) {
         var $item = $(ev.target).closest('.field-repeater-item'),
             isCollapsed = $item.hasClass('collapsed')
 
-        if (event.ctrlKey || event.metaKey) {
+        ev.preventDefault()
+
+        if (ev.ctrlKey || ev.metaKey) {
             isCollapsed ? this.expandAll() : this.collapseAll()
         }
         else {

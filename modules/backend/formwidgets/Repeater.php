@@ -34,7 +34,7 @@ class Repeater extends FormWidgetBase
     //
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $defaultAlias = 'repeater';
 
@@ -48,13 +48,18 @@ class Repeater extends FormWidgetBase
      */
     protected $formWidgets = [];
 
-     /**
-      * @var bool Stops nested repeaters populating from previous sibling.
-      */
+    /**
+     * @var bool Stops nested repeaters populating from previous sibling.
+     */
     protected static $onAddItemCalled = false;
 
     /**
-     * {@inheritDoc}
+     * @var int Maximum repeated items allowable.
+     */
+    protected $maxItems = null;
+
+    /**
+     * @inheritDoc
      */
     public function init()
     {
@@ -62,6 +67,7 @@ class Repeater extends FormWidgetBase
             'form',
             'prompt',
             'sortable',
+            'maxItems',
         ]);
 
         if (!self::$onAddItemCalled) {
@@ -70,7 +76,7 @@ class Repeater extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function render()
     {
@@ -86,10 +92,11 @@ class Repeater extends FormWidgetBase
         $this->vars['indexName'] = self::INDEX_PREFIX.$this->formField->getName(false).'[]';
         $this->vars['prompt'] = $this->prompt;
         $this->vars['formWidgets'] = $this->formWidgets;
+        $this->vars['maxItems'] = $this->maxItems;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function loadAssets()
     {
@@ -98,7 +105,7 @@ class Repeater extends FormWidgetBase
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getSaveValue($value)
     {

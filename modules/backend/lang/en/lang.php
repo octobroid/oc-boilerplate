@@ -242,6 +242,7 @@ return [
         'confirm_tab_close' => 'Close the tab? Unsaved changes will be lost.',
         'behavior_not_ready' => 'Form behavior has not been initialized, check that you have called initForm() in your controller.',
         'preview_no_files_message' => 'There are no files uploaded.',
+        'preview_no_media_message' => 'There is no media selected.',
         'preview_no_record_message' => 'There is no record selected.',
         'select' => 'Select',
         'select_all' => 'all',
@@ -255,7 +256,8 @@ return [
         'return_to_list' => 'Return to the list'
     ],
     'recordfinder' => [
-        'find_record' => 'Find Record'
+        'find_record' => 'Find Record',
+        'cancel' => 'Cancel',
     ],
     'pagelist' => [
         'page_link' => 'Page link',
@@ -311,7 +313,8 @@ return [
         'tips' => 'System configuration tips',
         'tips_description' => 'There are issues you need to pay attention to in order to configure the system properly.',
         'permissions'  => 'Directory :name or its subdirectories is not writable for PHP. Please set corresponding permissions for the webserver on this directory.',
-        'extension' => 'The PHP extension :name is not installed. Please install this library and activate the extension.'
+        'extension' => 'The PHP extension :name is not installed. Please install this library and activate the extension.',
+        'plugin_missing' => 'The plugin :name is a dependency but is not installed. Please install this plugin.',
     ],
     'editor' => [
         'menu_label' => 'Editor settings',

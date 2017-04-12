@@ -2664,12 +2664,10 @@ $el.prop('checked',false)}
 $el.trigger('change')
 return false})})(jQuery);+function($){"use strict";var BalloonSelector=function(element,options){this.$el=$(element)
 this.$field=$('input',this.$el)
-this.options=options||{};var self=this;$('li',this.$el).click(function(){if(self.$el.hasClass('control-disabled'))
-return
+this.options=options||{};var self=this;$('li',this.$el).click(function(){if(self.$el.hasClass('control-disabled')){return}
 $('li',self.$el).removeClass('active')
 $(this).addClass('active')
-self.$field.val($(this).data('value'))
-self.$el.trigger('change')})}
+self.$field.val($(this).data('value')).trigger('change')})}
 BalloonSelector.DEFAULTS={}
 var old=$.fn.balloonSelector
 $.fn.balloonSelector=function(option){return this.each(function(){var $this=$(this)
@@ -6314,7 +6312,7 @@ BaseProto.dispose.call(this)}
 ValidationSet.prototype.disposeValidators=function(){for(var i=0,len=this.validators.length;i<len;i++){this.validators[i].dispose()}}
 ValidationSet.prototype.throwError=function(errorMessage){throw new Error(errorMessage+' Property: '+this.propertyName)}
 ValidationSet.prototype.createValidators=function(){if((this.options.required!==undefined||this.options.validationPattern!==undefined||this.options.validationMessage!==undefined)&&this.options.validation!==undefined){this.throwError('Legacy and new validation syntax should not be mixed.')}
-if(this.options.required!==undefined){var validator=new $.oc.inspector.validators.required({message:this.options.validationMessage})
+if(this.options.required!==undefined&&this.options.required){var validator=new $.oc.inspector.validators.required({message:this.options.validationMessage})
 this.validators.push(validator)}
 if(this.options.validationPattern!==undefined){var validator=new $.oc.inspector.validators.regex({message:this.options.validationMessage,pattern:this.options.validationPattern})
 this.validators.push(validator)}
