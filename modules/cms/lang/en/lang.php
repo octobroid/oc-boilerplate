@@ -7,7 +7,7 @@ return [
         'file_already_exists' => "File ':name' already exists.",
         'error_saving' => "Error saving file ':name'. Please check write permissions.",
         'error_creating_directory' => 'Error creating directory :name. Please check write permissions.',
-        'invalid_file_extension'=>'Invalid file extension: :invalid. Allowed extensions are: :allowed.',
+        'invalid_file_extension' => 'Invalid file extension: :invalid. Allowed extensions are: :allowed.',
         'error_deleting' => "Error deleting the template file ':name'. Please check write permissions.",
         'delete_success' => 'Templates deleted: :count.',
         'file_name_required' => 'The File Name field is required.',
@@ -24,6 +24,7 @@ return [
     ],
     'theme' => [
         'not_found_name' => "The theme ':name' is not found.",
+        'by_author' => 'By :name',
         'active' => [
             'not_set' => 'The active theme is not set.',
             'not_found' => 'The active theme is not found.'
@@ -77,7 +78,7 @@ return [
         'export_folders_label' => 'Folders',
         'export_folders_comment' => 'Please select the theme folders you would like to export',
         'delete_button' => 'Delete',
-        'delete_confirm' => 'Are you sure you want to delete this theme? It cannot be undone!',
+        'delete_confirm' => 'Delete this theme? It cannot be undone!',
         'delete_active_theme_failed' => 'Cannot delete the active theme, try making another theme active first.',
         'delete_theme_success' => 'Theme deleted!',
         'create_title' => 'Create theme',
@@ -283,7 +284,7 @@ return [
         'size' => 'Size',
         'title' => 'Title',
         'last_modified' => 'Last modified',
-        'public_url' => 'Public URL',
+        'public_url' => 'Download URL',
         'click_here' => 'Click here',
         'thumbnail_error' => 'Error generating thumbnail.',
         'return_to_parent' => 'Return to the parent folder',
@@ -309,7 +310,7 @@ return [
         'move_destination' => 'Destination folder',
         'please_select_move_dest' => 'Please select a destination folder.',
         'move_dest_src_match' => 'Please select another destination folder.',
-        'empty_library' => 'The Media Library is empty. Upload files or create folders to get started.',
+        'empty_library' => 'It looks a bit empty here. Upload files or create folders to get started.',
         'insert' => 'Insert',
         'crop_and_insert' => 'Crop & Insert',
         'select_single_image' => 'Please select a single image.',

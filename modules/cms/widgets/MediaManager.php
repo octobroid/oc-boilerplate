@@ -6,6 +6,7 @@ use Lang;
 use File;
 use Form;
 use Input;
+use Config;
 use Request;
 use Response;
 use Exception;
@@ -247,7 +248,7 @@ class MediaManager extends WidgetBase
                  */
                 $filesToDelete[] = $path;
             }
-            else if ($type === MediaLibraryItem::TYPE_FOLDER) {
+            elseif ($type === MediaLibraryItem::TYPE_FOLDER) {
                 /*
                  * Delete single folder
                  */
@@ -306,16 +307,19 @@ class MediaManager extends WidgetBase
             throw new ApplicationException(Lang::get('cms::lang.asset.invalid_name'));
         }
 
-        if (!$this->validateFileType($newName)) {
-            throw new ApplicationException(Lang::get('cms::lang.media.type_blocked'));
-        }
-
         $originalPath = Input::get('originalPath');
         $originalPath = MediaLibrary::validatePath($originalPath);
         $newPath = dirname($originalPath).'/'.$newName;
         $type = Input::get('type');
 
         if ($type == MediaLibraryItem::TYPE_FILE) {
+            /*
+             * Validate extension
+             */
+            if (!$this->validateFileType($newName)) {
+                throw new ApplicationException(Lang::get('cms::lang.media.type_blocked'));
+            }
+
             /*
              * Move single file
              */
@@ -350,10 +354,6 @@ class MediaManager extends WidgetBase
 
         if (!$this->validateFileName($name)) {
             throw new ApplicationException(Lang::get('cms::lang.asset.invalid_name'));
-        }
-
-        if (!$this->validateFileType($name)) {
-            throw new ApplicationException(Lang::get('cms::lang.media.type_blocked'));
         }
 
         $path = Input::get('path');
@@ -873,7 +873,9 @@ class MediaManager extends WidgetBase
     {
         $fileName = md5($fileName.uniqid().microtime());
 
-        $path = temp_path() . '/media';
+        $mediaFolder = Config::get('cms.storage.media.folder', 'media');
+
+        $path = temp_path() . MediaLibrary::validatePath($mediaFolder, true);
 
         if (!File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
@@ -884,7 +886,11 @@ class MediaManager extends WidgetBase
 
     protected function getThumbnailDirectory()
     {
-        return '/public/';
+        /*
+         * NOTE: Custom routing for /storage/temp/$thumbnailDirectory must be setup
+         * to return the thumbnail if not using default 'public' directory
+         */
+        return MediaLibrary::validatePath(Config::get('cms.storage.media.thumbFolder', 'public'), true) . '/';
     }
 
     protected function getPlaceholderId($item)
@@ -944,7 +950,7 @@ class MediaManager extends WidgetBase
                 'isError' => false,
                 'imageUrl' => $this->getThumbnailImageUrl($thumbnailPath)
             ]);
-        } 
+        }
         catch (Exception $ex) {
             if ($tempFilePath) {
                 File::delete($tempFilePath);

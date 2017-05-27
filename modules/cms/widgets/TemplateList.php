@@ -72,7 +72,7 @@ class TemplateList extends WidgetBase
     public $ignoreDirectories = [];
 
     /**
-     * @var boolean Defines sorting properties. 
+     * @var boolean Defines sorting properties.
      * The sorting feature is disabled if there are no sorting properties defined.
      */
     public $sortingProperties = [];
@@ -233,7 +233,7 @@ class TemplateList extends WidgetBase
             }
         }
 
-        // Sort folders by name regardless of the 
+        // Sort folders by name regardless of the
         // selected sorting options.
         ksort($foundGroups);
 
@@ -261,7 +261,7 @@ class TemplateList extends WidgetBase
 
         $ignoreCache = [];
 
-        $items = array_filter($items, function($item) use (&$ignoreCache) {
+        $items = array_filter($items, function ($item) use (&$ignoreCache) {
             $fileName = $item->getBaseFileName();
             $dirName = dirname($fileName);
 
@@ -300,14 +300,32 @@ class TemplateList extends WidgetBase
             'title'        => $this->getItemTitle($item),
             'fileName'     => $item->getFileName(),
             'description'  => $description,
-            'descriptions' => $descriptions
+            'descriptions' => $descriptions,
+            'dragValue'    => $this->getItemDragValue($item)
         ];
 
-        foreach ($this->sortingProperties as $property=>$name) {
+        foreach ($this->sortingProperties as $property => $name) {
             $result[$property] = $item->$property;
         }
 
         return (object) $result;
+    }
+
+    protected function getItemDragValue($item)
+    {
+        if ($item instanceof \Cms\Classes\Partial) {
+            return "{% partial '".$item->getBaseFileName()."' %}";
+        }
+
+        if ($item instanceof \Cms\Classes\Content) {
+            return "{% content '".$item->getBaseFileName()."' %}";
+        }
+
+        if ($item instanceof \Cms\Classes\Page) {
+            return "{{ '".$item->getBaseFileName()."'|page }}";
+        }
+
+        return '';
     }
 
     protected function getItemTitle($item)
