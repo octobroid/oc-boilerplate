@@ -89,7 +89,6 @@ php artisan plugin:install <plugin-name>
 All frontend libraries are managed using **bower**. These packages are installed by default:
 
 1. [Bootstrap](https://getbootstrap.com)
-1. [jQuery](http://jquery.com)
 1. [Font Awesome](https://fortawesome.github.io/Font-Awesome)
 1. [FastClick](https://github.com/ftlabs/fastclick)
 
