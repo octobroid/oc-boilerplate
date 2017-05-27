@@ -10,7 +10,7 @@
         <div class="scoreboard-item control-chart" data-control="chart-bar">
             <ul>
                 <?php foreach ($emails as $email): ?>
-                    <li><?= $email->code ?> <span><?= $email->emailsByCode() ?></span></li>
+                    <li><?= substr(htmlspecialchars($email->code), 0, 50) ?> <span><?= $email->emailsByCode() ?></span></li>
                 <?php endforeach ?>
             </ul>
         </div>

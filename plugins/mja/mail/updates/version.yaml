@@ -24,3 +24,5 @@
     - Fixed table creation query for newer MySQL versions.
 1.1.0:
     - Major bugfix for emails sent with 3rd party provider.
+1.1.1:
+    - Fixed RAW emails breaking the mail list table.
