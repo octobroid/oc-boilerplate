@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@domain.tld', 'name' => 'My App'],
+    'from' => ['address' => 'noreply@domain.tld', 'name' => env('APP_NAME', 'My App')],
 
     /*
     |--------------------------------------------------------------------------
