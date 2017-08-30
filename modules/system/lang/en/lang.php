@@ -14,6 +14,7 @@ return [
         'en-au' => 'English (Australia)',
         'en-ca' => 'English (Canada)',
         'en-gb' => 'English (United Kingdom)',
+        'et' => 'Eesti',
         'de' => 'Deutsch',
         'el' => 'Ελληνικά',
         'es' => 'Español',
@@ -25,17 +26,20 @@ return [
         'id' => 'Bahasa Indonesia',
         'it' => 'Italiano',
         'ja' => '日本語',
+        'kr' => '한국어',
         'lt' => 'Lietuvių',
         'lv' => 'Latviešu',
         'nb-no' => 'Norsk (Bokmål)',
         'nl' => 'Nederlands',
         'pl' => 'Polskie',
         'pt-br' => 'Português (Brasil)',
+        'pt-pt' => 'Português (Portugal)',
         'ro' => 'Română',
         'ru' => 'Русский',
         'sv' => 'Svenska',
         'sk' => 'Slovenský',
         'tr' => 'Türkçe',
+        'uk' => 'Українська мова',
         'zh-cn' => '简体中文',
         'zh-tw' => '繁體中文'
     ],
@@ -61,9 +65,11 @@ return [
             'users' => 'Users',
             'system' => 'System',
             'social' => 'Social',
+            'backend' => 'Backend',
             'events' => 'Events',
             'customers' => 'Customers',
-            'my_settings' => 'My Settings'
+            'my_settings' => 'My Settings',
+            'notifications' => 'Notifications'
         ]
     ],
     'theme' => [
@@ -185,9 +191,13 @@ return [
         'menu_description' => 'Modify the mail templates that are sent to users and administrators, manage email layouts.',
         'new_template' => 'New Template',
         'new_layout' => 'New Layout',
+        'new_partial' => 'New Partial',
         'template' => 'Template',
         'templates' => 'Templates',
+        'partial' => 'Partial',
+        'partials' => 'Partials',
         'menu_layouts_label' => 'Mail Layouts',
+        'menu_partials_label' => 'Mail Partials',
         'layout' => 'Layout',
         'layouts' => 'Layouts',
         'no_layout' => '-- No layout --',
@@ -214,6 +224,10 @@ return [
         'deleting_layout' => 'Deleting Layout...',
         'sending' => 'Sending test message...',
         'return' => 'Return to template list'
+    ],
+    'mail_brand' => [
+        'menu_label' => 'Mail branding',
+        'menu_description' => 'Modify the colors and appearance of mail templates.',
     ],
     'install' => [
         'project_label' => 'Attach to Project',

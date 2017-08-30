@@ -26,3 +26,6 @@
     - Major bugfix for emails sent with 3rd party provider.
 1.1.1:
     - Fixed RAW emails breaking the mail list table.
+1.1.2:
+    - Makes field to nullable
+    - make_to_nullable.php  

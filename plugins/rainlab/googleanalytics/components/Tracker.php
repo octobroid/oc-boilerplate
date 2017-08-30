@@ -5,7 +5,6 @@ use RainLab\GoogleAnalytics\Models\Settings;
 
 class Tracker extends ComponentBase
 {
-
     public function componentDetails()
     {
         return [
@@ -22,5 +21,10 @@ class Tracker extends ComponentBase
     public function domainName()
     {
         return Settings::get('domain_name');
+    }
+
+    public function anonymizeIp()
+    {
+        return Settings::get('anonymize_ip');
     }
 }

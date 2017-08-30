@@ -25,11 +25,11 @@ class BelongsToManyModelTest extends PluginTestCase
         Model::reguard();
 
         // Add/remove to collection
-        $this->assertFalse($author->roles->contains($role1));
+        $this->assertFalse($author->roles->contains($role1->id));
         $author->roles()->add($role1);
         $author->roles()->add($role2);
-        $this->assertTrue($author->roles->contains($role1));
-        $this->assertTrue($author->roles->contains($role2));
+        $this->assertTrue($author->roles->contains($role1->id));
+        $this->assertTrue($author->roles->contains($role2->id));
 
         // Set by Model object
         $author->roles = $role1;
@@ -102,7 +102,7 @@ class BelongsToManyModelTest extends PluginTestCase
         $this->assertEquals([$role1->id, $role2->id], $author->getRelationValue('roles'));
 
         // Get simple value (explicit)
-        $relatedIds = $author->roles()->getRelatedIds($sessionKey);
+        $relatedIds = $author->roles()->allRelatedIds($sessionKey)->all();
         $this->assertEquals([$role1->id, $role2->id], $relatedIds);
 
         // Commit deferred
@@ -146,5 +146,23 @@ class BelongsToManyModelTest extends PluginTestCase
 
         $author->delete();
         $this->assertEquals(0, Db::table('database_tester_authors_roles')->where('author_id', $author->id)->count());
+    }
+
+    public function testConditionsWithPivotAttributes()
+    {
+        Model::unguard();
+        $author = Author::create(['name' => 'Stevie', 'email' => 'stevie@email.tld']);
+        $role1 = Role::create(['name' => "Designer", 'description' => "Quality"]);
+        $role2 = Role::create(['name' => "Programmer", 'description' => "Speed"]);
+        $role3 = Role::create(['name' => "Manager", 'description' => "Budget"]);
+        Model::reguard();
+
+        $author->roles()->add($role1, null, ['is_executive' => 1]);
+        $author->roles()->add($role2, null, ['is_executive' => 1]);
+        $author->roles()->add($role3, null, ['is_executive' => 0]);
+
+        $this->assertEquals([1, 2], $author->executive_authors->lists('id'));
+        $this->assertEquals([1, 2], $author->executive_authors()->lists('id'));
+        $this->assertEquals([1, 2], $author->executive_authors()->get()->lists('id'));
     }
 }

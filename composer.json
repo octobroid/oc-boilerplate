@@ -2,17 +2,19 @@
     "name": "octobro/oc-boilerplate",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "october/rain": "~1.0",
-        "october/system": "~1.0",
-        "october/backend": "~1.0",
-        "october/cms": "~1.0",
-        "laravel/framework": "5.1.*",
+        "php": ">=7.0",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "october/rain": "dev-develop",
+        "october/system": "dev-develop",
+        "october/backend": "dev-develop",
+        "october/cms": "dev-develop",
+        "laravel/framework": "5.5.*@dev",
         "wikimedia/composer-merge-plugin": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~5.7",
         "phpunit/phpunit-selenium": "~1.2"
     },
     "autoload-dev": {
@@ -25,6 +27,9 @@
     "scripts": {
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "post-update-cmd": [
+            "php artisan october:util set build"
         ]
     },
     "config": {
