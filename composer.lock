@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f26b4bc69e2305bee6586c86e3c7ba98",
+    "content-hash": "dee64b18131e70a8d4a0a048e8bd81ad",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.35.2",
+            "version": "3.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "a2f01d9e9ed93c1e121d2f4450ae0a047fbbb6e8"
+                "reference": "69321675769dd3e3d00a94bfdc747bd3a5b75b3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a2f01d9e9ed93c1e121d2f4450ae0a047fbbb6e8",
-                "reference": "a2f01d9e9ed93c1e121d2f4450ae0a047fbbb6e8",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/69321675769dd3e3d00a94bfdc747bd3a5b75b3b",
+                "reference": "69321675769dd3e3d00a94bfdc747bd3a5b75b3b",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-08-30T16:17:20+00:00"
+            "time": "2017-09-01T22:52:38+00:00"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1005,16 +1005,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.21",
+            "version": "v0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/google-api-php-client-services.git",
-                "reference": "b8282036684f2989e820b7830e8270f337304f23"
+                "reference": "f3cc7456ec878086ee6b53591e979a022e24ac27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/b8282036684f2989e820b7830e8270f337304f23",
-                "reference": "b8282036684f2989e820b7830e8270f337304f23",
+                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/f3cc7456ec878086ee6b53591e979a022e24ac27",
+                "reference": "f3cc7456ec878086ee6b53591e979a022e24ac27",
                 "shasum": ""
             },
             "require": {
@@ -1038,7 +1038,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2017-08-28T00:23:45+00:00"
+            "time": "2017-09-02T00:25:09+00:00"
         },
         {
             "name": "google/auth",
@@ -1687,16 +1687,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "bd352a0d2ca93775fce8ef02365b03fc4fb8cbb0"
+                "reference": "fad090f6e14b97df91489803644ac88b5321864e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/bd352a0d2ca93775fce8ef02365b03fc4fb8cbb0",
-                "reference": "bd352a0d2ca93775fce8ef02365b03fc4fb8cbb0",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/fad090f6e14b97df91489803644ac88b5321864e",
+                "reference": "fad090f6e14b97df91489803644ac88b5321864e",
                 "shasum": ""
             },
             "require": {
@@ -1760,7 +1760,7 @@
                 "aws/aws-sdk-php": "~3.0",
                 "doctrine/dbal": "~2.5",
                 "filp/whoops": "^2.1.4",
-                "mockery/mockery": "~0.9.4",
+                "mockery/mockery": "~1.0",
                 "orchestra/testbench-core": "3.5.*",
                 "pda/pheanstalk": "~3.0",
                 "phpunit/phpunit": "~6.0",
@@ -1782,7 +1782,7 @@
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (~2.0).",
                 "symfony/css-selector": "Required to use some of the crawler integration testing tools (~3.3).",
                 "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.3).",
-                "symfony/psr-http-message-bridge": "Required to psr7 bridging features (0.2.*)."
+                "symfony/psr-http-message-bridge": "Required to psr7 bridging features (~1.0)."
             },
             "type": "library",
             "extra": {
@@ -1815,7 +1815,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-08-30T09:25:30+00:00"
+            "time": "2017-09-01T06:33:38+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2544,16 +2544,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4d4896e553f2094e657fe493506dc37c509d4e2b"
+                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4d4896e553f2094e657fe493506dc37c509d4e2b",
-                "reference": "4d4896e553f2094e657fe493506dc37c509d4e2b",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a1e8e1a30e1352f118feff1a8481066ddc2f234a",
+                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a",
                 "shasum": ""
             },
             "require": {
@@ -2591,26 +2591,26 @@
                 "parser",
                 "php"
             ],
-            "time": "2017-07-28T14:45:09+00:00"
+            "time": "2017-09-02T17:10:46+00:00"
         },
         {
             "name": "october/backend",
-            "version": "dev-develop",
+            "version": "v1.0.419",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octoberrain/backend.git",
-                "reference": "49b11633f0d0bde158e047fa624a05cdcd0a85fb"
+                "reference": "e8ffe2988038d63a44a4f3eb9073da7cf6d78d81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octoberrain/backend/zipball/49b11633f0d0bde158e047fa624a05cdcd0a85fb",
-                "reference": "49b11633f0d0bde158e047fa624a05cdcd0a85fb",
+                "url": "https://api.github.com/repos/octoberrain/backend/zipball/e8ffe2988038d63a44a4f3eb9073da7cf6d78d81",
+                "reference": "e8ffe2988038d63a44a4f3eb9073da7cf6d78d81",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "~1.0",
-                "october/rain": "dev-develop",
-                "php": ">=7.0"
+                "october/rain": "~1.0",
+                "php": ">=5.5.9"
             },
             "type": "october-module",
             "extra": {
@@ -2644,26 +2644,26 @@
                 "october",
                 "october cms"
             ],
-            "time": "2017-08-11T14:59:06+00:00"
+            "time": "2017-05-14T04:47:17+00:00"
         },
         {
             "name": "october/cms",
-            "version": "dev-develop",
+            "version": "v1.0.419",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octoberrain/cms.git",
-                "reference": "0b14373d8271bef2f8f6e21f2af744318f3c0717"
+                "reference": "848269fb682e1386449251329918c16d49df6ec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octoberrain/cms/zipball/0b14373d8271bef2f8f6e21f2af744318f3c0717",
-                "reference": "0b14373d8271bef2f8f6e21f2af744318f3c0717",
+                "url": "https://api.github.com/repos/octoberrain/cms/zipball/848269fb682e1386449251329918c16d49df6ec0",
+                "reference": "848269fb682e1386449251329918c16d49df6ec0",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "~1.0",
-                "october/rain": "dev-develop",
-                "php": ">=7.0"
+                "october/rain": "~1.0",
+                "php": ">=5.5.9"
             },
             "type": "october-module",
             "extra": {
@@ -2697,20 +2697,20 @@
                 "october",
                 "october cms"
             ],
-            "time": "2017-08-06T18:36:34+00:00"
+            "time": "2017-05-15T22:47:15+00:00"
         },
         {
             "name": "october/rain",
-            "version": "dev-develop",
+            "version": "v1.0.421",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octobercms/library.git",
-                "reference": "7fdc46cb6c2424436b1eb1cb1a66223785d7520f"
+                "reference": "1cf05e262c32bbbdd9c5fa8c643c0a86b9a539bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octobercms/library/zipball/7fdc46cb6c2424436b1eb1cb1a66223785d7520f",
-                "reference": "7fdc46cb6c2424436b1eb1cb1a66223785d7520f",
+                "url": "https://api.github.com/repos/octobercms/library/zipball/1cf05e262c32bbbdd9c5fa8c643c0a86b9a539bf",
+                "reference": "1cf05e262c32bbbdd9c5fa8c643c0a86b9a539bf",
                 "shasum": ""
             },
             "require": {
@@ -2743,17 +2743,17 @@
                 "october/translation": "self.version"
             },
             "require-dev": {
-                "illuminate/database": "dev-develop",
-                "illuminate/events": "dev-develop",
-                "illuminate/filesystem": "dev-develop",
-                "illuminate/log": "dev-develop",
-                "illuminate/mail": "dev-develop",
-                "illuminate/pagination": "dev-develop",
-                "illuminate/queue": "dev-develop",
-                "illuminate/routing": "dev-develop",
-                "illuminate/support": "dev-develop",
-                "illuminate/validation": "dev-develop",
-                "illuminate/view": "dev-develop",
+                "illuminate/database": "5.5.*",
+                "illuminate/events": "5.5.*",
+                "illuminate/filesystem": "5.5.*",
+                "illuminate/log": "5.5.*",
+                "illuminate/mail": "5.5.*",
+                "illuminate/pagination": "5.5.*",
+                "illuminate/queue": "5.5.*",
+                "illuminate/routing": "5.5.*",
+                "illuminate/support": "5.5.*",
+                "illuminate/validation": "5.5.*",
+                "illuminate/view": "5.5.*",
                 "phpunit/phpunit": "~5.7",
                 "swiftmailer/swiftmailer": "~5.1",
                 "symfony/config": "2.7.*",
@@ -2796,26 +2796,26 @@
                 "october",
                 "rain"
             ],
-            "time": "2017-08-16T01:53:53+00:00"
+            "time": "2017-09-04T09:46:20+00:00"
         },
         {
             "name": "october/system",
-            "version": "dev-develop",
+            "version": "v1.0.419",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octoberrain/system.git",
-                "reference": "ad507203ef92eac19237f89920475bb42dedcab7"
+                "reference": "5102edeadc5a3cfecef86bf740219050ae267b22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octoberrain/system/zipball/ad507203ef92eac19237f89920475bb42dedcab7",
-                "reference": "ad507203ef92eac19237f89920475bb42dedcab7",
+                "url": "https://api.github.com/repos/octoberrain/system/zipball/5102edeadc5a3cfecef86bf740219050ae267b22",
+                "reference": "5102edeadc5a3cfecef86bf740219050ae267b22",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "~1.0",
-                "october/rain": "dev-develop",
-                "php": ">=7.0"
+                "october/rain": "~1.0",
+                "php": ">=5.5.9"
             },
             "type": "october-module",
             "extra": {
@@ -2849,7 +2849,7 @@
                 "october cms",
                 "system"
             ],
-            "time": "2017-08-13T21:53:19+00:00"
+            "time": "2017-05-10T01:01:04+00:00"
         },
         {
             "name": "oyejorge/less.php",
@@ -4878,22 +4878,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.2.2",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157"
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4aada1f93c72c35e22fb1383b47fee43b8f1d157",
-                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^7.0",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.3.0",
+                "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -4919,20 +4919,20 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-08T06:39:58+00:00"
+            "time": "2017-08-30T18:51:59+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "fb3933512008d8162b3cdf9e18dba9309b7c3773"
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/fb3933512008d8162b3cdf9e18dba9309b7c3773",
-                "reference": "fb3933512008d8162b3cdf9e18dba9309b7c3773",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
                 "shasum": ""
             },
             "require": {
@@ -4966,26 +4966,26 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2017-06-03T08:32:36+00:00"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.7.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073"
+                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/93d39f1f7f9326d746203c7c056f300f7f126073",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/15ea9ac619e37009edcda64089e3fa4cc88aa659",
+                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
                 "sebastian/comparator": "^1.1|^2.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -4996,7 +4996,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -5029,7 +5029,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-03-02T20:05:34+00:00"
+            "time": "2017-09-03T09:38:53+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6043,11 +6043,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "october/rain": 20,
-        "october/system": 20,
-        "october/backend": 20,
-        "october/cms": 20,
-        "laravel/framework": 20,
         "wikimedia/composer-merge-plugin": 20,
         "google/apiclient": 5
     },
