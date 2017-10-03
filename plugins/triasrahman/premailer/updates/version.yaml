@@ -1,1 +1,2 @@
 1.0.1: First version of Premailer
+2.0.0: Upgrade for compatibility with Laravel 5.5 (PHP 7+, October 420+)
