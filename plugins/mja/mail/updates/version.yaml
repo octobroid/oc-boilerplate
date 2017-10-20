@@ -28,4 +28,6 @@
     - Fixed RAW emails breaking the mail list table.
 1.1.2:
     - Makes field to nullable
-    - make_to_nullable.php  
+    - make_to_nullable.php
+1.2.0:
+    - Removed $response logging (version 420 of OctoberCMS does not support it); thanks @whsol.

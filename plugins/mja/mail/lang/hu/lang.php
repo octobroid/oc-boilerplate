@@ -38,7 +38,6 @@ return [
         'email' => [
             'tab_emails' => 'Levelek',
             'tab_opens' => 'Megnyitott',
-            'tab_response' => 'Válasz',
 
             'id' => 'Azonosító',
             'code' => 'Kód',
@@ -50,7 +49,6 @@ return [
             'sender' => 'Küldő',
             'reply_to' => 'Válasz neki',
             'date' => 'Elküldés dátuma',
-            'response' => 'Válasz',
             'sent' => 'Elküldve',
             'yes' => 'igen',
             'no' => 'nem',

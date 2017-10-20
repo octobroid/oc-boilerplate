@@ -42,11 +42,6 @@ tabs:
             type: partial
             path: relation_opens
 
-        response@preview:
-            label: mja.mail::lang.models.email.response
-            tab: mja.mail::lang.models.email.tab_response
-            type: richeditor
-
 secondaryTabs:
     fields:
 

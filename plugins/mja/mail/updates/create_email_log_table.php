@@ -21,7 +21,6 @@ class CreateEmailLogTable extends Migration
             $table->string('sender')->nullable();
             $table->string('reply_to')->nullable();
             $table->string('date')->nullable();
-            $table->text('response')->nullable();
             $table->boolean('sent')->default(false);
             $table->string('hash');
             $table->timestamps();

@@ -38,7 +38,6 @@ return [
         'email' => [
             'tab_emails' => 'Emails',
             'tab_opens' => 'Opens',
-            'tab_response' => 'Response',
 
             'id' => 'ID',
             'code' => 'Code',
@@ -50,7 +49,6 @@ return [
             'sender' => 'Sender',
             'reply_to' => 'Reply To',
             'date' => 'Date sent',
-            'response' => 'Response',
             'sent' => 'Sent',
             'yes' => 'Yes',
             'no' => 'No',
