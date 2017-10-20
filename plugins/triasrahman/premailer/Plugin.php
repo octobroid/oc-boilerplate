@@ -30,7 +30,7 @@ class Plugin extends PluginBase
 
     /**
      * Attach event listeners on boot.
-     * 
+     *
      * @return void
      */
     public function boot()
@@ -40,14 +40,11 @@ class Plugin extends PluginBase
             // Get the Swift mail message
             $swift = $message->getSwiftMessage();
 
-            // Convert to inline css
-            $cssToInlineStyles = new CssToInlineStyles($swift->getBody());
-            $cssToInlineStyles->setUseInlineStylesBlock(true);
-            $cssToInlineStyles->setCleanup(true);
-            $cssToInlineStyles->setStripOriginalStyleTags(true);
-            
+            // Init converter instance
+            $cssToInlineStyles = new CssToInlineStyles();
+
             // Set the body of mail
-            $swift->setBody($cssToInlineStyles->convert());
+            $swift->setBody($cssToInlineStyles->convert($swift->getBody()));
         }, 1);
 
     }
