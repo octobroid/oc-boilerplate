@@ -1,0 +1,24 @@
+//
+// Loading Stripe
+//
+
+.stripe::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 4px 0 7px 5px lighten(theme-color("warning"), 15%), 0 0 5px lighten(theme-color("warning"), 15%);
+    opacity: 1.0;
+    -webkit-transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
+    border-radius: 50%;
+}
+
+.stripe-loading-indicator .stripe, .stripe-loading-indicator .stripe-loaded {
+    box-shadow: none !important;
+    height: 4px !important;
+    background: theme-color("warning") !important;
+}

@@ -9,3 +9,12 @@ items:
             isExternal: '0'
             isHidden: '0'
             cssClass: ''
+    -
+        title: 'Privacy Policy'
+        type: cms-page
+        code: ''
+        reference: static/privacy-policy
+        viewBag:
+            isExternal: '0'
+            isHidden: '0'
+            cssClass: ''

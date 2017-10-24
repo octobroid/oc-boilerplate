@@ -1,0 +1,36 @@
+//
+// Alert fixed
+//
+
+.alert-fixed {
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    color: #fff;
+    @include box-shadow(0 2px 4px rgba(0,0,0,0.2));
+
+    button.close {
+        color: #fff;
+        opacity: 1;
+    }
+
+    h1, h2, h3, h4, h5 {
+        margin-top: 0;
+    }
+
+    &.alert-success {
+        background: theme-color("success");
+    }
+
+    &.alert-warning {
+        background: theme-color("warning");
+    }
+
+    &.alert-info {
+        background: theme-color("info");
+    }
+
+    &.alert-danger {
+        background: theme-color("danger");
+    }
+}

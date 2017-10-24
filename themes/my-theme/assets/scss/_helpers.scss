@@ -1,0 +1,24 @@
+//
+// Helpers
+//
+
+/* Removal */
+
+.no-border-radius {
+    border-radius: 0 !important;
+}
+
+/* Typography */
+
+.text-content {
+    font-size: 18px;
+    line-height: 2;
+
+    p {
+        margin-bottom: 30px;
+    }
+
+    img {
+        max-width: 100%;
+    }
+}
