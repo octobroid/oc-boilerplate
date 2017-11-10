@@ -1,0 +1,21 @@
+{
+  "modulesFolders": [
+    "vendor"
+  ],
+  "flags": [],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "bootstrap@4.*",
+    "fastclick@1.*",
+    "font-awesome@4.*",
+    "popper.js@^1.12.6"
+  ],
+  "lockfileEntries": {
+    "bootstrap@4.*": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.2.tgz#4d67d2aa2219f062cd90bc1247e6747b9e8fd051",
+    "fastclick@1.*": "https://registry.yarnpkg.com/fastclick/-/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a",
+    "font-awesome@4.*": "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133",
+    "popper.js@^1.12.6": "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.6.tgz#91e12a97b07815258b76915d64044e8ac053d426"
+  },
+  "files": [],
+  "artifacts": {}
+}

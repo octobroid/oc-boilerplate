@@ -1,0 +1,11 @@
+{
+  "name": "my-theme",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "4.*",
+    "fastclick": "1.*",
+    "font-awesome": "4.*",
+    "popper.js": "^1.12.6"
+  }
+}
