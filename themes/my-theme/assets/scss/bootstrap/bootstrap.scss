@@ -1,7 +1,4 @@
-$bootstrap-path: $bower-path + 'bootstrap/scss/';
-
-@import $bootstrap-path + "functions";
-// @import $bootstrap-path + "variables";
+$bootstrap-path: $vendor-path + 'bootstrap/scss/';
 
 // Custom variables
 @import "custom-variables";
