@@ -10,7 +10,7 @@
 1. PHP > 5.5.9
 1. MySQL
 1. [Composer](http://getcomposer.org)
-1. [Bower](http://bower.io)
+1. [Yarn](https://yarnpkg.com)
 
 ## Getting Started
 
@@ -47,10 +47,11 @@
 	php artisan october:up
 	```
 
-6. Install frontend library.
+6. Install frontend library using Yarn. Go to theme directory first.
 
-	```
-	bower install
+    ```
+    cd themes/my-theme
+	yarn install
 	```
 
 7. For security reason, please generate new application key.
@@ -95,7 +96,7 @@ All frontend libraries are managed using **bower**. These packages are installed
 To install additional library, run the command:
 
 ```
-bower install --save <package-name>
+yarn add <package-name>
 ```
 
 ## Coding Standards
