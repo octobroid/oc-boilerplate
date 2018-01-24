@@ -453,7 +453,7 @@
             $panel.append($collapseIcon)
 
             if (!hasSecondaryTabs) {
-                $('.tab-pane', $primaryPanel).addClass('pane-compact')
+                $('.primary-tabs').parent().removeClass('min-size')
             }
 
             $collapseIcon.click(function(){
@@ -469,10 +469,7 @@
                 return false
             })
 
-            var $primaryCollapseIcon = $('<a href="javascript:;" class="tab-collapse-icon primary"><i class="icon-chevron-down"></i></a>'),
-                $primaryTabContainer = $('.nav-tabs', $primaryPanel)
-
-            $primaryTabContainer.addClass('master-area')
+            var $primaryCollapseIcon = $('<a href="javascript:;" class="tab-collapse-icon primary"><i class="icon-chevron-down"></i></a>')
 
             if ($primaryPanel.length > 0) {
                 $secondaryPanel.append($primaryCollapseIcon)

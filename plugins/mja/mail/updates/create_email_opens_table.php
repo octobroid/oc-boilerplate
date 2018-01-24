@@ -14,7 +14,7 @@ class CreateEmailOpensTable extends Migration
             $table->increments('id');
             $table->integer('email_id');
             $table->string('ip_address');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

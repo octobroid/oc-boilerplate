@@ -1,6 +1,6 @@
 <?php namespace Mja\Mail\Updates;
 
-use DB;
+use Schema;
 use October\Rain\Database\Updates\Migration;
 
 class MakeCodeColumnNullable extends Migration
@@ -8,12 +8,18 @@ class MakeCodeColumnNullable extends Migration
 
     public function up()
     {
-        DB::statement('ALTER TABLE `mja_mail_email_log` MODIFY `code` VARCHAR(255) NULL;');
+        Schema::table('mja_mail_email_log', function($table)
+        {
+            $table->string('code')->nullable()->change();
+        });
     }
 
     public function down()
     {
-        DB::statement('ALTER TABLE `mja_mail_email_log` MODIFY `code` VARCHAR(255);');
+        Schema::table('mja_mail_email_log', function($table)
+        {
+            $table->string('code')->nullable(false)->change();
+        });
     }
 
 }

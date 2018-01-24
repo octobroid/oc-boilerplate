@@ -86,7 +86,7 @@ class Plugin extends PluginBase
             $swift = $message->getSwiftMessage();
 
             $mail = Email::create([
-                'code' => $view,
+                'code' => $view ? substr($view, 0, 255) : null,
                 'to' => $swift->getTo(),
                 'cc' => $swift->getCc(),
                 'bcc' => $swift->getBcc(),

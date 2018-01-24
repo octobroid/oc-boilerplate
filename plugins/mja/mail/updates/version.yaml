@@ -17,7 +17,7 @@
     - Body column is now nullable
     - make_body_column_nullable.php
 1.0.7:
-    - Fixed #14; thanks @flip4bytes
+    - 'Fixed #14; thanks @flip4bytes'
 1.0.8:
     - Minor improvements; thanks to @mplodowski
 1.0.9:
@@ -31,3 +31,7 @@
     - make_to_nullable.php
 1.2.0:
     - Removed $response logging (version 420 of OctoberCMS does not support it); thanks @whsol.
+1.2.1:
+    - Fix code field max length - now only a max of 255 chars will be stored.
+1.2.2:
+    - Fix faulty migrations.

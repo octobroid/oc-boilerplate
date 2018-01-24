@@ -1,6 +1,6 @@
 <?php namespace Mja\Mail\Updates;
 
-use DB;
+use Schema;
 use October\Rain\Database\Updates\Migration;
 
 class MakeBodyColumnNullable extends Migration
@@ -8,12 +8,18 @@ class MakeBodyColumnNullable extends Migration
 
     public function up()
     {
-        DB::statement('ALTER TABLE `mja_mail_email_log` MODIFY `body` text COLLATE utf8_unicode_ci NULL;');
+        Schema::table('mja_mail_email_log', function($table)
+        {
+            $table->text('body')->nullable()->change();
+        });
     }
 
     public function down()
     {
-        DB::statement('ALTER TABLE `mja_mail_email_log` MODIFY `body` text COLLATE utf8_unicode_ci NOT NULL;');
+        Schema::table('mja_mail_email_log', function($table)
+        {
+            $table->text('body')->nullable(false)->change();
+        });
     }
 
 }
