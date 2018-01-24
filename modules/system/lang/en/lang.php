@@ -36,6 +36,7 @@ return [
         'pt-pt' => 'Português (Portugal)',
         'ro' => 'Română',
         'ru' => 'Русский',
+        'fi' => 'Suomi',
         'sv' => 'Svenska',
         'sk' => 'Slovenský',
         'tr' => 'Türkçe',
@@ -304,6 +305,7 @@ return [
         'core_build_help' => 'Latest build is available.',
         'core_downloading' => 'Downloading application files',
         'core_extracting' => 'Unpacking application files',
+        'core_set_build' => 'Setting build number',
         'plugins' => 'Plugins',
         'themes' => 'Themes',
         'disabled' => 'Disabled',
@@ -423,5 +425,9 @@ return [
         'log_requests_comment' => 'Browser requests that may require attention, such as 404 errors.',
         'log_theme' => 'Log theme changes',
         'log_theme_comment' => 'When a change is made to the theme using the back-end.',
-    ]
+    ],
+    'media' => [
+        'invalid_path' => "Invalid file path specified: ':path'.",
+        'folder_size_items' => 'item(s)',
+    ],
 ];
