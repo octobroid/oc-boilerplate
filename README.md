@@ -7,8 +7,8 @@
 
 ## Prerequisites
 
-1. PHP > 5.5.9
-1. MySQL
+1. PHP > 7.1
+1. MySQL or MariaDB
 1. [Composer](http://getcomposer.org)
 1. [Yarn](https://yarnpkg.com)
 
@@ -70,12 +70,12 @@ In this boilerplate, **we've installed**:
 1. [RainLab.GoogleAnalytics](https://octobercms.com/plugin/rainlab-googleanalytics)
 1. [October.Drivers](https://octobercms.com/plugin/october-drivers)
 1. [Bedard.Debugbar](https://octobercms.com/plugin/bedard-debugbar)
-1. [Triasrahman.Premailer](https://octobercms.com/plugin/triasrahman-premailer)
 1. [Mja.Mail](https://octobercms.com/plugin/mja-mail)
 
 More plugins that we recommend (not installed yet):
 
 1. [RainLab.Blog](https://octobercms.com/plugin/rainlab-blog)
+1. [RainLab.Translate](https://octobercms.com/plugin/rainlab-translate)
 1. [Responsiv.Uploader](https://octobercms.com/plugin/responsiv-uploader)
 1. [eBussola.Feedback](https://octobercms.com/plugin/ebussola-feedback)
 
@@ -101,8 +101,6 @@ yarn add <package-name>
 
 ## Coding Standards
 
-Please follow the following guides and code standards:
+Please follow the following guide:
 
-* [PSR 4 Coding Standards](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md)
-* [PSR 2 Coding Style Guide](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
-* [PSR 1 Coding Standards](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md)
+* [OctoberCMS Developer Guide](https://octobercms.com/help/guidelines/developer)
