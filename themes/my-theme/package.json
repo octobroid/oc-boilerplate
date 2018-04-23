@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "4.*",
+    "bootstrap": "^4.1.0",
     "fastclick": "1.*",
     "font-awesome": "4.*",
     "popper.js": "^1.12.6"
