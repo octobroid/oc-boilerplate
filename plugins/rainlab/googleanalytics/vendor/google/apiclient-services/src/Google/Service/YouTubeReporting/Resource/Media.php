@@ -29,8 +29,7 @@ class Google_Service_YouTubeReporting_Resource_Media extends Google_Service_Reso
    * Method for media download. Download is supported on the URI
    * `/v1/media/{+name}?alt=media`. (media.download)
    *
-   * @param string $resourceName Name of the media that is being downloaded.  See
-   * ReadRequest.resource_name.
+   * @param string $resourceName Name of the media that is being downloaded.
    * @param array $optParams Optional parameters.
    * @return Google_Service_YouTubeReporting_GdataMedia
    */

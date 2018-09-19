@@ -32,7 +32,7 @@ class Google_Service_AndroidPublisher_Resource_EditsTracks extends Google_Servic
    * @param string $packageName Unique identifier for the Android app that is
    * being updated; for example, "com.spiffygame".
    * @param string $editId Unique identifier for this edit.
-   * @param string $track The track type to read or modify.
+   * @param string $track The track to read or modify.
    * @param array $optParams Optional parameters.
    * @return Google_Service_AndroidPublisher_Track
    */
@@ -66,7 +66,7 @@ class Google_Service_AndroidPublisher_Resource_EditsTracks extends Google_Servic
    * @param string $packageName Unique identifier for the Android app that is
    * being updated; for example, "com.spiffygame".
    * @param string $editId Unique identifier for this edit.
-   * @param string $track The track type to read or modify.
+   * @param string $track The track to read or modify.
    * @param Google_Service_AndroidPublisher_Track $postBody
    * @param array $optParams Optional parameters.
    * @return Google_Service_AndroidPublisher_Track
@@ -85,7 +85,7 @@ class Google_Service_AndroidPublisher_Resource_EditsTracks extends Google_Servic
    * @param string $packageName Unique identifier for the Android app that is
    * being updated; for example, "com.spiffygame".
    * @param string $editId Unique identifier for this edit.
-   * @param string $track The track type to read or modify.
+   * @param string $track The track to read or modify.
    * @param Google_Service_AndroidPublisher_Track $postBody
    * @param array $optParams Optional parameters.
    * @return Google_Service_AndroidPublisher_Track

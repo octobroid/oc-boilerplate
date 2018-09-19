@@ -60,6 +60,8 @@ class Google_Service_Vault_Resource_MattersHolds extends Google_Service_Resource
    * @param string $matterId The matter ID.
    * @param string $holdId The hold ID.
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string view Specifies which parts of the Hold to return.
    * @return Google_Service_Vault_Hold
    */
   public function get($matterId, $holdId, $optParams = array())
@@ -80,6 +82,7 @@ class Google_Service_Vault_Resource_MattersHolds extends Google_Service_Resource
    * @opt_param int pageSize The number of holds to return in the response,
    * between 0 and 100 inclusive. Leaving this empty, or as 0, is the same as
    * page_size = 100.
+   * @opt_param string view Specifies which parts of the Hold to return.
    * @return Google_Service_Vault_ListHoldsResponse
    */
   public function listMattersHolds($matterId, $optParams = array())

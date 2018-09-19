@@ -326,16 +326,6 @@ class Google_Service_CloudTasks extends Google_Service
                   'type' => 'integer',
                 ),
               ),
-            ),'pull' => array(
-              'path' => 'v2beta2/{+name}/tasks:pull',
-              'httpMethod' => 'POST',
-              'parameters' => array(
-                'name' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
             ),'renewLease' => array(
               'path' => 'v2beta2/{+name}:renewLease',
               'httpMethod' => 'POST',

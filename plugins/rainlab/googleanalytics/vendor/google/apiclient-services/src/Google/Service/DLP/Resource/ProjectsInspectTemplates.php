@@ -26,26 +26,27 @@
 class Google_Service_DLP_Resource_ProjectsInspectTemplates extends Google_Service_Resource
 {
   /**
-   * Creates an inspect template for re-using frequently used configuration for
+   * Creates an InspectTemplate for re-using frequently used configuration for
    * inspecting content, images, and storage. (inspectTemplates.create)
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id or organizations/my-org-id.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2CreateInspectTemplateRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2CreateInspectTemplateRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate
    */
-  public function create($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2CreateInspectTemplateRequest $postBody, $optParams = array())
+  public function create($parent, Google_Service_DLP_GooglePrivacyDlpV2CreateInspectTemplateRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('create', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate");
+    return $this->call('create', array($params), "Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate");
   }
   /**
-   * Deletes inspect templates. (inspectTemplates.delete)
+   * Deletes an InspectTemplate. (inspectTemplates.delete)
    *
    * @param string $name Resource name of the organization and inspectTemplate to
-   * be deleted, for example `organizations/433245324/inspectTemplates/432452342`.
+   * be deleted, for example `organizations/433245324/inspectTemplates/432452342`
+   * or projects/project-id/inspectTemplates/432452342.
    * @param array $optParams Optional parameters.
    * @return Google_Service_DLP_GoogleProtobufEmpty
    */
@@ -56,21 +57,22 @@ class Google_Service_DLP_Resource_ProjectsInspectTemplates extends Google_Servic
     return $this->call('delete', array($params), "Google_Service_DLP_GoogleProtobufEmpty");
   }
   /**
-   * Gets an inspect template. (inspectTemplates.get)
+   * Gets an InspectTemplate. (inspectTemplates.get)
    *
    * @param string $name Resource name of the organization and inspectTemplate to
-   * be read, for example `organizations/433245324/inspectTemplates/432452342`.
+   * be read, for example `organizations/433245324/inspectTemplates/432452342` or
+   * projects/project-id/inspectTemplates/432452342.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate
    */
   public function get($name, $optParams = array())
   {
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate");
+    return $this->call('get', array($params), "Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate");
   }
   /**
-   * Lists inspect templates. (inspectTemplates.listProjectsInspectTemplates)
+   * Lists InspectTemplates. (inspectTemplates.listProjectsInspectTemplates)
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id or organizations/my-org-id.
@@ -80,27 +82,28 @@ class Google_Service_DLP_Resource_ProjectsInspectTemplates extends Google_Servic
    * from previous call to `ListInspectTemplates`.
    * @opt_param int pageSize Optional size of the page, can be limited by server.
    * If zero server returns a page of max size 100.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2ListInspectTemplatesResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2ListInspectTemplatesResponse
    */
   public function listProjectsInspectTemplates($parent, $optParams = array())
   {
     $params = array('parent' => $parent);
     $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2ListInspectTemplatesResponse");
+    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2ListInspectTemplatesResponse");
   }
   /**
-   * Updates the inspect template. (inspectTemplates.patch)
+   * Updates the InspectTemplate. (inspectTemplates.patch)
    *
    * @param string $name Resource name of organization and inspectTemplate to be
-   * updated, for example `organizations/433245324/inspectTemplates/432452342`.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2UpdateInspectTemplateRequest $postBody
+   * updated, for example `organizations/433245324/inspectTemplates/432452342` or
+   * projects/project-id/inspectTemplates/432452342.
+   * @param Google_Service_DLP_GooglePrivacyDlpV2UpdateInspectTemplateRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate
    */
-  public function patch($name, Google_Service_DLP_GooglePrivacyDlpV2beta2UpdateInspectTemplateRequest $postBody, $optParams = array())
+  public function patch($name, Google_Service_DLP_GooglePrivacyDlpV2UpdateInspectTemplateRequest $postBody, $optParams = array())
   {
     $params = array('name' => $name, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2InspectTemplate");
+    return $this->call('patch', array($params), "Google_Service_DLP_GooglePrivacyDlpV2InspectTemplate");
   }
 }

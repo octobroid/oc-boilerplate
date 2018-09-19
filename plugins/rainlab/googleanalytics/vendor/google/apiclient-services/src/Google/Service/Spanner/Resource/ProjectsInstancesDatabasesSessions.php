@@ -109,11 +109,12 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
     return $this->call('delete', array($params), "Google_Service_Spanner_SpannerEmpty");
   }
   /**
-   * Executes an SQL query, returning all rows in a single reply. This method
-   * cannot be used to return a result set larger than 10 MiB; if the query yields
-   * more data than that, the query fails with a `FAILED_PRECONDITION` error.
+   * Executes an SQL statement, returning all results in a single reply. This
+   * method cannot be used to return a result set larger than 10 MiB; if the query
+   * yields more data than that, the query fails with a `FAILED_PRECONDITION`
+   * error.
    *
-   * Queries inside read-write transactions might return `ABORTED`. If this
+   * Operations inside read-write transactions might return `ABORTED`. If this
    * occurs, the application should restart the transaction from the beginning.
    * See Transaction for more details.
    *
@@ -194,6 +195,47 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
     $params = array('database' => $database);
     $params = array_merge($params, $optParams);
     return $this->call('list', array($params), "Google_Service_Spanner_ListSessionsResponse");
+  }
+  /**
+   * Creates a set of partition tokens that can be used to execute a query
+   * operation in parallel.  Each of the returned partition tokens can be used by
+   * ExecuteStreamingSql to specify a subset of the query result to read.  The
+   * same session and read-only transaction must be used by the
+   * PartitionQueryRequest used to create the partition tokens and the
+   * ExecuteSqlRequests that use the partition tokens. Partition tokens become
+   * invalid when the session used to create them is deleted or begins a new
+   * transaction. (sessions.partitionQuery)
+   *
+   * @param string $session Required. The session used to create the partitions.
+   * @param Google_Service_Spanner_PartitionQueryRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Spanner_PartitionResponse
+   */
+  public function partitionQuery($session, Google_Service_Spanner_PartitionQueryRequest $postBody, $optParams = array())
+  {
+    $params = array('session' => $session, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('partitionQuery', array($params), "Google_Service_Spanner_PartitionResponse");
+  }
+  /**
+   * Creates a set of partition tokens that can be used to execute a read
+   * operation in parallel.  Each of the returned partition tokens can be used by
+   * StreamingRead to specify a subset of the read result to read.  The same
+   * session and read-only transaction must be used by the PartitionReadRequest
+   * used to create the partition tokens and the ReadRequests that use the
+   * partition tokens. Partition tokens become invalid when the session used to
+   * create them is deleted or begins a new transaction. (sessions.partitionRead)
+   *
+   * @param string $session Required. The session used to create the partitions.
+   * @param Google_Service_Spanner_PartitionReadRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Spanner_PartitionResponse
+   */
+  public function partitionRead($session, Google_Service_Spanner_PartitionReadRequest $postBody, $optParams = array())
+  {
+    $params = array('session' => $session, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('partitionRead', array($params), "Google_Service_Spanner_PartitionResponse");
   }
   /**
    * Reads rows from the database using key lookups and scans, as a simple

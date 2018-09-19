@@ -16,10 +16,10 @@
  */
 
 /**
- * Service definition for DLP (v2beta2).
+ * Service definition for DLP (v2).
  *
  * <p>
- * The Google Data Loss Prevention API provides methods for detection of
+ * Provides methods for detection, risk analysis, and de-identification of
  * privacy-sensitive fragments in text, images, and Google Cloud Platform
  * storage repositories.</p>
  *
@@ -40,11 +40,11 @@ class Google_Service_DLP extends Google_Service
   public $organizations_deidentifyTemplates;
   public $organizations_inspectTemplates;
   public $projects_content;
-  public $projects_dataSource;
   public $projects_deidentifyTemplates;
   public $projects_dlpJobs;
   public $projects_image;
   public $projects_inspectTemplates;
+  public $projects_jobTriggers;
   
   /**
    * Constructs the internal representation of the DLP service.
@@ -56,7 +56,7 @@ class Google_Service_DLP extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://dlp.googleapis.com/';
     $this->servicePath = '';
-    $this->version = 'v2beta2';
+    $this->version = 'v2';
     $this->serviceName = 'dlp';
 
     $this->infoTypes = new Google_Service_DLP_Resource_InfoTypes(
@@ -66,10 +66,14 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'list' => array(
-              'path' => 'v2beta2/infoTypes',
+              'path' => 'v2/infoTypes',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'languageCode' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'filter' => array(
                   'location' => 'query',
                   'type' => 'string',
                 ),
@@ -85,7 +89,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'create' => array(
-              'path' => 'v2beta2/{+parent}/deidentifyTemplates',
+              'path' => 'v2/{+parent}/deidentifyTemplates',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -95,7 +99,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'delete' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => array(
                 'name' => array(
@@ -105,7 +109,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -115,7 +119,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v2beta2/{+parent}/deidentifyTemplates',
+              'path' => 'v2/{+parent}/deidentifyTemplates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
@@ -133,7 +137,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'patch' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => array(
                 'name' => array(
@@ -153,7 +157,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'create' => array(
-              'path' => 'v2beta2/{+parent}/inspectTemplates',
+              'path' => 'v2/{+parent}/inspectTemplates',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -163,7 +167,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'delete' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => array(
                 'name' => array(
@@ -173,7 +177,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -183,7 +187,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v2beta2/{+parent}/inspectTemplates',
+              'path' => 'v2/{+parent}/inspectTemplates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
@@ -191,17 +195,17 @@ class Google_Service_DLP extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
-                'pageToken' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
                 ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
               ),
             ),'patch' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => array(
                 'name' => array(
@@ -221,7 +225,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'deidentify' => array(
-              'path' => 'v2beta2/{+parent}/content:deidentify',
+              'path' => 'v2/{+parent}/content:deidentify',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -231,7 +235,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'inspect' => array(
-              'path' => 'v2beta2/{+parent}/content:inspect',
+              'path' => 'v2/{+parent}/content:inspect',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -241,37 +245,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'reidentify' => array(
-              'path' => 'v2beta2/{+parent}/content:reidentify',
-              'httpMethod' => 'POST',
-              'parameters' => array(
-                'parent' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
-            ),
-          )
-        )
-    );
-    $this->projects_dataSource = new Google_Service_DLP_Resource_ProjectsDataSource(
-        $this,
-        $this->serviceName,
-        'dataSource',
-        array(
-          'methods' => array(
-            'analyze' => array(
-              'path' => 'v2beta2/{+parent}/dataSource:analyze',
-              'httpMethod' => 'POST',
-              'parameters' => array(
-                'parent' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
-            ),'inspect' => array(
-              'path' => 'v2beta2/{+parent}/dataSource:inspect',
+              'path' => 'v2/{+parent}/content:reidentify',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -291,7 +265,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'create' => array(
-              'path' => 'v2beta2/{+parent}/deidentifyTemplates',
+              'path' => 'v2/{+parent}/deidentifyTemplates',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -301,7 +275,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'delete' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => array(
                 'name' => array(
@@ -311,7 +285,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -321,7 +295,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v2beta2/{+parent}/deidentifyTemplates',
+              'path' => 'v2/{+parent}/deidentifyTemplates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
@@ -329,17 +303,17 @@ class Google_Service_DLP extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
-                'pageToken' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
                 ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
               ),
             ),'patch' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => array(
                 'name' => array(
@@ -359,7 +333,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'cancel' => array(
-              'path' => 'v2beta2/{+name}:cancel',
+              'path' => 'v2/{+name}:cancel',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'name' => array(
@@ -368,8 +342,18 @@ class Google_Service_DLP extends Google_Service
                   'required' => true,
                 ),
               ),
+            ),'create' => array(
+              'path' => 'v2/{+parent}/dlpJobs',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
             ),'delete' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => array(
                 'name' => array(
@@ -379,7 +363,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -389,13 +373,17 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v2beta2/{+parent}/dlpJobs',
+              'path' => 'v2/{+parent}/dlpJobs',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
                 ),
                 'pageToken' => array(
                   'location' => 'query',
@@ -406,10 +394,6 @@ class Google_Service_DLP extends Google_Service
                   'type' => 'integer',
                 ),
                 'type' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-                'filter' => array(
                   'location' => 'query',
                   'type' => 'string',
                 ),
@@ -425,7 +409,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'redact' => array(
-              'path' => 'v2beta2/{+parent}/image:redact',
+              'path' => 'v2/{+parent}/image:redact',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -445,7 +429,7 @@ class Google_Service_DLP extends Google_Service
         array(
           'methods' => array(
             'create' => array(
-              'path' => 'v2beta2/{+parent}/inspectTemplates',
+              'path' => 'v2/{+parent}/inspectTemplates',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -455,7 +439,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'delete' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'DELETE',
               'parameters' => array(
                 'name' => array(
@@ -465,7 +449,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -475,7 +459,7 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v2beta2/{+parent}/inspectTemplates',
+              'path' => 'v2/{+parent}/inspectTemplates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
@@ -493,7 +477,79 @@ class Google_Service_DLP extends Google_Service
                 ),
               ),
             ),'patch' => array(
-              'path' => 'v2beta2/{+name}',
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'PATCH',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->projects_jobTriggers = new Google_Service_DLP_Resource_ProjectsJobTriggers(
+        $this,
+        $this->serviceName,
+        'jobTriggers',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => 'v2/{+parent}/jobTriggers',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => 'v2/{+parent}/jobTriggers',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'orderBy' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageSize' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+              ),
+            ),'patch' => array(
+              'path' => 'v2/{+name}',
               'httpMethod' => 'PATCH',
               'parameters' => array(
                 'name' => array(

@@ -26,6 +26,7 @@ class Google_Service_PolyService_Asset extends Google_Collection
   protected $formatsDataType = 'array';
   public $isCurated;
   public $license;
+  public $metadata;
   public $name;
   protected $presentationParamsType = 'Google_Service_PolyService_PresentationParams';
   protected $presentationParamsDataType = '';
@@ -95,6 +96,14 @@ class Google_Service_PolyService_Asset extends Google_Collection
   public function getLicense()
   {
     return $this->license;
+  }
+  public function setMetadata($metadata)
+  {
+    $this->metadata = $metadata;
+  }
+  public function getMetadata()
+  {
+    return $this->metadata;
   }
   public function setName($name)
   {

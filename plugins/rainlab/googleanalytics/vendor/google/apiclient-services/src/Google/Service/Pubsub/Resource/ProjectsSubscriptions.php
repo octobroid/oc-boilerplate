@@ -223,7 +223,8 @@ class Google_Service_Pubsub_Resource_ProjectsSubscriptions extends Google_Servic
   }
   /**
    * Seeks an existing subscription to a point in time or to a given snapshot,
-   * whichever is provided in the request. (subscriptions.seek)
+   * whichever is provided in the request. [ALPHA] This method is a part of a
+   * closed Alpha API. (subscriptions.seek)
    *
    * @param string $subscription The subscription to affect.
    * @param Google_Service_Pubsub_SeekRequest $postBody

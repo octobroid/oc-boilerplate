@@ -26,27 +26,28 @@
 class Google_Service_DLP_Resource_OrganizationsDeidentifyTemplates extends Google_Service_Resource
 {
   /**
-   * Creates an Deidentify template for re-using frequently used configuration for
-   * Deidentifying content, images, and storage. (deidentifyTemplates.create)
+   * Creates a DeidentifyTemplate for re-using frequently used configuration for
+   * de-identifying content, images, and storage. (deidentifyTemplates.create)
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id or organizations/my-org-id.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2CreateDeidentifyTemplateRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2CreateDeidentifyTemplateRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate
    */
-  public function create($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2CreateDeidentifyTemplateRequest $postBody, $optParams = array())
+  public function create($parent, Google_Service_DLP_GooglePrivacyDlpV2CreateDeidentifyTemplateRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('create', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate");
+    return $this->call('create', array($params), "Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate");
   }
   /**
-   * Deletes inspect templates. (deidentifyTemplates.delete)
+   * Deletes a DeidentifyTemplate. (deidentifyTemplates.delete)
    *
-   * @param string $name Resource name of the organization and inspectTemplate to
-   * be deleted, for example
-   * `organizations/433245324/deidentifyTemplates/432452342`.
+   * @param string $name Resource name of the organization and deidentify template
+   * to be deleted, for example
+   * `organizations/433245324/deidentifyTemplates/432452342` or projects/project-
+   * id/deidentifyTemplates/432452342.
    * @param array $optParams Optional parameters.
    * @return Google_Service_DLP_GoogleProtobufEmpty
    */
@@ -57,21 +58,23 @@ class Google_Service_DLP_Resource_OrganizationsDeidentifyTemplates extends Googl
     return $this->call('delete', array($params), "Google_Service_DLP_GoogleProtobufEmpty");
   }
   /**
-   * Gets an inspect template. (deidentifyTemplates.get)
+   * Gets a DeidentifyTemplate. (deidentifyTemplates.get)
    *
-   * @param string $name Resource name of the organization and inspectTemplate to
-   * be read, for example `organizations/433245324/deidentifyTemplates/432452342`.
+   * @param string $name Resource name of the organization and deidentify template
+   * to be read, for example
+   * `organizations/433245324/deidentifyTemplates/432452342` or projects/project-
+   * id/deidentifyTemplates/432452342.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate
    */
   public function get($name, $optParams = array())
   {
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate");
+    return $this->call('get', array($params), "Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate");
   }
   /**
-   * Lists inspect templates.
+   * Lists DeidentifyTemplates.
    * (deidentifyTemplates.listOrganizationsDeidentifyTemplates)
    *
    * @param string $parent The parent resource name, for example projects/my-
@@ -82,27 +85,29 @@ class Google_Service_DLP_Resource_OrganizationsDeidentifyTemplates extends Googl
    * from previous call to `ListDeidentifyTemplates`.
    * @opt_param int pageSize Optional size of the page, can be limited by server.
    * If zero server returns a page of max size 100.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2ListDeidentifyTemplatesResponse
    */
   public function listOrganizationsDeidentifyTemplates($parent, $optParams = array())
   {
     $params = array('parent' => $parent);
     $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse");
+    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2ListDeidentifyTemplatesResponse");
   }
   /**
-   * Updates the inspect template. (deidentifyTemplates.patch)
+   * Updates the DeidentifyTemplate. (deidentifyTemplates.patch)
    *
-   * @param string $name Resource name of organization and inspectTemplate to be
-   * updated, for example `organizations/433245324/deidentifyTemplates/432452342`.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2UpdateDeidentifyTemplateRequest $postBody
+   * @param string $name Resource name of organization and deidentify template to
+   * be updated, for example
+   * `organizations/433245324/deidentifyTemplates/432452342` or projects/project-
+   * id/deidentifyTemplates/432452342.
+   * @param Google_Service_DLP_GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate
+   * @return Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate
    */
-  public function patch($name, Google_Service_DLP_GooglePrivacyDlpV2beta2UpdateDeidentifyTemplateRequest $postBody, $optParams = array())
+  public function patch($name, Google_Service_DLP_GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest $postBody, $optParams = array())
   {
     $params = array('name' => $name, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyTemplate");
+    return $this->call('patch', array($params), "Google_Service_DLP_GooglePrivacyDlpV2DeidentifyTemplate");
   }
 }

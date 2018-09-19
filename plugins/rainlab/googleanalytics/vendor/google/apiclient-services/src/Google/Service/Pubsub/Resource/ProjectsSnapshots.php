@@ -26,10 +26,11 @@
 class Google_Service_Pubsub_Resource_ProjectsSnapshots extends Google_Service_Resource
 {
   /**
-   * Creates a snapshot from the requested subscription. If the snapshot already
-   * exists, returns `ALREADY_EXISTS`. If the requested subscription doesn't
-   * exist, returns `NOT_FOUND`. If the backlog in the subscription is too old --
-   * and the resulting snapshot would expire in less than 1 hour -- then
+   * [ALPHA] This method is a part of a closed Alpha API. Creates a snapshot from
+   * the requested subscription. If the snapshot already exists, returns
+   * `ALREADY_EXISTS`. If the requested subscription doesn't exist, returns
+   * `NOT_FOUND`. If the backlog in the subscription is too old -- and the
+   * resulting snapshot would expire in less than 1 hour -- then
    * `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field.
    *
    * If the name is not provided in the request, the server will assign a random
@@ -58,8 +59,8 @@ class Google_Service_Pubsub_Resource_ProjectsSnapshots extends Google_Service_Re
    * Removes an existing snapshot. All messages retained in the snapshot are
    * immediately dropped. After a snapshot is deleted, a new one may be created
    * with the same name, but the new one has no association with the old snapshot
-   * or its subscription, unless the same subscription is specified.
-   * (snapshots.delete)
+   * or its subscription, unless the same subscription is specified. [ALPHA] This
+   * method is a part of a closed Alpha API. (snapshots.delete)
    *
    * @param string $snapshot The name of the snapshot to delete. Format is
    * `projects/{project}/snapshots/{snap}`.
@@ -71,6 +72,21 @@ class Google_Service_Pubsub_Resource_ProjectsSnapshots extends Google_Service_Re
     $params = array('snapshot' => $snapshot);
     $params = array_merge($params, $optParams);
     return $this->call('delete', array($params), "Google_Service_Pubsub_PubsubEmpty");
+  }
+  /**
+   * Gets the configuration details of a snapshot. [ALPHA] This method is a part
+   * of a closed Alpha API. (snapshots.get)
+   *
+   * @param string $snapshot The name of the snapshot to get. Format is
+   * `projects/{project}/snapshots/{snap}`.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Pubsub_Snapshot
+   */
+  public function get($snapshot, $optParams = array())
+  {
+    $params = array('snapshot' => $snapshot);
+    $params = array_merge($params, $optParams);
+    return $this->call('get', array($params), "Google_Service_Pubsub_Snapshot");
   }
   /**
    * Gets the access control policy for a resource. Returns an empty policy if the
@@ -89,17 +105,18 @@ class Google_Service_Pubsub_Resource_ProjectsSnapshots extends Google_Service_Re
     return $this->call('getIamPolicy', array($params), "Google_Service_Pubsub_Policy");
   }
   /**
-   * Lists the existing snapshots. (snapshots.listProjectsSnapshots)
+   * Lists the existing snapshots. [ALPHA] This method is a part of a closed Alpha
+   * API. (snapshots.listProjectsSnapshots)
    *
    * @param string $project The name of the cloud project that snapshots belong
    * to. Format is `projects/{project}`.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param int pageSize Maximum number of snapshots to return.
    * @opt_param string pageToken The value returned by the last
    * `ListSnapshotsResponse`; indicates that this is a continuation of a prior
    * `ListSnapshots` call, and that the system should return the next page of
    * data.
-   * @opt_param int pageSize Maximum number of snapshots to return.
    * @return Google_Service_Pubsub_ListSnapshotsResponse
    */
   public function listProjectsSnapshots($project, $optParams = array())
@@ -110,7 +127,8 @@ class Google_Service_Pubsub_Resource_ProjectsSnapshots extends Google_Service_Re
   }
   /**
    * Updates an existing snapshot. Note that certain properties of a snapshot are
-   * not modifiable. (snapshots.patch)
+   * not modifiable. [ALPHA] This method is a part of a closed Alpha API.
+   * (snapshots.patch)
    *
    * @param string $name The name of the snapshot.
    * @param Google_Service_Pubsub_UpdateSnapshotRequest $postBody

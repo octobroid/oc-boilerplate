@@ -119,19 +119,19 @@ class Google_Service_Appengine_Resource_AppsServicesVersions extends Google_Serv
    * automatic_scaling.min_total_instances
    * (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.ser
    * vices.versions#Version.FIELDS.automatic_scaling):  For Version resources that
-   * use automatic scaling and run in the App  Engine Flexible environment.
+   * use automatic scaling and run in the App  Engine flexible environment.
    * automatic_scaling.max_total_instances
    * (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.ser
    * vices.versions#Version.FIELDS.automatic_scaling):  For Version resources that
-   * use automatic scaling and run in the App  Engine Flexible environment.
+   * use automatic scaling and run in the App  Engine flexible environment.
    * automatic_scaling.cool_down_period_sec
    * (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.ser
    * vices.versions#Version.FIELDS.automatic_scaling):  For Version resources that
-   * use automatic scaling and run in the App  Engine Flexible environment.
+   * use automatic scaling and run in the App  Engine flexible environment.
    * automatic_scaling.cpu_utilization.target_utilization
    * (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.ser
    * vices.versions#Version.FIELDS.automatic_scaling):  For Version resources that
-   * use automatic scaling and run in the App  Engine Flexible environment.
+   * use automatic scaling and run in the App  Engine flexible environment.
    * (versions.patch)
    *
    * @param string $appsId Part of `name`. Name of the resource to update.

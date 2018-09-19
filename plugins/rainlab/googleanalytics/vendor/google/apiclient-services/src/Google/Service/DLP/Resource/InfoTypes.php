@@ -26,19 +26,23 @@
 class Google_Service_DLP_Resource_InfoTypes extends Google_Service_Resource
 {
   /**
-   * Returns sensitive information types DLP supports. (infoTypes.listInfoTypes)
+   * Returns a list of the sensitive information types that the DLP API supports.
+   * For more information, see [Listing supported predefined infoTypes](/dlp/docs
+   * /listing-infotypes). (infoTypes.listInfoTypes)
    *
    * @param array $optParams Optional parameters.
    *
    * @opt_param string languageCode Optional BCP-47 language code for localized
-   * info type friendly names. If omitted, or if localized strings are not
+   * infoType friendly names. If omitted, or if localized strings are not
    * available, en-US strings will be returned.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2ListInfoTypesResponse
+   * @opt_param string filter Optional filter to only return infoTypes supported
+   * by certain parts of the API. Defaults to supported_by=INSPECT.
+   * @return Google_Service_DLP_GooglePrivacyDlpV2ListInfoTypesResponse
    */
   public function listInfoTypes($optParams = array())
   {
     $params = array();
     $params = array_merge($params, $optParams);
-    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2ListInfoTypesResponse");
+    return $this->call('list', array($params), "Google_Service_DLP_GooglePrivacyDlpV2ListInfoTypesResponse");
   }
 }

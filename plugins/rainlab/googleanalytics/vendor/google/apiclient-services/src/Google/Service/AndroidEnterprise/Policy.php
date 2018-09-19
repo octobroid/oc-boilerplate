@@ -18,10 +18,35 @@
 class Google_Service_AndroidEnterprise_Policy extends Google_Collection
 {
   protected $collection_key = 'productPolicy';
+  public $autoUpdatePolicy;
+  protected $maintenanceWindowType = 'Google_Service_AndroidEnterprise_MaintenanceWindow';
+  protected $maintenanceWindowDataType = '';
   public $productAvailabilityPolicy;
   protected $productPolicyType = 'Google_Service_AndroidEnterprise_ProductPolicy';
   protected $productPolicyDataType = 'array';
 
+  public function setAutoUpdatePolicy($autoUpdatePolicy)
+  {
+    $this->autoUpdatePolicy = $autoUpdatePolicy;
+  }
+  public function getAutoUpdatePolicy()
+  {
+    return $this->autoUpdatePolicy;
+  }
+  /**
+   * @param Google_Service_AndroidEnterprise_MaintenanceWindow
+   */
+  public function setMaintenanceWindow(Google_Service_AndroidEnterprise_MaintenanceWindow $maintenanceWindow)
+  {
+    $this->maintenanceWindow = $maintenanceWindow;
+  }
+  /**
+   * @return Google_Service_AndroidEnterprise_MaintenanceWindow
+   */
+  public function getMaintenanceWindow()
+  {
+    return $this->maintenanceWindow;
+  }
   public function setProductAvailabilityPolicy($productAvailabilityPolicy)
   {
     $this->productAvailabilityPolicy = $productAvailabilityPolicy;

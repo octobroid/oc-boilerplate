@@ -96,11 +96,11 @@ class Google_Service_CloudSourceRepositories_Resource_ProjectsRepos extends Goog
    * of the form `projects/`.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param int pageSize Maximum number of repositories to return; between 1
+   * and 500. If not set or zero, defaults to 100 at the server.
    * @opt_param string pageToken Resume listing repositories where a prior
    * ListReposResponse left off. This is an opaque token that must be obtained
    * from a recent, prior ListReposResponse's next_page_token field.
-   * @opt_param int pageSize Maximum number of repositories to return; between 1
-   * and 500. If not set or zero, defaults to 100 at the server.
    * @return Google_Service_CloudSourceRepositories_ListReposResponse
    */
   public function listProjectsRepos($name, $optParams = array())
@@ -108,6 +108,21 @@ class Google_Service_CloudSourceRepositories_Resource_ProjectsRepos extends Goog
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
     return $this->call('list', array($params), "Google_Service_CloudSourceRepositories_ListReposResponse");
+  }
+  /**
+   * Updates information about a repo. (repos.patch)
+   *
+   * @param string $name The name of the requested repository. Values are of the
+   * form `projects//repos/`.
+   * @param Google_Service_CloudSourceRepositories_UpdateRepoRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudSourceRepositories_Repo
+   */
+  public function patch($name, Google_Service_CloudSourceRepositories_UpdateRepoRequest $postBody, $optParams = array())
+  {
+    $params = array('name' => $name, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', array($params), "Google_Service_CloudSourceRepositories_Repo");
   }
   /**
    * Sets the access control policy on the specified resource. Replaces any

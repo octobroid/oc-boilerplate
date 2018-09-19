@@ -19,11 +19,13 @@
  * Service definition for Script (v1).
  *
  * <p>
- * An API for managing and executing Google Apps Script projects.</p>
+ * An API for managing and executing Google Apps Script projects. Note: In order
+ * to use this API in your apps, you must  enable it for use. To allow other
+ * apps to manage your scripts, you must  grant them access.</p>
  *
  * <p>
  * For more information about this service, see the API
- * <a href="https://developers.google.com/apps-script/execution/rest/v1/scripts/run" target="_blank">Documentation</a>
+ * <a href="https://developers.google.com/apps-script/api/" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -64,6 +66,10 @@ class Google_Service_Script extends Google_Service
   const USERINFO_EMAIL =
       "https://www.googleapis.com/auth/userinfo.email";
 
+  public $processes;
+  public $projects;
+  public $projects_deployments;
+  public $projects_versions;
   public $scripts;
   
   /**
@@ -79,6 +85,318 @@ class Google_Service_Script extends Google_Service
     $this->version = 'v1';
     $this->serviceName = 'script';
 
+    $this->processes = new Google_Service_Script_Resource_Processes(
+        $this,
+        $this->serviceName,
+        'processes',
+        array(
+          'methods' => array(
+            'list' => array(
+              'path' => 'v1/processes',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'userProcessFilter.endTime' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageSize' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+                'userProcessFilter.startTime' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'userProcessFilter.userAccessLevels' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'userProcessFilter.projectName' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'userProcessFilter.functionName' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'userProcessFilter.scriptId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'userProcessFilter.types' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'userProcessFilter.statuses' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'userProcessFilter.deploymentId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'listScriptProcesses' => array(
+              'path' => 'v1/processes:listScriptProcesses',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptProcessFilter.endTime' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'scriptProcessFilter.userAccessLevels' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'scriptProcessFilter.statuses' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'scriptProcessFilter.startTime' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'scriptProcessFilter.functionName' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'scriptProcessFilter.deploymentId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'scriptId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'scriptProcessFilter.types' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageSize' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->projects = new Google_Service_Script_Resource_Projects(
+        $this,
+        $this->serviceName,
+        'projects',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => 'v1/projects',
+              'httpMethod' => 'POST',
+              'parameters' => array(),
+            ),'get' => array(
+              'path' => 'v1/projects/{scriptId}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'getContent' => array(
+              'path' => 'v1/projects/{scriptId}/content',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'versionNumber' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+              ),
+            ),'getMetrics' => array(
+              'path' => 'v1/projects/{scriptId}/metrics',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'metricsGranularity' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'metricsFilter.deploymentId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'updateContent' => array(
+              'path' => 'v1/projects/{scriptId}/content',
+              'httpMethod' => 'PUT',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->projects_deployments = new Google_Service_Script_Resource_ProjectsDeployments(
+        $this,
+        $this->serviceName,
+        'deployments',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => 'v1/projects/{scriptId}/deployments',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => 'v1/projects/{scriptId}/deployments/{deploymentId}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'deploymentId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v1/projects/{scriptId}/deployments/{deploymentId}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'deploymentId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => 'v1/projects/{scriptId}/deployments',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'pageSize' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'update' => array(
+              'path' => 'v1/projects/{scriptId}/deployments/{deploymentId}',
+              'httpMethod' => 'PUT',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'deploymentId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->projects_versions = new Google_Service_Script_Resource_ProjectsVersions(
+        $this,
+        $this->serviceName,
+        'versions',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => 'v1/projects/{scriptId}/versions',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v1/projects/{scriptId}/versions/{versionNumber}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'versionNumber' => array(
+                  'location' => 'path',
+                  'type' => 'integer',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => 'v1/projects/{scriptId}/versions',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'scriptId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageSize' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+              ),
+            ),
+          )
+        )
+    );
     $this->scripts = new Google_Service_Script_Resource_Scripts(
         $this,
         $this->serviceName,

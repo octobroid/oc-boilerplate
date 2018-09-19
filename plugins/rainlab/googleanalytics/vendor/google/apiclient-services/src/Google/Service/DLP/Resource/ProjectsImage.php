@@ -32,14 +32,14 @@ class Google_Service_DLP_Resource_ProjectsImage extends Google_Service_Resource
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2RedactImageRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2RedactImageRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2RedactImageResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2RedactImageResponse
    */
-  public function redact($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2RedactImageRequest $postBody, $optParams = array())
+  public function redact($parent, Google_Service_DLP_GooglePrivacyDlpV2RedactImageRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('redact', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2RedactImageResponse");
+    return $this->call('redact', array($params), "Google_Service_DLP_GooglePrivacyDlpV2RedactImageResponse");
   }
 }

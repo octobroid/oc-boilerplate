@@ -32,15 +32,15 @@ class Google_Service_DLP_Resource_ProjectsContent extends Google_Service_Resourc
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyContentRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2DeidentifyContentRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyContentResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2DeidentifyContentResponse
    */
-  public function deidentify($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyContentRequest $postBody, $optParams = array())
+  public function deidentify($parent, Google_Service_DLP_GooglePrivacyDlpV2DeidentifyContentRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('deidentify', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2DeidentifyContentResponse");
+    return $this->call('deidentify', array($params), "Google_Service_DLP_GooglePrivacyDlpV2DeidentifyContentResponse");
   }
   /**
    * Finds potentially sensitive info in content. This method has limits on input
@@ -50,28 +50,28 @@ class Google_Service_DLP_Resource_ProjectsContent extends Google_Service_Resourc
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2InspectContentRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2InspectContentRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2InspectContentResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2InspectContentResponse
    */
-  public function inspect($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2InspectContentRequest $postBody, $optParams = array())
+  public function inspect($parent, Google_Service_DLP_GooglePrivacyDlpV2InspectContentRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('inspect', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2InspectContentResponse");
+    return $this->call('inspect', array($params), "Google_Service_DLP_GooglePrivacyDlpV2InspectContentResponse");
   }
   /**
-   * Re-identify content that has been de-identified. (content.reidentify)
+   * Re-identifies content that has been de-identified. (content.reidentify)
    *
    * @param string $parent The parent resource name.
-   * @param Google_Service_DLP_GooglePrivacyDlpV2beta2ReidentifyContentRequest $postBody
+   * @param Google_Service_DLP_GooglePrivacyDlpV2ReidentifyContentRequest $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_DLP_GooglePrivacyDlpV2beta2ReidentifyContentResponse
+   * @return Google_Service_DLP_GooglePrivacyDlpV2ReidentifyContentResponse
    */
-  public function reidentify($parent, Google_Service_DLP_GooglePrivacyDlpV2beta2ReidentifyContentRequest $postBody, $optParams = array())
+  public function reidentify($parent, Google_Service_DLP_GooglePrivacyDlpV2ReidentifyContentRequest $postBody, $optParams = array())
   {
     $params = array('parent' => $parent, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('reidentify', array($params), "Google_Service_DLP_GooglePrivacyDlpV2beta2ReidentifyContentResponse");
+    return $this->call('reidentify', array($params), "Google_Service_DLP_GooglePrivacyDlpV2ReidentifyContentResponse");
   }
 }

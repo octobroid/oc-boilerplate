@@ -142,8 +142,7 @@ class Google_Service_AndroidEnterprise_Resource_Enterprises extends Google_Servi
     return $this->call('get', array($params), "Google_Service_AndroidEnterprise_Enterprise");
   }
   /**
-   * Returns the Android Device Policy config resource.
-   * (enterprises.getAndroidDevicePolicyConfig)
+   * Deprecated and unused. (enterprises.getAndroidDevicePolicyConfig)
    *
    * @param string $enterpriseId The ID of the enterprise.
    * @param array $optParams Optional parameters.
@@ -297,10 +296,7 @@ class Google_Service_AndroidEnterprise_Resource_Enterprises extends Google_Servi
     return $this->call('setAccount', array($params), "Google_Service_AndroidEnterprise_EnterpriseAccount");
   }
   /**
-   * Sets the Android Device Policy config resource. EMM may use this method to
-   * enable or disable Android Device Policy support for the specified enterprise.
-   * To learn more about managing devices and apps with Android Device Policy, see
-   * the Android Management API. (enterprises.setAndroidDevicePolicyConfig)
+   * Deprecated and unused. (enterprises.setAndroidDevicePolicyConfig)
    *
    * @param string $enterpriseId The ID of the enterprise.
    * @param Google_Service_AndroidEnterprise_AndroidDevicePolicyConfig $postBody
