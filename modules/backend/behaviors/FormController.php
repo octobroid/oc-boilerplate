@@ -5,7 +5,6 @@ use Str;
 use Lang;
 use Flash;
 use Event;
-use Input;
 use Redirect;
 use Backend;
 use Backend\Classes\ControllerBehavior;
@@ -437,8 +436,7 @@ class FormController extends ControllerBehavior
     protected function createModel()
     {
         $class = $this->config->modelClass;
-        $model = new $class;
-        return $model;
+        return new $class;
     }
 
     /**
@@ -465,7 +463,7 @@ class FormController extends ControllerBehavior
         }
 
         if ($model && $redirectUrl) {
-            $redirectUrl = RouterHelper::parseValues($model, array_keys($model->getAttributes()), $redirectUrl);
+            $redirectUrl = RouterHelper::replaceParameters($model, $redirectUrl);
         }
 
         if (starts_with($redirectUrl, 'http://') || starts_with($redirectUrl, 'https://')) {
@@ -473,7 +471,7 @@ class FormController extends ControllerBehavior
             $redirect = Redirect::to($redirectUrl);
         } else {
             // Process relative redirects
-            $redirect = ($redirectUrl) ? Backend::redirect($redirectUrl) : null;
+            $redirect = $redirectUrl ? Backend::redirect($redirectUrl) : null;
         }
 
         return $redirect;

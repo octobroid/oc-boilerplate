@@ -5,6 +5,7 @@ use App;
 use Str;
 use File;
 use Lang;
+use Log;
 use View;
 use Config;
 use Schema;
@@ -121,17 +122,28 @@ class PluginManager
         $className = $namespace.'\Plugin';
         $classPath = $path.'/Plugin.php';
 
-        // Autoloader failed?
-        if (!class_exists($className)) {
-            include_once $classPath;
-        }
+        try {
+            // Autoloader failed?
+            if (!class_exists($className)) {
+                include_once $classPath;
+            }
 
-        // Not a valid plugin!
-        if (!class_exists($className)) {
+            // Not a valid plugin!
+            if (!class_exists($className)) {
+                return;
+            }
+
+            $classObj = new $className($this->app);
+        } catch (\Throwable $e) {
+            Log::error('Plugin ' . $className . ' could not be instantiated.', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return;
         }
 
-        $classObj = new $className($this->app);
         $classId = $this->getIdentifier($classObj);
 
         /*
@@ -302,9 +314,7 @@ class PluginManager
      */
     public function exists($id)
     {
-        return (!$this->findByIdentifier($id) || $this->isDisabled($id))
-            ? false
-            : true;
+        return !(!$this->findByIdentifier($id) || $this->isDisabled($id));
     }
 
     /**
@@ -760,7 +770,7 @@ class PluginManager
         /*
          * Delete from file system
          */
-        if ($pluginPath = PluginManager::instance()->getPluginPath($id)) {
+        if ($pluginPath = self::instance()->getPluginPath($id)) {
             File::deleteDirectory($pluginPath);
         }
     }

@@ -1,10 +1,8 @@
 <?php namespace Backend\Widgets;
 
 use Db;
-use App;
 use Html;
 use Lang;
-use Input;
 use Backend;
 use DbDongle;
 use Carbon\Carbon;
@@ -16,7 +14,6 @@ use Backend\Classes\ListColumn;
 use Backend\Classes\WidgetBase;
 use October\Rain\Database\Model;
 use ApplicationException;
-use DateTime;
 
 /**
  * List Widget
@@ -634,12 +631,7 @@ class Lists extends WidgetBase
             return null;
         }
 
-        $data = $record->toArray();
-        $data += [$record->getKeyName() => $record->getKey()];
-
-        $columns = array_keys($data);
-
-        $url = RouterHelper::parseValues($data, $columns, $this->recordUrl);
+        $url = RouterHelper::replaceParameters($record, $this->recordUrl);
         return Backend::url($url);
     }
 
@@ -654,8 +646,7 @@ class Lists extends WidgetBase
             return null;
         }
 
-        $columns = array_keys($record->getAttributes());
-        $recordOnClick = RouterHelper::parseValues($record, $columns, $this->recordOnClick);
+        $recordOnClick = RouterHelper::replaceParameters($record, $this->recordOnClick);
         return Html::attributes(['onclick' => $recordOnClick]);
     }
 
@@ -874,7 +865,7 @@ class Lists extends WidgetBase
             $config['searchable'] = false;
         }
 
-        $columnType = isset($config['type']) ? $config['type'] : null;
+        $columnType = $config['type'] ?? null;
 
         $column = new ListColumn($name, $label);
         $column->displayAs($columnType, $config);
@@ -1126,6 +1117,10 @@ class Lists extends WidgetBase
             $value = implode(', ', $value);
         }
 
+        if (is_string($column->format) && !empty($column->format)) {
+            $value = sprintf($column->format, $value);
+        }
+
         return htmlentities($value, ENT_QUOTES, 'UTF-8', false);
     }
 
@@ -1221,7 +1216,7 @@ class Lists extends WidgetBase
 
         $dateTime = $this->validateDateTimeValue($value, $column);
 
-        $format = $column->format !== null ? $column->format : 'g:i A';
+        $format = $column->format ?? 'g:i A';
 
         $value = $dateTime->format($format);
 
@@ -1479,19 +1474,18 @@ class Lists extends WidgetBase
             $this->sortColumn = $sortOptions['column'];
             $this->sortDirection = $sortOptions['direction'];
         }
+
+        /*
+         * Supplied default
+         */
         else {
-            /*
-             * Supplied default
-             */
             if (is_string($this->defaultSort)) {
                 $this->sortColumn = $this->defaultSort;
                 $this->sortDirection = 'desc';
             }
             elseif (is_array($this->defaultSort) && isset($this->defaultSort['column'])) {
                 $this->sortColumn = $this->defaultSort['column'];
-                $this->sortDirection = (isset($this->defaultSort['direction'])) ?
-                    $this->defaultSort['direction'] :
-                    'desc';
+                $this->sortDirection = $this->defaultSort['direction'] ?? 'desc';
             }
         }
 
@@ -1516,9 +1510,8 @@ class Lists extends WidgetBase
         if ($column === null) {
             return (count($this->getSortableColumns()) > 0);
         }
-        else {
-            return array_key_exists($column, $this->getSortableColumns());
-        }
+
+        return array_key_exists($column, $this->getSortableColumns());
     }
 
     /**
