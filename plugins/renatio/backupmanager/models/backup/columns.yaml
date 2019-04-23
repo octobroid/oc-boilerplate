@@ -1,0 +1,20 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+
+    disk_name:
+        label: renatio.backupmanager::lang.field.disk_name
+        searchable: true
+
+    filesystems:
+        label: renatio.backupmanager::lang.field.filesystems
+        searchable: true
+
+    file_size:
+        label: renatio.backupmanager::lang.field.file_size
+
+    created_at:
+        label: renatio.backupmanager::lang.field.created_at
+        type: datetime

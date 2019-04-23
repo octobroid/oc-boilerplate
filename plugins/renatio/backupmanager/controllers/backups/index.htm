@@ -1,0 +1,5 @@
+<?php if ( ! empty($issues)) : ?>
+    <?= $this->makeHintPartial(null, 'issues_hint', ['type' => 'warning']) ?>
+<?php endif ?>
+
+<?= $this->listRender() ?>

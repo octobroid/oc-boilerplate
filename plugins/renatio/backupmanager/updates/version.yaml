@@ -1,0 +1,23 @@
+1.0.1:
+    - First version of Backup Manager plugin.
+    - create_backups_table.php
+1.0.2: Added PostgreSQL support.
+1.0.3: Minor changes.
+1.0.4: Fix bug for PHP 5 < 5.6
+1.0.5: Dropbox Adapter Support
+1.0.6: Add system requirements check and fix bug with download backup response.
+1.0.7: Fix bug with empty port in database config.
+1.0.8: Fix issue with not deleted temp files after backup finished.
+1.0.9: Check for driver name, not connection name.
+1.0.10: Allow to add extra parameters to MySQL dump command. Better database error handling.
+2.0.0:
+    - !!! Rewrite plugin core and add support for Laravel 5.5.
+    - drop_type_column.php
+2.1.0: !!! Move Dropbox filesystem adapter to external plugin.
+2.1.1: Fix minor issue with cleanup of old backups.
+2.1.2: Default to database from config.
+2.1.3: Fix wrong script name.
+2.1.4: Remove database port check.
+3.0.0: !!! Update all dependencies.
+3.0.1: Add password protection for backups.
+3.0.2: Minor fix.
