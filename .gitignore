@@ -15,6 +15,7 @@ php-errors.log
 sftp-config.json
 selenium.php
 yarn-error.log
+/storage/framework/classes.php
 
 # for netbeans
 nbproject

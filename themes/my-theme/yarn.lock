@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@fortawesome/fontawesome-free@^5.7.2":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.8.1.tgz#cbafbfe8894c4e3e3c3a9da6774e249ac1f2da8b"
+  integrity sha512-GJtx6e55qLEOy2gPOsok2lohjpdWNGrYGtQx0FFT/++K4SYx+Z8LlPHdQBaFzKEwH5IbBB4fNgb//uyZjgYXoA==
+
+bootbox@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/bootbox/-/bootbox-4.4.0.tgz#ff7f898fb87d4527e547feb64158f88450d1a0c9"
+  integrity sha1-/3+Jj7h9RSflR/62QVj4hFDRoMk=
+
 bootstrap@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.0.tgz#110b05c31a236d56dbc9adcda6dd16f53738a28a"
@@ -9,10 +19,6 @@ bootstrap@^4.1.0:
 fastclick@1.*:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/fastclick/-/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a"
-
-font-awesome@4.*:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 popper.js@^1.12.6:
   version "1.12.6"
