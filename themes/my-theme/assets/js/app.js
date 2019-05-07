@@ -27,6 +27,32 @@
 		}
 	})
 
+	$(window).on('ajaxConfirmMessage', function (event, message) {
+		event.preventDefault()
+
+		bootbox.confirm({
+			message: message,
+			buttons: {
+				cancel: {
+					label: 'Cancel',
+				},
+				confirm: {
+					label: 'Yes',
+					className: 'btn-primary px-4'
+				},
+			},
+			callback: function (val) {
+				if (val) {
+					event.promise.resolve()
+				} else {
+					event.promise.reject()
+				}
+			}
+		})
+
+		return true
+	})
+
     /**
 	 *
 	 * Modal Control AJAX

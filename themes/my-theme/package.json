@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.2",
+    "bootbox": "^4.4.0",
     "bootstrap": "^4.1.0",
     "fastclick": "1.*",
-    "font-awesome": "4.*",
     "popper.js": "^1.12.6"
   }
 }
