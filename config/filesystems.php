@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => env('FILESYSTEM_DRIVER','local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,10 +50,20 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+            'key'                     => env('S3_KEY', ''),
+            'secret'                  => env('S3_SECRET', ''),
+            'region'                  => env('S3_REGION', ''),
+            'bucket'                  => env('S3_BUCKET', ''),
+        ],
+
+        's3_backup' => [
+            'driver'                  => 's3',
+            'key'                     => env('S3_KEY_BACKUP', ''),
+            'secret'                  => env('S3_SECRET_BACKUP', ''),
+            'region'                  => env('S3_REGION_BACKUP', ''),
+            'bucket'                  => env('S3_BUCKET_BACKUP', ''),
+            // 'endpoint'                => env('S3_ENDPOINT_BACKUP', ''),
+            'use_path_style_endpoint' => true,
         ],
 
         'rackspace' => [
