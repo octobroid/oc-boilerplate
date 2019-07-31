@@ -5,6 +5,13 @@ return [
         'title' => 'Administration Area',
         'invalid_login' => 'The details you entered did not match our records. Please double-check and try again.'
     ],
+    'aria-label' => [
+        'footer'        => 'Footer Section',
+        'side_panel'    => 'Side panel',
+        'breadcrumb'    => 'Breadcrumb Navigation',
+        'main_content'  => 'Main Content Body',
+        'tabs'          => 'Tabs',
+    ],
     'field' => [
         'invalid_type' => 'Invalid field type used :type.',
         'options_method_invalid_model' => "The attribute ':field' does not resolve to a valid model. Try specifying the options method for model class :model explicitly.",
@@ -17,24 +24,40 @@ return [
     ],
     'page' => [
         'untitled' => 'Untitled',
+        '404' => [
+            'label'     => 'Page Not Found',
+            'help'      => "We searched and searched but the requested URL just couldn't be found. Perhaps you were looking for something else?",
+            'back_link' => 'Go back to the previous page',
+        ],
         'access_denied' => [
             'label' => 'Access denied',
             'help' => "You don't have the required permissions to view this page.",
-            'cms_link' => 'Return to the back-end'
+            'cms_link' => 'Return to the back-end',
         ],
         'no_database' => [
             'label' => 'Database missing',
             'help' => "A database is required to access the back-end. Check the database is configured and migrated before trying again.",
-            'cms_link' => 'Return to the homepage'
+            'cms_link' => 'Return to the homepage',
         ],
         'invalid_token' => [
-            'label' => 'Invalid security token'
-        ]
+            'label' => 'Invalid security token',
+        ],
     ],
     'partial' => [
-        'not_found_name' => "The partial ':name' is not found."
+        'not_found_name' => "The partial ':name' is not found.",
+        'invalid_name' => 'Invalid partial name: :name.',
+    ],
+    'ajax_handler' => [
+        'invalid_name' => 'Invalid AJAX handler name: :name.',
+        'not_found' => "AJAX handler ':name' was not found."
     ],
     'account' => [
+        'impersonate' => 'Impersonate user',
+        'impersonate_confirm' => 'Are you sure you want to impersonate this user? You can revert to your original state by logging out.',
+        'impersonate_success' => 'You are now impersonating this user',
+        'impersonate_working' => 'Impersonating...',
+        'impersonating' => 'Impersonating :full_name',
+        'stop_impersonating' => 'Stop impersonating',
         'signed_in_as' => 'Signed in as :full_name',
         'sign_out' => 'Sign out',
         'login' => 'Login',
@@ -289,6 +312,7 @@ return [
     ],
     'recordfinder' => [
         'find_record' => 'Find Record',
+        'invalid_model_class' => 'The provided model class ":modelClass" for the recordfinder is invalid',
         'cancel' => 'Cancel',
     ],
     'pagelist' => [
@@ -416,6 +440,8 @@ return [
         'brand' => 'Brand',
         'logo' => 'Logo',
         'logo_description' => 'Upload a custom logo to use in the back-end.',
+        'favicon' => 'Favicon',
+        'favicon_description' => 'Upload a custom favicon to use in the back-end',
         'app_name' => 'App Name',
         'app_name_description' => 'This name is shown in the title area of the back-end.',
         'app_tagline' => 'App Tagline',
@@ -429,6 +455,7 @@ return [
         'navigation' => 'Navigation',
         'menu_mode' => 'Menu style',
         'menu_mode_inline' => 'Inline',
+        'menu_mode_inline_no_icons' => 'Inline (no icons)',
         'menu_mode_tile' => 'Tiles',
         'menu_mode_collapsed' => 'Collapsed'
     ],
@@ -539,7 +566,8 @@ return [
     ],
     'mediafinder' => [
         'label' => 'Media Finder',
-        'default_prompt' => 'Click the %s button to find a media item'
+        'default_prompt' => 'Click the %s button to find a media item',
+        'no_image' => 'The image could not be found'
     ],
     'media' => [
         'menu_label' => 'Media',

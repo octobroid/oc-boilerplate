@@ -11,6 +11,25 @@
 @mainmenu-tile-label-height: 20px;
 @mainmenu-tile-label-width: 100px;
 
+//
+// Focus Ring Support for accessibility
+//
+
+.js-focus-visible {
+	&:focus {
+		&:not(.focus-visible) {
+			outline: none;
+		}
+	}
+	.focus-visible {
+		border: .0625rem solid #3578E5;
+		-webkit-box-shadow: 0 0 .1875rem .125rem #3578E5;
+		box-shadow: 0 0 .1875rem .125rem #3578E5;
+		z-index: 1;
+		position: relative;
+	}
+}
+
 body.mainmenu-open {
     overflow: hidden;
     position: fixed;
@@ -75,6 +94,39 @@ body.mainmenu-open {
     }
 }
 
+ul.mainmenu-nav {
+    font-size: @font-size-base;
+
+    li {
+        /* Fix for SVG icons not rendering on initial page load until repaint (hover, move, etc) */
+        .svg-icon {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        span.counter {
+            display: block;
+            position: absolute;
+            top: .143em;
+            right: 0;
+            padding: .143em .429em .214em .286em;
+            background-color: @color-sidebarnav-counter-bg;
+            color: @color-sidebarnav-counter-text;
+            font-size: .786em;
+            line-height: 100%;
+            .border-radius(3px);
+            .opacity(1);
+            .scale(1);
+            .transition(all 0.3s);
+
+            &.empty {
+                .opacity(0);
+                .scale(0);
+            }
+        }
+    }
+}
+
 nav#layout-mainmenu {
     background-color: @color-mainmenu;
     padding: 0 0 0 20px;
@@ -115,10 +167,6 @@ nav#layout-mainmenu {
                     position: relative;
                     top: 0;
                 }
-            }
-
-            &.active a {
-                // font-weight: bold;
             }
         }
 
@@ -318,7 +366,8 @@ nav#layout-mainmenu ul li .mainmenu-accountmenu {
 // Navbar (Inline mode)
 //
 
-nav#layout-mainmenu.navbar-mode-inline {
+nav#layout-mainmenu.navbar-mode-inline,
+nav#layout-mainmenu.navbar-mode-inline_no_icons {
     .mainmenu-set-height(@mainmenu-mode-inline-height);
 
     ul.mainmenu-nav {
@@ -359,6 +408,13 @@ nav#layout-mainmenu.navbar-mode-inline {
         }
 
     }
+}
+
+//
+// Navbar (Inline no icons mode)
+//
+nav#layout-mainmenu.navbar-mode-inline_no_icons .nav-icon {
+    display: none !important;
 }
 
 //

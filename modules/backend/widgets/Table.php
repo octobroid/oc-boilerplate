@@ -4,6 +4,7 @@ use Lang;
 use Input;
 use Request;
 use Backend\Classes\WidgetBase;
+use October\Rain\Html\Helper as HtmlHelper;
 use SystemException;
 
 /**
@@ -79,11 +80,13 @@ class Table extends WidgetBase
 
         if (Request::method() == 'POST' && $this->isClientDataSource()) {
             if (strpos($this->fieldName, '[') === false) {
-                $requestDataField = $this->fieldName.'TableData';
+                $requestDataField = $this->fieldName . 'TableData';
+            } else {
+                $requestDataField = $this->fieldName . '[TableData]';
             }
-            else {
-                $requestDataField = $this->fieldName.'[TableData]';
-            }
+
+            // Use dot notation for request data field
+            $requestDataField = implode('.', HtmlHelper::nameToArray($requestDataField));
 
             if (Request::exists($requestDataField)) {
                 // Load data into the client memory data source on POST
@@ -135,9 +138,8 @@ class Table extends WidgetBase
         $isClientDataSource = $this->isClientDataSource();
 
         $this->vars['clientDataSourceClass'] = $isClientDataSource ? 'client' : 'server';
-        $this->vars['data'] = json_encode($isClientDataSource
-            ? $this->dataSource->getAllRecords()
-            : []
+        $this->vars['data'] = json_encode(
+            $isClientDataSource ? $this->dataSource->getAllRecords() : []
         );
     }
 
@@ -165,15 +167,17 @@ class Table extends WidgetBase
     {
         $result = [];
 
-        foreach ($this->columns as $key=>$data) {
+        foreach ($this->columns as $key => $data) {
             $data['key'] = $key;
 
-            if (isset($data['title']))
+            if (isset($data['title'])) {
                 $data['title'] = trans($data['title']);
+            }
 
             if (isset($data['options'])) {
-                foreach ($data['options'] as &$option)
+                foreach ($data['options'] as &$option) {
                     $option = trans($option);
+                }
             }
 
             if (isset($data['validation'])) {
