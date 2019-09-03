@@ -30,6 +30,9 @@
     RewriteRule ^storage/temp/protected/.* index.php [L,NC]
     RewriteRule ^storage/app/uploads/protected/.* index.php [L,NC]
 
+    # Allow Authorization Header
+    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
     ##
     ## White listed folders
     ##

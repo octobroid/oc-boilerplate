@@ -73,10 +73,6 @@ class MediaLibrary
         $this->storageFolder = self::validatePath(Config::get('cms.storage.media.folder', 'media'), true);
         $this->storagePath = rtrim(Config::get('cms.storage.media.path', '/storage/app/media'), '/');
 
-        if (!starts_with($this->storagePath, ['//', 'http://', 'https://'])) {
-            $this->storagePath = Request::getBasePath() . $this->storagePath;
-        }
-
         $this->ignoreNames = Config::get('cms.storage.media.ignore', FileDefinitions::get('ignoreFiles'));
 
         $this->ignorePatterns = Config::get('cms.storage.media.ignorePatterns', ['^\..*']);
@@ -739,8 +735,9 @@ class MediaLibrary
      */
     protected function filterItemList(&$itemList, $filter)
     {
-        if (!$filter)
+        if (!$filter) {
             return;
+        }
 
         $result = [];
         foreach ($itemList as $item) {

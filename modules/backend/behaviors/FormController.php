@@ -80,6 +80,11 @@ class FormController extends ControllerBehavior
     protected $requiredConfig = ['modelClass', 'form'];
 
     /**
+     * @var array Visible actions in context of the controller
+     */
+    protected $actions = ['create', 'update', 'preview'];
+
+    /**
      * @var string The context to pass to the form widget.
      */
     protected $context;
@@ -139,6 +144,11 @@ class FormController extends ControllerBehavior
          */
         $this->formWidget = $this->makeWidget('Backend\Widgets\Form', $config);
 
+        // Setup the default preview mode on form initialization if the context is preview
+        if ($config->context === 'preview') {
+            $this->formWidget->previewMode = true;
+        }
+
         $this->formWidget->bindEvent('form.extendFieldsBefore', function () {
             $this->controller->formExtendFieldsBefore($this->formWidget);
         });
@@ -149,7 +159,9 @@ class FormController extends ControllerBehavior
 
         $this->formWidget->bindEvent('form.beforeRefresh', function ($holder) {
             $result = $this->controller->formExtendRefreshData($this->formWidget, $holder->data);
-            if (is_array($result)) $holder->data = $result;
+            if (is_array($result)) {
+                $holder->data = $result;
+            }
         });
 
         $this->formWidget->bindEvent('form.refreshFields', function ($fields) {
@@ -531,11 +543,12 @@ class FormController extends ControllerBehavior
      *     <?= $this->formRenderField('field_name') ?>
      *
      * @param string $name Field name
+     * @param array $options (e.g. ['useContainer'=>false])
      * @return string HTML markup
      */
-    public function formRenderField($name)
+    public function formRenderField($name, $options = [])
     {
-        return $this->formWidget->renderField($name);
+        return $this->formWidget->renderField($name, $options);
     }
 
     /**
