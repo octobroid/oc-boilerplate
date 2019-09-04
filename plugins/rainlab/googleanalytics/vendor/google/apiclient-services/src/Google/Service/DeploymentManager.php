@@ -59,6 +59,7 @@ class Google_Service_DeploymentManager extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'deploymentmanager/v2/projects/';
+    $this->batchPath = 'batch/deploymentmanager/v2';
     $this->version = 'v2';
     $this->serviceName = 'deploymentmanager';
 

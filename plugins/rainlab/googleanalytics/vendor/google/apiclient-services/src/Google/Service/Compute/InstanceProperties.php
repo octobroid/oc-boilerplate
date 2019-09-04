@@ -35,6 +35,8 @@ class Google_Service_Compute_InstanceProperties extends Google_Collection
   protected $schedulingDataType = '';
   protected $serviceAccountsType = 'Google_Service_Compute_ServiceAccount';
   protected $serviceAccountsDataType = 'array';
+  protected $shieldedInstanceConfigType = 'Google_Service_Compute_ShieldedInstanceConfig';
+  protected $shieldedInstanceConfigDataType = '';
   protected $tagsType = 'Google_Service_Compute_Tags';
   protected $tagsDataType = '';
 
@@ -161,6 +163,20 @@ class Google_Service_Compute_InstanceProperties extends Google_Collection
   public function getServiceAccounts()
   {
     return $this->serviceAccounts;
+  }
+  /**
+   * @param Google_Service_Compute_ShieldedInstanceConfig
+   */
+  public function setShieldedInstanceConfig(Google_Service_Compute_ShieldedInstanceConfig $shieldedInstanceConfig)
+  {
+    $this->shieldedInstanceConfig = $shieldedInstanceConfig;
+  }
+  /**
+   * @return Google_Service_Compute_ShieldedInstanceConfig
+   */
+  public function getShieldedInstanceConfig()
+  {
+    return $this->shieldedInstanceConfig;
   }
   /**
    * @param Google_Service_Compute_Tags

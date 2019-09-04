@@ -58,6 +58,7 @@ class Google_Service_AdExchangeBuyer extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'adexchangebuyer/v1.4/';
+    $this->batchPath = 'batch/adexchangebuyer/v1.4';
     $this->version = 'v1.4';
     $this->serviceName = 'adexchangebuyer';
 

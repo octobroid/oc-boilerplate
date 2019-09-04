@@ -91,7 +91,10 @@ class Google_Service_Iam_Resource_ProjectsRoles extends Google_Service_Resource
    * ListRolesResponse.
    * @opt_param int pageSize Optional limit on the number of roles to include in
    * the response.
-   * @opt_param string view Optional view for the returned Role objects.
+   * @opt_param string view Optional view for the returned Role objects. When
+   * `FULL` is specified, the `includedPermissions` field is returned, which
+   * includes a list of all permissions in the role. The default value is `BASIC`,
+   * which does not return the `includedPermissions` field.
    * @return Google_Service_Iam_ListRolesResponse
    */
   public function listProjectsRoles($parent, $optParams = array())

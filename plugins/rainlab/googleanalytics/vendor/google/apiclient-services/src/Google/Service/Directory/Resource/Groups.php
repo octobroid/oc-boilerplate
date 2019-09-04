@@ -80,7 +80,7 @@ class Google_Service_Directory_Resource_Groups extends Google_Service_Resource
    * @opt_param string pageToken Token to specify next page in the list
    * @opt_param string query Query string search. Should be of the form "".
    * Complete documentation is at https://developers.google.com/admin-
-   * sdk/directory/v1/guides/search-users
+   * sdk/directory/v1/guides/search-groups
    * @opt_param string sortOrder Whether to return results in ascending or
    * descending order. Only of use when orderBy is also used
    * @opt_param string userKey Email or immutable Id of the user if only those

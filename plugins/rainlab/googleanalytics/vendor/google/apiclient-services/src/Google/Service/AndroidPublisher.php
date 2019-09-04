@@ -19,7 +19,7 @@
  * Service definition for AndroidPublisher (v3).
  *
  * <p>
- * Lets Android application developers access their Google Play accounts.</p>
+ * Accesses Android application developers' Google Play accounts.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -45,6 +45,8 @@ class Google_Service_AndroidPublisher extends Google_Service
   public $edits_testers;
   public $edits_tracks;
   public $inappproducts;
+  public $internalappsharingartifacts;
+  public $orders;
   public $purchases_products;
   public $purchases_subscriptions;
   public $purchases_voidedpurchases;
@@ -60,6 +62,7 @@ class Google_Service_AndroidPublisher extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'androidpublisher/v3/applications/';
+    $this->batchPath = 'batch/androidpublisher/v3';
     $this->version = 'v3';
     $this->serviceName = 'androidpublisher';
 
@@ -232,6 +235,10 @@ class Google_Service_AndroidPublisher extends Google_Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ),
+                'ackBundleInstallationWarning' => array(
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ),
               ),
             ),
@@ -942,13 +949,92 @@ class Google_Service_AndroidPublisher extends Google_Service
           )
         )
     );
+    $this->internalappsharingartifacts = new Google_Service_AndroidPublisher_Resource_Internalappsharingartifacts(
+        $this,
+        $this->serviceName,
+        'internalappsharingartifacts',
+        array(
+          'methods' => array(
+            'uploadapk' => array(
+              'path' => 'internalappsharing/{packageName}/artifacts/apk',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'packageName' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'uploadbundle' => array(
+              'path' => 'internalappsharing/{packageName}/artifacts/bundle',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'packageName' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->orders = new Google_Service_AndroidPublisher_Resource_Orders(
+        $this,
+        $this->serviceName,
+        'orders',
+        array(
+          'methods' => array(
+            'refund' => array(
+              'path' => '{packageName}/orders/{orderId}:refund',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'packageName' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'orderId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'revoke' => array(
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ),
+              ),
+            ),
+          )
+        )
+    );
     $this->purchases_products = new Google_Service_AndroidPublisher_Resource_PurchasesProducts(
         $this,
         $this->serviceName,
         'products',
         array(
           'methods' => array(
-            'get' => array(
+            'acknowledge' => array(
+              'path' => '{packageName}/purchases/products/{productId}/tokens/{token}:acknowledge',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'packageName' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'productId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'token' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
               'path' => '{packageName}/purchases/products/{productId}/tokens/{token}',
               'httpMethod' => 'GET',
               'parameters' => array(
@@ -978,7 +1064,27 @@ class Google_Service_AndroidPublisher extends Google_Service
         'subscriptions',
         array(
           'methods' => array(
-            'cancel' => array(
+            'acknowledge' => array(
+              'path' => '{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:acknowledge',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'packageName' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'subscriptionId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'token' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'cancel' => array(
               'path' => '{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:cancel',
               'httpMethod' => 'POST',
               'parameters' => array(

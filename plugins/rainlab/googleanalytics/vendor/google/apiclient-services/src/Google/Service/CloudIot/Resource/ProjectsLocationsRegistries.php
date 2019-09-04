@@ -26,6 +26,21 @@
 class Google_Service_CloudIot_Resource_ProjectsLocationsRegistries extends Google_Service_Resource
 {
   /**
+   * Associates the device with the gateway. (registries.bindDeviceToGateway)
+   *
+   * @param string $parent The name of the registry. For example, `projects
+   * /example-project/locations/us-central1/registries/my-registry`.
+   * @param Google_Service_CloudIot_BindDeviceToGatewayRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudIot_BindDeviceToGatewayResponse
+   */
+  public function bindDeviceToGateway($parent, Google_Service_CloudIot_BindDeviceToGatewayRequest $postBody, $optParams = array())
+  {
+    $params = array('parent' => $parent, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('bindDeviceToGateway', array($params), "Google_Service_CloudIot_BindDeviceToGatewayResponse");
+  }
+  /**
    * Creates a device registry that contains devices. (registries.create)
    *
    * @param string $parent The project and cloud region where this device registry
@@ -95,12 +110,12 @@ class Google_Service_CloudIot_Resource_ProjectsLocationsRegistries extends Googl
    *
    * @opt_param string pageToken The value returned by the last
    * `ListDeviceRegistriesResponse`; indicates that this is a continuation of a
-   * prior `ListDeviceRegistries` call, and that the system should return the next
-   * page of data.
+   * prior `ListDeviceRegistries` call and the system should return the next page
+   * of data.
    * @opt_param int pageSize The maximum number of registries to return in the
    * response. If this value is zero, the service will select a default size. A
-   * call may return fewer objects than requested, but if there is a non-empty
-   * `page_token`, it indicates that more entries are available.
+   * call may return fewer objects than requested. A non-empty `next_page_token`
+   * in the response indicates that more data is available.
    * @return Google_Service_CloudIot_ListDeviceRegistriesResponse
    */
   public function listProjectsLocationsRegistries($parent, $optParams = array())
@@ -164,5 +179,21 @@ class Google_Service_CloudIot_Resource_ProjectsLocationsRegistries extends Googl
     $params = array('resource' => $resource, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
     return $this->call('testIamPermissions', array($params), "Google_Service_CloudIot_TestIamPermissionsResponse");
+  }
+  /**
+   * Deletes the association between the device and the gateway.
+   * (registries.unbindDeviceFromGateway)
+   *
+   * @param string $parent The name of the registry. For example, `projects
+   * /example-project/locations/us-central1/registries/my-registry`.
+   * @param Google_Service_CloudIot_UnbindDeviceFromGatewayRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudIot_UnbindDeviceFromGatewayResponse
+   */
+  public function unbindDeviceFromGateway($parent, Google_Service_CloudIot_UnbindDeviceFromGatewayRequest $postBody, $optParams = array())
+  {
+    $params = array('parent' => $parent, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('unbindDeviceFromGateway', array($params), "Google_Service_CloudIot_UnbindDeviceFromGatewayResponse");
   }
 }

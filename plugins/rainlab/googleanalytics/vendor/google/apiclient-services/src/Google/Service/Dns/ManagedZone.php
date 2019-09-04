@@ -29,6 +29,9 @@ class Google_Service_Dns_ManagedZone extends Google_Collection
   public $name;
   public $nameServerSet;
   public $nameServers;
+  protected $privateVisibilityConfigType = 'Google_Service_Dns_ManagedZonePrivateVisibilityConfig';
+  protected $privateVisibilityConfigDataType = '';
+  public $visibility;
 
   public function setCreationTime($creationTime)
   {
@@ -115,5 +118,27 @@ class Google_Service_Dns_ManagedZone extends Google_Collection
   public function getNameServers()
   {
     return $this->nameServers;
+  }
+  /**
+   * @param Google_Service_Dns_ManagedZonePrivateVisibilityConfig
+   */
+  public function setPrivateVisibilityConfig(Google_Service_Dns_ManagedZonePrivateVisibilityConfig $privateVisibilityConfig)
+  {
+    $this->privateVisibilityConfig = $privateVisibilityConfig;
+  }
+  /**
+   * @return Google_Service_Dns_ManagedZonePrivateVisibilityConfig
+   */
+  public function getPrivateVisibilityConfig()
+  {
+    return $this->privateVisibilityConfig;
+  }
+  public function setVisibility($visibility)
+  {
+    $this->visibility = $visibility;
+  }
+  public function getVisibility()
+  {
+    return $this->visibility;
   }
 }

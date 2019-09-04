@@ -50,6 +50,7 @@ class Google_Service_DataTransfer extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'admin/datatransfer/v1/';
+    $this->batchPath = 'batch/admin/datatransfer_v1';
     $this->version = 'datatransfer_v1';
     $this->serviceName = 'admin';
 

@@ -23,6 +23,7 @@ class Google_Service_Spanner_ExecuteSqlRequest extends Google_Model
   public $partitionToken;
   public $queryMode;
   public $resumeToken;
+  public $seqno;
   public $sql;
   protected $transactionType = 'Google_Service_Spanner_TransactionSelector';
   protected $transactionDataType = '';
@@ -72,6 +73,14 @@ class Google_Service_Spanner_ExecuteSqlRequest extends Google_Model
   public function getResumeToken()
   {
     return $this->resumeToken;
+  }
+  public function setSeqno($seqno)
+  {
+    $this->seqno = $seqno;
+  }
+  public function getSeqno()
+  {
+    return $this->seqno;
   }
   public function setSql($sql)
   {

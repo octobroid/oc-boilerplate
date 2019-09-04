@@ -19,7 +19,7 @@
  * Service definition for AbusiveExperienceReport (v1).
  *
  * <p>
- * View Abusive Experience Report data, and get a list of sites that have a
+ * Views Abusive Experience Report data, and gets a list of sites that have a
  * significant number of abusive experiences.</p>
  *
  * <p>
@@ -49,6 +49,7 @@ class Google_Service_AbusiveExperienceReport extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://abusiveexperiencereport.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'abusiveexperiencereport';
 

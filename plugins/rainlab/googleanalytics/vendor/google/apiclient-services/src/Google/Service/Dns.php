@@ -60,6 +60,7 @@ class Google_Service_Dns extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'dns/v1/projects/';
+    $this->batchPath = 'batch/dns/v1';
     $this->version = 'v1';
     $this->serviceName = 'dns';
 

@@ -55,6 +55,7 @@ class Google_Service_AdSenseHost extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'adsensehost/v4.1/';
+    $this->batchPath = 'batch/adsensehost/v4.1';
     $this->version = 'v4.1';
     $this->serviceName = 'adsensehost';
 

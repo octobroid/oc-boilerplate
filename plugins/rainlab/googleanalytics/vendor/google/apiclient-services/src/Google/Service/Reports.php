@@ -54,6 +54,7 @@ class Google_Service_Reports extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'admin/reports/v1/';
+    $this->batchPath = 'batch/admin/reports_v1';
     $this->version = 'reports_v1';
     $this->serviceName = 'admin';
 
@@ -101,6 +102,10 @@ class Google_Service_Reports extends Google_Service
                   'location' => 'query',
                   'type' => 'integer',
                 ),
+                'orgUnitID' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'pageToken' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -147,6 +152,10 @@ class Google_Service_Reports extends Google_Service
                 'maxResults' => array(
                   'location' => 'query',
                   'type' => 'integer',
+                ),
+                'orgUnitID' => array(
+                  'location' => 'query',
+                  'type' => 'string',
                 ),
                 'pageToken' => array(
                   'location' => 'query',
@@ -288,6 +297,10 @@ class Google_Service_Reports extends Google_Service
                 'maxResults' => array(
                   'location' => 'query',
                   'type' => 'integer',
+                ),
+                'orgUnitID' => array(
+                  'location' => 'query',
+                  'type' => 'string',
                 ),
                 'pageToken' => array(
                   'location' => 'query',

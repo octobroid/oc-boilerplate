@@ -16,7 +16,7 @@
  */
 
 /**
- * Service definition for Texttospeech (v1beta1).
+ * Service definition for Texttospeech (v1).
  *
  * <p>
  * Synthesizes natural-sounding speech by applying powerful neural network
@@ -24,7 +24,7 @@
  *
  * <p>
  * For more information about this service, see the API
- * <a href="http://cloud.google.com/text-to-speech/" target="_blank">Documentation</a>
+ * <a href="https://cloud.google.com/text-to-speech/" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -48,7 +48,8 @@ class Google_Service_Texttospeech extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://texttospeech.googleapis.com/';
     $this->servicePath = '';
-    $this->version = 'v1beta1';
+    $this->batchPath = 'batch';
+    $this->version = 'v1';
     $this->serviceName = 'texttospeech';
 
     $this->text = new Google_Service_Texttospeech_Resource_Text(
@@ -58,7 +59,7 @@ class Google_Service_Texttospeech extends Google_Service
         array(
           'methods' => array(
             'synthesize' => array(
-              'path' => 'v1beta1/text:synthesize',
+              'path' => 'v1/text:synthesize',
               'httpMethod' => 'POST',
               'parameters' => array(),
             ),
@@ -72,7 +73,7 @@ class Google_Service_Texttospeech extends Google_Service
         array(
           'methods' => array(
             'list' => array(
-              'path' => 'v1beta1/voices',
+              'path' => 'v1/voices',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'languageCode' => array(

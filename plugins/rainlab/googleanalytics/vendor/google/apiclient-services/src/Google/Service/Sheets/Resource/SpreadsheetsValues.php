@@ -44,18 +44,18 @@ class Google_Service_Sheets_Resource_SpreadsheetsValues extends Google_Service_R
    * @param Google_Service_Sheets_ValueRange $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param bool includeValuesInResponse Determines if the update response
-   * should include the values of the cells that were appended. By default,
-   * responses do not include the updated values.
-   * @opt_param string responseValueRenderOption Determines how values in the
-   * response should be rendered. The default render option is
-   * ValueRenderOption.FORMATTED_VALUE.
    * @opt_param string insertDataOption How the input data should be inserted.
    * @opt_param string valueInputOption How the input data should be interpreted.
    * @opt_param string responseDateTimeRenderOption Determines how dates, times,
    * and durations in the response should be rendered. This is ignored if
    * response_value_render_option is FORMATTED_VALUE. The default dateTime render
    * option is [DateTimeRenderOption.SERIAL_NUMBER].
+   * @opt_param bool includeValuesInResponse Determines if the update response
+   * should include the values of the cells that were appended. By default,
+   * responses do not include the updated values.
+   * @opt_param string responseValueRenderOption Determines how values in the
+   * response should be rendered. The default render option is
+   * ValueRenderOption.FORMATTED_VALUE.
    * @return Google_Service_Sheets_AppendValuesResponse
    */
   public function append($spreadsheetId, $range, Google_Service_Sheets_ValueRange $postBody, $optParams = array())
@@ -230,19 +230,19 @@ class Google_Service_Sheets_Resource_SpreadsheetsValues extends Google_Service_R
    * @param Google_Service_Sheets_ValueRange $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string responseValueRenderOption Determines how values in the
+   * response should be rendered. The default render option is
+   * ValueRenderOption.FORMATTED_VALUE.
+   * @opt_param string valueInputOption How the input data should be interpreted.
    * @opt_param string responseDateTimeRenderOption Determines how dates, times,
    * and durations in the response should be rendered. This is ignored if
    * response_value_render_option is FORMATTED_VALUE. The default dateTime render
-   * option is [DateTimeRenderOption.SERIAL_NUMBER].
+   * option is DateTimeRenderOption.SERIAL_NUMBER.
    * @opt_param bool includeValuesInResponse Determines if the update response
    * should include the values of the cells that were updated. By default,
    * responses do not include the updated values. If the range to write was larger
    * than than the range actually written, the response will include all values in
    * the requested range (excluding trailing empty rows and columns).
-   * @opt_param string responseValueRenderOption Determines how values in the
-   * response should be rendered. The default render option is
-   * ValueRenderOption.FORMATTED_VALUE.
-   * @opt_param string valueInputOption How the input data should be interpreted.
    * @return Google_Service_Sheets_UpdateValuesResponse
    */
   public function update($spreadsheetId, $range, Google_Service_Sheets_ValueRange $postBody, $optParams = array())

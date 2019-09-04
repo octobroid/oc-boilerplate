@@ -20,6 +20,7 @@ class Google_Service_AdExchangeBuyerII_FilterSet extends Google_Collection
   protected $collection_key = 'sellerNetworkIds';
   protected $absoluteDateRangeType = 'Google_Service_AdExchangeBuyerII_AbsoluteDateRange';
   protected $absoluteDateRangeDataType = '';
+  public $breakdownDimensions;
   public $creativeId;
   public $dealId;
   public $environment;
@@ -47,6 +48,14 @@ class Google_Service_AdExchangeBuyerII_FilterSet extends Google_Collection
   public function getAbsoluteDateRange()
   {
     return $this->absoluteDateRange;
+  }
+  public function setBreakdownDimensions($breakdownDimensions)
+  {
+    $this->breakdownDimensions = $breakdownDimensions;
+  }
+  public function getBreakdownDimensions()
+  {
+    return $this->breakdownDimensions;
   }
   public function setCreativeId($creativeId)
   {

@@ -26,6 +26,36 @@
 class Google_Service_Compute_Resource_BackendServices extends Google_Service_Resource
 {
   /**
+   * Adds a key for validating requests with signed URLs for this backend service.
+   * (backendServices.addSignedUrlKey)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $backendService Name of the BackendService resource to which
+   * the Signed URL Key should be added. The name should conform to RFC1035.
+   * @param Google_Service_Compute_SignedUrlKey $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function addSignedUrlKey($project, $backendService, Google_Service_Compute_SignedUrlKey $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'backendService' => $backendService, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('addSignedUrlKey', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
    * Retrieves the list of all BackendService resources, regional and global,
    * available to the specified project. (backendServices.aggregatedList)
    *
@@ -106,8 +136,38 @@ class Google_Service_Compute_Resource_BackendServices extends Google_Service_Res
     return $this->call('delete', array($params), "Google_Service_Compute_Operation");
   }
   /**
+   * Deletes a key for validating requests with signed URLs for this backend
+   * service. (backendServices.deleteSignedUrlKey)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $backendService Name of the BackendService resource to which
+   * the Signed URL Key should be added. The name should conform to RFC1035.
+   * @param string $keyName The name of the Signed URL Key to delete.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function deleteSignedUrlKey($project, $backendService, $keyName, $optParams = array())
+  {
+    $params = array('project' => $project, 'backendService' => $backendService, 'keyName' => $keyName);
+    $params = array_merge($params, $optParams);
+    return $this->call('deleteSignedUrlKey', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
    * Returns the specified BackendService resource. Gets a list of available
-   * backend services by making a list() request. (backendServices.get)
+   * backend services. (backendServices.get)
    *
    * @param string $project Project ID for this request.
    * @param string $backendService Name of the BackendService resource to return.
@@ -251,6 +311,36 @@ class Google_Service_Compute_Resource_BackendServices extends Google_Service_Res
     $params = array('project' => $project, 'backendService' => $backendService, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
     return $this->call('patch', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
+   * Sets the security policy for the specified backend service.
+   * (backendServices.setSecurityPolicy)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $backendService Name of the BackendService resource to which
+   * the security policy should be set. The name should conform to RFC1035.
+   * @param Google_Service_Compute_SecurityPolicyReference $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function setSecurityPolicy($project, $backendService, Google_Service_Compute_SecurityPolicyReference $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'backendService' => $backendService, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('setSecurityPolicy', array($params), "Google_Service_Compute_Operation");
   }
   /**
    * Updates the specified BackendService resource with the data included in the

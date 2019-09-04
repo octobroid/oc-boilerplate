@@ -121,8 +121,8 @@ class Google_Service_Compute_Resource_Addresses extends Google_Service_Resource
     return $this->call('get', array($params), "Google_Service_Compute_Address");
   }
   /**
-   * Creates an address resource in the specified project using the data included
-   * in the request. (addresses.insert)
+   * Creates an address resource in the specified project by using the data
+   * included in the request. (addresses.insert)
    *
    * @param string $project Project ID for this request.
    * @param string $region Name of the region for this request.

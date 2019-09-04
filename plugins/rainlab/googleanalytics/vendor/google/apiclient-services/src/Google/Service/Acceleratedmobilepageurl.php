@@ -46,6 +46,7 @@ class Google_Service_Acceleratedmobilepageurl extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://acceleratedmobilepageurl.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'acceleratedmobilepageurl';
 

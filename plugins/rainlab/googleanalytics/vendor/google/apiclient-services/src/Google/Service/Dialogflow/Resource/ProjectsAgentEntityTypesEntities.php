@@ -26,8 +26,7 @@
 class Google_Service_Dialogflow_Resource_ProjectsAgentEntityTypesEntities extends Google_Service_Resource
 {
   /**
-   * Creates multiple new entities in the specified entity type (extends the
-   * existing collection of entries).
+   * Creates multiple new entities in the specified entity type.
    *
    * Operation  (entities.batchCreate)
    *
@@ -61,13 +60,14 @@ class Google_Service_Dialogflow_Resource_ProjectsAgentEntityTypesEntities extend
     return $this->call('batchDelete', array($params), "Google_Service_Dialogflow_GoogleLongrunningOperation");
   }
   /**
-   * Updates entities in the specified entity type (replaces the existing
-   * collection of entries).
+   * Updates or creates multiple entities in the specified entity type. This
+   * method does not affect entities in the entity type that aren't explicitly
+   * specified in the request.
    *
    * Operation  (entities.batchUpdate)
    *
-   * @param string $parent Required. The name of the entity type to update the
-   * entities in. Format: `projects//agent/entityTypes/`.
+   * @param string $parent Required. The name of the entity type to update or
+   * create entities in. Format: `projects//agent/entityTypes/`.
    * @param Google_Service_Dialogflow_GoogleCloudDialogflowV2BatchUpdateEntitiesRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Google_Service_Dialogflow_GoogleLongrunningOperation

@@ -50,6 +50,7 @@ class Google_Service_DoubleClickBidManager extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'doubleclickbidmanager/v1/';
+    $this->batchPath = 'batch/doubleclickbidmanager/v1';
     $this->version = 'v1';
     $this->serviceName = 'doubleclickbidmanager';
 

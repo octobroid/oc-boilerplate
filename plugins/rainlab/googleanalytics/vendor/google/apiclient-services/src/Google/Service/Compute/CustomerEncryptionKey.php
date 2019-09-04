@@ -17,9 +17,18 @@
 
 class Google_Service_Compute_CustomerEncryptionKey extends Google_Model
 {
+  public $kmsKeyName;
   public $rawKey;
   public $sha256;
 
+  public function setKmsKeyName($kmsKeyName)
+  {
+    $this->kmsKeyName = $kmsKeyName;
+  }
+  public function getKmsKeyName()
+  {
+    return $this->kmsKeyName;
+  }
   public function setRawKey($rawKey)
   {
     $this->rawKey = $rawKey;

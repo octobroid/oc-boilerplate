@@ -19,7 +19,7 @@
  * Service definition for AdExperienceReport (v1).
  *
  * <p>
- * View Ad Experience Report data, and get a list of sites that have a
+ * Views Ad Experience Report data, and gets a list of sites that have a
  * significant number of annoying ads.</p>
  *
  * <p>
@@ -48,6 +48,7 @@ class Google_Service_AdExperienceReport extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://adexperiencereport.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'adexperiencereport';
 

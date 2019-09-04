@@ -18,6 +18,7 @@
 class Google_Service_Compute_NetworkPeering extends Google_Model
 {
   public $autoCreateRoutes;
+  public $exchangeSubnetRoutes;
   public $name;
   public $network;
   public $state;
@@ -30,6 +31,14 @@ class Google_Service_Compute_NetworkPeering extends Google_Model
   public function getAutoCreateRoutes()
   {
     return $this->autoCreateRoutes;
+  }
+  public function setExchangeSubnetRoutes($exchangeSubnetRoutes)
+  {
+    $this->exchangeSubnetRoutes = $exchangeSubnetRoutes;
+  }
+  public function getExchangeSubnetRoutes()
+  {
+    return $this->exchangeSubnetRoutes;
   }
   public function setName($name)
   {

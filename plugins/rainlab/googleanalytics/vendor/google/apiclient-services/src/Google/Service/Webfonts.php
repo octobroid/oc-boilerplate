@@ -46,6 +46,7 @@ class Google_Service_Webfonts extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'webfonts/v1/';
+    $this->batchPath = 'batch/webfonts/v1';
     $this->version = 'v1';
     $this->serviceName = 'webfonts';
 

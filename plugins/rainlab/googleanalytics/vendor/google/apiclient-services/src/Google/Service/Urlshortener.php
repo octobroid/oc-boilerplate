@@ -46,6 +46,7 @@ class Google_Service_Urlshortener extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'urlshortener/v1/';
+    $this->batchPath = 'batch/urlshortener/v1';
     $this->version = 'v1';
     $this->serviceName = 'urlshortener';
 

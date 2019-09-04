@@ -22,6 +22,7 @@ class Google_Service_Container_ClusterUpdate extends Google_Collection
   protected $desiredAddonsConfigDataType = '';
   public $desiredImageType;
   public $desiredLocations;
+  public $desiredLoggingService;
   protected $desiredMasterAuthorizedNetworksConfigType = 'Google_Service_Container_MasterAuthorizedNetworksConfig';
   protected $desiredMasterAuthorizedNetworksConfigDataType = '';
   public $desiredMasterVersion;
@@ -30,6 +31,8 @@ class Google_Service_Container_ClusterUpdate extends Google_Collection
   protected $desiredNodePoolAutoscalingDataType = '';
   public $desiredNodePoolId;
   public $desiredNodeVersion;
+  protected $desiredResourceUsageExportConfigType = 'Google_Service_Container_ResourceUsageExportConfig';
+  protected $desiredResourceUsageExportConfigDataType = '';
 
   /**
    * @param Google_Service_Container_AddonsConfig
@@ -60,6 +63,14 @@ class Google_Service_Container_ClusterUpdate extends Google_Collection
   public function getDesiredLocations()
   {
     return $this->desiredLocations;
+  }
+  public function setDesiredLoggingService($desiredLoggingService)
+  {
+    $this->desiredLoggingService = $desiredLoggingService;
+  }
+  public function getDesiredLoggingService()
+  {
+    return $this->desiredLoggingService;
   }
   /**
    * @param Google_Service_Container_MasterAuthorizedNetworksConfig
@@ -120,5 +131,19 @@ class Google_Service_Container_ClusterUpdate extends Google_Collection
   public function getDesiredNodeVersion()
   {
     return $this->desiredNodeVersion;
+  }
+  /**
+   * @param Google_Service_Container_ResourceUsageExportConfig
+   */
+  public function setDesiredResourceUsageExportConfig(Google_Service_Container_ResourceUsageExportConfig $desiredResourceUsageExportConfig)
+  {
+    $this->desiredResourceUsageExportConfig = $desiredResourceUsageExportConfig;
+  }
+  /**
+   * @return Google_Service_Container_ResourceUsageExportConfig
+   */
+  public function getDesiredResourceUsageExportConfig()
+  {
+    return $this->desiredResourceUsageExportConfig;
   }
 }

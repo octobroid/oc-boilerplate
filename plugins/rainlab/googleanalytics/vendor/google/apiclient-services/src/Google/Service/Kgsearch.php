@@ -44,6 +44,7 @@ class Google_Service_Kgsearch extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://kgsearch.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'kgsearch';
 
@@ -57,6 +58,20 @@ class Google_Service_Kgsearch extends Google_Service
               'path' => 'v1/entities:search',
               'httpMethod' => 'GET',
               'parameters' => array(
+                'languages' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'ids' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ),
+                'limit' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
                 'prefix' => array(
                   'location' => 'query',
                   'type' => 'boolean',
@@ -73,20 +88,6 @@ class Google_Service_Kgsearch extends Google_Service
                 'indent' => array(
                   'location' => 'query',
                   'type' => 'boolean',
-                ),
-                'languages' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                  'repeated' => true,
-                ),
-                'ids' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                  'repeated' => true,
-                ),
-                'limit' => array(
-                  'location' => 'query',
-                  'type' => 'integer',
                 ),
               ),
             ),

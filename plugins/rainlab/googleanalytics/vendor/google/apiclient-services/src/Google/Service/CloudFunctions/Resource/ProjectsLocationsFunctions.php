@@ -26,8 +26,11 @@
 class Google_Service_CloudFunctions_Resource_ProjectsLocationsFunctions extends Google_Service_Resource
 {
   /**
-   * Invokes synchronously deployed function. To be used for testing, very limited
-   * traffic allowed. (functions.callProjectsLocationsFunctions)
+   * Synchronously invokes a deployed Cloud Function. To be used for testing
+   * purposes as very limited traffic is allowed. For more information on the
+   * actual limits, refer to [Rate
+   * Limits](https://cloud.google.com/functions/quotas#rate_limits).
+   * (functions.callProjectsLocationsFunctions)
    *
    * @param string $name The name of the function to be called.
    * @param Google_Service_CloudFunctions_CallFunctionRequest $postBody
@@ -103,12 +106,19 @@ class Google_Service_CloudFunctions_Resource_ProjectsLocationsFunctions extends 
    * restrictions:
    *
    * * Source file type should be a zip file. * Source file size should not exceed
-   * 100MB limit.
+   * 100MB limit. * No credentials should be attached - the signed URLs provide
+   * access to the   target bucket using internal service identity; if credentials
+   * were   attached, the identity from the credentials would be used, but that
+   * identity does not have permissions to upload files to the URL.
    *
    * When making a HTTP PUT request, these two headers need to be specified:
    *
    * * `content-type: application/zip` * `x-goog-content-length-range:
-   * 0,104857600` (functions.generateUploadUrl)
+   * 0,104857600`
+   *
+   * And this header SHOULD NOT be specified:
+   *
+   * * `Authorization: Bearer YOUR_TOKEN` (functions.generateUploadUrl)
    *
    * @param string $parent The project and location in which the Google Cloud
    * Storage signed URL should be generated, specified in the format
@@ -137,6 +147,22 @@ class Google_Service_CloudFunctions_Resource_ProjectsLocationsFunctions extends 
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
     return $this->call('get', array($params), "Google_Service_CloudFunctions_CloudFunction");
+  }
+  /**
+   * Gets the IAM access control policy for a function. Returns an empty policy if
+   * the function exists and does not have a policy set. (functions.getIamPolicy)
+   *
+   * @param string $resource REQUIRED: The resource for which the policy is being
+   * requested. See the operation documentation for the appropriate value for this
+   * field.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudFunctions_Policy
+   */
+  public function getIamPolicy($resource, $optParams = array())
+  {
+    $params = array('resource' => $resource);
+    $params = array_merge($params, $optParams);
+    return $this->call('getIamPolicy', array($params), "Google_Service_CloudFunctions_Policy");
   }
   /**
    * Returns a list of functions that belong to the requested project.
@@ -177,5 +203,40 @@ class Google_Service_CloudFunctions_Resource_ProjectsLocationsFunctions extends 
     $params = array('name' => $name, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
     return $this->call('patch', array($params), "Google_Service_CloudFunctions_Operation");
+  }
+  /**
+   * Sets the IAM access control policy on the specified function. Replaces any
+   * existing policy. (functions.setIamPolicy)
+   *
+   * @param string $resource REQUIRED: The resource for which the policy is being
+   * specified. See the operation documentation for the appropriate value for this
+   * field.
+   * @param Google_Service_CloudFunctions_SetIamPolicyRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudFunctions_Policy
+   */
+  public function setIamPolicy($resource, Google_Service_CloudFunctions_SetIamPolicyRequest $postBody, $optParams = array())
+  {
+    $params = array('resource' => $resource, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('setIamPolicy', array($params), "Google_Service_CloudFunctions_Policy");
+  }
+  /**
+   * Tests the specified permissions against the IAM access control policy for a
+   * function. If the function does not exist, this will return an empty set of
+   * permissions, not a NOT_FOUND error. (functions.testIamPermissions)
+   *
+   * @param string $resource REQUIRED: The resource for which the policy detail is
+   * being requested. See the operation documentation for the appropriate value
+   * for this field.
+   * @param Google_Service_CloudFunctions_TestIamPermissionsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_CloudFunctions_TestIamPermissionsResponse
+   */
+  public function testIamPermissions($resource, Google_Service_CloudFunctions_TestIamPermissionsRequest $postBody, $optParams = array())
+  {
+    $params = array('resource' => $resource, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('testIamPermissions', array($params), "Google_Service_CloudFunctions_TestIamPermissionsResponse");
   }
 }

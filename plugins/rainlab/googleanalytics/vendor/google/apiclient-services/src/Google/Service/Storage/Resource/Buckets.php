@@ -35,6 +35,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * its metageneration matches this value.
    * @opt_param string ifMetagenerationNotMatch If set, only deletes the bucket if
    * its metageneration does not match this value.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    */
@@ -57,6 +59,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * metadata conditional on whether the bucket's current metageneration does not
    * match the given value.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Bucket
@@ -73,6 +77,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @param string $bucket Name of a bucket.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Policy
@@ -97,6 +103,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @opt_param string projection Set of properties to return. Defaults to noAcl,
    * unless the bucket resource specifies acl or defaultObjectAcl properties, when
    * it defaults to full.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * @return Google_Service_Storage_Bucket
    */
@@ -120,6 +128,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @opt_param string prefix Filter results to buckets whose names begin with
    * this prefix.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * @return Google_Service_Storage_Buckets
    */
@@ -137,6 +147,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * whether bucket's current metageneration matches the given value.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Bucket
@@ -148,9 +160,9 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
     return $this->call('lockRetentionPolicy', array($params), "Google_Service_Storage_Bucket");
   }
   /**
-   * Updates a bucket. Changes to the bucket will be readable immediately after
-   * writing, but configuration changes may take time to propagate. This method
-   * supports patch semantics. (buckets.patch)
+   * Patches a bucket. Changes to the bucket will be readable immediately after
+   * writing, but configuration changes may take time to propagate.
+   * (buckets.patch)
    *
    * @param string $bucket Name of a bucket.
    * @param Google_Service_Storage_Bucket $postBody
@@ -167,6 +179,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @opt_param string predefinedDefaultObjectAcl Apply a predefined set of
    * default object access controls to this bucket.
    * @opt_param string projection Set of properties to return. Defaults to full.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Bucket
@@ -184,6 +198,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @param Google_Service_Storage_Policy $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Policy
@@ -202,6 +218,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @param string|array $permissions Permissions to test.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_TestIamPermissionsResponse
@@ -232,6 +250,8 @@ class Google_Service_Storage_Resource_Buckets extends Google_Service_Resource
    * @opt_param string predefinedDefaultObjectAcl Apply a predefined set of
    * default object access controls to this bucket.
    * @opt_param string projection Set of properties to return. Defaults to full.
+   * @opt_param string provisionalUserProject The project to be billed for this
+   * request if the target bucket is requester-pays bucket.
    * @opt_param string userProject The project to be billed for this request.
    * Required for Requester Pays buckets.
    * @return Google_Service_Storage_Bucket

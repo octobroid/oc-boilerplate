@@ -17,16 +17,16 @@
 
 class Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults extends Google_Collection
 {
-  protected $collection_key = 'speechTranscriptions';
+  protected $collection_key = 'textAnnotations';
   protected $errorType = 'Google_Service_CloudVideoIntelligence_GoogleRpcStatus';
   protected $errorDataType = '';
   protected $explicitAnnotationType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1ExplicitContentAnnotation';
   protected $explicitAnnotationDataType = '';
-  protected $faceDetectionAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation';
-  protected $faceDetectionAnnotationsDataType = 'array';
   protected $frameLabelAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1LabelAnnotation';
   protected $frameLabelAnnotationsDataType = 'array';
   public $inputUri;
+  protected $objectAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation';
+  protected $objectAnnotationsDataType = 'array';
   protected $segmentLabelAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1LabelAnnotation';
   protected $segmentLabelAnnotationsDataType = 'array';
   protected $shotAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1VideoSegment';
@@ -35,6 +35,8 @@ class Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta
   protected $shotLabelAnnotationsDataType = 'array';
   protected $speechTranscriptionsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1SpeechTranscription';
   protected $speechTranscriptionsDataType = 'array';
+  protected $textAnnotationsType = 'Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1TextAnnotation';
+  protected $textAnnotationsDataType = 'array';
 
   /**
    * @param Google_Service_CloudVideoIntelligence_GoogleRpcStatus
@@ -65,20 +67,6 @@ class Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta
     return $this->explicitAnnotation;
   }
   /**
-   * @param Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation
-   */
-  public function setFaceDetectionAnnotations($faceDetectionAnnotations)
-  {
-    $this->faceDetectionAnnotations = $faceDetectionAnnotations;
-  }
-  /**
-   * @return Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation
-   */
-  public function getFaceDetectionAnnotations()
-  {
-    return $this->faceDetectionAnnotations;
-  }
-  /**
    * @param Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1LabelAnnotation
    */
   public function setFrameLabelAnnotations($frameLabelAnnotations)
@@ -99,6 +87,20 @@ class Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta
   public function getInputUri()
   {
     return $this->inputUri;
+  }
+  /**
+   * @param Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation
+   */
+  public function setObjectAnnotations($objectAnnotations)
+  {
+    $this->objectAnnotations = $objectAnnotations;
+  }
+  /**
+   * @return Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation
+   */
+  public function getObjectAnnotations()
+  {
+    return $this->objectAnnotations;
   }
   /**
    * @param Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1LabelAnnotation
@@ -155,5 +157,19 @@ class Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta
   public function getSpeechTranscriptions()
   {
     return $this->speechTranscriptions;
+  }
+  /**
+   * @param Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1TextAnnotation
+   */
+  public function setTextAnnotations($textAnnotations)
+  {
+    $this->textAnnotations = $textAnnotations;
+  }
+  /**
+   * @return Google_Service_CloudVideoIntelligence_GoogleCloudVideointelligenceV1p1beta1TextAnnotation
+   */
+  public function getTextAnnotations()
+  {
+    return $this->textAnnotations;
   }
 }

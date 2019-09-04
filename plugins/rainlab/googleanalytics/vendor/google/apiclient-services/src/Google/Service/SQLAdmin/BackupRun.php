@@ -25,6 +25,7 @@ class Google_Service_SQLAdmin_BackupRun extends Google_Model
   public $id;
   public $instance;
   public $kind;
+  public $location;
   public $selfLink;
   public $startTime;
   public $status;
@@ -92,6 +93,14 @@ class Google_Service_SQLAdmin_BackupRun extends Google_Model
   public function getKind()
   {
     return $this->kind;
+  }
+  public function setLocation($location)
+  {
+    $this->location = $location;
+  }
+  public function getLocation()
+  {
+    return $this->location;
   }
   public function setSelfLink($selfLink)
   {

@@ -48,7 +48,10 @@ class Google_Service_Iam_Resource_Roles extends Google_Service_Resource
    *
    * @opt_param int pageSize Optional limit on the number of roles to include in
    * the response.
-   * @opt_param string view Optional view for the returned Role objects.
+   * @opt_param string view Optional view for the returned Role objects. When
+   * `FULL` is specified, the `includedPermissions` field is returned, which
+   * includes a list of all permissions in the role. The default value is `BASIC`,
+   * which does not return the `includedPermissions` field.
    * @opt_param string parent The resource name of the parent resource in one of
    * the following formats: `` (empty string) -- this refers to curated roles.
    * `organizations/{ORGANIZATION_ID}` `projects/{PROJECT_ID}`

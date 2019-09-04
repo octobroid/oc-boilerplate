@@ -48,6 +48,7 @@ class Google_Service_FirebaseDynamicLinks extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://firebasedynamiclinks.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'firebasedynamiclinks';
 
@@ -98,9 +99,17 @@ class Google_Service_FirebaseDynamicLinks extends Google_Service
                   'location' => 'query',
                   'type' => 'string',
                 ),
+                'sdkVersion' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
               ),
             ),'installAttribution' => array(
               'path' => 'v1/installAttribution',
+              'httpMethod' => 'POST',
+              'parameters' => array(),
+            ),'reopenAttribution' => array(
+              'path' => 'v1/reopenAttribution',
               'httpMethod' => 'POST',
               'parameters' => array(),
             ),

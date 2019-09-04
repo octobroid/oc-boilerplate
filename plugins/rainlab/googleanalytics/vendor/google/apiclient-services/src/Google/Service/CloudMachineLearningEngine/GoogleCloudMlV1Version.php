@@ -15,22 +15,29 @@
  * the License.
  */
 
-class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends Google_Model
+class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends Google_Collection
 {
+  protected $collection_key = 'packageUris';
   protected $autoScalingType = 'Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1AutoScaling';
   protected $autoScalingDataType = '';
   public $createTime;
   public $deploymentUri;
   public $description;
   public $errorMessage;
+  public $etag;
   public $framework;
   public $isDefault;
+  public $labels;
   public $lastUseTime;
+  public $machineType;
   protected $manualScalingType = 'Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1ManualScaling';
   protected $manualScalingDataType = '';
   public $name;
+  public $packageUris;
+  public $predictionClass;
   public $pythonVersion;
   public $runtimeVersion;
+  public $serviceAccount;
   public $state;
 
   /**
@@ -79,6 +86,14 @@ class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends G
   {
     return $this->errorMessage;
   }
+  public function setEtag($etag)
+  {
+    $this->etag = $etag;
+  }
+  public function getEtag()
+  {
+    return $this->etag;
+  }
   public function setFramework($framework)
   {
     $this->framework = $framework;
@@ -95,6 +110,14 @@ class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends G
   {
     return $this->isDefault;
   }
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  public function getLabels()
+  {
+    return $this->labels;
+  }
   public function setLastUseTime($lastUseTime)
   {
     $this->lastUseTime = $lastUseTime;
@@ -102,6 +125,14 @@ class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends G
   public function getLastUseTime()
   {
     return $this->lastUseTime;
+  }
+  public function setMachineType($machineType)
+  {
+    $this->machineType = $machineType;
+  }
+  public function getMachineType()
+  {
+    return $this->machineType;
   }
   /**
    * @param Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1ManualScaling
@@ -125,6 +156,22 @@ class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends G
   {
     return $this->name;
   }
+  public function setPackageUris($packageUris)
+  {
+    $this->packageUris = $packageUris;
+  }
+  public function getPackageUris()
+  {
+    return $this->packageUris;
+  }
+  public function setPredictionClass($predictionClass)
+  {
+    $this->predictionClass = $predictionClass;
+  }
+  public function getPredictionClass()
+  {
+    return $this->predictionClass;
+  }
   public function setPythonVersion($pythonVersion)
   {
     $this->pythonVersion = $pythonVersion;
@@ -140,6 +187,14 @@ class Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version extends G
   public function getRuntimeVersion()
   {
     return $this->runtimeVersion;
+  }
+  public function setServiceAccount($serviceAccount)
+  {
+    $this->serviceAccount = $serviceAccount;
+  }
+  public function getServiceAccount()
+  {
+    return $this->serviceAccount;
   }
   public function setState($state)
   {

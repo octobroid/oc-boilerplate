@@ -97,15 +97,68 @@ class URCConstructorTest extends TestCase
     /**
      * @expectedException InvalidArgumentException
      */
+    public function testShouldFailIfJsonDoesNotHaveClientId()
+    {
+        $testJson = createURCTestJson();
+        unset($testJson['client_id']);
+        $scope = ['scope/1', 'scope/2'];
+        $sa = new UserRefreshCredentials(
+            $scope,
+            $testJson
+        );
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
     public function testFailsToInitalizeFromANonExistentFile()
     {
-        $keyFile = __DIR__ . '/../fixtures' . '/does-not-exist-private.json';
+        $keyFile = __DIR__ . '/../fixtures/does-not-exist-private.json';
         new UserRefreshCredentials('scope/1', $keyFile);
     }
 
     public function testInitalizeFromAFile()
     {
         $keyFile = __DIR__ . '/../fixtures2' . '/private.json';
+        $this->assertNotNull(
+            new UserRefreshCredentials('scope/1', $keyFile)
+        );
+    }
+
+    /**
+     * @expectedException LogicException
+     */
+    public function testFailsToInitializeFromInvalidJsonData()
+    {
+        $tmp = tmpfile();
+        fwrite($tmp, '{');
+
+        $path = stream_get_meta_data($tmp)['uri'];
+
+        try {
+            new UserRefreshCredentials('scope/1', $path);
+        } catch (\Exception $e) {
+            fclose($tmp);
+            throw $e;
+        }
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     */
+    public function testGcloudWarning()
+    {
+        putenv('SUPPRESS_GCLOUD_CREDS_WARNING=false');
+        $keyFile = __DIR__ . '/../fixtures2/gcloud.json';
+        $this->assertNotNull(
+            new UserRefreshCredentials('scope/1', $keyFile)
+        );
+    }
+
+    public function testValid3LOauthCreds()
+    {
+        putenv('SUPPRESS_GCLOUD_CREDS_WARNING=false');
+        $keyFile = __DIR__ . '/../fixtures2/valid_oauth_creds.json';
         $this->assertNotNull(
             new UserRefreshCredentials('scope/1', $keyFile)
         );
@@ -129,14 +182,14 @@ class URCFromEnvTest extends TestCase
      */
     public function testFailsIfEnvSpecifiesNonExistentFile()
     {
-        $keyFile = __DIR__ . '/../fixtures' . '/does-not-exist-private.json';
+        $keyFile = __DIR__ . '/../fixtures/does-not-exist-private.json';
         putenv(UserRefreshCredentials::ENV_VAR . '=' . $keyFile);
         UserRefreshCredentials::fromEnv('a scope');
     }
 
     public function testSucceedIfFileExists()
     {
-        $keyFile = __DIR__ . '/../fixtures2' . '/private.json';
+        $keyFile = __DIR__ . '/../fixtures2/private.json';
         putenv(UserRefreshCredentials::ENV_VAR . '=' . $keyFile);
         $this->assertNotNull(ApplicationDefaultCredentials::getCredentials('a scope'));
     }

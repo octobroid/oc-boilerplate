@@ -17,15 +17,23 @@
 
 class Google_Service_Logging_LogSink extends Google_Model
 {
+  public $createTime;
   public $destination;
-  public $endTime;
   public $filter;
   public $includeChildren;
   public $name;
   public $outputVersionFormat;
-  public $startTime;
+  public $updateTime;
   public $writerIdentity;
 
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
   public function setDestination($destination)
   {
     $this->destination = $destination;
@@ -33,14 +41,6 @@ class Google_Service_Logging_LogSink extends Google_Model
   public function getDestination()
   {
     return $this->destination;
-  }
-  public function setEndTime($endTime)
-  {
-    $this->endTime = $endTime;
-  }
-  public function getEndTime()
-  {
-    return $this->endTime;
   }
   public function setFilter($filter)
   {
@@ -74,13 +74,13 @@ class Google_Service_Logging_LogSink extends Google_Model
   {
     return $this->outputVersionFormat;
   }
-  public function setStartTime($startTime)
+  public function setUpdateTime($updateTime)
   {
-    $this->startTime = $startTime;
+    $this->updateTime = $updateTime;
   }
-  public function getStartTime()
+  public function getUpdateTime()
   {
-    return $this->startTime;
+    return $this->updateTime;
   }
   public function setWriterIdentity($writerIdentity)
   {

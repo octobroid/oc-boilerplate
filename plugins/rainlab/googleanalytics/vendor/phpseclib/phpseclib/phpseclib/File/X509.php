@@ -1928,6 +1928,9 @@ class X509
             // "Certificate Transparency"
             // https://tools.ietf.org/html/rfc6962
             case '1.3.6.1.4.1.11129.2.4.2':
+            // "Qualified Certificate statements"
+            // https://tools.ietf.org/html/rfc3739#section-3.2.6
+            case '1.3.6.1.5.5.7.1.3':
                 return true;
 
             // CSR attributes
@@ -2092,7 +2095,7 @@ class X509
      *
      * If $date isn't defined it is assumed to be the current date.
      *
-     * @param int $date optional
+     * @param \DateTime|string $date optional
      * @access public
      */
     function validateDate($date = null)
@@ -2102,7 +2105,7 @@ class X509
         }
 
         if (!isset($date)) {
-            $date = new DateTime($date, new DateTimeZone(@date_default_timezone_get()));
+            $date = new DateTime(null, new DateTimeZone(@date_default_timezone_get()));
         }
 
         $notBefore = $this->currentCert['tbsCertificate']['validity']['notBefore'];
@@ -2111,9 +2114,16 @@ class X509
         $notAfter = $this->currentCert['tbsCertificate']['validity']['notAfter'];
         $notAfter = isset($notAfter['generalTime']) ? $notAfter['generalTime'] : $notAfter['utcTime'];
 
+        if (is_string($date)) {
+            $date = new DateTime($date, new DateTimeZone(@date_default_timezone_get()));
+        }
+
+        $notBefore = new DateTime($notBefore, new DateTimeZone(@date_default_timezone_get()));
+        $notAfter = new DateTime($notAfter, new DateTimeZone(@date_default_timezone_get()));
+
         switch (true) {
-            case $date < new DateTime($notBefore, new DateTimeZone(@date_default_timezone_get())):
-            case $date > new DateTime($notAfter, new DateTimeZone(@date_default_timezone_get())):
+            case $date < $notBefore:
+            case $date > $notAfter:
                 return false;
         }
 
@@ -2920,7 +2930,7 @@ class X509
             }
             $output.= $desc . '=' . $value;
             $result[$desc] = isset($result[$desc]) ?
-                array_merge((array) $dn[$prop], array($value)) :
+                array_merge((array) $result[$desc], array($value)) :
                 $value;
             $start = false;
         }

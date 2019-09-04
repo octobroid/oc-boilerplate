@@ -27,7 +27,7 @@ class Google_Service_Monitoring_Resource_ProjectsNotificationChannels extends Go
 {
   /**
    * Creates a new notification channel, representing a single notification
-   * endpoint such as an email address, SMS number, or pagerduty service.
+   * endpoint such as an email address, SMS number, or PagerDuty service.
    * (notificationChannels.create)
    *
    * @param string $name The project on which to execute the request. The format

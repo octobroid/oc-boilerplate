@@ -51,6 +51,7 @@ class Google_Service_Cloudbilling extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://cloudbilling.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'cloudbilling';
 
@@ -88,6 +89,10 @@ class Google_Service_Cloudbilling extends Google_Service
               'path' => 'v1/billingAccounts',
               'httpMethod' => 'GET',
               'parameters' => array(
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'pageToken' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -95,10 +100,6 @@ class Google_Service_Cloudbilling extends Google_Service
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
-                ),
-                'filter' => array(
-                  'location' => 'query',
-                  'type' => 'string',
                 ),
               ),
             ),'patch' => array(

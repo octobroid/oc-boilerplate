@@ -4,17 +4,17 @@ This plugin allows end users to create and edit static pages and menus with a si
 
 ## Managing static pages
 
-Static pages are managed on the Pages tab of the Static Pages plugin. Static pages have three required parameters - **Title**, **URL** and **Layout**. The URL is generated automatically when the Title is entered, but it could be changed manually. URLs must start with the forward slash character. The Layout drop-down allows to select a layout created with the CMS. Only layouts that host the `staticPage` component are displayed in the drop-down.
+Static pages are managed on the Pages tab of the Static Pages plugin. Static pages have three required parameters - **Title**, **URL** and **Layout**. The URL is generated automatically when the Title is entered, but it could be changed manually. URLs must start with the forward slash character. The Layout drop-down allows to select a layout created with the CMS. Only layouts that include the `staticPage` component are displayed in the drop-down.
 
 ![image](https://raw.githubusercontent.com/rainlab/pages-plugin/master/docs/images/static-page.png) {.img-responsive .frame}
 
-Pages are hierarchical. The page hierarchy is used when a new page URL is generated, but as URLs can be changed manually, the hierarchy doesn't really affect the routing process. The only place where the page hierarchy matters is the generated Menus. The generated menus reflect the page hierarchy. You can manage the page hierarchy by dragging pages in the page tree. The page drag handle ![http://s13.postimg.org/6kd6lwgar/hierarchy_drag_handle.png](http://s13.postimg.org/6kd6lwgar/hierarchy_drag_handle.png) appears when you move the mouse cursor over page item in the tree.
+Pages are hierarchical. The page hierarchy is used when a new page URL is generated, but as URLs can be changed manually, the hierarchy doesn't really affect the routing process. The only place where the page hierarchy matters is the generated Menus. The generated menus reflect the page hierarchy. You can manage the page hierarchy by dragging pages in the page tree. The page drag handle appears when you move the mouse cursor over page item in the tree.
 
 Optional properties of static pages are **Hidden** and **Hide in navigation**. The **Hidden** checkbox allows to hide a page from the front-end. Hidden pages are still visible for administrators who are logged into the back-end. The **Hide in navigation** checkbox allows to hide a page from generated menus and breadcrumbs.
 
 ## Placeholders
 
-If a static layout contains [placeholders](http://octobercms.com/docs/cms/layouts#placeholders), the static page editor will show tabs for editing the placeholder contents. The plugin automatically detects text and HTML placeholders and displays a corresponding editor for them - the WYSIWYG editor for HTML placeholders and a text editor for text placeholders.
+If a static layout contains [placeholders](https://octobercms.com/docs/cms/layouts#placeholders), the static page editor will show tabs for editing the placeholder contents. The plugin automatically detects text and HTML placeholders and displays a corresponding editor for them - the WYSIWYG editor for HTML placeholders and a text editor for text placeholders.
 
 ## Snippets
 
@@ -32,9 +32,9 @@ Snippets are displayed in the sidebar list on the Static Pages and can be added 
 
 ## Managing menus
 
-You can manage menus on the Menus tab of the Static Pages plugin. A website can contain multiple menus, for example the main menu, footer menu, sidebar menu, etc. A theme developer can place menus to a page layout with the `staticMenu` component.
+You can manage menus on the Menus tab of the Static Pages plugin. A website can contain multiple menus, for example the main menu, footer menu, sidebar menu, etc. A theme developer can include menus on a page layout with the `staticMenu` component.
 
-Menus have two required parameters - the menu **Name** and menu **Code**. The menu name is displayed in the menu list in the back-end. The menu code is required for referring menus in the layout code, it's the API parameter.
+Menus have two required properties - the menu **Name** and menu **Code**. The menu name is displayed in the menu list in the back-end. The menu code is required for referring menus in the layout code, it's the API parameter.
 
 ![image](https://raw.githubusercontent.com/rainlab/pages-plugin/master/docs/images/menu-management.png) {.img-responsive .frame}
 
@@ -58,7 +58,7 @@ Items of this type refer to static pages. The static page should be selected in 
 Items of this type expand to create links to all static pages defined in the theme. Nested pages are represented with nested menu items.
 
 #### Custom menu item types
-Other plugins can supply new menu item types. For example, the [Blog plugin](http://octobercms.com/plugin/rainlab-blog) by [RainLab](http://octobercms.com/author/RainLab) supplies two more types:
+Other plugins can supply new menu item types. For example, the [Blog plugin](https://octobercms.com/plugin/rainlab-blog) by [RainLab](https://octobercms.com/author/RainLab) supplies two more types:
 
 ###### Blog Category {.subheader}
 An item of this type represents a link to a specific blog category. The category should be selected in the **Reference** drop-down. This menu type also requires selecting a **CMS page** that outputs a blog category.
@@ -86,7 +86,7 @@ The Code field allows to assign the API code that you can use to set the active 
 
 ## See also
 
-Read the [Getting started with Static Pages](http://octobercms.com/blog/post/getting-started-static-pages) tutorial in the Blog.
+Read the [Getting started with Static Pages](https://octobercms.com/blog/post/getting-started-static-pages) tutorial in the Blog.
 
 ---
 
@@ -94,7 +94,7 @@ The plugin currently includes three components: Static Page, Static Menu and Sta
 
 ### Integrating the Static Pages plugin
 
-In the simplest case you could create a [layout](http://octobercms.com/docs/cms/layouts) in the CMS area and drop the plugin's components to its body. The next example layout outputs a menu, breadcrumbs and a static page:
+In the simplest case you could create a [layout](https://octobercms.com/docs/cms/layouts) in the CMS area and include the plugin's components in its body. The next example layout outputs a menu, breadcrumbs and a static page:
 
     <html>
         <head>
@@ -107,85 +107,7 @@ In the simplest case you could create a [layout](http://octobercms.com/docs/cms/
         </body>
     </html>
 
-![http://oi58.tinypic.com/6gbnsn.jpg](https://raw.githubusercontent.com/rainlab/pages-plugin/master/docs/images/static-layout.png)  {.img-responsive .frame}
-
-##### Static pages
-
-Include the Static Page [component](http://octobercms.com/docs/cms/components) to the layout. The Static Page component has two public properties:
-
-* `title` - specifies the static page title.
-* `content` - the static page content.
-
-If your layout does not need static page content entry, that section can be removed from the page form using the Inspector or manually with the `useContent` component property.
-
-###### Default page layout
-
-If adding a new subpage, the parent page's layout is checked for a `childLayout` property, and the new subpage's layout will default to that property value. Otherwise, the theme layouts will be searched for the `default` component property and that layout will be selected by default.
-
-Example:
-```
-# /themes/mytheme/layouts/layout1.htm
-[staticPage]
-default = true
-childLayout = "child"
-
-# /themes/mytheme/layouts/child.htm
-[staticPage]
-```
-
-##### Static menus
-
-Add the staticMenu component to the static page layout to output a menu. The static menu component has the `code` property that should refer a code of a static menu the component should display. In the Inspector the `code` field is displayed as Menu.
-
-The static menu component injects the `menuItems` page variable. The default component partial outputs a simple nested unordered list for menus:
-
-    <ul>
-        <li>
-            <a href="http://example.com">Home</a>
-        </li>
-        <li class="child-active">
-            <a href="http://example.com/about">About</a>
-            <ul>
-                <li class="active">
-                    <a href="http://example.com/about/directions">Directions</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-
-You might want to render the menus with your own code. The `menuItems` variable is an array of the `RainLab\Pages\Classes\MenuItemReference` objects. Each object has the following properties:
-
-* `title` - specifies the menu item title.
-* `url` - specifies the absolute menu item URL.
-* `isActive` - indicates whether the item corresponds to a page currently being viewed.
-* `isChildActive` - indicates whether the item contains an active subitem.
-* `items` - an array of the menu item subitems, if any. If there are no subitems, the array is empty
-
-The static menu component also has the `menuItems` property that you can access in the Twig code using the component's alias, for example:
-
-    {% for item in staticMenu.menuItems %}
-       <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-
-##### Breadcrumbs
-
-The staticBreadcrumbs component outputs breadcrumbs for static pages. This component doesn't have any properties. The default component partial outputs a simple unordered list for the breadcrumbs:
-
-    <ul>
-        <li><a href="http://example.com/about">About</a></li>
-        <li class="active"><a href="http://example.com/about/directions">Directions</a></li>
-    </ul>
-
-The component injects the `breadcrumbs` page variable that contains an array of the `MenuItemReference` objects described above.
-
-##### Setting the active menu item explicitly
-
-In some cases you might want to mark a specific menu item as active explicitly. You can do that in the page's [`onInit()`](http://octobercms.com/docs/cms/pages#dynamic-pages) function with assigning the `activeMenuItem` page variable a value matching the menu item code you want to make active. Menu item codes are managed in the Edit Menu Item popup.
-
-    function onInit()
-    {
-        $this['activeMenuItem'] = 'blog';
-    }
+![image](https://raw.githubusercontent.com/rainlab/pages-plugin/master/docs/images/static-layout.png)  {.img-responsive .frame}
 
 ##### Linking to static pages
 
@@ -216,7 +138,7 @@ The field's assigned value will be the static page's file name, which can be use
 
 ### Placeholders
 
-[Placeholders](http://octobercms.com/docs/cms/layouts#placeholders) defined in the layout are automatically detected by the Static Pages plugin. The Edit Static Page form displays a tab for each placeholder defined in the layout used by the page. Placeholders are defined in the layout in the usual way:
+[Placeholders](https://octobercms.com/docs/cms/layouts#placeholders) defined in the layout are automatically detected by the Static Pages plugin. The Edit Static Page form displays a tab for each placeholder defined in the layout used by the page. Placeholders are defined in the layout in the usual way:
 
     {% placeholder ordering %}
 
@@ -242,7 +164,7 @@ To prevent a placeholder from appearing in the editor set the `ignore` attribute
 
 ### Creating new menu item types
 
-Plugins can extend the Static Pages plugin with new menu item types. Please refer to the [Blog plugin](http://octobercms.com/plugin/rainlab-blog) for the integration example. New item types are registered with the API events triggered by the Static Pages plugin. The event handlers should be defined in the `boot()` method of the [plugin registration file](http://octobercms.com/docs/plugin/registration#registration-file). There are three events that should be handled in the plugin.
+Plugins can extend the Static Pages plugin with new menu item types. Please refer to the [Blog plugin](https://octobercms.com/plugin/rainlab-blog) for the integration example. New item types are registered with the API events triggered by the Static Pages plugin. The event handlers should be defined in the `boot()` method of the [plugin registration file](https://octobercms.com/docs/plugin/registration#registration-file). There are three events that should be handled in the plugin.
 
 * `pages.menuitem.listType` event handler should return a list of new menu item types supported by the plugin.
 * `pages.menuitem.getTypeInfo` event handler returns detailed information about a menu item type.
@@ -260,13 +182,15 @@ The next example shows an event handler registration code for the Blog plugin. T
         });
 
         Event::listen('pages.menuitem.getTypeInfo', function($type) {
-            if ($type == 'blog-category' || $type == 'all-blog-categories')
+            if ($type == 'blog-category' || $type == 'all-blog-categories') {
                 return Category::getMenuTypeInfo($type);
+            }
         });
 
         Event::listen('pages.menuitem.resolveItem', function($type, $item, $url, $theme) {
-            if ($type == 'blog-category' || $type == 'all-blog-categories')
+            if ($type == 'blog-category' || $type == 'all-blog-categories') {
                 return Category::resolveMenuItem($item, $url, $theme);
+            }
         });
     }
 
@@ -334,8 +258,9 @@ The `cmsPages` is a list of CMS pages that can display objects supported by the 
 
     $cmsPages = [];
     foreach ($pages as $page) {
-        if (!$page->hasComponent('blogPosts'))
+        if (!$page->hasComponent('blogPosts')) {
             continue;
+        }
 
         $cmsPages[] = $page;
     }
@@ -356,18 +281,18 @@ When the Static Pages plugin generates a menu on the front-end, every menu item 
 The event handler should return an array. The array keys depend on whether the menu item contains subitems or not. Expected result format:
 
     Array (
-        [url] => http://example.com/blog/category/another-category
+        [url] => https://example.com/blog/category/another-category
         [isActive] => 1,
         [items] => Array (
             [0] => Array  (
                 [title] => Another category
-                [url] => http://example.com/blog/category/another-category
+                [url] => https://example.com/blog/category/another-category
                 [isActive] => 1
             )
 
             [1] => Array (
                     [title] => News
-                    [url] => http://example.com/blog/category/news
+                    [url] => https://example.com/blog/category/news
                     [isActive] => 0
             )
         )
@@ -377,7 +302,7 @@ The `url` and `isActive` elements are required for menu items that point to a sp
 
 As the resolving process occurs every time when the front-end page is rendered, it's a good idea to cache all the information required for resolving menu items, if that's possible.
 
-If your item type requires a CMS page to resolve item URLs, you might need to return the selected page's URL, and sometimes pass parameters to the page through the URL. The next code example shows how to load a blog category CMS page referred by a menu item and how to generate an URL to this page. The blog category page has the `blogPosts` component that can load the requested category slug from the URL. We assume that the URL parameter is called 'slug', although it can be edited manually. We skip the part that loads the real parameter name for the simplicity. Please refer to the [Blog plugin](http://octobercms.com/plugin/rainlab-blog) for the reference.
+If your item type requires a CMS page to resolve item URLs, you might need to return the selected page's URL, and sometimes pass parameters to the page through the URL. The next code example shows how to load a blog category CMS page referred by a menu item and how to generate an URL to this page. The blog category page has the `blogPosts` component that can load the requested category slug from the URL. We assume that the URL parameter is called 'slug', although it can be edited manually. We skip the part that loads the real parameter name for the simplicity. Please refer to the [Blog plugin](https://octobercms.com/plugin/rainlab-blog) for the reference.
 
     use Cms\Classes\Page as CmsPage;
     use October\Rain\Router\Helper as RouterHelper;
@@ -389,8 +314,9 @@ If your item type requires a CMS page to resolve item URLs, you might need to re
     $page = CmsPage::loadCached($theme, $item->cmsPage);
 
     // Always check if the page can be resolved
-    if (!$page)
+    if (!$page) {
         return;
+    }
 
     // Generate the URL
     $url = CmsPage::url($page->getBaseFileName(), ['slug' => $category->slug]);
@@ -402,7 +328,6 @@ To determine whether an item is active just compare it with the `$url` argument 
 #### Overriding generated references
 
 In order to override generated references you can listen to  `pages.menu.referencesGenerated` event that fires right before injecting to page object. For example you can filter the unwanted menu entries.
-
 
 #### Snippets
 
@@ -436,11 +361,11 @@ Any property defined in the property list can be accessed within the partial mar
 
     The country name is {{ country }}
 
-In addition, properties can be passed to the partial components using an [external property value](http://octobercms.com/docs/cms/components#external-property-values).
+In addition, properties can be passed to the partial components using an [external property value](https://octobercms.com/docs/cms/components#external-property-values).
 
 ###### Snippets created from components
 
-Any component can be registered as a snippet and be used in Static Pages. To register a snippet, add the `registerPageSnippets()` method to your plugin class in the [registration file](http://octobercms.com/docs/plugin/registration#registration-file). The API for registering a snippet is similar to the one for [registering  components](http://octobercms.com/docs/plugin/registration#component-registration) - the method should return an array with class names in keys and aliases in values:
+Any component can be registered as a snippet and be used in Static Pages. To register a snippet, add the `registerPageSnippets()` method to your plugin class in the [registration file](https://octobercms.com/docs/plugin/registration#registration-file). The API for registering a snippet is similar to the one for [registering  components](https://octobercms.com/docs/plugin/registration#component-registration) - the method should return an array with class names in keys and aliases in values:
 
     public function registerPageSnippets()
     {
@@ -449,7 +374,7 @@ Any component can be registered as a snippet and be used in Static Pages. To reg
         ];
     }
 
-A same component can be registered with registerPageSnippets() and  registerComponents() and used in CMS pages and Static Pages.
+A same component can be registered with registerPageSnippets() and registerComponents() and used in CMS pages and Static Pages.
 
 ##### Custom page fields
 
@@ -468,7 +393,7 @@ These act just like regular form field definitions. Accessing the variables insi
 
 All custom fields are placed in the Secondary tabs container (next to Content field). If you need to place them in the Primary tabs container, use *placement="primary"* attribute.
 
-	{variable name="tagline" label="Tagline" tab="Header" type="text" placement="primary"}{/variable}
+    {variable name="tagline" label="Tagline" tab="Header" type="text" placement="primary"}{/variable}
 
 Alternatively you may use the field type as the tag name, here we use the `{text}` tag to directly render the `tagline` variable:
 
@@ -485,14 +410,13 @@ You may also use the `{repeater}` tag for repeating content:
         </div>
     {/repeater}
 
-For more details on syntax fields, see the [Parser section](http://octobercms.com/docs/services/parser#dynamic-syntax-parser) of the October documentation.
+For more details on syntax fields, see the [Parser section](https://octobercms.com/docs/services/parser#dynamic-syntax-parser) of the October documentation.
 
 ##### Custom menu item form fields
 
 Just like CMS objects have the view bag component to store arbitrary values, you may use the `viewBag` property of the `MenuItem` class to store custom data values and add corresponding form fields.
 
     Event::listen('backend.form.extendFields', function ($widget) {
-
         if (
             !$widget->getController() instanceof \RainLab\Pages\Controllers\Index ||
             !$widget->model instanceof \RainLab\Pages\Classes\MenuItem

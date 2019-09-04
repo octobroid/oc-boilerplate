@@ -16,7 +16,7 @@
  */
 
 /**
- * Service definition for ServiceUsage (v1beta1).
+ * Service definition for ServiceUsage (v1).
  *
  * <p>
  * Enables services that service consumers want to use on Google Cloud Platform,
@@ -55,7 +55,8 @@ class Google_Service_ServiceUsage extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://serviceusage.googleapis.com/';
     $this->servicePath = '';
-    $this->version = 'v1beta1';
+    $this->batchPath = 'batch';
+    $this->version = 'v1';
     $this->serviceName = 'serviceusage';
 
     $this->operations = new Google_Service_ServiceUsage_Resource_Operations(
@@ -64,8 +65,28 @@ class Google_Service_ServiceUsage extends Google_Service
         'operations',
         array(
           'methods' => array(
-            'get' => array(
-              'path' => 'v1beta1/{+name}',
+            'cancel' => array(
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -75,7 +96,7 @@ class Google_Service_ServiceUsage extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v1beta1/operations',
+              'path' => 'v1/operations',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -106,7 +127,7 @@ class Google_Service_ServiceUsage extends Google_Service
         array(
           'methods' => array(
             'batchEnable' => array(
-              'path' => 'v1beta1/{+parent}/services:batchEnable',
+              'path' => 'v1/{+parent}/services:batchEnable',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'parent' => array(
@@ -116,7 +137,7 @@ class Google_Service_ServiceUsage extends Google_Service
                 ),
               ),
             ),'disable' => array(
-              'path' => 'v1beta1/{+name}:disable',
+              'path' => 'v1/{+name}:disable',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'name' => array(
@@ -126,7 +147,7 @@ class Google_Service_ServiceUsage extends Google_Service
                 ),
               ),
             ),'enable' => array(
-              'path' => 'v1beta1/{+name}:enable',
+              'path' => 'v1/{+name}:enable',
               'httpMethod' => 'POST',
               'parameters' => array(
                 'name' => array(
@@ -136,7 +157,7 @@ class Google_Service_ServiceUsage extends Google_Service
                 ),
               ),
             ),'get' => array(
-              'path' => 'v1beta1/{+name}',
+              'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
@@ -146,17 +167,13 @@ class Google_Service_ServiceUsage extends Google_Service
                 ),
               ),
             ),'list' => array(
-              'path' => 'v1beta1/{+parent}/services',
+              'path' => 'v1/{+parent}/services',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
-                ),
-                'filter' => array(
-                  'location' => 'query',
-                  'type' => 'string',
                 ),
                 'pageToken' => array(
                   'location' => 'query',
@@ -165,6 +182,10 @@ class Google_Service_ServiceUsage extends Google_Service
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
+                ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
                 ),
               ),
             ),

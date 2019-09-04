@@ -28,13 +28,11 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
   /**
    * Enable multiple services on a project. The operation is atomic: if enabling
    * any service fails, then the entire batch fails, and no state changes occur.
-   *
-   * Operation (services.batchEnable)
+   * (services.batchEnable)
    *
    * @param string $parent Parent to enable services on.
    *
-   * An example name would be: `projects/123` where `123` is the project number
-   * (not project ID).
+   * An example name would be: `projects/123` where `123` is the project number.
    *
    * The `BatchEnableServices` method currently only supports projects.
    * @param Google_Service_ServiceUsage_BatchEnableServicesRequest $postBody
@@ -54,9 +52,7 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
    *
    * It is not valid to call the disable method on a service that is not currently
    * enabled. Callers will receive a `FAILED_PRECONDITION` status if the target
-   * service is not currently enabled.
-   *
-   * Operation (services.disable)
+   * service is not currently enabled. (services.disable)
    *
    * @param string $name Name of the consumer and service to disable the service
    * on.
@@ -64,7 +60,7 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
    * The enable and disable methods currently only support projects.
    *
    * An example name would be: `projects/123/services/serviceusage.googleapis.com`
-   * where `123` is the project number (not project ID).
+   * where `123` is the project number.
    * @param Google_Service_ServiceUsage_DisableServiceRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Google_Service_ServiceUsage_Operation
@@ -76,9 +72,7 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
     return $this->call('disable', array($params), "Google_Service_ServiceUsage_Operation");
   }
   /**
-   * Enable a service so that it can be used with a project.
-   *
-   * Operation (services.enable)
+   * Enable a service so that it can be used with a project. (services.enable)
    *
    * @param string $name Name of the consumer and service to enable the service
    * on.
@@ -90,7 +84,7 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
    * user enabling the service.
    *
    * An example name would be: `projects/123/services/serviceusage.googleapis.com`
-   * where `123` is the project number (not project ID).
+   * where `123` is the project number.
    * @param Google_Service_ServiceUsage_EnableServiceRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Google_Service_ServiceUsage_Operation
@@ -109,15 +103,15 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
    * `ConsumerState` for.
    *
    * An example name would be: `projects/123/services/serviceusage.googleapis.com`
-   * where `123` is the project number (not project ID).
+   * where `123` is the project number.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_ServiceUsage_Service
+   * @return Google_Service_ServiceUsage_GoogleApiServiceusageV1Service
    */
   public function get($name, $optParams = array())
   {
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_ServiceUsage_Service");
+    return $this->call('get', array($params), "Google_Service_ServiceUsage_GoogleApiServiceusageV1Service");
   }
   /**
    * List all services available to the specified project, and the current state
@@ -130,16 +124,15 @@ class Google_Service_ServiceUsage_Resource_Services extends Google_Service_Resou
    *
    * @param string $parent Parent to search for services on.
    *
-   * An example name would be: `projects/123` where `123` is the project number
-   * (not project ID).
+   * An example name would be: `projects/123` where `123` is the project number.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string filter Only list services that conform to the given filter.
-   * The allowed filter strings are `state:ENABLED` and `state:DISABLED`.
    * @opt_param string pageToken Token identifying which result to start with,
    * which is returned by a previous list call.
    * @opt_param int pageSize Requested size of the next page of data. Requested
    * page size cannot exceed 200.  If not set, the default page size is 50.
+   * @opt_param string filter Only list services that conform to the given filter.
+   * The allowed filter strings are `state:ENABLED` and `state:DISABLED`.
    * @return Google_Service_ServiceUsage_ListServicesResponse
    */
   public function listServices($parent, $optParams = array())

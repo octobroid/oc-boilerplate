@@ -69,6 +69,7 @@ class Google_Service_Books extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'books/v1/';
+    $this->batchPath = 'batch/books/v1';
     $this->version = 'v1';
     $this->serviceName = 'books';
 

@@ -49,6 +49,7 @@ class Google_Service_SiteVerification extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'siteVerification/v1/';
+    $this->batchPath = 'batch/siteVerification/v1';
     $this->version = 'v1';
     $this->serviceName = 'siteVerification';
 

@@ -1,21 +1,17 @@
-[![Build Status](https://travis-ci.org/google/google-api-php-client.svg?branch=master)](https://travis-ci.org/google/google-api-php-client)
+[![Build Status](https://travis-ci.org/googleapis/google-api-php-client.svg?branch=master)](https://travis-ci.org/googleapis/google-api-php-client)
 
 # Google APIs Client Library for PHP #
 
-## Library maintenance
-This client library is supported but in maintenance mode only.  We are fixing necessary bugs and adding essential features to ensure this library continues to meet your needs for accessing Google APIs.  Non-critical issues will be closed.  Any issue may be reopened if it is causing ongoing problems.
-
-## Description ##
 The Google API Client Library enables you to work with Google APIs such as Google+, Drive, or YouTube on your server.
 
-## Beta ##
-This library is in Beta. We're comfortable enough with the stability and features of the library that we want you to build real production applications on it. We will make an effort to support the public and protected surface of the library and maintain backwards compatibility in the future. While we are still in Beta, we reserve the right to make incompatible changes.
+These client libraries are officially supported by Google.  However, the libraries are considered complete and are in maintenance mode. This means that we will address critical bugs and security issues but will not add any new features.
+
+## Google Cloud Platform
+
+For Google Cloud Platform APIs such as Datastore, Cloud Storage or Pub/Sub, we recommend using [GoogleCloudPlatform/google-cloud-php](https://github.com/GoogleCloudPlatform/google-cloud-php) which is under active development.
 
 ## Requirements ##
 * [PHP 5.4.0 or higher](http://www.php.net/)
-
-## Google Cloud Platform APIs
-If you're looking to call the **Google Cloud Platform** APIs, you will want to use the [Google Cloud PHP](https://github.com/googlecloudplatform/google-cloud-php) library instead of this one.
 
 ## Developer Documentation ##
 http://developers.google.com/api-client-library/php
@@ -33,7 +29,7 @@ composer installed.
 Once composer is installed, execute the following command in your project root to install this library:
 
 ```sh
-composer require google/apiclient:^2.0
+composer require google/apiclient:"^2.0"
 ```
 
 Finally, be sure to include the autoloader:
@@ -124,6 +120,11 @@ foreach ($results as $item) {
 ### Authentication with Service Accounts ###
 
 > An example of this can be seen in [`examples/service-account.php`](examples/service-account.php).
+
+Some APIs
+(such as the [YouTube Data API](https://developers.google.com/youtube/v3/)) do
+not support service accounts. Check with the specific API documentation if API
+calls return unexpected 401 or 403 errors.
 
 1. Follow the instructions to [Create a Service Account](https://developers.google.com/api-client-library/php/auth/service-accounts#creatinganaccount)
 1. Download the JSON credentials
@@ -264,14 +265,21 @@ $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 It is recommended to use another caching library to improve performance. This can be done by passing a [PSR-6](http://www.php-fig.org/psr/psr-6/) compatible library to the client:
 
 ```php
-$cache = new Stash\Pool(new Stash\Driver\FileSystem);
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use Cache\Adapter\Filesystem\FilesystemCachePool;
+
+$filesystemAdapter = new Local(__DIR__.'/');
+$filesystem        = new Filesystem($filesystemAdapter);
+
+$cache = new FilesystemCachePool($filesystem);
 $client->setCache($cache);
 ```
 
-In this example we use [StashPHP](http://www.stashphp.com/). Add this to your project with composer:
+In this example we use [PHP Cache](http://www.php-cache.com/). Add this to your project with composer:
 
 ```
-composer require tedivm/stash
+composer require cache/filesystem-adapter
 ```
 
 ### Updating Tokens ###
@@ -305,13 +313,34 @@ Now all calls made by this library will appear in the Charles UI.
 
 One additional step is required in Charles to view SSL requests. Go to **Charles > Proxy > SSL Proxying Settings** and add the domain you'd like captured. In the case of the Google APIs, this is usually `*.googleapis.com`.
 
+### Controlling HTTP Client Configuration Directly
+
+Google API Client uses [Guzzle](http://docs.guzzlephp.org) as its default HTTP client. That means that you can control your HTTP requests in the same manner you would for any application using Guzzle.
+
+Let's say, for instance, we wished to apply a referrer to each request.
+
+```php
+use GuzzleHttp\Client;
+
+$httpClient = new Client([
+    'headers' => [
+        'referer' => 'mysite.com'
+    ]
+]);
+
+$client = new Google_Client();
+$client->setHttpClient($httpClient);
+```
+
+Other Guzzle features such as [Handlers and Middleware](http://docs.guzzlephp.org/en/stable/handlers-and-middleware.html) offer even more control.
+
 ### Service Specific Examples ###
 
 YouTube: https://github.com/youtube/api-samples/tree/master/php
 
 ## How Do I Contribute? ##
 
-Please see the [contributing](CONTRIBUTING.md) page for more information. In particular, we love pull requests - but please make sure to sign the [contributor license agreement](https://developers.google.com/api-client-library/php/contribute).
+Please see the [contributing](.github/CONTRIBUTING.md) page for more information. In particular, we love pull requests - but please make sure to sign the [contributor license agreement](https://developers.google.com/api-client-library/php/contribute).
 
 ## Frequently Asked Questions ##
 

@@ -58,6 +58,7 @@ class Google_Service_Spanner extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://spanner.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'spanner';
 
@@ -154,6 +155,10 @@ class Google_Service_Spanner extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'pageToken' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -161,10 +166,6 @@ class Google_Service_Spanner extends Google_Service
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
-                ),
-                'filter' => array(
-                  'location' => 'query',
-                  'type' => 'string',
                 ),
               ),
             ),'patch' => array(
@@ -354,6 +355,10 @@ class Google_Service_Spanner extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'pageToken' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -361,10 +366,6 @@ class Google_Service_Spanner extends Google_Service
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
-                ),
-                'filter' => array(
-                  'location' => 'query',
-                  'type' => 'string',
                 ),
               ),
             ),
@@ -417,6 +418,16 @@ class Google_Service_Spanner extends Google_Service
                   'required' => true,
                 ),
               ),
+            ),'executeBatchDml' => array(
+              'path' => 'v1/{+session}:executeBatchDml',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'session' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
             ),'executeSql' => array(
               'path' => 'v1/{+session}:executeSql',
               'httpMethod' => 'POST',
@@ -456,6 +467,10 @@ class Google_Service_Spanner extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'pageToken' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -463,10 +478,6 @@ class Google_Service_Spanner extends Google_Service
                 'pageSize' => array(
                   'location' => 'query',
                   'type' => 'integer',
-                ),
-                'filter' => array(
-                  'location' => 'query',
-                  'type' => 'string',
                 ),
               ),
             ),'partitionQuery' => array(

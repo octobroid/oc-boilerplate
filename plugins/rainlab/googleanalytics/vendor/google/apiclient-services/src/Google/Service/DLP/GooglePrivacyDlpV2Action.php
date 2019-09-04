@@ -17,6 +17,8 @@
 
 class Google_Service_DLP_GooglePrivacyDlpV2Action extends Google_Model
 {
+  protected $jobNotificationEmailsType = 'Google_Service_DLP_GooglePrivacyDlpV2JobNotificationEmails';
+  protected $jobNotificationEmailsDataType = '';
   protected $pubSubType = 'Google_Service_DLP_GooglePrivacyDlpV2PublishToPubSub';
   protected $pubSubDataType = '';
   protected $publishSummaryToCsccType = 'Google_Service_DLP_GooglePrivacyDlpV2PublishSummaryToCscc';
@@ -24,6 +26,20 @@ class Google_Service_DLP_GooglePrivacyDlpV2Action extends Google_Model
   protected $saveFindingsType = 'Google_Service_DLP_GooglePrivacyDlpV2SaveFindings';
   protected $saveFindingsDataType = '';
 
+  /**
+   * @param Google_Service_DLP_GooglePrivacyDlpV2JobNotificationEmails
+   */
+  public function setJobNotificationEmails(Google_Service_DLP_GooglePrivacyDlpV2JobNotificationEmails $jobNotificationEmails)
+  {
+    $this->jobNotificationEmails = $jobNotificationEmails;
+  }
+  /**
+   * @return Google_Service_DLP_GooglePrivacyDlpV2JobNotificationEmails
+   */
+  public function getJobNotificationEmails()
+  {
+    return $this->jobNotificationEmails;
+  }
   /**
    * @param Google_Service_DLP_GooglePrivacyDlpV2PublishToPubSub
    */

@@ -7,6 +7,7 @@ return [
     ],
     'page' => [
         'menu_label' => 'Pages',
+        'template_title' => '%s Pages',
         'delete_confirmation' => 'Do you really want to delete selected pages? This will also delete the subpages, if any.',
         'no_records' => 'No pages found',
         'delete_confirm_single' => 'Do you really want delete this page? This will also delete the subpages, if any.',
@@ -136,5 +137,7 @@ return [
         'static_menu_code_description' => 'Specify a code of the menu the component should output.',
         'static_breadcrumbs_name' => 'Static breadcrumbs',
         'static_breadcrumbs_description' => 'Outputs breadcrumbs for a static page.',
+        'child_pages_name' => 'Child pages',
+        'child_pages_description' => 'Displays a list of child pages for the current page',
     ]
 ];

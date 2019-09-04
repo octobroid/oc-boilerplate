@@ -18,10 +18,11 @@
 class Google_Service_Dns_Quota extends Google_Collection
 {
   protected $collection_key = 'whitelistedKeySpecs';
-  public $blackHoleHidesSystemZones;
   public $dnsKeysPerManagedZone;
   public $kind;
   public $managedZones;
+  public $managedZonesPerNetwork;
+  public $networksPerManagedZone;
   public $resourceRecordsPerRrset;
   public $rrsetAdditionsPerChange;
   public $rrsetDeletionsPerChange;
@@ -30,14 +31,6 @@ class Google_Service_Dns_Quota extends Google_Collection
   protected $whitelistedKeySpecsType = 'Google_Service_Dns_DnsKeySpec';
   protected $whitelistedKeySpecsDataType = 'array';
 
-  public function setBlackHoleHidesSystemZones($blackHoleHidesSystemZones)
-  {
-    $this->blackHoleHidesSystemZones = $blackHoleHidesSystemZones;
-  }
-  public function getBlackHoleHidesSystemZones()
-  {
-    return $this->blackHoleHidesSystemZones;
-  }
   public function setDnsKeysPerManagedZone($dnsKeysPerManagedZone)
   {
     $this->dnsKeysPerManagedZone = $dnsKeysPerManagedZone;
@@ -61,6 +54,22 @@ class Google_Service_Dns_Quota extends Google_Collection
   public function getManagedZones()
   {
     return $this->managedZones;
+  }
+  public function setManagedZonesPerNetwork($managedZonesPerNetwork)
+  {
+    $this->managedZonesPerNetwork = $managedZonesPerNetwork;
+  }
+  public function getManagedZonesPerNetwork()
+  {
+    return $this->managedZonesPerNetwork;
+  }
+  public function setNetworksPerManagedZone($networksPerManagedZone)
+  {
+    $this->networksPerManagedZone = $networksPerManagedZone;
+  }
+  public function getNetworksPerManagedZone()
+  {
+    return $this->networksPerManagedZone;
   }
   public function setResourceRecordsPerRrset($resourceRecordsPerRrset)
   {

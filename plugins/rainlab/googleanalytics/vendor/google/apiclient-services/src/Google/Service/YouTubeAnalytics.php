@@ -23,7 +23,7 @@
  *
  * <p>
  * For more information about this service, see the API
- * <a href="http://developers.google.com/youtube/analytics" target="_blank">Documentation</a>
+ * <a href="https://developers.google.com/youtube/analytics" target="_blank">Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -60,6 +60,7 @@ class Google_Service_YouTubeAnalytics extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://youtubeanalytics.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v2';
     $this->serviceName = 'youtubeAnalytics';
 
@@ -180,6 +181,26 @@ class Google_Service_YouTubeAnalytics extends Google_Service
               'path' => 'v2/reports',
               'httpMethod' => 'GET',
               'parameters' => array(
+                'maxResults' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+                'filters' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'sort' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'startDate' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'metrics' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'includeHistoricalChannelData' => array(
                   'location' => 'query',
                   'type' => 'boolean',
@@ -201,26 +222,6 @@ class Google_Service_YouTubeAnalytics extends Google_Service
                   'type' => 'string',
                 ),
                 'endDate' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-                'maxResults' => array(
-                  'location' => 'query',
-                  'type' => 'integer',
-                ),
-                'filters' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-                'sort' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-                'startDate' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-                'metrics' => array(
                   'location' => 'query',
                   'type' => 'string',
                 ),

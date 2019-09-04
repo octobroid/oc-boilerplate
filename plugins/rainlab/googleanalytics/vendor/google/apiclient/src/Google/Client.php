@@ -25,7 +25,6 @@ use Google\Auth\Credentials\UserRefreshCredentials;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Ring\Client\StreamHandler;
-use GuzzleHttp\Psr7;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
@@ -39,10 +38,10 @@ use Monolog\Handler\SyslogHandler as MonologSyslogHandler;
  */
 class Google_Client
 {
-  const LIBVER = "2.2.1";
+  const LIBVER = "2.2.3";
   const USER_AGENT_SUFFIX = "google-api-php-client/";
-  const OAUTH2_REVOKE_URI = 'https://accounts.google.com/o/oauth2/revoke';
-  const OAUTH2_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token';
+  const OAUTH2_REVOKE_URI = 'https://oauth2.googleapis.com/revoke';
+  const OAUTH2_TOKEN_URI = 'https://oauth2.googleapis.com/token';
   const OAUTH2_AUTH_URL = 'https://accounts.google.com/o/oauth2/auth';
   const API_BASE_PATH = 'https://www.googleapis.com';
 
@@ -131,6 +130,7 @@ class Google_Client
           // Task Runner retry configuration
           // @see Google_Task_Runner
           'retry' => array(),
+          'retry_map' => null,
 
           // cache config for downstream auth caching
           'cache_config' => [],
@@ -211,7 +211,7 @@ class Google_Client
 
   /**
    * Fetches a fresh access token with a given assertion token.
-   * @param $assertionCredentials optional.
+   * @param ClientInterface $authHttp optional.
    * @return array access token
    */
   public function fetchAccessTokenWithAssertion(ClientInterface $authHttp = null)
@@ -441,11 +441,16 @@ class Google_Client
     return $this->token;
   }
 
+  /**
+   * @return string|null
+   */
   public function getRefreshToken()
   {
     if (isset($this->token['refresh_token'])) {
       return $this->token['refresh_token'];
     }
+
+    return null;
   }
 
   /**
@@ -480,6 +485,9 @@ class Google_Client
     return ($created + ($this->token['expires_in'] - 30)) < time();
   }
 
+  /**
+   * @deprecated See UPGRADING.md for more information
+   */
   public function getAuth()
   {
     throw new BadMethodCallException(
@@ -487,6 +495,9 @@ class Google_Client
     );
   }
 
+  /**
+   * @deprecated See UPGRADING.md for more information
+   */
   public function setAuth($auth)
   {
     throw new BadMethodCallException(
@@ -626,6 +637,9 @@ class Google_Client
    * If no value is specified and the user has not previously authorized
    * access, then the user is shown a consent screen.
    * @param $prompt string
+   *  {@code "none"} Do not display any authentication or consent screens. Must not be specified with other values.
+   *  {@code "consent"} Prompt the user for consent.
+   *  {@code "select_account"} Prompt the user to select an account.
    */
   public function setPrompt($prompt)
   {
@@ -667,7 +681,7 @@ class Google_Client
    * Revoke an OAuth2 access token or refresh token. This method will revoke the current access
    * token, if a token isn't provided.
    *
-   * @param string|null $token The token (access token or a refresh token) that should be revoked.
+   * @param string|array|null $token The token (access token or a refresh token) that should be revoked.
    * @return boolean Returns True if the revocation was successful, otherwise False.
    */
   public function revokeToken($token = null)
@@ -683,7 +697,8 @@ class Google_Client
    * Verify an id_token. This method will verify the current id_token, if one
    * isn't provided.
    *
-   * @throws LogicException
+   * @throws LogicException If no token was provided and no token was set using `setAccessToken`.
+   * @throws UnexpectedValueException If the token is not a valid JWT.
    * @param string|null $idToken The token (id_token) that should be verified.
    * @return array|false Returns the token payload as an array if the verification was
    * successful, false otherwise.
@@ -715,13 +730,13 @@ class Google_Client
   /**
    * Set the scopes to be requested. Must be called before createAuthUrl().
    * Will remove any previously configured scopes.
-   * @param array $scopes, ie: array('https://www.googleapis.com/auth/plus.login',
+   * @param string|array $scope_or_scopes, ie: array('https://www.googleapis.com/auth/plus.login',
    * 'https://www.googleapis.com/auth/moderator')
    */
-  public function setScopes($scopes)
+  public function setScopes($scope_or_scopes)
   {
     $this->requestedScopes = array();
-    $this->addScope($scopes);
+    $this->addScope($scope_or_scopes);
   }
 
   /**
@@ -753,7 +768,7 @@ class Google_Client
   }
 
   /**
-   * @return array
+   * @return string|null
    * @visible For Testing
    */
   public function prepareScopes()
@@ -785,7 +800,13 @@ class Google_Client
     // this is where most of the grunt work is done
     $http = $this->authorize();
 
-    return Google_Http_REST::execute($http, $request, $expectedClass, $this->config['retry']);
+    return Google_Http_REST::execute(
+        $http,
+        $request,
+        $expectedClass,
+        $this->config['retry'],
+        $this->config['retry_map']
+    );
   }
 
   /**
@@ -846,7 +867,7 @@ class Google_Client
   {
     if (is_string($config)) {
       if (!file_exists($config)) {
-        throw new InvalidArgumentException('file does not exist');
+        throw new InvalidArgumentException(sprintf('file "%s" does not exist', $config));
       }
 
       $json = file_get_contents($config);
@@ -886,7 +907,7 @@ class Google_Client
   /**
    * Use when the service account has been delegated domain wide access.
    *
-   * @param string subject an email address account to impersonate
+   * @param string $subject an email address account to impersonate
    */
   public function setSubject($subject)
   {
@@ -968,7 +989,7 @@ class Google_Client
   }
 
   /**
-   * @return Google\Auth\CacheInterface Cache implementation
+   * @param array $cacheConfig
    */
   public function setCacheConfig(array $cacheConfig)
   {

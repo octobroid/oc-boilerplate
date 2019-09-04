@@ -61,6 +61,7 @@ class Google_Service_ServiceManagement extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://servicemanagement.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'servicemanagement';
 
@@ -363,6 +364,10 @@ class Google_Service_ServiceManagement extends Google_Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ),
+                'baseRolloutId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
                 ),
               ),
             ),'get' => array(

@@ -60,10 +60,11 @@ class Google_Service_TagManager extends Google_Service
   public $accounts_containers_workspaces;
   public $accounts_containers_workspaces_built_in_variables;
   public $accounts_containers_workspaces_folders;
-  public $accounts_containers_workspaces_proposal;
   public $accounts_containers_workspaces_tags;
+  public $accounts_containers_workspaces_templates;
   public $accounts_containers_workspaces_triggers;
   public $accounts_containers_workspaces_variables;
+  public $accounts_containers_workspaces_zones;
   public $accounts_user_permissions;
   
   /**
@@ -76,6 +77,7 @@ class Google_Service_TagManager extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'tagmanager/v2/';
+    $this->batchPath = 'batch/tagmanager/v2';
     $this->version = 'v2';
     $this->serviceName = 'tagmanager';
 
@@ -236,20 +238,6 @@ class Google_Service_TagManager extends Google_Service
                   'required' => true,
                 ),
                 'pageToken' => array(
-                  'location' => 'query',
-                  'type' => 'string',
-                ),
-              ),
-            ),'patch' => array(
-              'path' => '{+path}',
-              'httpMethod' => 'PATCH',
-              'parameters' => array(
-                'path' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-                'fingerprint' => array(
                   'location' => 'query',
                   'type' => 'string',
                 ),
@@ -458,16 +446,6 @@ class Google_Service_TagManager extends Google_Service
                   'required' => true,
                 ),
               ),
-            ),'getProposal' => array(
-              'path' => '{+path}',
-              'httpMethod' => 'GET',
-              'parameters' => array(
-                'path' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
             ),'getStatus' => array(
               'path' => '{+path}/status',
               'httpMethod' => 'GET',
@@ -538,16 +516,6 @@ class Google_Service_TagManager extends Google_Service
                 'fingerprint' => array(
                   'location' => 'query',
                   'type' => 'string',
-                ),
-              ),
-            ),'updateProposal' => array(
-              'path' => '{+path}',
-              'httpMethod' => 'PUT',
-              'parameters' => array(
-                'path' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
                 ),
               ),
             ),
@@ -743,36 +711,6 @@ class Google_Service_TagManager extends Google_Service
           )
         )
     );
-    $this->accounts_containers_workspaces_proposal = new Google_Service_TagManager_Resource_AccountsContainersWorkspacesProposal(
-        $this,
-        $this->serviceName,
-        'proposal',
-        array(
-          'methods' => array(
-            'create' => array(
-              'path' => '{+parent}/proposal',
-              'httpMethod' => 'POST',
-              'parameters' => array(
-                'parent' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
-            ),'delete' => array(
-              'path' => '{+path}',
-              'httpMethod' => 'DELETE',
-              'parameters' => array(
-                'path' => array(
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ),
-              ),
-            ),
-          )
-        )
-    );
     $this->accounts_containers_workspaces_tags = new Google_Service_TagManager_Resource_AccountsContainersWorkspacesTags(
         $this,
         $this->serviceName,
@@ -811,6 +749,88 @@ class Google_Service_TagManager extends Google_Service
               ),
             ),'list' => array(
               'path' => '{+parent}/tags',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'revert' => array(
+              'path' => '{+path}:revert',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'fingerprint' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'update' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'PUT',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'fingerprint' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->accounts_containers_workspaces_templates = new Google_Service_TagManager_Resource_AccountsContainersWorkspacesTemplates(
+        $this,
+        $this->serviceName,
+        'templates',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => '{+parent}/templates',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => '{+parent}/templates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(
@@ -975,6 +995,88 @@ class Google_Service_TagManager extends Google_Service
               ),
             ),'list' => array(
               'path' => '{+parent}/variables',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'revert' => array(
+              'path' => '{+path}:revert',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'fingerprint' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),'update' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'PUT',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'fingerprint' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->accounts_containers_workspaces_zones = new Google_Service_TagManager_Resource_AccountsContainersWorkspacesZones(
+        $this,
+        $this->serviceName,
+        'zones',
+        array(
+          'methods' => array(
+            'create' => array(
+              'path' => '{+parent}/zones',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => '{+path}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'path' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => '{+parent}/zones',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'parent' => array(

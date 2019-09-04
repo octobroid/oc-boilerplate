@@ -207,4 +207,36 @@ class Google_Service_Compute_Resource_InterconnectAttachments extends Google_Ser
     $params = array_merge($params, $optParams);
     return $this->call('list', array($params), "Google_Service_Compute_InterconnectAttachmentList");
   }
+  /**
+   * Updates the specified interconnect attachment with the data included in the
+   * request. This method supports PATCH semantics and uses the JSON merge patch
+   * format and processing rules. (interconnectAttachments.patch)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $region Name of the region scoping this request.
+   * @param string $interconnectAttachment Name of the interconnect attachment to
+   * patch.
+   * @param Google_Service_Compute_InterconnectAttachment $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function patch($project, $region, $interconnectAttachment, Google_Service_Compute_InterconnectAttachment $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'region' => $region, 'interconnectAttachment' => $interconnectAttachment, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', array($params), "Google_Service_Compute_Operation");
+  }
 }

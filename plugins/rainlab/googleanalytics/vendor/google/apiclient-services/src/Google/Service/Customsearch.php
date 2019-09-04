@@ -45,6 +45,7 @@ class Google_Service_Customsearch extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'customsearch/';
+    $this->batchPath = 'batch/customsearch/v1';
     $this->version = 'v1';
     $this->serviceName = 'customsearch';
 

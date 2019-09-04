@@ -20,12 +20,15 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   public $availableMemoryMb;
   public $description;
   public $entryPoint;
+  public $environmentVariables;
   protected $eventTriggerType = 'Google_Service_CloudFunctions_EventTrigger';
   protected $eventTriggerDataType = '';
   protected $httpsTriggerType = 'Google_Service_CloudFunctions_HttpsTrigger';
   protected $httpsTriggerDataType = '';
   public $labels;
+  public $maxInstances;
   public $name;
+  public $network;
   public $runtime;
   public $serviceAccountEmail;
   public $sourceArchiveUrl;
@@ -36,6 +39,7 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   public $timeout;
   public $updateTime;
   public $versionId;
+  public $vpcConnector;
 
   public function setAvailableMemoryMb($availableMemoryMb)
   {
@@ -60,6 +64,14 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   public function getEntryPoint()
   {
     return $this->entryPoint;
+  }
+  public function setEnvironmentVariables($environmentVariables)
+  {
+    $this->environmentVariables = $environmentVariables;
+  }
+  public function getEnvironmentVariables()
+  {
+    return $this->environmentVariables;
   }
   /**
    * @param Google_Service_CloudFunctions_EventTrigger
@@ -97,6 +109,14 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   {
     return $this->labels;
   }
+  public function setMaxInstances($maxInstances)
+  {
+    $this->maxInstances = $maxInstances;
+  }
+  public function getMaxInstances()
+  {
+    return $this->maxInstances;
+  }
   public function setName($name)
   {
     $this->name = $name;
@@ -104,6 +124,14 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   public function getName()
   {
     return $this->name;
+  }
+  public function setNetwork($network)
+  {
+    $this->network = $network;
+  }
+  public function getNetwork()
+  {
+    return $this->network;
   }
   public function setRuntime($runtime)
   {
@@ -182,5 +210,13 @@ class Google_Service_CloudFunctions_CloudFunction extends Google_Model
   public function getVersionId()
   {
     return $this->versionId;
+  }
+  public function setVpcConnector($vpcConnector)
+  {
+    $this->vpcConnector = $vpcConnector;
+  }
+  public function getVpcConnector()
+  {
+    return $this->vpcConnector;
   }
 }

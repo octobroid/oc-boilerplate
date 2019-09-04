@@ -30,16 +30,16 @@
  */
 class Google_Service_Plus extends Google_Service
 {
-  /** Know the list of people in your circles, your age range, and language. */
+  /** View your basic profile info, including your age range and language. */
   const PLUS_LOGIN =
       "https://www.googleapis.com/auth/plus.login";
-  /** Know who you are on Google. */
+  /** Associate you with your personal info on Google. */
   const PLUS_ME =
       "https://www.googleapis.com/auth/plus.me";
   /** View your email address. */
   const USERINFO_EMAIL =
       "https://www.googleapis.com/auth/userinfo.email";
-  /** View your basic profile info. */
+  /** See your personal info, including any personal info you've made publicly available. */
   const USERINFO_PROFILE =
       "https://www.googleapis.com/auth/userinfo.profile";
 
@@ -57,6 +57,7 @@ class Google_Service_Plus extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'plus/v1/';
+    $this->batchPath = 'batch/plus/v1';
     $this->version = 'v1';
     $this->serviceName = 'plus';
 

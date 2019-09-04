@@ -18,12 +18,21 @@
 class Google_Service_Dataflow_StreamingConfigTask extends Google_Collection
 {
   protected $collection_key = 'streamingComputationConfigs';
+  public $maxWorkItemCommitBytes;
   protected $streamingComputationConfigsType = 'Google_Service_Dataflow_StreamingComputationConfig';
   protected $streamingComputationConfigsDataType = 'array';
   public $userStepToStateFamilyNameMap;
   public $windmillServiceEndpoint;
   public $windmillServicePort;
 
+  public function setMaxWorkItemCommitBytes($maxWorkItemCommitBytes)
+  {
+    $this->maxWorkItemCommitBytes = $maxWorkItemCommitBytes;
+  }
+  public function getMaxWorkItemCommitBytes()
+  {
+    return $this->maxWorkItemCommitBytes;
+  }
   /**
    * @param Google_Service_Dataflow_StreamingComputationConfig
    */

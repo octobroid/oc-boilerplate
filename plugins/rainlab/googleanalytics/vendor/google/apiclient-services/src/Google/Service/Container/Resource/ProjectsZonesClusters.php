@@ -26,7 +26,7 @@
 class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Service_Resource
 {
   /**
-   * Sets the addons of a specific cluster. (clusters.addons)
+   * Sets the addons for a specific cluster. (clusters.addons)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -75,12 +75,12 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
    * By default, the cluster is created in the project's [default
    * network](/compute/docs/networks-and-firewalls#networks).
    *
-   * One firewall is added for the cluster. After cluster creation, the cluster
+   * One firewall is added for the cluster. After cluster creation, the Kubelet
    * creates routes for each node to allow the containers on that node to
    * communicate with all other instances in the cluster.
    *
    * Finally, an entry is added to the project's global metadata indicating which
-   * CIDR range is being used by the cluster. (clusters.create)
+   * CIDR range the cluster is using. (clusters.create)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -104,9 +104,9 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
    * Firewalls and routes that were configured during cluster creation are also
    * deleted.
    *
-   * Other Google Compute Engine resources that might be in use by the cluster
-   * (e.g. load balancer resources) will not be deleted if they weren't present at
-   * the initial create time. (clusters.delete)
+   * Other Google Compute Engine resources that might be in use by the cluster,
+   * such as load balancer resources, are not deleted if they weren't present when
+   * the cluster was initially created. (clusters.delete)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -198,7 +198,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('list', array($params), "Google_Service_Container_ListClustersResponse");
   }
   /**
-   * Sets the locations of a specific cluster. (clusters.locations)
+   * Sets the locations for a specific cluster. (clusters.locations)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -219,7 +219,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('locations', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Sets the logging service of a specific cluster. (clusters.logging)
+   * Sets the logging service for a specific cluster. (clusters.logging)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -240,7 +240,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('logging', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Updates the master of a specific cluster. (clusters.master)
+   * Updates the master for a specific cluster. (clusters.master)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -261,7 +261,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('master', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Sets the monitoring service of a specific cluster. (clusters.monitoring)
+   * Sets the monitoring service for a specific cluster. (clusters.monitoring)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -322,9 +322,9 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('setMaintenancePolicy', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Used to set master auth materials. Currently supports :- Changing the admin
-   * password of a specific cluster. This can be either via password generation or
-   * explicitly set the password. (clusters.setMasterAuth)
+   * Sets master auth materials. Currently supports changing the admin password or
+   * a specific cluster, either via password generation or explicitly setting the
+   * password. (clusters.setMasterAuth)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project number](https://support.google.com/cloud/answer/6158840). This
@@ -345,7 +345,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('setMasterAuth', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Enables/Disables Network Policy for a cluster. (clusters.setNetworkPolicy)
+   * Enables or disables Network Policy for a cluster. (clusters.setNetworkPolicy)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project
@@ -367,7 +367,7 @@ class Google_Service_Container_Resource_ProjectsZonesClusters extends Google_Ser
     return $this->call('setNetworkPolicy', array($params), "Google_Service_Container_Operation");
   }
   /**
-   * Start master IP rotation. (clusters.startIpRotation)
+   * Starts master IP rotation. (clusters.startIpRotation)
    *
    * @param string $projectId Deprecated. The Google Developers Console [project
    * ID or project

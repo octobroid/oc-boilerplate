@@ -19,7 +19,9 @@
  * Service definition for CloudVideoIntelligence (v1).
  *
  * <p>
- * Cloud Video Intelligence API.</p>
+ * Detects objects, explicit content, and scene changes in videos. It also
+ * specifies the region for annotation and transcribes speech to text. Supports
+ * both asynchronous API and streaming API.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -35,6 +37,8 @@ class Google_Service_CloudVideoIntelligence extends Google_Service
       "https://www.googleapis.com/auth/cloud-platform";
 
   public $operations;
+  public $operations_projects_locations_operations;
+  public $projects_locations_operations;
   public $videos;
   
   /**
@@ -48,6 +52,7 @@ class Google_Service_CloudVideoIntelligence extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://videointelligence.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'videointelligence';
 
@@ -87,13 +92,94 @@ class Google_Service_CloudVideoIntelligence extends Google_Service
                   'required' => true,
                 ),
               ),
-            ),'list' => array(
-              'path' => 'v1/operations',
+            ),
+          )
+        )
+    );
+    $this->operations_projects_locations_operations = new Google_Service_CloudVideoIntelligence_Resource_OperationsProjectsLocationsOperations(
+        $this,
+        $this->serviceName,
+        'operations',
+        array(
+          'methods' => array(
+            'cancel' => array(
+              'path' => 'v1/operations/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => 'v1/operations/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v1/operations/{+name}',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'name' => array(
-                  'location' => 'query',
+                  'location' => 'path',
                   'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->projects_locations_operations = new Google_Service_CloudVideoIntelligence_Resource_ProjectsLocationsOperations(
+        $this,
+        $this->serviceName,
+        'operations',
+        array(
+          'methods' => array(
+            'cancel' => array(
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'delete' => array(
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => 'v1/{+name}/operations',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'name' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ),
                 'pageToken' => array(
                   'location' => 'query',

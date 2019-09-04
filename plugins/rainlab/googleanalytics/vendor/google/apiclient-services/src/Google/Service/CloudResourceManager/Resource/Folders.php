@@ -41,11 +41,11 @@ class Google_Service_CloudResourceManager_Resource_Folders extends Google_Servic
    * the Folder must not cause the total number of Folders under its parent to
    * exceed 100.
    *
-   * If the operation fails due to a folder constraint violation, a
-   * PreconditionFailure explaining the violation will be returned. If the failure
-   * occurs synchronously then the PreconditionFailure will be returned via the
-   * Status.details field and if it occurs asynchronously then the
-   * PreconditionFailure will be returned via the the Operation.error field.
+   * If the operation fails due to a folder constraint violation, some errors may
+   * be returned by the CreateFolder request, with status code FAILED_PRECONDITION
+   * and an error description. Other folder constraint violations will be
+   * communicated in the Operation, with the specific PreconditionFailure returned
+   * via the details list in the Operation.error field.
    *
    * The caller must have `resourcemanager.folders.create` permission on the
    * identified parent. (folders.create)
@@ -129,8 +129,6 @@ class Google_Service_CloudResourceManager_Resource_Folders extends Google_Servic
    *
    * @param array $optParams Optional parameters.
    *
-   * @opt_param int pageSize The maximum number of Folders to return in the
-   * response. This field is optional.
    * @opt_param string parent The resource name of the Organization or Folder
    * whose Folders are being listed. Must be of the form `folders/{folder_id}` or
    * `organizations/{org_id}`. Access to this method is controlled by checking the
@@ -140,6 +138,8 @@ class Google_Service_CloudResourceManager_Resource_Folders extends Google_Servic
    * @opt_param string pageToken A pagination token returned from a previous call
    * to `ListFolders` that indicates where this listing should continue from. This
    * field is optional.
+   * @opt_param int pageSize The maximum number of Folders to return in the
+   * response. This field is optional.
    * @return Google_Service_CloudResourceManager_ListFoldersResponse
    */
   public function listFolders($optParams = array())
@@ -155,8 +155,8 @@ class Google_Service_CloudResourceManager_Resource_Folders extends Google_Servic
    * failure, a FolderOperationError categorizing the failure cause will be
    * returned - if the failure occurs synchronously then the FolderOperationError
    * will be returned via the Status.details field and if it occurs asynchronously
-   * then the FolderOperation will be returned via the the Operation.error field.
-   * In addition, the Operation.metadata field will be populated with a
+   * then the FolderOperation will be returned via the Operation.error field. In
+   * addition, the Operation.metadata field will be populated with a
    * FolderOperation message as an aid to stateless clients. Folder moves will be
    * rejected if they violate either the naming, height or fanout constraints
    * described in the CreateFolder documentation. The caller must have
@@ -184,7 +184,7 @@ class Google_Service_CloudResourceManager_Resource_Folders extends Google_Servic
    * The Folder's display name must start and end with a letter or digit, may
    * contain letters, digits, spaces, hyphens and underscores and can be no longer
    * than 30 characters. This is captured by the regular expression:
-   * [\p{L}\p{N}]({\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?. The caller must have
+   * [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?. The caller must have
    * `resourcemanager.folders.update` permission on the identified folder.
    *
    * If the update fails due to the unique name constraint then a

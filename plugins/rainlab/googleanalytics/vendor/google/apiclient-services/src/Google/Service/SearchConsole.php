@@ -44,6 +44,7 @@ class Google_Service_SearchConsole extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://searchconsole.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'searchconsole';
 

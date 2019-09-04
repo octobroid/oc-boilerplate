@@ -54,6 +54,7 @@ class Google_Service_Fusiontables extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'fusiontables/v2/';
+    $this->batchPath = 'batch/fusiontables/v2';
     $this->version = 'v2';
     $this->serviceName = 'fusiontables';
 

@@ -26,7 +26,10 @@
 class Google_Service_Dialogflow_Resource_ProjectsAgentSessionsEntityTypes extends Google_Service_Resource
 {
   /**
-   * Creates a session entity type. (entityTypes.create)
+   * Creates a session entity type.
+   *
+   * If the specified session entity type already exists, overrides the session
+   * entity type. (entityTypes.create)
    *
    * @param string $parent Required. The session to create a session entity type
    * for. Format: `projects//agent/sessions/`.
@@ -93,6 +96,9 @@ class Google_Service_Dialogflow_Resource_ProjectsAgentSessionsEntityTypes extend
    *
    * @param string $name Required. The unique identifier of this session entity
    * type. Format: `projects//agent/sessions//entityTypes/`.
+   *
+   * `` must be the display name of an existing entity type in the same agent that
+   * will be overridden or supplemented.
    * @param Google_Service_Dialogflow_GoogleCloudDialogflowV2SessionEntityType $postBody
    * @param array $optParams Optional parameters.
    *

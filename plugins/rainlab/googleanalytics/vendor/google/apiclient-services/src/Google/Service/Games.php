@@ -33,12 +33,9 @@ class Google_Service_Games extends Google_Service
   /** View and manage its own configuration data in your Google Drive. */
   const DRIVE_APPDATA =
       "https://www.googleapis.com/auth/drive.appdata";
-  /** Share your Google+ profile information and view and manage your game activity. */
+  /** Create, edit, and delete your Google Play Games activity. */
   const GAMES =
       "https://www.googleapis.com/auth/games";
-  /** Know the list of people in your circles, your age range, and language. */
-  const PLUS_LOGIN =
-      "https://www.googleapis.com/auth/plus.login";
 
   public $achievementDefinitions;
   public $achievements;
@@ -66,6 +63,7 @@ class Google_Service_Games extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'games/v1/';
+    $this->batchPath = 'batch/games/v1';
     $this->version = 'v1';
     $this->serviceName = 'games';
 
@@ -181,11 +179,20 @@ class Google_Service_Games extends Google_Service
                   'type' => 'string',
                   'required' => true,
                 ),
+                'builtinGameId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
               ),
             ),'updateMultiple' => array(
               'path' => 'achievements/updateMultiple',
               'httpMethod' => 'POST',
-              'parameters' => array(),
+              'parameters' => array(
+                'builtinGameId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
             ),
           )
         )
@@ -217,7 +224,12 @@ class Google_Service_Games extends Google_Service
             ),'played' => array(
               'path' => 'applications/played',
               'httpMethod' => 'POST',
-              'parameters' => array(),
+              'parameters' => array(
+                'builtinGameId' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+              ),
             ),'verify' => array(
               'path' => 'applications/{applicationId}/verify',
               'httpMethod' => 'GET',

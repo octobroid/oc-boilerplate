@@ -19,8 +19,7 @@
  * Service definition for HangoutsChat (v1).
  *
  * <p>
- * Enables bots to fetch information and perform actions in the new Hangouts
- * Chat.</p>
+ * Enables bots to fetch information and perform actions in Hangouts Chat.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -47,6 +46,7 @@ class Google_Service_HangoutsChat extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://chat.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'chat';
 

@@ -151,6 +151,36 @@ class Google_Service_Compute_Resource_TargetHttpsProxies extends Google_Service_
     return $this->call('list', array($params), "Google_Service_Compute_TargetHttpsProxyList");
   }
   /**
+   * Sets the QUIC override policy for TargetHttpsProxy.
+   * (targetHttpsProxies.setQuicOverride)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $targetHttpsProxy Name of the TargetHttpsProxy resource to set
+   * the QUIC override policy for. The name should conform to RFC1035.
+   * @param Google_Service_Compute_TargetHttpsProxiesSetQuicOverrideRequest $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function setQuicOverride($project, $targetHttpsProxy, Google_Service_Compute_TargetHttpsProxiesSetQuicOverrideRequest $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'targetHttpsProxy' => $targetHttpsProxy, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('setQuicOverride', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
    * Replaces SslCertificates for TargetHttpsProxy.
    * (targetHttpsProxies.setSslCertificates)
    *

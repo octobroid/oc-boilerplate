@@ -19,7 +19,10 @@
  * Service definition for Logging (v2).
  *
  * <p>
- * Writes log entries and manages your Stackdriver Logging configuration.</p>
+ * Writes log entries and manages your Stackdriver Logging configuration. The
+ * table entries below are presented in alphabetical order, not in order of
+ * common use. For explanations of the concepts found in the table entries, read
+ * the Stackdriver Logging documentation.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -75,6 +78,7 @@ class Google_Service_Logging extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://logging.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v2';
     $this->serviceName = 'logging';
 

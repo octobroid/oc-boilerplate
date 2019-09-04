@@ -26,7 +26,10 @@
 class Google_Service_Dialogflow_Resource_ProjectsAgentSessionsContexts extends Google_Service_Resource
 {
   /**
-   * Creates a context. (contexts.create)
+   * Creates a context.
+   *
+   * If the specified context already exists, overrides the context.
+   * (contexts.create)
    *
    * @param string $parent Required. The session to create a context for. Format:
    * `projects//agent/sessions/`.
@@ -93,6 +96,9 @@ class Google_Service_Dialogflow_Resource_ProjectsAgentSessionsContexts extends G
    *
    * @param string $name Required. The unique identifier of the context. Format:
    * `projects//agent/sessions//contexts/`.
+   *
+   * The `Context ID` is always converted to lowercase, may only contain
+   * characters in [a-zA-Z0-9_-%] and may be at most 250 bytes long.
    * @param Google_Service_Dialogflow_GoogleCloudDialogflowV2Context $postBody
    * @param array $optParams Optional parameters.
    *

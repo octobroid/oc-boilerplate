@@ -46,6 +46,7 @@ class Google_Service_GroupsMigration extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'groups/v1/groups/';
+    $this->batchPath = 'batch/groupsmigration/v1';
     $this->version = 'v1';
     $this->serviceName = 'groupsmigration';
 

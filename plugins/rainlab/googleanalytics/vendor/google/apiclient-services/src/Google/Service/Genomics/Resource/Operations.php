@@ -30,7 +30,10 @@ class Google_Service_Genomics_Resource_Operations extends Google_Service_Resourc
    * makes a best effort to cancel the operation, but success is not guaranteed.
    * Clients may use Operations.GetOperation or Operations.ListOperations to check
    * whether the cancellation succeeded or the operation completed despite
-   * cancellation. (operations.cancel)
+   * cancellation. Authorization requires the following [Google
+   * IAM](https://cloud.google.com/iam) permission
+   *
+   * * `genomics.operations.cancel` (operations.cancel)
    *
    * @param string $name The name of the operation resource to be cancelled.
    * @param Google_Service_Genomics_CancelOperationRequest $postBody
@@ -44,9 +47,12 @@ class Google_Service_Genomics_Resource_Operations extends Google_Service_Resourc
     return $this->call('cancel', array($params), "Google_Service_Genomics_GenomicsEmpty");
   }
   /**
-   * Gets the latest state of a long-running operation.  Clients can use this
+   * Gets the latest state of a long-running operation. Clients can use this
    * method to poll the operation result at intervals as recommended by the API
-   * service. (operations.get)
+   * service. Authorization requires the following [Google
+   * IAM](https://cloud.google.com/iam) permission
+   *
+   * * `genomics.operations.get` (operations.get)
    *
    * @param string $name The name of the operation resource.
    * @param array $optParams Optional parameters.
@@ -60,7 +66,10 @@ class Google_Service_Genomics_Resource_Operations extends Google_Service_Resourc
   }
   /**
    * Lists operations that match the specified filter in the request.
-   * (operations.listOperations)
+   * Authorization requires the following [Google
+   * IAM](https://cloud.google.com/iam) permission
+   *
+   * * `genomics.operations.list` (operations.listOperations)
    *
    * @param string $name The name of the operation's parent resource.
    * @param array $optParams Optional parameters.
@@ -73,7 +82,8 @@ class Google_Service_Genomics_Resource_Operations extends Google_Service_Resourc
    * to determine if a   particular event has occurred. * error If the pipeline is
    * running, this value is NULL.  Once the   pipeline finishes, the value is the
    * standard Google error code. * labels.key or labels."key with space" where key
-   * is a label key.
+   * is a label key. * done If the pipeline is running, this value is false. Once
+   * the   pipeline finishes, the value is true.
    *
    * In v1 and v1alpha2, the following filter fields are supported
    *
@@ -90,8 +100,8 @@ class Google_Service_Genomics_Resource_Operations extends Google_Service_Resourc
    * = RUNNING` * `projectId = my-project AND labels.color = *` * `projectId = my-
    * project AND labels.color = red`
    * @opt_param string pageToken The standard list page token.
-   * @opt_param int pageSize The maximum number of results to return. If
-   * unspecified, defaults to 256. The maximum value is 2048.
+   * @opt_param int pageSize The maximum number of results to return. The maximum
+   * value is 256.
    * @return Google_Service_Genomics_ListOperationsResponse
    */
   public function listOperations($name, $optParams = array())

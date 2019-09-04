@@ -27,8 +27,13 @@ class Google_Service_DLP_Resource_ProjectsContent extends Google_Service_Resourc
 {
   /**
    * De-identifies potentially sensitive info from a ContentItem. This method has
-   * limits on input size and output size. [How-to guide](/dlp/docs/deidentify-
-   * sensitive-data) (content.deidentify)
+   * limits on input size and output size. See https://cloud.google.com/dlp/docs
+   * /deidentify-sensitive-data to learn more.
+   *
+   * When no InfoTypes or CustomInfoTypes are specified in this request, the
+   * system will automatically choose what detectors to run. By default this may
+   * be all types, but may change over time as detectors are updated.
+   * (content.deidentify)
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id.
@@ -44,9 +49,14 @@ class Google_Service_DLP_Resource_ProjectsContent extends Google_Service_Resourc
   }
   /**
    * Finds potentially sensitive info in content. This method has limits on input
-   * size, processing time, and output size. [How-to guide for text](/dlp/docs
-   * /inspecting-text), [How-to guide for images](/dlp/docs/inspecting-images)
-   * (content.inspect)
+   * size, processing time, and output size.
+   *
+   * When no InfoTypes or CustomInfoTypes are specified in this request, the
+   * system will automatically choose what detectors to run. By default this may
+   * be all types, but may change over time as detectors are updated.
+   *
+   * For how to guides, see https://cloud.google.com/dlp/docs/inspecting-images
+   * and https://cloud.google.com/dlp/docs/inspecting-text, (content.inspect)
    *
    * @param string $parent The parent resource name, for example projects/my-
    * project-id.
@@ -61,7 +71,9 @@ class Google_Service_DLP_Resource_ProjectsContent extends Google_Service_Resourc
     return $this->call('inspect', array($params), "Google_Service_DLP_GooglePrivacyDlpV2InspectContentResponse");
   }
   /**
-   * Re-identifies content that has been de-identified. (content.reidentify)
+   * Re-identifies content that has been de-identified. See
+   * https://cloud.google.com/dlp/docs/pseudonymization#re-
+   * identification_in_free_text_code_example to learn more. (content.reidentify)
    *
    * @param string $parent The parent resource name.
    * @param Google_Service_DLP_GooglePrivacyDlpV2ReidentifyContentRequest $postBody

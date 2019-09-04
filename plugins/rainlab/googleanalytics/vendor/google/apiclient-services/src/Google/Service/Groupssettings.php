@@ -19,7 +19,7 @@
  * Service definition for Groupssettings (v1).
  *
  * <p>
- * Lets you manage permission levels and related settings of a group.</p>
+ * Manages permission levels and related settings of a group.</p>
  *
  * <p>
  * For more information about this service, see the API
@@ -46,6 +46,7 @@ class Google_Service_Groupssettings extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'groups/v1/groups/';
+    $this->batchPath = 'batch/groupssettings/v1';
     $this->version = 'v1';
     $this->serviceName = 'groupssettings';
 

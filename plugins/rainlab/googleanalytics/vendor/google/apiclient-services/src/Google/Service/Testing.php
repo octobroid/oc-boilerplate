@@ -52,6 +52,7 @@ class Google_Service_Testing extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://testing.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1';
     $this->serviceName = 'testing';
 

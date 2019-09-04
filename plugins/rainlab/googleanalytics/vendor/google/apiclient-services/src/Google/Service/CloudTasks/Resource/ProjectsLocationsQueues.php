@@ -34,8 +34,9 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    *
    * WARNING: Using this method may have unintended side effects if you are using
    * an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read
-   * [Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)
-   * before using this method. (queues.create)
+   * [Overview of Queue Management and
+   * queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this
+   * method. (queues.create)
    *
    * @param string $parent Required.
    *
@@ -64,8 +65,9 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    *
    * WARNING: Using this method may have unintended side effects if you are using
    * an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read
-   * [Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)
-   * before using this method. (queues.delete)
+   * [Overview of Queue Management and
+   * queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this
+   * method. (queues.delete)
    *
    * @param string $name Required.
    *
@@ -100,8 +102,9 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    * Gets the access control policy for a Queue. Returns an empty policy if the
    * resource exists and does not have a policy set.
    *
-   * Authorization requires the following [Google IAM](/iam) permission on the
-   * specified resource parent:
+   * Authorization requires the following [Google
+   * IAM](https://cloud.google.com/iam) permission on the specified resource
+   * parent:
    *
    * * `cloudtasks.queues.getIamPolicy` (queues.getIamPolicy)
    *
@@ -133,11 +136,11 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    * Any Queue field can be used as a filter and several operators as supported.
    * For example: `<=, <, >=, >, !=, =, :`. The filter syntax is the same as
    * described in [Stackdriver's Advanced Logs
-   * Filters](/logging/docs/view/advanced_filters).
+   * Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
    *
-   * Sample filter "app_engine_http_target: *".
+   * Sample filter "state: PAUSED".
    *
-   * Note that using filters might cause fewer queues than the requested_page size
+   * Note that using filters might cause fewer queues than the requested page_size
    * to be returned.
    * @opt_param string pageToken A token identifying the page of results to
    * return.
@@ -172,26 +175,27 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    *
    * WARNING: Using this method may have unintended side effects if you are using
    * an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read
-   * [Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)
-   * before using this method. (queues.patch)
+   * [Overview of Queue Management and
+   * queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this
+   * method. (queues.patch)
    *
-   * @param string $name The queue name.
+   * @param string $name Caller-specified and required in CreateQueue, after which
+   * it becomes output only.
+   *
+   * The queue name.
    *
    * The queue name must have the following format:
    * `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
    *
    * * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),    hyphens
    * (-), colons (:), or periods (.).    For more information, see    [Identifying
-   * projects](/resource-manager/docs/creating-managing-
+   * projects](https://cloud.google.com/resource-manager/docs/creating-managing-
    * projects#identifying_projects) * `LOCATION_ID` is the canonical ID for the
    * queue's location.    The list of available locations can be obtained by
    * calling    ListLocations.    For more information, see
    * https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain letters
    * ([A-Za-z]), numbers ([0-9]), or   hyphens (-). The maximum length is 100
    * characters.
-   *
-   * Caller-specified and required in CreateQueue, after which it becomes output
-   * only.
    * @param Google_Service_CloudTasks_Queue $postBody
    * @param array $optParams Optional parameters.
    *
@@ -260,8 +264,9 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    *
    * WARNING: Resuming many high-QPS queues at the same time can lead to target
    * overloading. If you are resuming high-QPS queues, follow the 500/50/5 pattern
-   * described in [Managing Cloud Tasks Scaling Risks](/cloud-tasks/pdfs/managing-
-   * cloud-tasks-scaling-risks-2017-06-05.pdf). (queues.resume)
+   * described in [Managing Cloud Tasks Scaling
+   * Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+   * (queues.resume)
    *
    * @param string $name Required.
    *
@@ -283,8 +288,9 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueues extends Google_
    * Note: The Cloud Console does not check queue-level IAM permissions yet.
    * Project-level permissions are required to use the Cloud Console.
    *
-   * Authorization requires the following [Google IAM](/iam) permission on the
-   * specified resource parent:
+   * Authorization requires the following [Google
+   * IAM](https://cloud.google.com/iam) permission on the specified resource
+   * parent:
    *
    * * `cloudtasks.queues.setIamPolicy` (queues.setIamPolicy)
    *

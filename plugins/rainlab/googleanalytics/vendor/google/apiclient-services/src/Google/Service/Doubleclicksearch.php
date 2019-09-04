@@ -49,6 +49,7 @@ class Google_Service_Doubleclicksearch extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://www.googleapis.com/';
     $this->servicePath = 'doubleclicksearch/v2/';
+    $this->batchPath = 'batch/doubleclicksearch/v2';
     $this->version = 'v2';
     $this->serviceName = 'doubleclicksearch';
 

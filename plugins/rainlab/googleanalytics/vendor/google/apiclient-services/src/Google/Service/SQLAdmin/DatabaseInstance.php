@@ -22,6 +22,10 @@ class Google_Service_SQLAdmin_DatabaseInstance extends Google_Collection
   public $connectionName;
   public $currentDiskSize;
   public $databaseVersion;
+  protected $diskEncryptionConfigurationType = 'Google_Service_SQLAdmin_DiskEncryptionConfiguration';
+  protected $diskEncryptionConfigurationDataType = '';
+  protected $diskEncryptionStatusType = 'Google_Service_SQLAdmin_DiskEncryptionStatus';
+  protected $diskEncryptionStatusDataType = '';
   public $etag;
   protected $failoverReplicaType = 'Google_Service_SQLAdmin_DatabaseInstanceFailoverReplica';
   protected $failoverReplicaDataType = '';
@@ -41,6 +45,7 @@ class Google_Service_SQLAdmin_DatabaseInstance extends Google_Collection
   protected $replicaConfigurationType = 'Google_Service_SQLAdmin_ReplicaConfiguration';
   protected $replicaConfigurationDataType = '';
   public $replicaNames;
+  public $rootPassword;
   public $selfLink;
   protected $serverCaCertType = 'Google_Service_SQLAdmin_SslCert';
   protected $serverCaCertDataType = '';
@@ -81,6 +86,34 @@ class Google_Service_SQLAdmin_DatabaseInstance extends Google_Collection
   public function getDatabaseVersion()
   {
     return $this->databaseVersion;
+  }
+  /**
+   * @param Google_Service_SQLAdmin_DiskEncryptionConfiguration
+   */
+  public function setDiskEncryptionConfiguration(Google_Service_SQLAdmin_DiskEncryptionConfiguration $diskEncryptionConfiguration)
+  {
+    $this->diskEncryptionConfiguration = $diskEncryptionConfiguration;
+  }
+  /**
+   * @return Google_Service_SQLAdmin_DiskEncryptionConfiguration
+   */
+  public function getDiskEncryptionConfiguration()
+  {
+    return $this->diskEncryptionConfiguration;
+  }
+  /**
+   * @param Google_Service_SQLAdmin_DiskEncryptionStatus
+   */
+  public function setDiskEncryptionStatus(Google_Service_SQLAdmin_DiskEncryptionStatus $diskEncryptionStatus)
+  {
+    $this->diskEncryptionStatus = $diskEncryptionStatus;
+  }
+  /**
+   * @return Google_Service_SQLAdmin_DiskEncryptionStatus
+   */
+  public function getDiskEncryptionStatus()
+  {
+    return $this->diskEncryptionStatus;
   }
   public function setEtag($etag)
   {
@@ -225,6 +258,14 @@ class Google_Service_SQLAdmin_DatabaseInstance extends Google_Collection
   public function getReplicaNames()
   {
     return $this->replicaNames;
+  }
+  public function setRootPassword($rootPassword)
+  {
+    $this->rootPassword = $rootPassword;
+  }
+  public function getRootPassword()
+  {
+    return $this->rootPassword;
   }
   public function setSelfLink($selfLink)
   {

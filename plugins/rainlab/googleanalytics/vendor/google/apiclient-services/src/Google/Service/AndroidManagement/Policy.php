@@ -34,6 +34,8 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public $bluetoothDisabled;
   public $cameraDisabled;
   public $cellBroadcastsConfigDisabled;
+  protected $choosePrivateKeyRulesType = 'Google_Service_AndroidManagement_ChoosePrivateKeyRule';
+  protected $choosePrivateKeyRulesDataType = 'array';
   protected $complianceRulesType = 'Google_Service_AndroidManagement_ComplianceRule';
   protected $complianceRulesDataType = 'array';
   public $createWindowsDisabled;
@@ -57,6 +59,7 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   protected $longSupportMessageType = 'Google_Service_AndroidManagement_UserFacingMessage';
   protected $longSupportMessageDataType = '';
   public $maximumTimeToLock;
+  public $minimumApiLevel;
   public $mobileNetworksConfigDisabled;
   public $modifyAccountsDisabled;
   public $mountPhysicalMediaDisabled;
@@ -66,12 +69,20 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public $openNetworkConfiguration;
   public $outgoingBeamDisabled;
   public $outgoingCallsDisabled;
+  protected $passwordPoliciesType = 'Google_Service_AndroidManagement_PasswordRequirements';
+  protected $passwordPoliciesDataType = 'array';
   protected $passwordRequirementsType = 'Google_Service_AndroidManagement_PasswordRequirements';
   protected $passwordRequirementsDataType = '';
+  protected $permissionGrantsType = 'Google_Service_AndroidManagement_PermissionGrant';
+  protected $permissionGrantsDataType = 'array';
   protected $permittedInputMethodsType = 'Google_Service_AndroidManagement_PackageNameList';
   protected $permittedInputMethodsDataType = '';
   protected $persistentPreferredActivitiesType = 'Google_Service_AndroidManagement_PersistentPreferredActivity';
   protected $persistentPreferredActivitiesDataType = 'array';
+  public $playStoreMode;
+  protected $policyEnforcementRulesType = 'Google_Service_AndroidManagement_PolicyEnforcementRule';
+  protected $policyEnforcementRulesDataType = 'array';
+  public $privateKeySelectionEnabled;
   protected $recommendedGlobalProxyType = 'Google_Service_AndroidManagement_ProxyInfo';
   protected $recommendedGlobalProxyDataType = '';
   public $removeUserDisabled;
@@ -79,6 +90,8 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public $screenCaptureDisabled;
   public $setUserIconDisabled;
   public $setWallpaperDisabled;
+  protected $setupActionsType = 'Google_Service_AndroidManagement_SetupAction';
+  protected $setupActionsDataType = 'array';
   public $shareLocationDisabled;
   protected $shortSupportMessageType = 'Google_Service_AndroidManagement_UserFacingMessage';
   protected $shortSupportMessageDataType = '';
@@ -223,6 +236,20 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public function getCellBroadcastsConfigDisabled()
   {
     return $this->cellBroadcastsConfigDisabled;
+  }
+  /**
+   * @param Google_Service_AndroidManagement_ChoosePrivateKeyRule
+   */
+  public function setChoosePrivateKeyRules($choosePrivateKeyRules)
+  {
+    $this->choosePrivateKeyRules = $choosePrivateKeyRules;
+  }
+  /**
+   * @return Google_Service_AndroidManagement_ChoosePrivateKeyRule
+   */
+  public function getChoosePrivateKeyRules()
+  {
+    return $this->choosePrivateKeyRules;
   }
   /**
    * @param Google_Service_AndroidManagement_ComplianceRule
@@ -402,6 +429,14 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   {
     return $this->maximumTimeToLock;
   }
+  public function setMinimumApiLevel($minimumApiLevel)
+  {
+    $this->minimumApiLevel = $minimumApiLevel;
+  }
+  public function getMinimumApiLevel()
+  {
+    return $this->minimumApiLevel;
+  }
   public function setMobileNetworksConfigDisabled($mobileNetworksConfigDisabled)
   {
     $this->mobileNetworksConfigDisabled = $mobileNetworksConfigDisabled;
@@ -477,6 +512,20 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   /**
    * @param Google_Service_AndroidManagement_PasswordRequirements
    */
+  public function setPasswordPolicies($passwordPolicies)
+  {
+    $this->passwordPolicies = $passwordPolicies;
+  }
+  /**
+   * @return Google_Service_AndroidManagement_PasswordRequirements
+   */
+  public function getPasswordPolicies()
+  {
+    return $this->passwordPolicies;
+  }
+  /**
+   * @param Google_Service_AndroidManagement_PasswordRequirements
+   */
   public function setPasswordRequirements(Google_Service_AndroidManagement_PasswordRequirements $passwordRequirements)
   {
     $this->passwordRequirements = $passwordRequirements;
@@ -487,6 +536,20 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public function getPasswordRequirements()
   {
     return $this->passwordRequirements;
+  }
+  /**
+   * @param Google_Service_AndroidManagement_PermissionGrant
+   */
+  public function setPermissionGrants($permissionGrants)
+  {
+    $this->permissionGrants = $permissionGrants;
+  }
+  /**
+   * @return Google_Service_AndroidManagement_PermissionGrant
+   */
+  public function getPermissionGrants()
+  {
+    return $this->permissionGrants;
   }
   /**
    * @param Google_Service_AndroidManagement_PackageNameList
@@ -515,6 +578,36 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public function getPersistentPreferredActivities()
   {
     return $this->persistentPreferredActivities;
+  }
+  public function setPlayStoreMode($playStoreMode)
+  {
+    $this->playStoreMode = $playStoreMode;
+  }
+  public function getPlayStoreMode()
+  {
+    return $this->playStoreMode;
+  }
+  /**
+   * @param Google_Service_AndroidManagement_PolicyEnforcementRule
+   */
+  public function setPolicyEnforcementRules($policyEnforcementRules)
+  {
+    $this->policyEnforcementRules = $policyEnforcementRules;
+  }
+  /**
+   * @return Google_Service_AndroidManagement_PolicyEnforcementRule
+   */
+  public function getPolicyEnforcementRules()
+  {
+    return $this->policyEnforcementRules;
+  }
+  public function setPrivateKeySelectionEnabled($privateKeySelectionEnabled)
+  {
+    $this->privateKeySelectionEnabled = $privateKeySelectionEnabled;
+  }
+  public function getPrivateKeySelectionEnabled()
+  {
+    return $this->privateKeySelectionEnabled;
   }
   /**
    * @param Google_Service_AndroidManagement_ProxyInfo
@@ -569,6 +662,20 @@ class Google_Service_AndroidManagement_Policy extends Google_Collection
   public function getSetWallpaperDisabled()
   {
     return $this->setWallpaperDisabled;
+  }
+  /**
+   * @param Google_Service_AndroidManagement_SetupAction
+   */
+  public function setSetupActions($setupActions)
+  {
+    $this->setupActions = $setupActions;
+  }
+  /**
+   * @return Google_Service_AndroidManagement_SetupAction
+   */
+  public function getSetupActions()
+  {
+    return $this->setupActions;
   }
   public function setShareLocationDisabled($shareLocationDisabled)
   {

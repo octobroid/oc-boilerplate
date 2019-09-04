@@ -26,6 +26,37 @@
 class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
 {
   /**
+   * Adds existing resource policies to a disk. You can only add one policy which
+   * will be applied to this disk for scheduling snapshot creation.
+   * (disks.addResourcePolicies)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $disk The disk name for this request.
+   * @param Google_Service_Compute_DisksAddResourcePoliciesRequest $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function addResourcePolicies($project, $zone, $disk, Google_Service_Compute_DisksAddResourcePoliciesRequest $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'zone' => $zone, 'disk' => $disk, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('addResourcePolicies', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
    * Retrieves an aggregated list of persistent disks. (disks.aggregatedList)
    *
    * @param string $project Project ID for this request.
@@ -86,7 +117,10 @@ class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
    * @param Google_Service_Compute_Snapshot $postBody
    * @param array $optParams Optional parameters.
    *
-   * @opt_param bool guestFlush
+   * @opt_param bool guestFlush [Input Only] Specifies to create an application
+   * consistent snapshot by informing the OS to prepare for the snapshot process.
+   * Currently only supported on Windows instances using the Volume Shadow Copy
+   * Service (VSS).
    * @opt_param string requestId An optional request ID to identify requests.
    * Specify a unique request ID so that if you must retry your request, the
    * server will know to ignore the request if it has already been completed.
@@ -153,6 +187,22 @@ class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
     $params = array('project' => $project, 'zone' => $zone, 'disk' => $disk);
     $params = array_merge($params, $optParams);
     return $this->call('get', array($params), "Google_Service_Compute_Disk");
+  }
+  /**
+   * Gets the access control policy for a resource. May be empty if no such policy
+   * or resource exists. (disks.getIamPolicy)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_Policy
+   */
+  public function getIamPolicy($project, $zone, $resource, $optParams = array())
+  {
+    $params = array('project' => $project, 'zone' => $zone, 'resource' => $resource);
+    $params = array_merge($params, $optParams);
+    return $this->call('getIamPolicy', array($params), "Google_Service_Compute_Policy");
   }
   /**
    * Creates a persistent disk in the specified project using the data in the
@@ -242,6 +292,35 @@ class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
     return $this->call('list', array($params), "Google_Service_Compute_DiskList");
   }
   /**
+   * Removes resource policies from a disk. (disks.removeResourcePolicies)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $disk The disk name for this request.
+   * @param Google_Service_Compute_DisksRemoveResourcePoliciesRequest $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string requestId An optional request ID to identify requests.
+   * Specify a unique request ID so that if you must retry your request, the
+   * server will know to ignore the request if it has already been completed.
+   *
+   * For example, consider a situation where you make an initial request and the
+   * request times out. If you make the request again with the same request ID,
+   * the server can check if original operation with the same request ID was
+   * received, and if so, will ignore the second request. This prevents clients
+   * from accidentally creating duplicate commitments.
+   *
+   * The request ID must be a valid UUID with the exception that zero UUID is not
+   * supported (00000000-0000-0000-0000-000000000000).
+   * @return Google_Service_Compute_Operation
+   */
+  public function removeResourcePolicies($project, $zone, $disk, Google_Service_Compute_DisksRemoveResourcePoliciesRequest $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'zone' => $zone, 'disk' => $disk, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('removeResourcePolicies', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
    * Resizes the specified persistent disk. You can only increase the size of the
    * disk. (disks.resize)
    *
@@ -272,12 +351,29 @@ class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
     return $this->call('resize', array($params), "Google_Service_Compute_Operation");
   }
   /**
+   * Sets the access control policy on the specified resource. Replaces any
+   * existing policy. (disks.setIamPolicy)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param Google_Service_Compute_ZoneSetPolicyRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_Policy
+   */
+  public function setIamPolicy($project, $zone, $resource, Google_Service_Compute_ZoneSetPolicyRequest $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'zone' => $zone, 'resource' => $resource, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('setIamPolicy', array($params), "Google_Service_Compute_Policy");
+  }
+  /**
    * Sets the labels on a disk. To learn more about labels, read the Labeling
    * Resources documentation. (disks.setLabels)
    *
    * @param string $project Project ID for this request.
    * @param string $zone The name of the zone for this request.
-   * @param string $resource Name of the resource for this request.
+   * @param string $resource Name or id of the resource for this request.
    * @param Google_Service_Compute_ZoneSetLabelsRequest $postBody
    * @param array $optParams Optional parameters.
    *
@@ -300,5 +396,22 @@ class Google_Service_Compute_Resource_Disks extends Google_Service_Resource
     $params = array('project' => $project, 'zone' => $zone, 'resource' => $resource, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
     return $this->call('setLabels', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
+   * Returns permissions that a caller has on the specified resource.
+   * (disks.testIamPermissions)
+   *
+   * @param string $project Project ID for this request.
+   * @param string $zone The name of the zone for this request.
+   * @param string $resource Name or id of the resource for this request.
+   * @param Google_Service_Compute_TestPermissionsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_TestPermissionsResponse
+   */
+  public function testIamPermissions($project, $zone, $resource, Google_Service_Compute_TestPermissionsRequest $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'zone' => $zone, 'resource' => $resource, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('testIamPermissions', array($params), "Google_Service_Compute_TestPermissionsResponse");
   }
 }

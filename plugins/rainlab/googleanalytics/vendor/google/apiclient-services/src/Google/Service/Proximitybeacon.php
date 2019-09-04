@@ -51,6 +51,7 @@ class Google_Service_Proximitybeacon extends Google_Service
     parent::__construct($client);
     $this->rootUrl = 'https://proximitybeacon.googleapis.com/';
     $this->servicePath = '';
+    $this->batchPath = 'batch';
     $this->version = 'v1beta1';
     $this->serviceName = 'proximitybeacon';
 

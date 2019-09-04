@@ -95,8 +95,9 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
     return $this->call('create', array($params), "Google_Service_Spanner_Session");
   }
   /**
-   * Ends a session, releasing server resources associated with it.
-   * (sessions.delete)
+   * Ends a session, releasing server resources associated with it. This will
+   * asynchronously trigger cancellation of any operations that are running with
+   * this session. (sessions.delete)
    *
    * @param string $name Required. The name of the session to delete.
    * @param array $optParams Optional parameters.
@@ -107,6 +108,36 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
     return $this->call('delete', array($params), "Google_Service_Spanner_SpannerEmpty");
+  }
+  /**
+   * Executes a batch of SQL DML statements. This method allows many statements to
+   * be run with lower latency than submitting them sequentially with ExecuteSql.
+   *
+   * Statements are executed in order, sequentially. ExecuteBatchDmlResponse will
+   * contain a ResultSet for each DML statement that has successfully executed. If
+   * a statement fails, its error status will be returned as part of the
+   * ExecuteBatchDmlResponse. Execution will stop at the first failed statement;
+   * the remaining statements will not run.
+   *
+   * ExecuteBatchDml is expected to return an OK status with a response even if
+   * there was an error while processing one of the DML statements. Clients must
+   * inspect response.status to determine if there were any errors while
+   * processing the request.
+   *
+   * See more details in ExecuteBatchDmlRequest and ExecuteBatchDmlResponse.
+   * (sessions.executeBatchDml)
+   *
+   * @param string $session Required. The session in which the DML statements
+   * should be performed.
+   * @param Google_Service_Spanner_ExecuteBatchDmlRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Spanner_ExecuteBatchDmlResponse
+   */
+  public function executeBatchDml($session, Google_Service_Spanner_ExecuteBatchDmlRequest $postBody, $optParams = array())
+  {
+    $params = array('session' => $session, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('executeBatchDml', array($params), "Google_Service_Spanner_ExecuteBatchDmlResponse");
   }
   /**
    * Executes an SQL statement, returning all results in a single reply. This
@@ -173,10 +204,6 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
    * @param string $database Required. The database in which to list sessions.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string pageToken If non-empty, `page_token` should contain a
-   * next_page_token from a previous ListSessionsResponse.
-   * @opt_param int pageSize Number of sessions to be returned in the response. If
-   * 0 or less, defaults to the server's maximum allowed page size.
    * @opt_param string filter An expression for filtering the results of the
    * request. Filter rules are case insensitive. The fields eligible for filtering
    * are:
@@ -188,6 +215,10 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
    *   * `labels.env:*` --> The session has the label "env".   * `labels.env:dev`
    * --> The session has the label "env" and the value of
    * the label contains the string "dev".
+   * @opt_param string pageToken If non-empty, `page_token` should contain a
+   * next_page_token from a previous ListSessionsResponse.
+   * @opt_param int pageSize Number of sessions to be returned in the response. If
+   * 0 or less, defaults to the server's maximum allowed page size.
    * @return Google_Service_Spanner_ListSessionsResponse
    */
   public function listProjectsInstancesDatabasesSessions($database, $optParams = array())
@@ -202,9 +233,13 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
    * ExecuteStreamingSql to specify a subset of the query result to read.  The
    * same session and read-only transaction must be used by the
    * PartitionQueryRequest used to create the partition tokens and the
-   * ExecuteSqlRequests that use the partition tokens. Partition tokens become
-   * invalid when the session used to create them is deleted or begins a new
-   * transaction. (sessions.partitionQuery)
+   * ExecuteSqlRequests that use the partition tokens.
+   *
+   * Partition tokens become invalid when the session used to create them is
+   * deleted, is idle for too long, begins a new transaction, or becomes too old.
+   * When any of these happen, it is not possible to resume the query, and the
+   * whole operation must be restarted from the beginning.
+   * (sessions.partitionQuery)
    *
    * @param string $session Required. The session used to create the partitions.
    * @param Google_Service_Spanner_PartitionQueryRequest $postBody
@@ -223,8 +258,15 @@ class Google_Service_Spanner_Resource_ProjectsInstancesDatabasesSessions extends
    * StreamingRead to specify a subset of the read result to read.  The same
    * session and read-only transaction must be used by the PartitionReadRequest
    * used to create the partition tokens and the ReadRequests that use the
-   * partition tokens. Partition tokens become invalid when the session used to
-   * create them is deleted or begins a new transaction. (sessions.partitionRead)
+   * partition tokens.  There are no ordering guarantees on rows returned among
+   * the returned partition tokens, or even within each individual StreamingRead
+   * call issued with a partition_token.
+   *
+   * Partition tokens become invalid when the session used to create them is
+   * deleted, is idle for too long, begins a new transaction, or becomes too old.
+   * When any of these happen, it is not possible to resume the read, and the
+   * whole operation must be restarted from the beginning.
+   * (sessions.partitionRead)
    *
    * @param string $session Required. The session used to create the partitions.
    * @param Google_Service_Spanner_PartitionReadRequest $postBody
