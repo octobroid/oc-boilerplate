@@ -5,7 +5,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
     "bootbox": "^4.4.0",
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.3.1",
     "fastclick": "1.*",
     "popper.js": "^1.12.6"
   }
