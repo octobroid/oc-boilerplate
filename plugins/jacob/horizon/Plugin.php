@@ -88,7 +88,7 @@ class Plugin extends PluginBase
             'horizon' => [
                 'label' => 'Horizon',
                 'url' => Backend::url('jacob/horizon/horizon'),
-                'iconSvg' => Backend::url('jacob/horizon/horizon/icon'),
+                'iconSvg' => '/plugins/jacob/horizon/assets/horizon.svg',
                 'order' => 500,
                 'permissions' => ['jacob.horizon.access'],
             ]

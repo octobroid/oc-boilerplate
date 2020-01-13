@@ -509,7 +509,7 @@ class Index extends Controller
 
         $widgetConfig = $this->makeConfig($formConfigs[$type]);
         $widgetConfig->model = $object;
-        $widgetConfig->alias = $alias ?: 'form'.studly_case($type).md5($object->getFileName());
+        $widgetConfig->alias = $alias ?: 'form'.studly_case($type).md5($object->exists ? $object->getFileName() : uniqid());
         $widgetConfig->context = !$object->exists ? 'create' : 'update';
 
         $widget = $this->makeWidget('Backend\Widgets\Form', $widgetConfig);
@@ -550,8 +550,10 @@ class Index extends Controller
             if ($fieldConfig['type'] == 'fileupload') continue;
 
             if ($fieldConfig['type'] == 'repeater') {
-                $fieldConfig['form']['fields'] = array_get($fieldConfig, 'fields', []);
-                unset($fieldConfig['fields']);
+                if (empty($fieldConfig['form']) || !is_string($fieldConfig['form'])) {
+                    $fieldConfig['form']['fields'] = array_get($fieldConfig, 'fields', []);
+                    unset($fieldConfig['fields']);
+                }
             }
 
             /*

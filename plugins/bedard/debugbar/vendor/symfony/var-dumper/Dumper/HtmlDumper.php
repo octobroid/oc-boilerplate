@@ -30,7 +30,7 @@ class HtmlDumper extends CliDumper
     protected $colors = true;
     protected $headerIsDumped = false;
     protected $lastDepth = -1;
-    protected $styles = array(
+    protected $styles = [
         'default' => 'background-color:#18171B; color:#FF8400; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:99999; word-break: break-all',
         'num' => 'font-weight:bold; color:#1299DA',
         'const' => 'font-weight:bold',
@@ -44,14 +44,14 @@ class HtmlDumper extends CliDumper
         'key' => 'color:#56DB3A',
         'index' => 'color:#1299DA',
         'ellipsis' => 'color:#FF8400',
-    );
+    ];
 
-    private $displayOptions = array(
+    private $displayOptions = [
         'maxDepth' => 1,
         'maxStringLength' => 160,
         'fileLinkFormat' => null,
-    );
-    private $extraDisplayOptions = array();
+    ];
+    private $extraDisplayOptions = [];
 
     /**
      * {@inheritdoc}
@@ -108,7 +108,7 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Data $data, $output = null, array $extraDisplayOptions = array())
+    public function dump(Data $data, $output = null, array $extraDisplayOptions = [])
     {
         $this->extraDisplayOptions = $extraDisplayOptions;
         $result = parent::dump($data, $output);
@@ -155,24 +155,31 @@ if (!doc.addEventListener) {
 function toggle(a, recursive) {
     var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass;
 
-    if ('sf-dump-compact' == oldClass) {
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
         arrow = '▼';
         newClass = 'sf-dump-expanded';
-    } else if ('sf-dump-expanded' == oldClass) {
+    } else if (/\bsf-dump-expanded\b/.test(oldClass)) {
         arrow = '▶';
         newClass = 'sf-dump-compact';
     } else {
         return false;
     }
 
+    if (doc.createEvent && s.dispatchEvent) {
+        var event = doc.createEvent('Event');
+        event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);
+
+        s.dispatchEvent(event);
+    }
+
     a.lastChild.innerHTML = arrow;
-    s.className = newClass;
+    s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass);
 
     if (recursive) {
         try {
             a = s.querySelectorAll('.'+oldClass);
             for (s = 0; s < a.length; ++s) {
-                if (a[s].className !== newClass) {
+                if (-1 == a[s].className.indexOf(newClass)) {
                     a[s].className = newClass;
                     a[s].previousSibling.lastChild.innerHTML = arrow;
                 }
@@ -187,7 +194,7 @@ function toggle(a, recursive) {
 function collapse(a, recursive) {
     var s = a.nextSibling || {}, oldClass = s.className;
 
-    if ('sf-dump-expanded' == oldClass) {
+    if (/\bsf-dump-expanded\b/.test(oldClass)) {
         toggle(a, recursive);
 
         return true;
@@ -199,7 +206,7 @@ function collapse(a, recursive) {
 function expand(a, recursive) {
     var s = a.nextSibling || {}, oldClass = s.className;
 
-    if ('sf-dump-compact' == oldClass) {
+    if (/\bsf-dump-compact\b/.test(oldClass)) {
         toggle(a, recursive);
 
         return true;
@@ -254,8 +261,8 @@ function highlight(root, activeNode, nodes) {
 
 function resetHighlightedNodes(root) {
     Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {
-        strNode.className = strNode.className.replace(/\b sf-dump-highlight\b/, '');
-        strNode.className = strNode.className.replace(/\b sf-dump-highlight-active\b/, '');
+        strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, '');
+        strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, '');
     });
 }
 
@@ -303,6 +310,9 @@ return function (root, x) {
 
         return "concat(" + parts.join(",") + ", '')";
     }
+    function xpathHasClass(className) {
+        return "contains(concat(' ', normalize-space(@class), ' '), ' " + className +" ')";
+    }
     addEventListener(root, 'mouseover', function (e) {
         if ('' != refStyle.innerHTML) {
             refStyle.innerHTML = '';
@@ -334,7 +344,7 @@ return function (root, x) {
                 if (f && t && f[0] !== t[0]) {
                     r.innerHTML = r.innerHTML.replace(new RegExp('^'+f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]);
                 }
-                if ('sf-dump-compact' == r.className) {
+                if (/\bsf-dump-compact\b/.test(r.className)) {
                     toggle(s, isCtrlKey(e));
                 }
             }
@@ -352,7 +362,7 @@ return function (root, x) {
         } else if (/\bsf-dump-str-toggle\b/.test(a.className)) {
             e.preventDefault();
             e = a.parentNode.parentNode;
-            e.className = e.className.replace(/sf-dump-str-(expand|collapse)/, a.parentNode.className);
+            e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className);
         }
     });
 
@@ -366,7 +376,6 @@ return function (root, x) {
     for (i = 0; i < len; ++i) {
         elt = t[i];
         if ('SAMP' == elt.tagName) {
-            elt.className = 'sf-dump-expanded';
             a = elt.previousSibling || {};
             if ('A' != a.tagName) {
                 a = doc.createElement('A');
@@ -378,15 +387,18 @@ return function (root, x) {
             a.title = (a.title ? a.title+'\n[' : '[')+keyHint+'+click] Expand all children';
             a.innerHTML += '<span>▼</span>';
             a.className += ' sf-dump-toggle';
+
             x = 1;
             if ('sf-dump' != elt.parentNode.className) {
                 x += elt.parentNode.getAttribute('data-depth')/1;
             }
             elt.setAttribute('data-depth', x);
-            if (x > options.maxDepth) {
+            var className = elt.className;
+            elt.className = 'sf-dump-expanded';
+            if (className ? 'sf-dump-expanded' !== className : (x > options.maxDepth)) {
                 toggle(a);
             }
-        } else if ('sf-dump-ref' == elt.className && (a = elt.getAttribute('href'))) {
+        } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) {
             a = a.substr(1);
             elt.className += ' '+a;
 
@@ -425,16 +437,16 @@ return function (root, x) {
                 if (this.isEmpty()) {
                     return this.current();
                 }
-                this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : this.idx;
-        
+                this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0;
+
                 return this.current();
             },
             previous: function () {
                 if (this.isEmpty()) {
                     return this.current();
                 }
-                this.idx = this.idx > 0 ? this.idx - 1 : this.idx;
-        
+                this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1);
+
                 return this.current();
             },
             isEmpty: function () {
@@ -471,14 +483,10 @@ return function (root, x) {
             <input type="text" class="sf-dump-search-input">
             <span class="sf-dump-search-count">0 of 0<\/span>
             <button type="button" class="sf-dump-search-input-previous" tabindex="-1">
-                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1683 1331l-166 165q-19 19-45 19t-45-19l-531-531-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/>
-                <\/svg>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg>
             <\/button>
             <button type="button" class="sf-dump-search-input-next" tabindex="-1">
-                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1683 808l-742 741q-19 19-45 19t-45-19l-742-741q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/>
-                <\/svg>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg>
             <\/button>
         ';
         root.insertBefore(search, root.firstChild);
@@ -507,10 +515,18 @@ return function (root, x) {
                     return;
                 }
 
-                var xpathResult = doc.evaluate('//pre[@id="' + root.id + '"]//span[@class="sf-dump-str" or @class="sf-dump-key" or @class="sf-dump-public" or @class="sf-dump-protected" or @class="sf-dump-private"][contains(child::text(), ' + xpathString(searchQuery) + ')]', document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                var classMatches = [
+                    "sf-dump-str",
+                    "sf-dump-key",
+                    "sf-dump-public",
+                    "sf-dump-protected",
+                    "sf-dump-private",
+                ].map(xpathHasClass).join(' or ');
+
+                var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
                 while (node = xpathResult.iterateNext()) state.nodes.push(node);
-                
+
                 showCurrent(state);
             }, 400);
         });
@@ -518,8 +534,7 @@ return function (root, x) {
         Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {
             addEventListener(btn, 'click', function (e) {
                 e.preventDefault();
-                var direction = -1 !== e.target.className.indexOf('next') ? 'next' : 'previous';
-                'next' === direction ? state.next() : state.previous();
+                -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();
                 searchInput.focus();
                 collapseAll(root);
                 showCurrent(state);
@@ -728,15 +743,25 @@ EOHTML
     {
         parent::enterHash($cursor, $type, $class, false);
 
+        if ($cursor->skipChildren) {
+            $cursor->skipChildren = false;
+            $eol = ' class=sf-dump-compact>';
+        } elseif ($this->expandNextHash) {
+            $this->expandNextHash = false;
+            $eol = ' class=sf-dump-expanded>';
+        } else {
+            $eol = '>';
+        }
+
         if ($hasChild) {
+            $this->line .= '<samp';
             if ($cursor->refIndex) {
                 $r = Cursor::HASH_OBJECT !== $type ? 1 - (Cursor::HASH_RESOURCE !== $type) : 2;
                 $r .= $r && 0 < $cursor->softRefHandle ? $cursor->softRefHandle : $cursor->refIndex;
 
-                $this->line .= sprintf('<samp id=%s-ref%s>', $this->dumpId, $r);
-            } else {
-                $this->line .= '<samp>';
+                $this->line .= sprintf(' id=%s-ref%s', $this->dumpId, $r);
             }
+            $this->line .= $eol;
             $this->dumpLine($cursor->depth);
         }
     }
@@ -756,7 +781,7 @@ EOHTML
     /**
      * {@inheritdoc}
      */
-    protected function style($style, $value, $attr = array())
+    protected function style($style, $value, $attr = [])
     {
         if ('' === $value) {
             return '';
@@ -797,10 +822,10 @@ EOHTML
             }
             $label = esc(substr($value, -$attr['ellipsis']));
             $style = str_replace(' title="', " title=\"$v\n", $style);
-            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -strlen($label)));
+            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -\strlen($label)));
 
             if (!empty($attr['ellipsis-tail'])) {
-                $tail = strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
+                $tail = \strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
                 $v .= sprintf('<span class=sf-dump-ellipsis>%s</span>%s', substr($label, 0, $tail), substr($label, $tail));
             } else {
                 $v .= $label;
@@ -811,7 +836,7 @@ EOHTML
             $s = '<span class=sf-dump-default>';
             $c = $c[$i = 0];
             do {
-                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', ord($c[$i]));
+                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', \ord($c[$i]));
             } while (isset($c[++$i]));
 
             return $s.'</span>';
@@ -821,7 +846,8 @@ EOHTML
             $attr['href'] = $href;
         }
         if (isset($attr['href'])) {
-            $v = sprintf('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>', esc($this->utf8Encode($attr['href'])), $v);
+            $target = isset($attr['file']) ? '' : ' target="_blank"';
+            $v = sprintf('<a href="%s"%s rel="noopener noreferrer">%s</a>', esc($this->utf8Encode($attr['href'])), $target, $v);
         }
         if (isset($attr['lang'])) {
             $v = sprintf('<code class="%s">%s</code>', esc($attr['lang']), $v);
@@ -843,7 +869,7 @@ EOHTML
         }
 
         if (-1 === $depth) {
-            $args = array('"'.$this->dumpId.'"');
+            $args = ['"'.$this->dumpId.'"'];
             if ($this->extraDisplayOptions) {
                 $args[] = json_encode($this->extraDisplayOptions, JSON_FORCE_OBJECT);
             }
@@ -865,7 +891,7 @@ EOHTML
         $options = $this->extraDisplayOptions + $this->displayOptions;
 
         if ($fmt = $options['fileLinkFormat']) {
-            return is_string($fmt) ? strtr($fmt, array('%f' => $file, '%l' => $line)) : $fmt->format($file, $line);
+            return \is_string($fmt) ? strtr($fmt, ['%f' => $file, '%l' => $line]) : $fmt->format($file, $line);
         }
 
         return false;

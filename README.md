@@ -71,6 +71,7 @@ In this boilerplate, **we've installed**:
 1. [October.Drivers](https://octobercms.com/plugin/october-drivers)
 1. [Bedard.Debugbar](https://octobercms.com/plugin/bedard-debugbar)
 1. [Mja.Mail](https://octobercms.com/plugin/mja-mail)
+1. [Jacob.Horizon](https://octobercms.com/plugin/jacob-horizon)
 
 More plugins that we recommend (not installed yet):
 
@@ -83,6 +84,12 @@ To install plugin, run the command:
 
 ```
 php artisan plugin:install <plugin-name>
+```
+
+To enable Laravel Horizon, run the command:
+
+```
+php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
 ```
 
 ## Frontend Libraries

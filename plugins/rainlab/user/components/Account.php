@@ -205,6 +205,8 @@ class Account extends ComponentBase
                 $data['login'] = post('username', post('email'));
             }
 
+            $data['login'] = trim($data['login']);
+
             $validation = Validator::make($data, $rules);
             if ($validation->fails()) {
                 throw new ValidationException($validation);
@@ -284,13 +286,10 @@ class Account extends ComponentBase
                 $data['password_confirmation'] = post('password');
             }
 
-            $rules = [
-                'email'    => 'required|email|between:6,255',
-                'password' => 'required|between:4,255|confirmed'
-            ];
+            $rules = (new UserModel)->rules;
 
-            if ($this->loginAttribute() == UserSettings::LOGIN_USERNAME) {
-                $rules['username'] = 'required|between:2,255';
+            if ($this->loginAttribute() !== UserSettings::LOGIN_USERNAME) {
+                unset($rules['username']);
             }
 
             $validation = Validator::make($data, $rules);
@@ -420,7 +419,7 @@ class Account extends ComponentBase
         /*
          * Password has changed, reauthenticate the user
          */
-        if (strlen($data['password'])) {
+        if (array_key_exists('password', $data) && strlen($data['password'])) {
             Auth::login($user->reload(), true);
         }
 

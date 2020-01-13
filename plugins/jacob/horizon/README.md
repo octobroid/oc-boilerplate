@@ -11,8 +11,9 @@ Provide [Laravel Horizon](https://horizon.laravel.com/) inside your OctoberCMS a
 2. Install laravel horizon trough composer `composer require laravel/horizon "^2.2"`
 3. Publish the laravel horizon vendors `php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"`
 4. Install this plugin
-4. Edit the config file `config/horizon.php` - [see here](https://divinglaravel.com/horizon/before-the-dive)
-5. run `php artisan horizon`
+5. Edit the config file `config/horizon.php` - [see here](https://divinglaravel.com/horizon/before-the-dive)
+6. Add `'env' => env('APP_ENV', 'production'),` to the config file `config/horizon` to run the workers defined in the config file
+7. run `php artisan horizon`
 
 For production this command needs to be supervised by a tool like supervisord.
 Supervisord will take care of restarting a process when it fails.

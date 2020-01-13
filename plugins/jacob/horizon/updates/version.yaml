@@ -1,2 +1,4 @@
 1.0.1:
     - First version of Horizon
+1.0.2:
+    - Use static path for horizon icon svg
