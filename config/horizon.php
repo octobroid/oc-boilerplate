@@ -4,6 +4,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Horizon Environment
+    |--------------------------------------------------------------------------
+    |
+    | This is the name of environment type where Horizon is located, either
+    | production server or local installment for development
+    |
+    */
+    
+    'env' => env('APP_ENV', 'production'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Horizon Redis Connection
     |--------------------------------------------------------------------------
     |
@@ -115,17 +127,16 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'connection' => 'redis',
+                'connection' => env('QUEUE_DRIVER', 'redis'),
                 'queue' => ['default'],
                 'balance' => 'simple',
                 'processes' => 10,
                 'tries' => 3,
             ],
         ],
-
         'local' => [
             'supervisor-1' => [
-                'connection' => 'redis',
+                'connection' => env('QUEUE_DRIVER', 'redis'),
                 'queue' => ['default'],
                 'balance' => 'simple',
                 'processes' => 3,
