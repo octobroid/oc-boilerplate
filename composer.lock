@@ -1965,16 +1965,16 @@
         },
         {
             "name": "october/cms",
-            "version": "v1.0.464",
+            "version": "v1.0.466",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octoberrain/cms.git",
-                "reference": "c7cbf4420fc372cc0c253382def9d5c99930e725"
+                "reference": "9f1bb8c9a769bd79f5001f73181a94a117624995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octoberrain/cms/zipball/c7cbf4420fc372cc0c253382def9d5c99930e725",
-                "reference": "c7cbf4420fc372cc0c253382def9d5c99930e725",
+                "url": "https://api.github.com/repos/octoberrain/cms/zipball/9f1bb8c9a769bd79f5001f73181a94a117624995",
+                "reference": "9f1bb8c9a769bd79f5001f73181a94a117624995",
                 "shasum": ""
             },
             "require": {
@@ -2020,7 +2020,7 @@
                 "october",
                 "october cms"
             ],
-            "time": "2019-12-19T06:42:25+00:00"
+            "time": "2020-05-31T17:23:31+00:00"
         },
         {
             "name": "october/rain",
