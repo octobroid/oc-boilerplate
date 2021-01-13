@@ -2,7 +2,7 @@
     "name": "octobro/oc-boilerplate",
     "type": "project",
     "require": {
-        "php": ">=7.0",
+        "php": "~7.2.0",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "october/rain": "~1.0",
@@ -11,7 +11,8 @@
         "october/cms": "~1.0",
         "laravel/framework": "5.5.*",
         "wikimedia/composer-merge-plugin": "dev-master",
-        "laravel/horizon": "^2.2"
+        "laravel/horizon": "^2.2",
+        "barryvdh/laravel-cors": "0.10.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

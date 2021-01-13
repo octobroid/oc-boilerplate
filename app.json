@@ -1,0 +1,106 @@
+{
+    "name": "Dokku OctoberCMS Deployment",
+    "description": "OctoberCMS Deployment in Dokku System",
+    "keywords": [
+      "laravel",
+      "HTML5",
+      "PHP",
+      "javascript"
+    ],
+    "success_url": "/",
+    "scripts": {
+      "dokku": {
+          "predeploy": "bash predeploy.sh",
+          "postdeploy": "bash postdeploy.sh"
+      }
+    },
+    "env": {
+      "APP_DEBUG": {
+        "value": "5"
+      },
+      "APP_NAME": {
+        "value": "OC Boilerplate"
+      },
+      "APP_URL": {
+        "value": "http://localhost"
+      },
+      "APP_KEY": {
+        "value": "DdV0T8N74DYtlJXzjd7Y8hDFNQiFlEsj"
+      },
+
+      "DB_CONNECTION": {
+        "value": "mysql"
+      },
+      "DB_HOST": {
+        "value": ""
+      },
+      "DB_PORT": {
+        "value": "3306"
+      },
+      "DB_DATABASE": {
+        "value": ""
+      },
+      "DB_USERNAME": {
+        "value": ""
+      },
+      "DB_PASSWORD": {
+        "value": ""
+      },
+
+      "FILESYSTEM_DRIVER": {
+        "value": "local"
+      },
+
+      "REDIS_DRIVER": {
+        "value": "redis"
+      },
+
+      "CACHE_DRIVER": {
+        "value": "file"
+      },
+      "CACHE_PREFIX": {
+        "value": "myapp"
+      },
+
+      "SESSION_DRIVER": {
+        "value": "file"
+      },
+      "SESSION_COOKIE": {
+        "value": "myapp_session"
+      },
+
+      "QUEUE_DRIVER": {
+        "value": "redis"
+      },
+
+      "MAIL_DRIVER": {
+        "value": "mail"
+      },
+      "MAIL_HOST": {
+        "value": "smtp.mailgun.org"
+      },
+      "MAIL_PORT": {
+        "value": "587"
+      },
+      "MAIL_ENCRYPTION": {
+        "value": "tls"
+      },
+      "MAIL_USERNAME": {
+        "value": null
+      },
+      "MAIL_PASSWORD": {
+        "value": null
+      },
+
+      "CMS_BACKEND_URI": {
+        "value": "backend"
+      },
+      "CMS_ACTIVE_THEME": {
+        "value": "my-theme"
+      },
+
+      "LINK_POLICY": {
+        "value": "secure"
+      }
+    }
+  }

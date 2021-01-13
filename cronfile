@@ -1,0 +1,24 @@
+# server cron jobs
+PATH=/usr/local/bin:/usr/bin:/bin
+SHELL=/bin/bash
+
+# m   h   dom mon dow   username command
+# *   *   *   *   *     dokku    command to be executed
+# -   -   -   -   -
+# |   |   |   |   |
+# |   |   |   |   +----- day of week (0 - 6) (Sunday=0)
+# |   |   |   +------- month (1 - 12)
+# |   |   +--------- day of month (1 - 31)
+# |   +----------- hour (0 - 23)
+# +----------- min (0 - 59)
+
+### HIGH TRAFFIC TIME IS B/W 00:00 - 04:00 AND 14:00 - 23:59
+### RUN YOUR TASKS FROM 04:00 - 14:00
+### KEEP SORTED IN TIME ORDER
+
+### PLACE ALL CRON TASKS BELOW
+
+# Run LARAVEL Scheduler
+* * * * * dokku dokku --rm run plate php artisan schedule:run
+
+### PLACE ALL CRON TASKS ABOVE, DO NOT REMOVE THE WHITESPACE AFTER THIS LINE
