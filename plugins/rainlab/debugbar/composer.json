@@ -1,0 +1,18 @@
+{
+    "name": "rainlab/debugbar-plugin",
+    "description": "Debugbar integration for October CMS.",
+    "homepage": "https://github.com/rainlab/debugbar-plugin",
+    "type": "october-plugin",
+    "license": "MIT",
+    "keywords": ["october", "debugbar"],
+    "require": {
+        "barryvdh/laravel-debugbar": "~3.0"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "barryvdh/laravel-debugbar"
+            ]
+        }
+    }
+}

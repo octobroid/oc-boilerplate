@@ -1,0 +1,21 @@
+.control-roleimpersonator {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  background-color: #fff8d4;
+  color: #586667;
+}
+.control-roleimpersonator a {
+  color: #2980B9;
+}
+.control-roleimpersonator .roleimpersonator-left,
+.control-roleimpersonator .roleimpersonator-right {
+  align-items: center;
+  height: fit-content;
+  padding: 5px;
+}
+.control-roleimpersonator .roleimpersonator-contents {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}

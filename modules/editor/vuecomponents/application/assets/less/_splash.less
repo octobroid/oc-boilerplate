@@ -1,0 +1,60 @@
+.editor-application-splash {
+    > div {
+        .splash-content {
+            display: inline-block;
+
+            &.document-not-found {
+                text-align: center;
+
+                .october-cms-logo-grey {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .document-not-found-message {
+            margin: 30px auto 0 auto;
+            color: @color-text-grey-4;
+
+            > div {
+                margin-top: 30px;
+            }
+        }
+
+        .october-cms-logo-grey {
+            width: 230px;
+            height: 38px;
+        }
+
+        .editor-custom-logo {
+            > img {
+                display: block;
+                max-width: 200px;
+                max-height: 200px;
+            }
+        }
+
+        .editor-hotkeys {
+            margin: 30px auto 0 auto;
+            color: @color-text-grey-4;
+
+            th,
+            td {
+                padding-bottom: 10px;
+            }
+
+            th {
+                font-weight: normal;
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            .editor-hotkey {
+                display: inline-block;
+                padding: 1px 4px;
+                border-radius: 4px;
+                background: @color-grey-3-light;
+            }
+        }
+    }
+}

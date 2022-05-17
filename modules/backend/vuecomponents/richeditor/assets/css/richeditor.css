@@ -1,0 +1,121 @@
+.component-backend-richeditor {
+  position: relative;
+}
+.component-backend-richeditor .field-richeditor {
+  border: none;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view {
+  padding: 10px 10px;
+  line-height: 150%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  padding: 30px 40px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view a {
+  text-decoration: underline;
+  color: #3498db;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view h1 {
+  font-size: 34px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view h2 {
+  font-size: 26px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view h3 {
+  font-size: 21px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view h4 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 20px 0;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view h5 {
+  font-size: 16px;
+  font-weight: normal;
+  color: #434343;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view strong {
+  font-weight: 700;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view code {
+  background: #eee;
+  padding: 0px 3px 2px;
+  display: inline-block;
+  border-radius: 4px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view blockquote {
+  border-left: solid 2px #5e35b1;
+  margin-left: 0;
+  padding-left: 5px;
+  color: #5e35b1;
+  font-size: inherit;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view blockquote blockquote {
+  border-color: #00bcd4;
+  color: #00bcd4;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view blockquote blockquote blockquote {
+  border-color: #43a047;
+  color: #43a047;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table {
+  border: none;
+  border-collapse: collapse;
+  empty-cells: show;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table td,
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table th {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table td:empty,
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table th:empty {
+  height: 20px;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view table th {
+  background: #e6e6e6;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view hr {
+  clear: both;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  page-break-after: always;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view a.fr-file {
+  position: relative;
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view a.fr-file:before {
+  font-family: 'octo-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  content: "\e92a";
+}
+.component-backend-richeditor .fr-box.fr-basic .fr-element.fr-view a.fr-file:after {
+  display: none;
+}

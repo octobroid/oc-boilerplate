@@ -1,0 +1,147 @@
+ul.mainmenu-items {
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    white-space: nowrap;
+    user-select: none;
+
+    > li.mainmenu-item {
+        display: block;
+    }
+}
+
+.mainmenu-item {
+    display: block;
+    position: relative;
+    vertical-align: top;
+    user-select: none;
+
+    > a,
+    > .mainmenu-item-container {
+        // height: define in subclass;
+        // padding: define in subclass;
+
+        .flex-display();
+        .flex-direction-row();
+        .align-items(baseline);
+        text-decoration: none!important;
+        outline: none;
+        color: @color-mainmenu-active;
+
+        &:after {
+            opacity: 0.5;
+        }
+    }
+
+    .nav-label {
+        opacity: 0.5;
+        font-size: @font-size-base;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .flex-stretch();
+    }
+
+    .nav-icon {
+        opacity: 0.5;
+        position: absolute; // Don't let icon fonts height affect the layout
+        top: 0;
+
+        display: inline-block;
+        height: 100%;
+
+        // line-height: define in subclass;
+        // left: define in subclass;
+        // width: define in subclass;
+
+        .svg-icon {
+            // height: define in subclass;
+            // width: define in subclass;
+
+            .svg-fix-load();
+            position: relative;
+        }
+
+        i {
+            // line-height: define in subclass;
+            // font-size: define in subclass;
+
+            vertical-align: middle;
+            display: block;
+            height: 100%;
+
+            &:before {
+                position: relative;
+
+                // top: define in subclass;
+            }
+        }
+    }
+
+    &.has-subitems {
+        > a:after,
+        > .mainmenu-item-container:after {
+            // .backend-icon-sprite-pseudo(define in subclass);
+            display: inline-block;
+        }
+    }
+
+    span.counter {
+        .flex-fix();
+        position: relative;
+        top: 1px;
+        padding: 2px 2px;
+        background-color: @color-sidebarnav-counter-bg;
+        color: @color-sidebarnav-counter-text;
+        font-size: 14px;
+        line-height: 100%;
+        opacity: 1;
+        border-radius: 4px;
+        transform: scale(1);
+        transition: transform 0.3s;
+        margin-left: 6px;
+
+        &.empty {
+            transform: scale(0);
+            opacity: 0;
+            padding: 0;
+            margin-left: 0!important;
+        }
+    }
+
+    &.mainmenu-account {
+        .nav-icon {
+            opacity: 1;
+            width: 42px;
+        }
+    }
+
+    &.active {
+        .nav-label, .nav-icon, > a:after {
+            opacity: 1;
+        }
+    }
+}
+
+body:not(.drag) {
+    .mainmenu-item:hover {
+        .nav-label, .nav-icon, > a:after {
+            opacity: 1;
+        }
+    }
+
+    ul.mainmenu-items.hover-effects {
+        li > a {
+            &:hover {
+                background: @brand-primary;
+            }
+        }
+    }
+}
+
+html.mobile {
+    .mainmenu-item {
+        .nav-label {
+            font-size: @font-size-base + 2;
+        }
+    }
+}

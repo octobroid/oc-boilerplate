@@ -1,0 +1,146 @@
+.component-backend-inspector-table {
+    @table-cell-base-padding-v: 8px;
+    @table-cell-base-padding-h: 10px;
+    @table-first-cell-padding: 20px;
+    @table-last-cell-padding: 23px;
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+        border-top: 1px solid @color-grey-3;
+    
+        th, td {
+            border-right: 1px solid @color-grey-3;
+            border-bottom: 1px solid @color-grey-3;
+            
+            &:last-child {
+                border-right: none;
+            }
+        }
+    
+        thead {
+            th {
+                background-color: white;
+                font-weight: 500;
+                color: @color-text-grey-4;
+                min-width: 50px;
+        
+                .header-cell-container {
+                    padding: @table-cell-base-padding-v @table-cell-base-padding-h;
+                    position: relative;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 100%;
+                    white-space: nowrap;
+    
+                    .cell-resize-handle {
+                        position: absolute;
+                        left: -1px;
+                        top: 1px;
+                        width: 3px;
+                        height: 100%;
+                        cursor: col-resize;
+                    }
+                }
+    
+                &:first-child .header-cell-container {
+                    padding-left: @table-first-cell-padding;
+                }
+            }
+        }
+
+        tbody {
+            td {
+                .table-cell-container {
+                    position: relative;
+                    padding-right: @table-cell-base-padding-h;
+                }
+
+                &:first-child {
+                    padding-left: @table-first-cell-padding;
+                }
+
+                &:last-child {
+                    .table-cell-container {
+                        padding-right: @table-last-cell-padding;
+                    }
+                }
+
+                &.no-sub-controls {
+                    padding-top: 7px;
+                    padding-bottom: 8px;
+                }
+
+                &.clickable {
+                    cursor: pointer;
+
+                    &:hover {
+                        background: @background-color-focus;
+                    }
+
+                    .clickable-data-container {
+                        position: relative;
+                        margin-right: 30px;
+
+                        > span {
+                            display: block;
+                            word-break: break-all;
+                        }
+
+                        .remove-row-btn {
+                            right: -21px;
+                            top: 3px;
+                        }
+                    }
+                }
+            }
+
+            tr.focused {
+                td {
+                    border-bottom: 1px solid @brand-primary;
+                }
+            }
+
+            tr.has-errors {
+                &, &.focused {
+                    td {
+                        border-bottom: 1px solid @brand-danger;
+                    }
+                }
+            }
+            
+            .remove-row-btn {
+                .remove-button();
+            }
+
+            @import "_control-table-text.less";
+            @import "_control-table-dropdown.less";
+        }
+    }
+
+    .table-control-links {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        a {
+            color: @color-grey-2;
+            text-decoration: underline;
+
+            &:active, &:focus {
+                color: @link-color;
+                outline: none;
+            }
+
+            &.disabled {
+                cursor: default;
+                color: @color-grey-2!important;
+            }
+        }
+    }
+}
+
+.no-property-title > .component-backend-inspector-table {
+    table {
+        border-top: none;
+    }
+}

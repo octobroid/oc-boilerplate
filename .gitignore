@@ -1,8 +1,6 @@
 /bootstrap/compiled.php
 /vendor
-/modules
 composer.phar
-composer.lock
 .DS_Store
 .idea
 .env
@@ -18,6 +16,7 @@ sftp-config.json
 selenium.php
 yarn-error.log
 /storage/framework/classes.php
+auth.json
 
 # for netbeans
 nbproject

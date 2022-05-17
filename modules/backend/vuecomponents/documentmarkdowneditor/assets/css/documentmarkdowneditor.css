@@ -1,0 +1,120 @@
+.component-backend-documentmarkdowneditor .EasyMDEContainer .editor-toolbar,
+.component-backend-documentmarkdowneditor .EasyMDEContainer .editor-statusbar {
+  display: none;
+}
+.component-backend-documentmarkdowneditor .EasyMDEContainer .editor-preview-side {
+  background: white;
+  border: none;
+  border-left: #d7e1eA 1px solid;
+}
+.component-backend-documentmarkdowneditor .EasyMDEContainer .CodeMirror {
+  border: none;
+  border-radius: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.component-backend-documentmarkdowneditor .CodeMirror-sided.sided--no-fullscreen {
+  flex: none;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  z-index: 0;
+}
+.component-backend-documentmarkdowneditor .editor-preview-active-side.sided--no-fullscreen {
+  flex: none;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  z-index: 0;
+}
+.component-backend-documentmarkdowneditor a {
+  text-decoration: underline;
+  color: #3498db;
+}
+.component-backend-documentmarkdowneditor h1 {
+  font-size: 34px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-documentmarkdowneditor h2 {
+  font-size: 26px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-documentmarkdowneditor h3 {
+  font-size: 21px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.component-backend-documentmarkdowneditor h4 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 20px 0;
+}
+.component-backend-documentmarkdowneditor h5 {
+  font-size: 16px;
+  font-weight: normal;
+  color: #434343;
+}
+.component-backend-documentmarkdowneditor strong {
+  font-weight: 700;
+}
+.component-backend-documentmarkdowneditor pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.component-backend-documentmarkdowneditor code {
+  background: #eee;
+  padding: 0px 3px 2px;
+  display: inline-block;
+  border-radius: 4px;
+}
+.component-backend-documentmarkdowneditor blockquote {
+  border-left: solid 2px #5e35b1;
+  margin-left: 0;
+  padding-left: 5px;
+  color: #5e35b1;
+  font-size: inherit;
+}
+.component-backend-documentmarkdowneditor blockquote blockquote {
+  border-color: #00bcd4;
+  color: #00bcd4;
+}
+.component-backend-documentmarkdowneditor blockquote blockquote blockquote {
+  border-color: #43a047;
+  color: #43a047;
+}
+.component-backend-documentmarkdowneditor table {
+  border: none;
+  border-collapse: collapse;
+  empty-cells: show;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+.component-backend-documentmarkdowneditor table td,
+.component-backend-documentmarkdowneditor table th {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+.component-backend-documentmarkdowneditor table td:empty,
+.component-backend-documentmarkdowneditor table th:empty {
+  height: 20px;
+}
+.component-backend-documentmarkdowneditor table th {
+  background: #e6e6e6;
+}
+.component-backend-documentmarkdowneditor hr {
+  clear: both;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  page-break-after: always;
+}

@@ -1,0 +1,23 @@
+@import "backend-toolbar-buttons-mixin.less";
+
+.backend-toolbar-button-focus() {
+    &:focus:not([disabled]) {
+        background: @background-color-focus;
+    }
+}
+
+button,
+a {
+    &.backend-toolbar-button {
+        .backend-toolbar-button();
+    }
+}
+
+html:not(.user-touch) {
+    button,
+    a {
+        &.backend-toolbar-button {
+            .backend-toolbar-button-focus();
+        }
+    }
+}

@@ -1,0 +1,27 @@
+//
+// Side panel
+// --------------------------------------------------
+
+#layout-side-panel {
+    border-right: 1px solid @color-grey-3;
+
+    .sidepanel-content-header {
+        background: @color-grey-3;
+        font-size: 15px;
+        padding: 12px 20px 13px;
+        position: relative;
+    }
+}
+
+body.display-side-panel {
+    #layout-side-panel {
+        display: block;
+        position: absolute;
+        // This needs to be higher than the dropdown overlay, otherwise the
+        // mouseout event fires and sidebar hides when opening a dropdown.
+        z-index: @zindex-dropdown;
+        width: 350px;
+        border-right: none;
+        .box-shadow(3px 0px 3px 0 rgba(0, 0, 0, 0.1));
+    }
+}

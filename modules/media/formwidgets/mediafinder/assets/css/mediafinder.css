@@ -1,0 +1,250 @@
+.field-mediafinder.size-tiny .upload-files-container {
+  max-height: 100px;
+  overflow: auto;
+}
+.field-mediafinder.size-small .upload-files-container {
+  max-height: 200px;
+  overflow: auto;
+}
+.field-mediafinder.size-large .upload-files-container {
+  max-height: 400px;
+  overflow: auto;
+}
+.field-mediafinder.size-huge .upload-files-container {
+  max-height: 500px;
+  overflow: auto;
+}
+.field-mediafinder.size-giant .upload-files-container {
+  max-height: 700px;
+  overflow: auto;
+}
+.field-mediafinder.size-auto {
+  overflow: auto;
+}
+.field-mediafinder.size-adaptive {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+.field-mediafinder.size-adaptive .mediafinder-control-container {
+  border: none!important;
+  padding: 14px;
+}
+.field-mediafinder .item-object {
+  position: relative;
+  outline: none;
+  display: block;
+  margin: 4px 4px 0 4px;
+}
+.field-mediafinder .item-object:last-child {
+  margin-bottom: 4px;
+}
+.field-mediafinder .item-object h4.filename,
+.field-mediafinder .item-object p {
+  color: #536061;
+  font-size: 14px;
+  word-break: break-all;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.field-mediafinder .item-object p.description:empty {
+  display: none;
+}
+.field-mediafinder .item-object h4.filename {
+  font-weight: 500;
+  margin-top: -1px;
+}
+.field-mediafinder .item-object.item-object-image h4.filename {
+  padding-top: 10px;
+}
+.field-mediafinder .item-object .file-data-container {
+  padding: 3px;
+  border-radius: 4px;
+}
+.field-mediafinder .item-object .file-data-container .file-data-container-inner {
+  position: relative;
+}
+.field-mediafinder .item-object.selected .icon-container i {
+  color: white;
+}
+.field-mediafinder .item-object.selected .file-data-container {
+  background: #6bc48d;
+}
+.field-mediafinder .item-object.selected .file-data-container h4.filename,
+.field-mediafinder .item-object.selected .file-data-container p {
+  color: white;
+}
+.field-mediafinder .item-object a.drag-handle {
+  position: absolute;
+  display: none;
+  color: #72809d;
+  cursor: move;
+  left: -1px;
+  top: 23px;
+  font-size: 24px;
+  text-decoration: none;
+}
+.field-mediafinder .item-object:hover a.drag-handle {
+  display: block;
+}
+.field-mediafinder .item-object .custom-checkbox-v2 {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+}
+.field-mediafinder .empty-state {
+  display: none;
+}
+.field-mediafinder.size-adaptive .empty-state {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.field-mediafinder.size-adaptive.is-populated .empty-state {
+  display: none;
+}
+.field-mediafinder.is-max-reached .toolbar-find-button {
+  display: none;
+}
+.field-mediafinder.is-preview .item-object .custom-checkbox-v2 {
+  display: none;
+}
+.field-mediafinder.is-preview a.drag-handle {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .field-mediafinder.is-grid .mediafinder-files-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .field-mediafinder.is-grid .mediafinder-files-container .item-object {
+    width: 300px;
+  }
+  .field-mediafinder.is-grid .mediafinder-files-container .item-object h4.filename,
+  .field-mediafinder.is-grid .mediafinder-files-container .item-object p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+.field-mediafinder.is-image .item-object.item-object-image .file-data-container .file-data-container-inner {
+  padding-left: 103px;
+  min-height: 95px;
+}
+.field-mediafinder.is-image .item-object.item-object-image .icon-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 95px;
+  height: 95px;
+  overflow: hidden;
+  border: 1px solid #E7EBF0;
+  border-radius: 4px;
+  background: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.field-mediafinder.is-image .item-object.item-object-image .icon-container img {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+}
+.field-mediafinder.is-image .item-object.item-object-image.mode-multi .file-data-container {
+  margin-left: 23px;
+}
+.field-mediafinder.is-image.is-preview .item-object.item-object-image.mode-multi .file-data-container {
+  margin-left: 0;
+}
+.field-mediafinder.is-file .item-object.item-object-file .file-data-container-inner {
+  padding-top: 4px;
+}
+.field-mediafinder.is-file .item-object.item-object-file .icon-container,
+.field-mediafinder.is-file .item-object.item-object-file .info,
+.field-mediafinder.is-file .item-object.item-object-file .info h4 {
+  vertical-align: top;
+  display: inline-block;
+}
+.field-mediafinder.is-file .item-object.item-object-file .icon-container {
+  margin-top: -2px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+.field-mediafinder.is-file .item-object.item-object-file .icon-container i {
+  margin-top: 4px;
+  margin-left: 3px;
+  display: block;
+}
+.field-mediafinder.is-file .item-object.item-object-file .info {
+  padding-left: 22px;
+}
+.field-mediafinder.is-file .item-object.item-object-file h4 {
+  margin-bottom: 0;
+}
+.field-mediafinder.is-file .item-object.item-object-file .custom-checkbox-v2 {
+  top: 7px;
+}
+.field-mediafinder.is-file .item-object.item-object-file.mode-multi .file-data-container {
+  margin-left: 43px;
+}
+.field-mediafinder.is-file .item-object.item-object-file.mode-multi .drag-handle {
+  display: block;
+  left: 24px;
+  top: 0;
+}
+.field-mediafinder.is-file.is-preview .item-object.item-object-file.mode-multi .file-data-container {
+  margin-left: 0;
+}
+.field-mediafinder .mediafinder-control-container {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #CFD7E1;
+  background: white;
+}
+.field-mediafinder .mediafinder-control-container .mediafinder-control-toolbar {
+  padding: 3px;
+  font-size: 0;
+  white-space: nowrap;
+}
+.field-mediafinder .mediafinder-control-container .mediafinder-control-toolbar .backend-toolbar-button.populated-only {
+  display: none;
+}
+.field-mediafinder .mediafinder-control-container.external-toolbar .mediafinder-control-toolbar {
+  display: none;
+}
+.field-mediafinder .mediafinder-control-container .mediafinder-files-container {
+  position: relative;
+}
+.field-mediafinder.is-populated .mediafinder-control-toolbar {
+  border-bottom: 1px solid #d7e1eA;
+}
+.field-mediafinder.is-populated .mediafinder-control-toolbar .backend-toolbar-button.populated-only {
+  display: inline-block;
+}
+.field-mediafinder:not(.is-populated) .mediafinder-files-container {
+  display: none;
+}
+.field-mediafinder.is-preview .mediafinder-control-toolbar {
+  display: none;
+}

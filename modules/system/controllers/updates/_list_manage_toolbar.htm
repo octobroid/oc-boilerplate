@@ -1,0 +1,56 @@
+<?php
+    $canReset = Config::get('app.debug', false) && BackendAuth::getUser()->is_superuser;
+?>
+<div id="plugin-toolbar">
+    <div data-control="toolbar">
+        <a href="<?= Backend::url('system/updates') ?>" class="btn btn-default oc-icon-chevron-left">
+            <?= e(trans('system::lang.updates.return_link')) ?>
+        </a>
+
+        <div class="btn-group dropdown dropdown-fixed">
+            <button
+                type="button"
+                class="btn btn-default oc-icon-caret-down dropdown-toggle"
+                data-toggle="dropdown"
+                data-list-checked-trigger>
+                <?= e(trans('system::lang.plugins.select_label')) ?>
+            </button>
+
+            <ul class="dropdown-menu" data-dropdown-title="<?= e(trans('system::lang.plugins.bulk_actions_label')) ?>">
+                <li>
+                    <a href="javascript:;" class="oc-icon-ban"
+                        data-request="onBulkAction"
+                        data-request-data="action: 'disable'"
+                        data-list-checked-request
+                        data-request-confirm="<?= e(trans('system::lang.plugins.action_confirm', ['action' => e(trans('system::lang.plugins.disable'))])) ?>"
+                        data-stripe-load-indicator>
+                        <?= e(trans('system::lang.plugins.disable_label')) ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="oc-icon-check"
+                        data-request="onBulkAction"
+                        data-request-data="action: 'enable'"
+                        data-list-checked-request
+                        data-request-confirm="<?= e(trans('system::lang.plugins.action_confirm', ['action' => e(trans('system::lang.plugins.enable'))])) ?>"
+                        data-stripe-load-indicator>
+                        <?= e(trans('system::lang.plugins.enable_label')) ?>
+                    </a>
+                </li>
+                <?php if ($canReset): ?>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="javascript:;" class="oc-icon-bomb"
+                            data-request="onBulkAction"
+                            data-request-data="action: 'refresh'"
+                            data-list-checked-request
+                            data-request-confirm="<?= e(trans('system::lang.plugins.refresh_confirm')) ?>"
+                            data-stripe-load-indicator>
+                            <?= e(trans('system::lang.plugins.refresh_label')) ?>
+                        </a>
+                    </li>
+                <?php endif ?>
+            </ul>
+        </div>
+    </div>
+</div>

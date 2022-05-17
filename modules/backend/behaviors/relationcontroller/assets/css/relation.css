@@ -1,0 +1,94 @@
+.relation-behavior {
+  margin-bottom: 20px;
+}
+.relation-behavior .control-list {
+  border: 1px solid #eeeeee;
+}
+.relation-behavior .control-list thead > tr > th {
+  border-top: none !important;
+  border-color: #eeeeee;
+}
+.relation-behavior .control-toolbar {
+  padding: 0 20px 20px 20px;
+}
+.relation-behavior .control-toolbar .toolbar-item .form-control.search {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.relation-behavior .control-toolbar .loading-indicator-container.size-input-text {
+  min-height: 0;
+}
+.relation-behavior .control-toolbar .loading-indicator-container.size-input-text .loading-indicator > span {
+  top: 4px;
+}
+.relation-behavior .list-header {
+  padding: 0 !important;
+}
+.relation-behavior .control-list:last-child > table {
+  margin-bottom: 0;
+}
+.relation-flush .control-list {
+  border-top: none;
+}
+.relation-inset {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.form-group > .relation-behavior .control-toolbar {
+  padding: 0 0 10px 0;
+}
+.relation-behavior.relation-view-multi,
+.relation-behavior.relation-view-single {
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #CFD7E1;
+  background: white;
+  overflow: hidden;
+}
+.relation-behavior.relation-view-multi .relation-toolbar .control-toolbar,
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar {
+  padding: 0;
+}
+.relation-behavior.relation-view-multi .relation-toolbar .control-toolbar .loading-indicator-container.size-input-text .loading-indicator > span,
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar .loading-indicator-container.size-input-text .loading-indicator > span {
+  top: 7px;
+}
+.relation-behavior.relation-view-multi .relation-toolbar .control-toolbar .toolbar-item.toolbar-primary,
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar .toolbar-item.toolbar-primary {
+  padding: 3px;
+}
+.relation-behavior.relation-view-multi .relation-toolbar .control-toolbar .search-input-container:before,
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar .search-input-container:before {
+  right: 10px;
+  top: 11px;
+}
+.relation-behavior.relation-view-multi .relation-toolbar .control-toolbar .search-input-container .form-control,
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar .search-input-container .form-control {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.relation-behavior.relation-view-multi .control-list,
+.relation-behavior.relation-view-single .control-list {
+  margin-bottom: 0;
+  border: none;
+}
+.relation-behavior.relation-view-multi .control-list table.table.data,
+.relation-behavior.relation-view-single .control-list table.table.data {
+  border-bottom: none;
+}
+.relation-behavior.relation-view-single {
+  background: transparent;
+}
+.relation-behavior.relation-view-single .relation-toolbar .control-toolbar {
+  background: white;
+  border-bottom: 1px solid #d7e1eA;
+}
+.relation-behavior.relation-view-single > .relation-manager {
+  padding: 20px 20px 0 20px;
+}

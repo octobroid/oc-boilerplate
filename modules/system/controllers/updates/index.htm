@@ -1,0 +1,54 @@
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <?php if ($projectDetails): ?>
+            <div class="scoreboard-item title-value">
+                <h4><?= e(trans(/* Project */'system::lang.project.name')) ?></h4>
+                <p class="oc-icon-chain"><?= $projectDetails->name ?></p>
+                <p class="description">
+                    <?= e(trans(/* Owner */'system::lang.project.owner_label')) ?>: <?= $projectDetails->owner ?>
+                </p>
+            </div>
+        <?php endif ?>
+        <div class="scoreboard-item title-value">
+            <h4><?= e(trans(/* Plugins */'system::lang.updates.plugins')) ?></h4>
+            <p><?= $pluginsCount ?></p>
+            <p class="description">
+                <?= e(trans(/* Disabled */'system::lang.updates.disabled')) ?>: <?= $pluginsCount - $pluginsActiveCount ?>
+            </p>
+        </div>
+        <?php if ($currentVersion): ?>
+            <div class="scoreboard-item title-value">
+                <h4><?= e(trans(/* Current Build */'system::lang.updates.core_current_build')) ?></h4>
+                <p><span data-core-current-version="<?= $currentVersion ?>"><?= $currentVersion ?></span></p>
+                <p class="description">
+                    <span data-core-has-updates style="display:none"><?= e(trans(/* Updates Available */'system::lang.updates.core_updates_available')) ?></span>
+                    <span data-core-no-updates><?= e(trans(/* Up to Date */'system::lang.updates.core_up_to_date')) ?></span>
+                </p>
+            </div>
+            <div class="scoreboard-item title-value">
+                <h4><?= e(trans(/* Latest Build */'system::lang.updates.core_latest_build')) ?></h4>
+                <p><span data-core-latest-version class="oc-loading"></span></p>
+                <p class="description">
+                    <a
+                        href="javascript:;"
+                        data-control="popup"
+                        data-handler="<?= $this->changelogWidget->getEventHandler('onLoadChangelog') ?>">
+                        <?= e(trans(/* View Changelog */'system::lang.updates.core_view_changelog')) ?>
+                    </a>
+                </p>
+            </div>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="padded-container container-flush" style="display: none" data-update-message>
+    <div class="callout callout-info no-icon no-subheader no-title">
+        <div class="content">
+            <code>php artisan october:update</code>
+        </div>
+    </div>
+</div>
+
+<div class="layout-row p-b">
+    <?= $this->listRender() ?>
+</div>

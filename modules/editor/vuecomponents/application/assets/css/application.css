@@ -1,0 +1,44 @@
+.editor-application-splash > div .splash-content {
+  display: inline-block;
+}
+.editor-application-splash > div .splash-content.document-not-found {
+  text-align: center;
+}
+.editor-application-splash > div .splash-content.document-not-found .october-cms-logo-grey {
+  display: inline-block;
+}
+.editor-application-splash > div .document-not-found-message {
+  margin: 30px auto 0 auto;
+  color: #5E6D8C;
+}
+.editor-application-splash > div .document-not-found-message > div {
+  margin-top: 30px;
+}
+.editor-application-splash > div .october-cms-logo-grey {
+  width: 230px;
+  height: 38px;
+}
+.editor-application-splash > div .editor-custom-logo > img {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+}
+.editor-application-splash > div .editor-hotkeys {
+  margin: 30px auto 0 auto;
+  color: #5E6D8C;
+}
+.editor-application-splash > div .editor-hotkeys th,
+.editor-application-splash > div .editor-hotkeys td {
+  padding-bottom: 10px;
+}
+.editor-application-splash > div .editor-hotkeys th {
+  font-weight: normal;
+  text-align: right;
+  padding-right: 10px;
+}
+.editor-application-splash > div .editor-hotkeys .editor-hotkey {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #e9edf3;
+}

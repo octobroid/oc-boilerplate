@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'prefix' => env('HORIZON_PREFIX', 'horizon:'),
+    'prefix' => env('HORIZON_PREFIX', 'ganjaran:'),
 
     /*
     |--------------------------------------------------------------------------
@@ -139,8 +139,8 @@ return [
                 'connection' => env('QUEUE_DRIVER', 'redis'),
                 'queue' => ['default'],
                 'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 3,
+                'processes' => 1,
+                'tries' => 1,
             ],
         ],
     ],

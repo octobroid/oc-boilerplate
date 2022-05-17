@@ -1,0 +1,290 @@
+.component-backend-tabs.full-screen {
+  background: #FAFBFD;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+.component-backend-tabs > .tablist-container {
+  position: relative;
+}
+.component-backend-tabs > .tablist-container .tabs-scrollable {
+  width: 100%;
+  overflow: hidden;
+}
+.component-backend-tabs > .tablist-container .tablist button {
+  -webkit-appearance: none;
+  padding: 0 13px;
+  background: transparent;
+  color: #5E6D8C;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  white-space: nowrap;
+  text-align: left;
+}
+.component-backend-tabs > .tablist-container .tablist button.has-icon {
+  padding-left: 36px;
+}
+.component-backend-tabs > .tablist-container .tablist button.has-close-button {
+  padding-right: 32px;
+  min-width: 120px;
+}
+.component-backend-tabs > .tablist-container .tablist button:focus {
+  outline: none;
+  color: #6a6cf7;
+}
+.component-backend-tabs > .tablist-container .tablist button:focus span.tab-icon:not(.tab-error) {
+  box-shadow: 0 0 0px 2px rgba(0,0,0,0.15);
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border-radius: 4px;
+  position: absolute;
+  left: 13px;
+  top: 16px;
+  overflow: hidden;
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon .tab-icon-background {
+  width: 16px;
+  height: 16px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: top 0.5s;
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon i {
+  color: white;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  font-size: 10px;
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon i.tab-error {
+  top: 16px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-position: -31px -35px;
+  transition: top 0.5s;
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon.tab-error .tab-icon-background {
+  top: -16px;
+}
+.component-backend-tabs > .tablist-container .tablist button span.tab-icon.tab-error i.tab-error {
+  top: 0;
+}
+.component-backend-tabs > .tablist-container .tablist button span.close-tab {
+  display: inline-block;
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  right: 10px;
+  top: 15px;
+  color: transparent;
+  vertical-align: middle;
+  border-radius: 20px;
+}
+.component-backend-tabs > .tablist-container .tablist button span.close-tab:focus {
+  outline: none;
+  background-color: rgba(215, 225, 234, 0.7);
+}
+.component-backend-tabs > .tablist-container .tablist button span.close-tab:before {
+  position: absolute;
+  display: block;
+  width: 7px;
+  height: 7px;
+  left: 6px;
+  top: 6px;
+  background-position: -156px 0;
+}
+.component-backend-tabs > .tablist-container .tablist button span.close-tab:focus:before,
+.component-backend-tabs > .tablist-container .tablist button span.close-tab.has-changes:focus:before,
+.component-backend-tabs > .tablist-container .tablist button span.close-tab:hover:before,
+.component-backend-tabs > .tablist-container .tablist button span.close-tab.has-changes:hover:before {
+  background-position: -165px 0;
+}
+.component-backend-tabs > .tablist-container .tablist button span.close-tab.has-changes:before {
+  background-position: -167px -10px;
+}
+.component-backend-tabs > .tabpanel:focus {
+  outline: none;
+}
+.component-backend-tabs.style-form > .tablist-container .tablist button {
+  border: 1px solid #d7e1eA;
+  margin-left: -1px;
+  height: 38px;
+}
+.component-backend-tabs.style-form > .tablist-container .tablist button.active {
+  color: #2C3E4F;
+  border-color: #6a6cf7;
+  font-weight: 500;
+  z-index: 1;
+}
+.component-backend-tabs.style-form > .tablist-container .tablist button:first-child {
+  margin-left: 0;
+  -webkit-border-radius: 6px 0 0 6px;
+  -moz-border-radius: 6px 0 0 6px;
+  border-radius: 6px 0 0 6px;
+}
+.component-backend-tabs.style-form > .tablist-container .tablist button:last-child {
+  -webkit-border-radius: 0 6px 6px 0;
+  -moz-border-radius: 0 6px 6px 0;
+  border-radius: 0 6px 6px 0;
+}
+.component-backend-tabs.style-document > .tablist-container .tabs-scrollable {
+  background-color: #e9edf3;
+}
+.component-backend-tabs.style-document > .tablist-container .tabs-toolbar {
+  line-height: 39px;
+  background-color: #e9edf3;
+}
+.component-backend-tabs.style-document > .tablist-container .tabs-toolbar:after {
+  content: '';
+  height: 100%;
+  width: 1px;
+  top: 0;
+  background: #d7e1eA;
+  position: absolute;
+  margin-left: -1px;
+}
+.component-backend-tabs.style-document > .tablist-container .tabs-toolbar .toolbar-container {
+  margin: 5px 10px 0 10px;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: #d7e1eA;
+  z-index: 0;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist:empty:after {
+  display: none;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist button {
+  height: 48px;
+  border-left: 1px solid #d7e1eA;
+  max-width: 220px;
+  min-width: 120px;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist button.active {
+  background-color: #FAFBFD;
+  color: #2C3E4F;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist button.active:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+  background-color: #FAFBFD;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist button:first-child {
+  margin-left: 25px;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist button:last-child {
+  border-right: 1px solid #d7e1eA;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container {
+  position: relative;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container .tabs-scrollable:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 48px;
+  opacity: 0;
+  top: 0;
+  transition: opacity 0.3s;
+  left: 0;
+  background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container.scroll-before .tabs-scrollable:after {
+  opacity: 0.15;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container:not(.has-fixed-panel):after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 48px;
+  opacity: 0;
+  top: 0;
+  transition: opacity 0.3s;
+  right: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container:not(.has-fixed-panel).scroll-after:after {
+  opacity: 0.15;
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container.has-fixed-panel .fixed-right:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 48px;
+  opacity: 0;
+  top: 0;
+  transition: opacity 0.3s;
+  margin-left: -5px;
+  background: linear-gradient(-90deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+}
+.component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container.has-fixed-panel.scroll-after .fixed-right:before {
+  opacity: 0.15;
+}
+.component-backend-tabs.style-inspector > .tablist-container {
+  background: white;
+  padding-top: 15px;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: #d7e1eA;
+  z-index: 0;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist button {
+  overflow: visible;
+  text-overflow: clip;
+  color: #536061;
+  font-weight: 500;
+  z-index: auto;
+  margin-right: 15px;
+  padding: 0 0 4px;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist button.active {
+  color: #6a6cf7;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist button.active:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+  background-color: #6a6cf7;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist button:first-child {
+  margin-left: 0;
+}
+.component-backend-tabs.style-inspector > .tablist-container .tablist button:last-child {
+  margin-right: 0;
+}

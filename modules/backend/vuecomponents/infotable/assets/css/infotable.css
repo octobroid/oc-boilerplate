@@ -1,0 +1,25 @@
+.component-backend-infotable {
+  width: 100%;
+  margin-bottom: 30px;
+}
+.component-backend-infotable > tr > th,
+.component-backend-infotable > tr > td {
+  line-height: 150%;
+  padding: 7px;
+  font-weight: normal;
+  border-bottom: 1px solid #d7e1eA;
+  color: #536061;
+  vertical-align: top;
+}
+.component-backend-infotable > tr > td {
+  padding-right: 0;
+}
+.component-backend-infotable > tr > th {
+  padding-left: 0;
+  font-weight: 500;
+  color: #5E6D8C;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

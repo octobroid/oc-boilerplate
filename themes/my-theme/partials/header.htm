@@ -1,33 +1,12 @@
-[viewBag]
-
-[staticMenu mainMenu]
-code = "main-menu"
-
-==
-<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">{{ this.theme.site_name|default('My App') }}</a>
-        <a class="navbar-toggler" href="#" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                {% for item in mainMenu.menuItems if not item.viewBag.isHidden %}
-                <li class="nav-item {{ item.isActive ? 'active' : '' }} {{ item.viewBag.cssClass }}">
-                    <a class="nav-link" href="{{ item.url ?: '#' }}" {{ item.viewBag.isExternal ? 'target="_blank"' }}>
-                        {{ item.title }}
-                        {% if item.isActive %}
-                        <span class="sr-only">(current)</span>
-                        {% endif %}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
+<!-- Nav -->
+<nav class="container">
+    <ul>
+        <li><a href="/" class="contrast"><strong>VhiWEB</strong></a></li>
+    </ul>
+    <ul>
+        <li><a href="#">Menu 1</a></li>
+        <li><a href="#">Menu 2</a></li>
+        <li><a href="#">Menu 3</a></li>
+    </ul>
 </nav>
+<!-- ./ Nav -->

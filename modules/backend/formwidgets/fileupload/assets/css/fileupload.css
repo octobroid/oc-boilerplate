@@ -1,0 +1,405 @@
+.field-fileupload.size-tiny .upload-files-container {
+  max-height: 100px;
+  overflow: auto;
+}
+.field-fileupload.size-small .upload-files-container {
+  max-height: 200px;
+  overflow: auto;
+}
+.field-fileupload.size-large .upload-files-container {
+  max-height: 400px;
+  overflow: auto;
+}
+.field-fileupload.size-huge .upload-files-container {
+  max-height: 500px;
+  overflow: auto;
+}
+.field-fileupload.size-giant .upload-files-container {
+  max-height: 700px;
+  overflow: auto;
+}
+.field-fileupload.size-auto {
+  overflow: auto;
+}
+.field-fileupload.size-adaptive {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+.field-fileupload.size-adaptive .uploader-control-container {
+  border: none!important;
+  padding: 14px;
+}
+.field-fileupload.size-adaptive .empty-state {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.field-fileupload.size-adaptive.is-populated .empty-state {
+  display: none;
+}
+.field-fileupload .upload-object {
+  position: relative;
+  outline: none;
+  display: block;
+  margin: 4px 4px 0 4px;
+}
+.field-fileupload .upload-object:last-child {
+  margin-bottom: 4px;
+}
+.field-fileupload .upload-object h4.filename,
+.field-fileupload .upload-object p {
+  color: #536061;
+  font-size: 14px;
+  word-break: break-all;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.field-fileupload .upload-object p.description:empty {
+  display: none;
+}
+.field-fileupload .upload-object h4.filename {
+  font-weight: 500;
+  margin-top: -2px;
+}
+.field-fileupload .upload-object.upload-object-image h4.filename {
+  padding-top: 10px;
+}
+.field-fileupload .upload-object .file-data-container {
+  padding: 3px;
+  border-radius: 4px;
+}
+.field-fileupload .upload-object .file-data-container:hover {
+  background: rgba(215, 225, 234, 0.7);
+}
+.field-fileupload .upload-object .file-data-container .file-data-container-inner {
+  position: relative;
+}
+.field-fileupload .upload-object.selected .icon-container i {
+  color: white;
+}
+.field-fileupload .upload-object.selected .file-data-container {
+  background: #6bc48d;
+}
+.field-fileupload .upload-object.selected .file-data-container h4.filename,
+.field-fileupload .upload-object.selected .file-data-container p {
+  color: white;
+}
+.field-fileupload .upload-object a.drag-handle {
+  position: absolute;
+  display: none;
+  color: #72809d;
+  cursor: move;
+  left: -1px;
+  top: 23px;
+  font-size: 24px;
+  text-decoration: none;
+}
+.field-fileupload .upload-object:hover a.drag-handle {
+  display: block;
+}
+.field-fileupload .upload-object .custom-checkbox-v2 {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+}
+.field-fileupload.is-preview .upload-object .custom-checkbox-v2 {
+  display: none;
+}
+.field-fileupload .empty-state {
+  display: none;
+}
+.field-fileupload .upload-object .icon-container:after {
+  background-image: url('../../../../../system/assets/ui/images/loader-transparent.svg');
+  position: absolute;
+  content: ' ';
+  width: 40px;
+  height: 40px;
+  left: 50%;
+  top: 50%;
+  margin-top: -20px;
+  margin-left: -20px;
+  display: block;
+  background-size: 40px 40px;
+  background-position: 50% 50%;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+.field-fileupload .upload-object.is-success .icon-container {
+  opacity: 1;
+}
+.field-fileupload .upload-object.is-success .icon-container:after {
+  display: none;
+}
+.field-fileupload .upload-object.is-loading .icon-container {
+  opacity: 0.6;
+}
+.field-fileupload .upload-object.is-loading .icon-container:after {
+  display: block;
+}
+.field-fileupload .upload-object.is-success .file-data-container-inner {
+  cursor: pointer;
+}
+.field-fileupload .upload-object.is-success .progress-bar {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.field-fileupload .upload-object.is-error .file-data-container-inner {
+  cursor: pointer;
+}
+.field-fileupload .upload-object.is-error .icon-container {
+  opacity: 1;
+}
+.field-fileupload .upload-object.is-error .icon-container > img,
+.field-fileupload .upload-object.is-error .icon-container > i {
+  opacity: 0.5;
+}
+.field-fileupload .upload-object.is-error .info h4 {
+  color: #ab2a1c;
+}
+.field-fileupload .upload-object.is-error .info h4 a {
+  display: none;
+}
+.field-fileupload .upload-object.is-error .drag-handle {
+  display: none !important;
+}
+.field-fileupload.is-preview .upload-button,
+.field-fileupload.is-preview a.drag-handle {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .field-fileupload.is-grid .upload-files-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .field-fileupload.is-grid .upload-files-container .upload-object {
+    width: 300px;
+  }
+  .field-fileupload.is-grid .upload-files-container .upload-object h4.filename,
+  .field-fileupload.is-grid .upload-files-container .upload-object p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+.fileupload-config-form .fileupload-url-button {
+  padding-left: 0;
+}
+.fileupload-config-form .fileupload-url-button > i {
+  color: #666;
+}
+.fileupload-config-form .file-upload-modal-image-header {
+  background-color: #FEFEFE;
+  background-image: -webkit-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB), -webkit-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB);
+  background-image: -moz-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB), -moz-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB);
+  background-image: -o-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB), -o-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB);
+  background-image: -ms-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB), -ms-linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB);
+  background-image: linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB), linear-gradient(45deg, #CBCBCB 25%, transparent 25%, transparent 75%, #CBCBCB 75%, #CBCBCB);
+  -webkit-background-size: 20px 20px;
+  -moz-background-size: 20px 20px;
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+.fileupload-config-form .file-upload-modal-image-header,
+.fileupload-config-form .file-upload-modal-image-header img {
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.fileupload-config-form .file-upload-modal-image-header .close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #BDC3C7;
+  opacity: 0.7;
+  height: 24px;
+  width: 22px;
+}
+.fileupload-config-form .file-upload-modal-image-header .close:hover,
+.fileupload-config-form .file-upload-modal-image-header .close:focus {
+  opacity: 0.9;
+}
+.fileupload-config-form .file-upload-modal-image-header + .modal-body {
+  padding-top: 20px;
+}
+.field-fileupload.is-image .upload-object.upload-object-image .file-data-container .file-data-container-inner {
+  padding-left: 103px;
+  min-height: 95px;
+}
+.field-fileupload.is-image .upload-object.upload-object-image .icon-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 95px;
+  height: 95px;
+  overflow: hidden;
+  border: 1px solid #E7EBF0;
+  border-radius: 4px;
+  background: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.field-fileupload.is-image .upload-object.upload-object-image .icon-container img {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+}
+.field-fileupload.is-image .upload-object.upload-object-image.mode-multi .file-data-container {
+  margin-left: 23px;
+}
+.field-fileupload.is-image .upload-object.upload-object-image.is-error .icon-container:after {
+  content: "";
+  background: none;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  content: "\f071";
+  -webkit-animation: none;
+  animation: none;
+  font-size: 40px;
+  color: #ab2a1c;
+  margin-top: -20px;
+  margin-left: -20px;
+  text-shadow: 2px 2px 0 #fff;
+}
+.field-fileupload.is-image.is-preview .upload-object.upload-object-image.mode-multi .file-data-container {
+  margin-left: 0;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .file-data-container-inner {
+  padding-top: 4px;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .icon-container,
+.field-fileupload.is-file .upload-object.upload-object-file .info,
+.field-fileupload.is-file .upload-object.upload-object-file .info h4,
+.field-fileupload.is-file .upload-object.upload-object-file .info h4 p {
+  vertical-align: top;
+  display: inline-block;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .icon-container {
+  margin-top: -2px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .icon-container i {
+  margin-top: 4px;
+  margin-left: 3px;
+  display: none;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .icon-container:after {
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  background-size: 20px 20px;
+  opacity: 1;
+}
+.field-fileupload.is-file .upload-object.upload-object-file .info {
+  padding-left: 22px;
+}
+.field-fileupload.is-file .upload-object.upload-object-file h4,
+.field-fileupload.is-file .upload-object.upload-object-file h4 p,
+.field-fileupload.is-file .upload-object.upload-object-file p.description {
+  margin-bottom: 0;
+}
+.field-fileupload.is-file .upload-object.upload-object-file h4 p {
+  font-weight: normal;
+}
+.field-fileupload.is-file .upload-object.upload-object-file h4 p:before {
+  content: ' (';
+}
+.field-fileupload.is-file .upload-object.upload-object-file h4 p:after {
+  content: ')';
+}
+.field-fileupload.is-file .upload-object.upload-object-file .custom-checkbox-v2 {
+  top: 7px;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.mode-multi .file-data-container {
+  margin-left: 43px;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.mode-multi .drag-handle {
+  display: block;
+  left: 24px;
+  top: 0;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-success .icon-container i {
+  display: inline-block;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-loading .icon-container {
+  opacity: 1;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-loading .icon-container > i {
+  display: none;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-loading .icon-container > i:after {
+  display: block;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-error .icon-container,
+.field-fileupload.is-file .upload-object.upload-object-file.is-error .icon-container > i {
+  opacity: 1;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-error .icon-container > i {
+  display: inline-block;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-error .icon-container:after {
+  display: none;
+}
+.field-fileupload.is-file .upload-object.upload-object-file.is-error div.error-message {
+  margin-left: 22px;
+}
+.field-fileupload.is-file.is-preview .upload-object.upload-object-file.mode-multi .file-data-container {
+  margin-left: 0;
+}
+.field-fileupload .uploader-control-container {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #CFD7E1;
+  background: white;
+}
+.field-fileupload .uploader-control-container .uploader-control-toolbar {
+  padding: 3px;
+  font-size: 0;
+  white-space: nowrap;
+}
+.field-fileupload .uploader-control-container .uploader-control-toolbar .backend-toolbar-button.populated-only {
+  display: none;
+}
+.field-fileupload .uploader-control-container.external-toolbar .uploader-control-toolbar {
+  display: none;
+}
+.field-fileupload.file-drag-over .uploader-control-container {
+  border: 1px solid #6a6cf7;
+  box-shadow: 0 0 0 1px #6a6cf7;
+}
+.field-fileupload.is-populated .uploader-control-toolbar {
+  border-bottom: 1px solid #d7e1eA;
+}
+.field-fileupload.is-populated .uploader-control-toolbar .backend-toolbar-button.populated-only {
+  display: inline-block;
+}
+.field-fileupload.is-preview .uploader-control-toolbar {
+  display: none;
+}

@@ -1,0 +1,68 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    defaultTab: cms::lang.theme.default_tab
+    fields:
+
+        name:
+            label: cms::lang.theme.name_label
+            placeholder: cms::lang.theme.name_create_placeholder
+            span: auto
+            required: true
+            attributes:
+                default-focus: 1
+
+        dir_name@create:
+            label: cms::lang.theme.dir_name_label
+            placeholder: cms::lang.theme.dir_name_create_label
+            span: auto
+            preset: name
+            required: true
+
+        dir_name@update:
+            label: cms::lang.theme.dir_name_label
+            disabled: true
+            span: auto
+
+        description:
+            label: cms::lang.theme.description_label
+            placeholder: cms::lang.theme.description_placeholder
+            type: textarea
+            size: tiny
+
+        author:
+            label: cms::lang.theme.author_label
+            placeholder: cms::lang.theme.author_placeholder
+            span: auto
+            tab: cms::lang.theme.publish_tab
+
+        homepage:
+            label: cms::lang.theme.homepage_label
+            placeholder: cms::lang.theme.homepage_placeholder
+            span: auto
+            tab: cms::lang.theme.publish_tab
+
+        authorCode:
+            label: cms::lang.theme.author_code_label
+            placeholder: cms::lang.theme.author_code_placeholder
+            span: auto
+            tab: cms::lang.theme.publish_tab
+
+        code:
+            label: cms::lang.theme.code_label
+            placeholder: cms::lang.theme.code_placeholder
+            span: auto
+            tab: cms::lang.theme.publish_tab
+
+        parent:
+            label: cms::lang.theme.parent_label
+            type: dropdown
+            tab: cms::lang.theme.advanced_tab
+
+        database:
+            label: cms::lang.theme.database_templates_label
+            comment: cms::lang.theme.database_templates_description
+            type: checkbox
+            tab: cms::lang.theme.advanced_tab

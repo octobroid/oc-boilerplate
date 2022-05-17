@@ -1,0 +1,190 @@
+//
+// Shared
+//
+
+.mediafinder-set-height(@size) {
+    .upload-files-container {
+        max-height: @size * 2;
+        overflow: auto;
+    }
+}
+
+.field-mediafinder {
+    &.size-tiny {
+        .mediafinder-set-height(@size-tiny);
+    }
+    &.size-small {
+        .mediafinder-set-height(@size-small);
+    }
+    &.size-large {
+        .mediafinder-set-height(@size-large);
+    }
+    &.size-huge {
+        .mediafinder-set-height(@size-huge);
+    }
+    &.size-giant {
+        .mediafinder-set-height(@size-giant);
+    }
+    &.size-auto {
+        overflow: auto;
+    }
+    &.size-adaptive {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: white;
+
+        .mediafinder-control-container {
+            border: none!important;
+            padding: 14px;
+        }
+    }
+}
+
+.field-mediafinder {
+    //
+    // Selected item
+    //
+
+    .item-object {
+        position: relative;
+        outline: none;
+        display: block;
+        margin: 4px 4px 0 4px;
+
+        &:last-child {
+            margin-bottom: 4px;
+        }
+
+        h4.filename, p {
+            color: @color-text-grey-1;
+            font-size: @font-size-base;
+            word-break: break-all;
+
+            // Stop vertical trim on overflow ellipsis
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        p.description:empty {
+            display: none;
+        }
+
+        h4.filename {
+            font-weight: 500;
+            margin-top: -1px;
+        }
+
+        &.item-object-image {
+            h4.filename {
+                padding-top: 10px;
+            }
+        }
+
+        .file-data-container {
+            padding: 3px;
+            border-radius: @border-radius-base;
+
+            // &:hover {
+            //     background: @background-color-focus;
+            // }
+
+            .file-data-container-inner {
+                position: relative;
+            }
+        }
+
+        &.selected {
+            .icon-container i {
+                color: white;
+            }
+
+            .file-data-container {
+                background: @brand-selection;
+
+                h4.filename, p {
+                    color: white;
+                }
+            }
+        }
+
+        a.drag-handle {
+            position: absolute;
+            display: none;
+            color: @color-grey-2;
+            cursor: move;
+            left: -1px;
+            top: 23px;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        &:hover {
+            a.drag-handle {
+                display: block;
+            }
+        }
+
+        .custom-checkbox-v2 {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+        }
+    }
+
+    .empty-state {
+        display: none;
+    }
+
+    &.size-adaptive {
+        .empty-state {
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &.is-populated {
+            .empty-state {
+                display: none;
+            }
+        }
+    }
+
+    &.is-max-reached {
+        .toolbar-find-button {
+            display: none;
+        }
+    }
+
+    &.is-preview {
+        .item-object {
+            .custom-checkbox-v2 {
+                display: none;
+            }
+        }
+        a.drag-handle {
+            display: none !important;
+        }
+    }
+
+    //
+    // Grid mode (small screens and above)
+    //
+    @media (min-width: @screen-sm-min) {
+        &.is-grid .mediafinder-files-container {
+            display: flex;
+            flex-wrap: wrap;
+            .item-object {
+                width: 300px;
+
+                h4.filename, p {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+}

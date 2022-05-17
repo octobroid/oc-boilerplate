@@ -1,0 +1,44 @@
+name: Test
+description: 'Test October CMS theme.'
+author: October CMS
+homepage: 'http://octobercms.com'
+code: ''
+
+form:
+    fields:
+        nested[field]:
+            label: Nested Field
+
+        nested[field2]:
+            label: Second Field
+
+        nestedform:
+            label: Nested Form
+            type: nestedform
+            form:
+                fields:
+                    position:
+                        label: Position
+                        type: radio
+                        options:
+                            top: At the top
+                            left: At the left
+
+        position:
+            label: Position
+            type: radio
+            options:
+                top: At the top
+                left: At the left
+            assetVar: 'nav-position'
+
+        breakdown:
+            tab: Breakdown
+            type: repeater
+            prompt: Add a new point summary
+            form:
+                fields:
+                    point_summary:
+                        label: Point
+                        placeholder: What points are you trying to make
+                        type: text

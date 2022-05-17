@@ -1,0 +1,70 @@
+.october-snackbar {
+    padding: 14px 40px 0 16px;
+    background: @color-snackbar;
+    font-size: @font-size-base;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    max-width: 100%;
+    margin-right: 16px;
+    position: fixed;
+    z-index: @zindex-snackbar;
+    left: 16px;
+    bottom: 16px;
+    color: white;
+    opacity: 0;
+
+    &.enter {
+        transition: opacity 0.2s;
+    }
+
+    &.show-snackbar {
+        opacity: 1;
+    }
+
+    .snackbar-label {
+        float: left;
+        margin-right: 16px;
+        margin-bottom: 14px;
+    }
+
+    button {
+        outline: none;
+        -webkit-appearance: none;
+        background: transparent;
+        border-radius: 3px;
+        border: none;
+        color: @color-alert;
+        font-weight: 500;
+
+        &:focus {
+            background: @background-color-focus-dark;
+        }
+    }
+
+    .snackbar-dismiss {
+        .backend-hide-text();
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        right: 10px;
+        top: 14px;
+
+        &:before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            left: 7px;
+            top: 8px;
+            display: block;
+            position: absolute;
+            .backend-icon-sprite(156px, 10px);
+        }
+    }
+
+    .snackbar-action {
+        float: left;
+        margin: 0 0 14px -8px;
+        padding: 1px 8px;
+        text-transform: uppercase;
+    }
+}

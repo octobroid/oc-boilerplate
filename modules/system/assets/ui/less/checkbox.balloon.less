@@ -1,0 +1,68 @@
+//
+// Balloon selector
+// --------------------------------------------------
+
+@color-balloon-control-default-text:         @input-color;
+@color-balloon-control-hover-bg:             @background-color-focus;
+@color-balloon-control-active-bg:            @brand-selection;
+
+body .control-balloon-selector {
+    ul {
+        padding: 0;
+        display: inline-block;
+        background: white;
+        font-size: 0;
+
+        li {
+            list-style: none;
+            line-height: 36px;
+            display: inline-block;
+            color: @color-balloon-control-default-text;
+            font-size: @input-font-size;
+            padding: 0 14px;
+            border: 1px solid @color-form-field-border;
+
+            &:first-child {
+                border-top-left-radius: @border-radius-base;
+                border-bottom-left-radius: @border-radius-base;
+            }
+
+            &:last-child {
+                border-top-right-radius: @border-radius-base;
+                border-bottom-right-radius: @border-radius-base;
+            }
+
+            &.active {
+                background: @color-balloon-control-active-bg !important;
+                color: white;
+                border-color: @color-balloon-control-active-bg;
+                position: relative;
+                z-index: 1;
+            }
+
+            + li {
+                margin-left: -1px;
+            }
+        }
+    }
+
+    &.control-disabled {
+        ul li.active {
+            background-color: @color-grey-2!important;
+            border-color: @color-grey-2!important;
+        }
+    }
+
+    &:not(.control-disabled) ul {
+        li:hover {
+            background: @color-balloon-control-hover-bg;
+            cursor: pointer;
+        }
+    }
+}
+
+.form-group {
+    .control-balloon-selector ul {
+        margin-bottom: 0;
+    }
+}

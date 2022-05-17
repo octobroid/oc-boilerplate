@@ -1,0 +1,26 @@
+.component-backend-scrollablepanel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.component-backend-scrollablepanel .scrollable-panel-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.component-backend-scrollablepanel .scrollable-panel-container .scrollable {
+  overflow: hidden;
+}
+.component-backend-scrollablepanel.scrollablepanel-relative {
+  position: relative;
+}
+.component-backend-scrollablepanel.scrollablepanel-relative > .scrollable-panel-container {
+  position: relative;
+}
+.component-backend-scrollablepanel.scrollablepanel-relative > .scrollable-panel-container > .scrollable {
+  position: relative;
+}

@@ -1,0 +1,155 @@
+.component-cms-object-component-list {
+  padding: 5px;
+}
+.component-cms-object-component-list .components-scrollable {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.component-cms-object-component-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  font-size: 0;
+}
+.component-cms-object-component-list ul li {
+  margin: 0 5px 0 0;
+  position: relative;
+  background-color: #5E6D8C;
+  padding: 4px 26px 6px 10px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  color: white;
+}
+.component-cms-object-component-list ul li.unknown {
+  background-color: #7f8c8d;
+  cursor: default;
+}
+.component-cms-object-component-list ul li:not(.unknown):hover {
+  background-color: #6a6cf7;
+}
+.component-cms-object-component-list ul li:last-child {
+  margin-right: 0;
+}
+.component-cms-object-component-list ul li.inspector-enabled {
+  cursor: pointer;
+}
+.component-cms-object-component-list ul li.popover-highlight {
+  background-color: #6a6cf7;
+}
+.component-cms-object-component-list ul li .component-header {
+  position: relative;
+  padding-left: 20px;
+}
+.component-cms-object-component-list ul li .component-header i {
+  font-size: 14px;
+  position: absolute;
+  left: 0;
+  top: 1px;
+}
+.component-cms-object-component-list ul li h3,
+.component-cms-object-component-list ul li p {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+.component-cms-object-component-list ul li h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 150%;
+}
+.component-cms-object-component-list ul li p {
+  white-space: normal;
+  margin-top: 5px;
+  font-weight: 100;
+  font-size: 12px;
+  display: none;
+}
+.component-cms-object-component-list ul li p.component-alias {
+  position: absolute;
+  bottom: 7px;
+  left: 9px;
+  right: 9px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.component-cms-object-component-list ul li p.component-alias:before {
+  margin-right: 4px;
+}
+.component-cms-object-component-list ul li .remove-component {
+  border: none;
+  background: transparent;
+  -webkit-appearance: none;
+  position: absolute;
+  outline: none;
+  width: 15px;
+  height: 15px;
+  right: 7px;
+  top: 9px;
+}
+.component-cms-object-component-list ul li .remove-component:before {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 7px;
+  height: 7px;
+  background-position: -156px -10px;
+  opacity: 0.5;
+  display: block;
+}
+.component-cms-object-component-list ul li .remove-component:hover:before {
+  opacity: 1;
+}
+.component-cms-object-component-list .list-control-buttons {
+  padding-left: 15px;
+  font-size: 0;
+}
+.component-cms-object-component-list .list-control-buttons .expand-collapse-button {
+  margin: 6px 4px 0 0;
+}
+.component-cms-object-component-list .list-control-buttons .expand-collapse-button:before {
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+}
+.component-cms-object-component-list .list-control-buttons .expand-collapse-button:focus {
+  background: transparent !important;
+}
+.component-cms-object-component-list .list-control-buttons .expand-collapse-button.expand-list:before {
+  background-position: -95px -15px;
+}
+.component-cms-object-component-list .list-control-buttons .expand-collapse-button.collapse-list:before {
+  background-position: -116px -15px;
+}
+.component-cms-object-component-list.expanded ul li {
+  min-width: 170px;
+  max-width: 340px;
+  padding: 4px 26px 30px 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.component-cms-object-component-list.expanded ul li p {
+  display: block;
+  overflow-wrap: anywhere;
+}
+div.cms-transition-component-list-enter-active {
+  transition: opacity 0.3s;
+}
+div.cms-transition-component-list-enter {
+  opacity: 0;
+}
+li.cms-transition-component-list-enter-active {
+  transition: transform 0.3s, opacity 0.3s;
+}
+li.cms-transition-component-list-enter {
+  opacity: 0;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}

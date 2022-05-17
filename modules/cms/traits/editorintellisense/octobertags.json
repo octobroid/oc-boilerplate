@@ -1,0 +1,90 @@
+[
+    {
+        "label": "{% page %}",
+        "hoverKeyword": "page",
+        "documentation": "cms::lang.intellisense.docs.page",
+        "docUrl": "https://octobercms.com/docs/markup/tag-page",
+        "insertText": "page"
+    },
+    {
+        "label": "{% partial %}",
+        "hoverKeyword": "partial",
+        "documentation": "cms::lang.intellisense.docs.partial",
+        "docUrl": "https://octobercms.com/docs/markup/tag-partial",
+        "insertText": "partial \"${1{partial-list}}\"",
+        "customData": {
+            "isPartialTag": true
+        }
+    },
+    {
+        "label": "{% content %}",
+        "hoverKeyword": "content",
+        "documentation": "cms::lang.intellisense.docs.partial",
+        "docUrl": "https://octobercms.com/docs/markup/tag-content",
+        "insertText": "content \"${1{content-list}}\""
+    },
+
+    {
+        "label": "{% component %}",
+        "hoverKeyword": "component",
+        "documentation": "cms::lang.intellisense.docs.component",
+        "docUrl": "https://octobercms.com/docs/markup/tag-component",
+        "insertText": "component \"${1:name}\""
+    },
+    {
+        "label": "{% placeholder %}",
+        "hoverKeyword": "placeholder",
+        "documentation": "cms::lang.intellisense.docs.placeholder",
+        "docUrl": "https://octobercms.com/docs/markup/tag-placeholder.",
+        "insertText": "placeholder ${1:name}"
+    },
+    {
+        "label": "{% scripts %}",
+        "hoverKeyword": "scripts",
+        "documentation": "cms::lang.intellisense.docs.scripts",
+        "docUrl": "https://octobercms.com/docs/markup/tag-scripts",
+        "insertText": "scripts$0"
+    },
+    {
+        "label": "{% styles %}",
+        "hoverKeyword": "styles",
+        "documentation": "cms::lang.intellisense.docs.styles",
+        "docUrl": "https://octobercms.com/docs/markup/tag-styles",
+        "insertText": "styles$0"
+    },
+    {
+        "label": "{% flash %}",
+        "hoverKeyword": ["flash", "endflash"],
+        "documentation": "cms::lang.intellisense.docs.flash",
+        "docUrl": "https://octobercms.com/docs/markup/tag-flash",
+        "insertText": "{% flash %}$0{{ message }}{% endflash %}"
+    },
+    {
+        "label": "{% verbatim %}",
+        "hoverKeyword": ["verbatim", "endverbatim"],
+        "documentation": "cms::lang.intellisense.docs.verbatim",
+        "docUrl": "https://octobercms.com/docs/markup/tag-verbatim",
+        "insertText": "{% verbatim %}$0{% endverbatim %}"
+    },
+    {
+        "label": "{% macro %}",
+        "hoverKeyword": ["macro", "endmacro"],
+        "documentation": "cms::lang.intellisense.docs.macro",
+        "docUrl": "https://octobercms.com/docs/markup/tag-macro",
+        "insertText": "{% macro ${1:name}(${2:argument}) %}$0{% endmacro %}"
+    },
+    {
+        "label": "{% for %}",
+        "hoverKeyword": ["for", "endfor"],
+        "documentation": "cms::lang.intellisense.docs.for",
+        "docUrl": "https://octobercms.com/docs/markup/tag-for",
+        "insertText": "{% for ${1:item} in ${2:collection} %}\n\t$0\n{% endfor %}"
+    },
+    {
+        "label": "{% if %}",
+        "hoverKeyword": ["if", "endif", "else", "elseif"],
+        "documentation": "cms::lang.intellisense.docs.if",
+        "docUrl": "https://octobercms.com/docs/markup/tag-if",
+        "insertText": "{% if ${1:condition} %}\n\t$0\n{% endif %}"
+    }
+]

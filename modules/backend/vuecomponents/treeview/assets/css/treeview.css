@@ -1,0 +1,490 @@
+.component-backend-treeview {
+  background: #f0f4f8;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-treeview ul li {
+  display: block;
+  white-space: nowrap;
+}
+.component-backend-treeview ul li .node-label {
+  display: block;
+  color: #536061;
+  position: relative;
+  z-index: 1;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.component-backend-treeview ul li > .item-label-outer-container:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  border-radius: 4px;
+  z-index: 0;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container {
+  cursor: default;
+  position: relative;
+  line-height: 30px;
+  font-size: 14px;
+  vertical-align: top;
+}
+.component-backend-treeview ul li.root-node > .item-label-outer-container > .item-label-container .node-label {
+  color: #333333;
+}
+.component-backend-treeview ul li:focus {
+  outline: none;
+}
+.component-backend-treeview ul li:focus > .item-label-outer-container:before {
+  background-color: rgba(215, 225, 234, 0.7);
+}
+.component-backend-treeview ul li.selectable-node:not(.selected-node) > .item-label-outer-container:hover:before {
+  background-color: rgba(215, 225, 234, 0.7);
+}
+.component-backend-treeview ul li.selectable-node:not(.selected-node).context-menu-visible > .item-label-outer-container:before {
+  background-color: rgba(215, 225, 234, 0.7);
+}
+.component-backend-treeview ul li.selected-node > .item-label-outer-container:before {
+  background: #6bc48d;
+}
+.component-backend-treeview ul li.selected-node > .item-label-outer-container > .item-label-container .node-label,
+.component-backend-treeview ul li.selected-node > .item-label-outer-container > .item-label-container.root-node .node-label {
+  color: white;
+}
+.component-backend-treeview ul li.selected-node:focus > .item-label-outer-container:before {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.component-backend-treeview ul li.selectable-node > .item-label-outer-container > .item-label-container {
+  cursor: pointer;
+}
+.component-backend-treeview ul li.selected-node:not(.expanded-with-children) + li.selected-node > .item-label-outer-container:before,
+.component-backend-treeview ul li.selected-node > ul[data-subtree] > li.selected-node:first-child > .item-label-outer-container:before {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.component-backend-treeview ul li.selected-node.next-is-selected > .item-label-outer-container:before {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.component-backend-treeview ul li.mode-tree > .item-label-outer-container > .item-label-container .node-label,
+.component-backend-treeview ul li.root-node > .item-label-outer-container > .item-label-container .node-label {
+  padding-left: 19px;
+}
+.component-backend-treeview ul li.mode-tree > .item-label-outer-container > .item-label-container.has-icon .node-label,
+.component-backend-treeview ul li.root-node > .item-label-outer-container > .item-label-container.has-icon .node-label {
+  padding-left: 38px;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-icon .node-label {
+  padding-left: 19px;
+}
+.component-backend-treeview .treeview-readonly ul li .node-label {
+  opacity: 0.7;
+}
+.component-backend-treeview ul li > .item-label-outer-container.section-label {
+  background: #d7e1eA;
+  margin: 0 -8px;
+  padding: 0 8px;
+  position: sticky;
+  margin-bottom: 2px;
+  z-index: 3;
+  top: 0;
+}
+.component-backend-treeview ul li > .item-label-outer-container.section-label .node-label {
+  cursor: pointer;
+  color: #333333;
+  font-weight: 500;
+  padding-left: 19px;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu .node-menu-trigger.section-create-button {
+  right: 30px;
+  z-index: 2;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu .node-menu-trigger.section-create-button:before {
+  width: 11px;
+  height: 11px;
+  top: 9px;
+  left: 9px;
+  position: absolute;
+  background-position: -267px -40px;
+}
+.component-backend-treeview ul li.mode-tree > ul,
+.component-backend-treeview ul li.root-node > ul {
+  padding-left: 19px;
+}
+.component-backend-treeview ul li .node-toggle-control {
+  -webkit-appearance: none;
+  display: inline-block;
+  border: none;
+  background: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  padding: 0;
+  margin: 0;
+  width: 16px;
+  height: 30px;
+  margin-right: 3px;
+  vertical-align: top;
+  outline: none;
+}
+.component-backend-treeview ul li .node-toggle-control:before {
+  position: absolute;
+  width: 10px;
+  height: 6px;
+  left: 3px;
+  top: 12px;
+  background-position: -182px 0;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transition: transform 0.1s;
+  transition: transform 0.1s;
+}
+.component-backend-treeview ul li .node-toggle-control.no-child-nodes {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: inherit;
+}
+.component-backend-treeview ul li.expanded-node > .item-label-outer-container > .item-label-container .node-toggle-control:before {
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  transform: rotate(0);
+}
+.component-backend-treeview ul li.selected-node > .item-label-outer-container > .item-label-container .node-toggle-control:before {
+  background-position: -182px -8px;
+}
+.component-backend-treeview ul li span.node-icon {
+  display: inline-block;
+  position: absolute;
+  top: 7px;
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  margin-right: 3px;
+  vertical-align: text-bottom;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.component-backend-treeview ul li span.node-icon.folder-icon {
+  box-shadow: none;
+}
+.component-backend-treeview ul li span.node-icon i {
+  color: white;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  font-size: 10px;
+}
+.component-backend-treeview ul li span.node-icon i.treeview-folder {
+  width: 16px;
+  height: 16px;
+  background-position: 0 -20px;
+  left: 0;
+  top: 0;
+}
+.component-backend-treeview ul li.selected-node > .item-label-outer-container > .item-label-container span.node-icon .treeview-folder {
+  background-position: 0 -73px;
+}
+.component-backend-treeview ul li.mode-tree span.node-icon {
+  left: 19px;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu .node-menu-trigger {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  -webkit-appearance: none;
+  outline: none;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+  color: transparent;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu .node-menu-trigger:before {
+  width: 2px;
+  height: 12px;
+  top: 9px;
+  left: 14px;
+  position: absolute;
+  background-position: -231px 0;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu .node-menu-trigger:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu:hover {
+  padding-right: 30px;
+}
+.component-backend-treeview ul li > .item-label-outer-container > .item-label-container.has-menu:hover .node-menu-trigger {
+  display: inline-block;
+}
+.component-backend-treeview .drag-indicator {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  right: 0;
+  height: 4px;
+  background: #6a6cf7;
+  border: 1px solid white;
+  border-radius: 6px;
+  z-index: 1;
+  margin-top: -2px;
+}
+.component-backend-treeview .drag-indicator[data-drop-position] {
+  display: block;
+}
+.component-backend-treeview .drag-indicator[data-drop-position=below] {
+  margin-top: 28px;
+}
+.component-backend-treeview .drag-indicator:after {
+  content: '';
+  position: absolute;
+  border: 2px solid #6a6cf7;
+  background: white;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  top: -2px;
+  left: -4px;
+  -webkit-box-shadow: 0 0 0 1px white;
+  box-shadow: 0 0 0 1px white;
+}
+.component-backend-treeview ul li.drop-target-parent > .item-label-outer-container:before {
+  border: 2px solid #6a6cf7;
+}
+.component-backend-treeview .treeview-ghost-image-container {
+  top: 0;
+  left: 0;
+  z-index: 0;
+  position: absolute;
+}
+.component-backend-treeview .treeview-ghost-image-container.snapshot {
+  z-index: 5;
+}
+.component-backend-treeview .treeview-search-control {
+  height: 40px;
+  background: white;
+  position: relative;
+}
+.component-backend-treeview .treeview-search-control:before {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  background-position: -238px 0;
+  top: 14px;
+  right: 11px;
+}
+.component-backend-treeview .treeview-search-control > input {
+  display: block;
+  border: none;
+  height: 40px;
+  width: 100%;
+  border-top: 1px solid #d7e1eA;
+  background: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  padding-left: 10px;
+  padding-right: 35px;
+  position: relative;
+  z-index: 0;
+}
+.component-backend-treeview .treeview-search-control > input:focus {
+  border-top: 1px solid #72809d;
+}
+.component-backend-treeview .treeview-search-control > button {
+  display: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 30px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 6px;
+  top: 6px;
+  background: transparent;
+  font-size: 0;
+  color: transparent;
+  padding: 0;
+  outline: none;
+}
+.component-backend-treeview .treeview-search-control > button:focus {
+  background: rgba(215, 225, 234, 0.7);
+}
+.component-backend-treeview .treeview-search-control > button:before {
+  display: block;
+  width: 11px;
+  height: 11px;
+  position: absolute;
+  background-position: -253px 0;
+  top: 10px;
+  right: 9px;
+}
+.component-backend-treeview .treeview-search-control.search-enabled:before {
+  display: none;
+}
+.component-backend-treeview .treeview-search-control.search-enabled > button {
+  display: block;
+}
+.component-backend-treeview .modal.component-backend-modal.treeview-quick-access-modal .modal-content {
+  min-height: 52px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-header {
+  border-bottom: none;
+  padding: 0;
+  height: 10px;
+  min-height: 0;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-header h4 {
+  display: none;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body {
+  padding: 0;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .input-container {
+  position: relative;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .input-container:before {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  background-position: -238px 0;
+  top: 7px;
+  left: 10px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .input-container > input {
+  display: block;
+  border: none;
+  height: 40px;
+  width: 100%;
+  border-bottom-style: solid;
+  border-bottom-color: #d7e1eA;
+  border-bottom-width: 0;
+  background: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  position: relative;
+  padding: 0 10px 11px 35px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .input-container > input:focus {
+  border-bottom-color: #72809d;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .scrollable-panel-container {
+  background: white;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li {
+  line-height: 30px;
+  padding: 0 10px 0 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  cursor: pointer;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.quick-list-header {
+  cursor: default;
+  line-height: 12px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #98A0A0;
+  padding: 0 0 0 10px;
+  margin: 8px 0 5px 0;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span {
+  vertical-align: middle;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.node-icon {
+  left: 10px;
+  box-shadow: none;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.node-icon i.icon-command {
+  background-position: -283px -37px;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-item {
+  font-size: 14px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-section,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-node,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-command,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-folder {
+  color: #98A0A0;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-folder:before {
+  width: 16px;
+  height: 16px;
+  background-position: 0 -20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-node:before,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-leaf:before {
+  display: inline-block;
+  color: #98A0A0;
+  margin: 0 3px;
+  content: '/';
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-node.path-leaf-command:before,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-leaf.path-leaf-command:before {
+  display: none;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-section + .path-node:before {
+  display: inline-block;
+  margin: 0 3px;
+  content: '→';
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li span.path-command:after {
+  display: inline-block;
+  margin: 0 3px;
+  content: '→';
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected {
+  background: #6bc48d;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span.path-section,
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span.path-node {
+  color: white;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span:before {
+  color: white;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span.path-folder:before {
+  background-position: 0 -73px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body .quick-access-list li.selected span.node-icon i.icon-command {
+  background-position: -283px -53px;
+}
+.component-backend-treeview .modal.component-backend-modal .treeview-quick-access .modal-body.has-results .input-container > input {
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+}
+.component-backend-treeview .scrollable-panel-container {
+  background: #f0f4f8;
+}
+.component-backend-treeview .scrollable-panel-container.scrolled:before {
+  z-index: 1;
+}
+.component-backend-treeview .treeview-container ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 0;
+}
+.component-backend-treeview .treeview-container .scrollable > div {
+  margin: 0 8px 8px 8px;
+  position: relative;
+}

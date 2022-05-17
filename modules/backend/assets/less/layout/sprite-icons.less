@@ -1,0 +1,54 @@
+.backend-icon-background {
+    .backend-icon-sprite(0, 0);
+
+    &.entity-small {
+        position: relative;
+        width: 10px;
+        height: 10px;
+
+        &.cms-page {
+            background-position: -129px 0;
+        }
+
+        &.cms-partial {
+            background-position: -180px -20px;
+        }
+
+        &.cms-content {
+            background-position: -206px -20px;
+        }
+
+        &.cms-layout {
+            background-position: -193px -20px;
+        }
+
+        &.cms-asset {
+            background-position: -219px -20px;
+        }
+
+        &.text {
+            background-position: -142px 0;
+        }
+    }
+
+    &.monaco-document {
+        position: relative;
+        width: 16px;
+        height: 16px;
+
+        &.php {
+            background-position: -181px -38px;
+        }
+
+        &.html {
+            background-position: -203px -38px;
+        }
+    }
+}
+
+.backend-icon-background-pseudo {
+    &:before {
+        content: '';
+        .backend-icon-sprite(0, 0);
+    }
+}

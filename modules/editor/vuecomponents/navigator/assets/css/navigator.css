@@ -1,0 +1,10 @@
+.application-sidebar-hidden > .component-backend-splitter > .splitter-first-panel {
+  width: 0 !important;
+}
+.application-sidebar-hidden > .component-backend-splitter > .splitter-first-panel .treeview-ghost-image-container,
+.application-sidebar-hidden > .component-backend-splitter > .splitter-first-panel .treeview-search-control {
+  display: none;
+}
+.application-sidebar-hidden > .component-backend-splitter .splitter-handle {
+  display: none;
+}

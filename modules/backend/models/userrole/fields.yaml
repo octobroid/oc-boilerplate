@@ -1,0 +1,26 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+tabs:
+    stretch: true
+    defaultTab: backend::lang.user.role.name
+    fields:
+        _view_as:
+            type: partial
+            path: ~/modules/backend/controllers/userroles/_action_view_as.htm
+
+        name:
+            label: backend::lang.user.role.name_field
+            comment: backend::lang.user.role.name_comment
+            span: auto
+
+        code:
+            label: backend::lang.user.role.code_field
+            comment: backend::lang.user.role.code_comment
+            span: auto
+
+        description:
+            label: backend::lang.user.role.description_field
+            type: textarea
+            size: tiny

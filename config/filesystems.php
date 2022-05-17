@@ -11,11 +11,11 @@ return [
     | by the framework. A "local" driver, as well as a variety of cloud
     | based drivers are available for your choosing. Just store away!
     |
-    | Supported: "local", "s3", "rackspace"
+    | Supported: "local", "ftp", "sftp", "s3", "rackspace"
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER','local'),
+    'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,34 +45,39 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root' => storage_path('app'),
+            'url' => '/storage/app',
         ],
 
         's3' => [
-            'driver' => 's3',
+            'driver'                  => 's3',
             'key'                     => env('S3_KEY', ''),
             'secret'                  => env('S3_SECRET', ''),
             'region'                  => env('S3_REGION', ''),
             'bucket'                  => env('S3_BUCKET', ''),
+            'endpoint'                => env('S3_ENDPOINT', ''),
+            'public'                  => true,
+            'use_path_style_endpoint' => true,
         ],
 
-        's3_backup' => [
+	   's3_backup' => [
             'driver'                  => 's3',
             'key'                     => env('S3_KEY_BACKUP', ''),
             'secret'                  => env('S3_SECRET_BACKUP', ''),
             'region'                  => env('S3_REGION_BACKUP', ''),
             'bucket'                  => env('S3_BUCKET_BACKUP', ''),
-            // 'endpoint'                => env('S3_ENDPOINT_BACKUP', ''),
+            'endpoint'                => env('S3_ENDPOINT_BACKUP', ''),
+            'public'                  => true,
             'use_path_style_endpoint' => true,
         ],
 
         'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
+            'driver' => 'rackspace',
+            'username' => 'your-username',
+            'key' => 'your-key',
             'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
+            'endpoint' => 'https://identity.api.rackspacecloud.com/v2.0/',
+            'region' => 'IAD',
         ],
 
     ],

@@ -1,15 +1,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
 
-{% set _meta_title = this.page.title ? this.page.title ~ ' - ' ~ this.theme.site_name : this.theme.site_name ~ ' - ' ~ this.theme.site_description %}
+{% set _meta_title = this.page.title ? this.page.title ~ ' - ' ~ 'My Theme' : 'My Theme' ~ ' - ' ~ this.theme.site_description %}
 {% set _meta_description = this.page.description ?: this.theme.site_description %}
 {% set _meta_image = this.page.image ? this.page.image|app : this.theme.site_image ? this.theme.site_image.getThumb(1200, 630, 'crop')|app : 'meta-image.png'|media|app %}
 
 <!-- Place this data between the <head> tags of your website -->
 <title>{{ _meta_title }}</title>
+
 <meta name="description" content="{{ str_limit(_meta_description, 160) }}">
 
-<!-- Schema.org markup for Google+ -->
 <meta itemprop="name" content="{{ _meta_title }}">
 <meta itemprop="description" content="{{ str_limit(_meta_description, 300) }}">
 <meta itemprop="image" content="{{ _meta_image }}">
@@ -32,10 +33,6 @@
 <meta property="og:description" content="{{ str_limit(_meta_description, 300) }}">
 <meta property="og:site_name" content="{{ this.theme.site_name }}">
 
-<!-- Facebook Data -->
-<meta property="fb:app_id" content="">
-<meta property="fb:page_id" content="">
-
 <link rel="canonical" href="{{ ''|page }}">
 
 <!-- Favicons -->
@@ -54,11 +51,11 @@
 <meta name="msapplication-TileColor" content="#333">
 <meta name="theme-color" content="#333">
 
-<!-- Google Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,100,300,700,400italic' rel='stylesheet' type='text/css'>
+<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
 
 <!-- App Styles -->
 <link href="{{ [
     '@framework.extras',
-    'assets/scss/app.scss',
     ]|theme }}" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">

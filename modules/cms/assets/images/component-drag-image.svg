@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="89px" height="22px" viewBox="0 0 89 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>component-drag-image</title>
+    <g id="component-drag-image" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.504138765">
+        <g id="Drag-&amp;-Drop-component" transform="translate(7.000000, 0.000000)">
+            <rect id="Rectangle" stroke="#ECF0F1" fill="#FFFFFF" x="0.5" y="0.5" width="80" height="21" rx="3"></rect>
+            <text id="Component" font-family="HelveticaNeue, Helvetica Neue" font-size="12" font-weight="normal" fill="#2C3E4F">
+                <tspan x="8" y="15">Component</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

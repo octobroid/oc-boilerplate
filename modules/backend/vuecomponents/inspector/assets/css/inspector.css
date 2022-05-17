@@ -1,0 +1,824 @@
+.inspector-modal-host .component-backend-inspector-panel {
+  padding-bottom: 30px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container:before {
+  top: -5px;
+  bottom: -5px;
+  height: auto;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost:not(:hover) .inspector-control-container:before {
+  opacity: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable {
+  padding-right: 20px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost > tr th {
+  background: transparent;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost > tr:first-child > td .inspector-control-container:before {
+  top: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links {
+  padding-left: 20px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-group .component-backend-inspector-table {
+  margin-left: 0;
+  margin-right: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-group .component-backend-inspector-table table tbody td:first-child {
+  padding-left: 10px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-group .component-backend-inspector-table .table-control-links {
+  padding-left: 10px;
+}
+.inspector-modal-host .component-backend-inspector-panel .inspector-padding-control-left {
+  padding-left: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .inspector-control-container {
+  padding-right: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .inspector-padding-control-right {
+  padding-right: 0;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-tabs.style-inspector > .tablist-container {
+  position: relative;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.inspector-modal-host .component-backend-inspector-panel .component-backend-tabs.style-inspector > .tablist-container .tablist button:first-child {
+  margin-left: 15px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost {
+  width: 100%;
+  table-layout: fixed;
+  background: white;
+  border-top: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr > th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr > td {
+  padding: 0;
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.hide-bottom-border > th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.hide-bottom-border > td {
+  border-bottom: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.focused > th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.focused > td {
+  border-bottom: 1px solid #6a6cf7;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors > th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors.focused > th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors > td,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors.focused > td {
+  border-bottom: 1px solid #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors > th > .inspector-label-container > label,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors.focused > th > .inspector-label-container > label,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors > td > .inspector-label-container > label,
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr.has-errors.focused > td > .inspector-label-container > label {
+  color: #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost > tr th {
+  background: #f0f4f8;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container {
+  position: relative;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container > div[tabindex] {
+  outline: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container:before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  border-left: 1px dotted #d7e1eA;
+  opacity: 1;
+  transition: opacity 0.35s;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container .inspector-drag-handle {
+  position: absolute;
+  left: -1px;
+  top: 1px;
+  width: 3px;
+  height: 100%;
+  cursor: col-resize;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-container .component-backend-loading-indicator {
+  margin-left: 12px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-label-container {
+  position: relative;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-label-container.has-description label {
+  margin-right: 25px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-label-container label {
+  display: block;
+  height: 35px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 12px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: #5E6D8C;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-label-container .property-description {
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 8px;
+  width: 19px;
+  height: 19px;
+  border-radius: 25px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-label-container .property-description:before {
+  width: 5px;
+  height: 11px;
+  left: 7px;
+  top: 4px;
+  background-position: -52px -35px;
+  position: absolute;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .full-width-control-label {
+  padding-top: 8px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .full-width-control-label label {
+  display: block;
+  line-height: 35px;
+  font-weight: 500;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .full-width-control-label label,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .full-width-control-label .full-width-property-description {
+  word-break: break-all;
+  color: #5E6D8C;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .full-width-control-label .full-width-property-description {
+  margin-top: -9px;
+  margin-bottom: 10px;
+}
+.component-backend-inspector-panel > .component-backend-inspector-grouphost > .component-backend-inspector-controlhost,
+.component-backend-inspector-panel .tabpanel > .component-backend-inspector-grouphost > .component-backend-inspector-controlhost:first-child {
+  border-top: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control {
+  height: 35px;
+  padding-top: 0;
+  padding-left: 12px;
+  padding-right: 0;
+  padding-bottom: 0;
+  line-height: 35px;
+  border: none;
+  display: block;
+  -webkit-appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control[readonly] {
+  color: #899C9D !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control.clickable {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control.clickable[readonly] {
+  cursor: default;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control.act-as-text-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control.placeholder {
+  color: #95A5A6;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control::-webkit-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control::-moz-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control:-ms-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control::placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable {
+  padding-right: 5px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable button.clear-value {
+  border: none;
+  background: transparent;
+  position: absolute;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  right: 8px;
+  top: 11px;
+  padding: 0;
+  outline: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable button.clear-value:hover:before,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable button.clear-value:focus:before {
+  color: #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-control-clearable button.clear-value:before {
+  font-family: 'octo-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e93e";
+  font-size: 13px;
+  display: inline-block;
+  position: absolute;
+  color: #72809d;
+  left: 2px;
+  top: 1px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect {
+  font-size: 14px;
+  color: inherit;
+  min-height: 0;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__single {
+  font-size: 14px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect.multiselect--disabled,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect--disabled,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect.multiselect--disabled .multiselect__select,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect--disabled .multiselect__select {
+  background: transparent;
+  opacity: 1;
+  color: #899C9D;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect.multiselect--disabled .multiselect__select,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect--disabled .multiselect__select {
+  opacity: 0.5;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper {
+  z-index: 1000;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__single {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect span > .multiselect__single {
+  color: #95A5A6;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__single {
+  line-height: 35px;
+  height: 35px;
+  padding: 0;
+  margin: 0;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input::-webkit-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input::-moz-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input:-ms-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__input::placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper {
+  margin-left: -1px;
+  margin-top: 3px;
+  border-radius: 4px;
+  box-sizing: content-box;
+  border-color: #d7e1eA;
+  border-top: 1px solid #d7e1eA;
+  padding: 3px;
+  -webkit-box-shadow: -2px 2px 5px rgba(67, 86, 100, 0.12);
+  box-shadow: -2px 2px 5px rgba(67, 86, 100, 0.12);
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper ul.multiselect__content {
+  display: block!important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper ul.multiselect__content li span.multiselect__option {
+  min-height: 30px;
+  line-height: 30px;
+  padding: 0 12px;
+  border-radius: 2px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper ul.multiselect__content li span.multiselect__option.multiselect__option--highlight {
+  background: #6bc48d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper ul.multiselect__content li span.multiselect__option.multiselect__option--selected {
+  font-weight: 500;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__content-wrapper ul.multiselect__content li span.multiselect__option span {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__tags {
+  border: none;
+  padding: 0 15px 0 12px;
+  margin: 0;
+  line-height: 35px;
+  min-height: 35px;
+  height: 35px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__select {
+  top: 0;
+  right: 0;
+  height: 35px;
+  width: 15px;
+  margin: 0;
+  padding: 0;
+  transition: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect__select:before {
+  width: 10px;
+  height: 6px;
+  margin: 0;
+  right: 0;
+  top: 9px;
+  border: none;
+  display: inline-block;
+  background-position: -182px 0;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect.multiselect--above .multiselect__content-wrapper {
+  margin-top: 0;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect.multiselect--active .multiselect__select:before {
+  top: 7px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect-enter-active,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.multiselect .multiselect-leave-active {
+  transition: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-textinput {
+  resize: none;
+  min-height: 35px;
+  line-height: 150%;
+  padding-top: 7px;
+  padding-bottom: 5px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-textinput[readonly] {
+  color: #899C9D;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-textinput.size-small {
+  max-height: 75px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-textinput.size-medium {
+  max-height: 150px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-textinput.size-large {
+  max-height: 300px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-textarea-shadow {
+  max-height: none;
+  height: auto;
+  white-space: pre-wrap;
+  position: fixed;
+  left: -1000em;
+  top: -1000em;
+  visibility: hidden;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .inspector-textarea-shadow:after {
+  content: '';
+  display: inline-block;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border-radius: 4px;
+  position: relative;
+  top: 2px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label:focus {
+  box-shadow: 0 0 0px 2px rgba(0,0,0,0.15);
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label input {
+  display: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label span {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label span:before {
+  width: 16px;
+  height: 16px;
+  display: block;
+  background-position: -88px -40px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label input:checked + span:before {
+  background-position: -68px -40px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-checkbox label input[readonly]:checked + span:before {
+  background-position: -108px -40px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table {
+  width: 100%;
+  table-layout: fixed;
+  border-top: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table th,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table td {
+  border-right: 1px solid #d7e1eA;
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table th:last-child,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table td:last-child {
+  border-right: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table thead th {
+  background-color: white;
+  font-weight: 500;
+  color: #5E6D8C;
+  min-width: 50px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table thead th .header-cell-container {
+  padding: 8px 10px;
+  position: relative;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table thead th .header-cell-container .cell-resize-handle {
+  position: absolute;
+  left: -1px;
+  top: 1px;
+  width: 3px;
+  height: 100%;
+  cursor: col-resize;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table thead th:first-child .header-cell-container {
+  padding-left: 20px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td .table-cell-container {
+  position: relative;
+  padding-right: 10px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td:first-child {
+  padding-left: 20px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td:last-child .table-cell-container {
+  padding-right: 23px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.no-sub-controls {
+  padding-top: 7px;
+  padding-bottom: 8px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.clickable {
+  cursor: pointer;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.clickable:hover {
+  background: rgba(215, 225, 234, 0.7);
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.clickable .clickable-data-container {
+  position: relative;
+  margin-right: 30px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.clickable .clickable-data-container > span {
+  display: block;
+  word-break: break-all;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td.clickable .clickable-data-container .remove-row-btn {
+  right: -21px;
+  top: 3px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody tr.focused td {
+  border-bottom: 1px solid #6a6cf7;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody tr.has-errors td,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody tr.has-errors.focused td {
+  border-bottom: 1px solid #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody .remove-row-btn {
+  border: none;
+  background: transparent;
+  position: absolute;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  right: 8px;
+  top: 11px;
+  padding: 0;
+  outline: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody .remove-row-btn:hover:before,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody .remove-row-btn:focus:before {
+  color: #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody .remove-row-btn:before {
+  font-family: 'octo-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e93e";
+  font-size: 13px;
+  display: inline-block;
+  position: absolute;
+  color: #72809d;
+  left: 2px;
+  top: 1px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td input.inspector-table-control-text {
+  padding: 8px 0 8px 10px;
+  background: white;
+  border: none;
+  outline: none;
+  display: block;
+  width: 100%;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td input.inspector-table-control-text[readonly] {
+  color: #899C9D;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td:first-child input.inspector-table-control-text {
+  padding-left: 0;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td .inspector-table-dropdown-container {
+  padding-right: 0;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td .inspector-table-dropdown-container .dropdown-placeholder {
+  position: absolute;
+  padding: 0 42px 0 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  left: 0;
+  top: 0;
+  line-height: 36px;
+  color: #95A5A6;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td div.multiselect .multiselect__select {
+  height: 36px;
+  width: 20px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td div.multiselect .multiselect__select:before {
+  top: 8px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td div.multiselect .multiselect__tags {
+  padding-right: 20px;
+  height: 36px;
+  line-height: 36px;
+  min-height: 36px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td div.multiselect .multiselect__single {
+  line-height: 36px;
+  height: 36px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table table tbody td div.multiselect .multiselect__input {
+  line-height: 36px;
+  height: 36px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links a {
+  color: #72809d;
+  text-decoration: underline;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links a:active,
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links a:focus {
+  color: #3498db;
+  outline: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .component-backend-inspector-table .table-control-links a.disabled {
+  cursor: default;
+  color: #72809d !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost .no-property-title > .component-backend-inspector-table table {
+  border-top: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input {
+  height: 35px;
+  padding-top: 0;
+  padding-left: 12px;
+  padding-right: 0;
+  padding-bottom: 0;
+  line-height: 35px;
+  border: none;
+  display: block;
+  -webkit-appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-size: inherit;
+  background-image: none;
+  background-color: transparent;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input[readonly] {
+  color: #899C9D !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.clickable {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.clickable[readonly] {
+  cursor: default;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.act-as-text-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.placeholder {
+  color: #95A5A6;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::-webkit-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::-moz-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input:-ms-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input[readonly] {
+  color: #899C9D !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.clickable {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.clickable[readonly] {
+  cursor: default;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.act-as-text-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input.placeholder {
+  color: #95A5A6;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::-webkit-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::-moz-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input:-ms-input-placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input::placeholder {
+  color: #95A5A6 !important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input:focus,
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete input.autocomplete-input[aria-expanded=true] {
+  box-shadow: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete ul.autocomplete-result-list {
+  margin-top: 3px;
+  border-radius: 4px;
+  border-color: #d7e1eA;
+  padding: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-shadow: -2px 2px 5px rgba(67, 86, 100, 0.12);
+  box-shadow: -2px 2px 5px rgba(67, 86, 100, 0.12);
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete ul.autocomplete-result-list li.autocomplete-result {
+  padding: 0 12px;
+  border-radius: 2px;
+  min-height: 30px;
+  line-height: 30px;
+  background-image: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete ul.autocomplete-result-list li.autocomplete-result[aria-selected=true] {
+  background: #6bc48d !important;
+  color: white!important;
+}
+.component-backend-inspector-panel .component-backend-inspector-controlhost div.autocomplete ul.autocomplete-result-list li.autocomplete-result:hover {
+  background: rgba(215, 225, 234, 0.7);
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name {
+  position: relative;
+  background: white;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #536061;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name span {
+  display: block;
+  padding-left: 14px;
+  margin-left: -14px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name span:before {
+  position: absolute;
+  width: 10px;
+  height: 6px;
+  left: 0;
+  top: 7px;
+  background-position: -182px 0;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.loading span {
+  margin-right: 50px;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.loading span:before {
+  display: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.loading .component-backend-loading-indicator {
+  float: right;
+  margin-top: -20px;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.expanded span:before {
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  transform: rotate(0);
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.collapsed {
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.hide-bottom-border-collapsed.collapsed {
+  border-bottom: none;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-name.has-errors {
+  color: #ff3e1d;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-fade-in-enter-active {
+  transition: opacity 0.3s;
+}
+.component-backend-inspector-panel .component-backend-inspector-group .group-fade-in-enter {
+  opacity: 0;
+}
+.component-backend-inspector-panel .inspector-padding-control-left {
+  padding-left: 20px;
+}
+.component-backend-inspector-panel .inspector-control-container {
+  padding-right: 20px;
+}
+.component-backend-inspector-panel .inspector-padding-control-right {
+  padding-right: 20px;
+}
+.component-backend-inspector-panel .component-backend-tabs.style-inspector > .tablist-container .tablist button {
+  padding-left: 5px;
+  padding-right: 5px;
+}

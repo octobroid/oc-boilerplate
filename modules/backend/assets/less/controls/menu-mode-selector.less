@@ -1,0 +1,96 @@
+div.control-simplelist.is-selectable-box.menu-mode-selector {
+    margin-left: 0;
+    margin-top: 10px;
+    border: none;
+
+    li {
+        margin: 0 16px 16px 0;
+        width: 175px;
+
+        &.active .menu-mode-box {
+            border-color: @brand-accent;
+        }
+
+        .heading {
+            margin: 0;
+            text-align: left;
+            padding: 18px 17px;
+        }
+    }
+
+    .menu-mode-box {
+        display: block;
+        border: 2px solid @color-grey-3;
+        background: white;
+        border-radius: 10px;
+
+        .mode-image {
+            display: block;
+            height: 42px;
+            border-bottom: 1px solid @color-grey-3;
+            position: relative;
+
+            &:before {
+                position: absolute;
+                left: 17px;
+            }
+        }
+
+        &.menu-mode-box-inline .mode-image:before {
+            .backend-icon-sprite-pseudo(131px, 10px, 0, 100px);
+            top: 15px;
+        }
+
+        &.menu-mode-box-text .mode-image:before {
+            .backend-icon-sprite-pseudo(137px, 6px, 0, 120px);
+            top: 17px;
+        }
+
+        &.menu-mode-box-tiles .mode-image:before {
+            .backend-icon-sprite-pseudo(126px, 20px, 0, 139px);
+            top: 10px;
+        }
+
+        &.menu-mode-box-icons .mode-image:before {
+            .backend-icon-sprite-pseudo(79px, 10px, 61px, 169px);
+            top: 15px;
+        }
+
+        &.menu-mode-box-collapsed .mode-image {
+            &:before {
+                .backend-icon-sprite-pseudo(35px, 10px, 0, 170px);
+                top: 15px;
+            }
+
+            &:after {
+                position: absolute;
+                right: 17px;
+                top: 13px;
+                .backend-icon-sprite-pseudo(10px, 16px, 44px, 167px);
+            }
+        }
+
+        &.menu-mode-box-left {
+            height: 93px;
+
+            .mode-image {
+                width: 42px;
+                height: 93px;
+                float: left;
+                border-bottom: none;
+                border-right: 1px solid @color-grey-3;
+
+                &:before {
+                    top: 17px;
+                    .backend-icon-sprite-pseudo(10px, 56px, 148px, 100px);
+                }
+            }
+
+            .heading {
+                margin-left: 42px;
+                text-align: left;
+                padding: 18px 17px;
+            }
+        }
+    }
+}

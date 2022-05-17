@@ -11,154 +11,55 @@ return [
     |
     */
 
-    'activeTheme' => env('CMS_ACTIVE_THEME', 'my-theme'),
+    'active_theme' => env('ACTIVE_THEME', 'my-theme'),
 
     /*
     |--------------------------------------------------------------------------
-    | Bleeding edge updates
+    | Safe Mode
     |--------------------------------------------------------------------------
     |
-    | If you are developing with October, it is important to have the latest
-    | code base. Set this value to 'true' to tell the platform to download
-    | and use the development copies of core files and plugins.
+    | If safe mode is enabled, the PHP code section is disabled in the CMS
+    | for security reasons. If set to null, safe mode is enabled when
+    | debug mode (app.debug) is disabled.
     |
     */
 
-    'edgeUpdates' => true,
+    'safe_mode' => env('CMS_SAFE_MODE', null),
 
     /*
     |--------------------------------------------------------------------------
-    | Back-end URI prefix
+    | Database Themes
     |--------------------------------------------------------------------------
     |
-    | Specifies the URL name used for accessing back-end pages.
-    | For example: backend -> http://localhost/backend
+    | Globally forces all themes to store template changes in the database,
+    | instead of the file system. If this feature is enabled, changes will
+    | not be stored in the file system.
+    |
+    | false - All theme templates are sourced from the filesystem.
+    | true  - Source theme templates from the database with fallback to the filesytem.
+    | null  - Setting equal to the inverse of app.debug: debug enabled, this disabled.
     |
     */
 
-    'backendUri' => env('CMS_BACKEND_URI', 'backend'),
+    'database_templates' => env('CMS_DB_TEMPLATES', false),
 
     /*
     |--------------------------------------------------------------------------
-    | Back-end force HTTPS security
+    | Template Strictness
     |--------------------------------------------------------------------------
     |
-    | Use this setting to force a secure protocol when accessing any back-end
-    | pages, including the authentication pages. If set to null, this setting
-    | is enabled when debug mode (app.debug) is disabled.
+    | When enabled, an error is thrown when a component, variable, or attribute
+    | used does not exist. When disabled, a null value is returned instead.
     |
     */
 
-    'backendForceSecure' => null,
+    'strict_variables' => env('CMS_STRICT_VARIABLES', false),
+
+    'strict_components' => env('CMS_STRICT_COMPONENTS', false),
 
     /*
     |--------------------------------------------------------------------------
-    | Back-end login remember
-    |--------------------------------------------------------------------------
-    |
-    | Define live duration of backend sessions :
-    |
-    | true  - session never expire (cookie expiration in 5 years)
-    |
-    | false - session have a limited time (see session.lifetime)
-    |
-    | null  - The form login display a checkbox that allow user to choose
-    |         wanted behavior
-    |
-    */
-
-    'backendForceRemember' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Back-end timezone
-    |--------------------------------------------------------------------------
-    |
-    | This acts as the default setting for a back-end user's timezone. This can
-    | be changed by the user at any time using the backend preferences. All
-    | dates displayed in the back-end will be converted to this timezone.
-    |
-    */
-
-    'backendTimezone' => 'Asia/Jakarta',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Back-end Skin
-    |--------------------------------------------------------------------------
-    |
-    | Specifies the back-end skin to use.
-    |
-    */
-
-    'backendSkin' => 'Backend\Skins\Standard',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Determines which modules to load
-    |--------------------------------------------------------------------------
-    |
-    | Specify which modules should be registered when using the application.
-    |
-    */
-
-    'loadModules' => ['System', 'Backend', 'Cms'],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Prevents application updates
-    |--------------------------------------------------------------------------
-    |
-    | If using composer or git to download updates to the core files, set this
-    | value to 'true' to prevent the update gateway from trying to download
-    | these files again as part of the application update process. Plugins
-    | and themes will still be downloaded.
-    |
-    */
-
-    'disableCoreUpdates' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Specific plugins to disable
-    |--------------------------------------------------------------------------
-    |
-    | Specify plugin codes which will always be disabled in the application.
-    |
-    */
-
-    'disablePlugins' => explode(',', env('DISABLE_PLUGINS')),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Determines if the routing caching is enabled.
-    |--------------------------------------------------------------------------
-    |
-    | If the caching is enabled, the page URL map is saved in the cache. If a page
-    | URL was changed on the disk, the old URL value could be still saved in the cache.
-    | To update the cache the back-end Clear Cache feature should be used. It is recommended
-    | to disable the caching during the development, and enable it in the production mode.
-    |
-    */
-
-    'enableRoutesCache' => env('ROUTES_CACHE', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Time to live for the URL map.
-    |--------------------------------------------------------------------------
-    |
-    | The URL map used in the CMS page routing process. By default
-    | the map is updated every time when a page is saved in the back-end or when the
-    | interval, in minutes, specified with the urlMapCacheTTL parameter expires.
-    |
-    */
-
-    'urlCacheTtl' => 10,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Time to live for parsed CMS objects.
+    | Template Caching
     |--------------------------------------------------------------------------
     |
     | Specifies the number of minutes the CMS object cache lives. After the interval
@@ -167,7 +68,47 @@ return [
     |
     */
 
-    'parsedPageCacheTTL' => 10,
+    'template_cache_ttl' => 1440,
+
+    'template_cache_driver' => 'file',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Twig Cache
+    |--------------------------------------------------------------------------
+    |
+    | Store a temporary cache of parsed Twig templates in the local filesystem.
+    |
+    */
+
+    'enable_twig_cache' => env('CMS_TWIG_CACHE', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Determines if the routing caching is enabled.
+    |--------------------------------------------------------------------------
+    |
+    | If the caching is enabled, the page URL map is saved in the cache. If a page
+    | URL was changed on the disk, the old URL value could be still saved in the cache.
+    | To update the cache the clear:cache command should be used. It is recommended
+    | to disable the caching during the development, and enable it in the production mode.
+    |
+    */
+
+    'enable_route_cache' => env('CMS_ROUTE_CACHE', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Time to live for the URL map.
+    |--------------------------------------------------------------------------
+    |
+    | The URL map used in the CMS page routing process. By default
+    | the map is updated every time when a page is saved in the backend or when the
+    | interval, in minutes, specified with the url_cache_ttl parameter expires.
+    |
+    */
+
+    'url_cache_ttl' => 10,
 
     /*
     |--------------------------------------------------------------------------
@@ -176,12 +117,12 @@ return [
     |
     | If the caching is enabled, combined assets are cached. If a asset file
     | is changed on the disk, the old file contents could be still saved in the cache.
-    | To update the cache the back-end Clear Cache feature should be used. It is recommended
+    | To update the cache the clear cache command should be used. It is recommended
     | to disable the caching during the development, and enable it in the production mode.
     |
     */
 
-    'enableAssetCache' => env('ASSET_CACHE', null),
+    'enable_asset_cache' => env('CMS_ASSET_CACHE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -190,12 +131,11 @@ return [
     |
     | If the minification is enabled, combined assets are compressed (minified).
     | It is recommended to disable the minification during development, and
-    | enable it in production mode. If set to null, assets are minified
-    | when debug mode (app.debug) is disabled.
+    | enable it in production mode.
     |
     */
 
-    'enableAssetMinify' => env('ASSET_MINIFY', null),
+    'enable_asset_minify' => env('CMS_ASSET_MINIFY', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -209,130 +149,7 @@ return [
     |
     */
 
-    'enableAssetDeepHashing' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Public plugins path
-    |--------------------------------------------------------------------------
-    |
-    | Specifies the public plugins path relative to the application base URL,
-    | or you can specify a full URL path.
-    |
-    */
-
-    'pluginsPath' => '/plugins',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Public themes path
-    |--------------------------------------------------------------------------
-    |
-    | Specifies the public themes path relative to the application base URL,
-    | or you can specify a full URL path.
-    |
-    */
-
-    'themesPath' => '/themes',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Resource storage
-    |--------------------------------------------------------------------------
-    |
-    | Specifies the configuration for resource storage, such as media and
-    | upload files. These resources are used:
-    |
-    | media   - generated by the media manager.
-    | uploads - generated by attachment model relationships.
-    |
-    | For each resource you can specify:
-    |
-    | disk   - filesystem disk, as specified in filesystems.php config.
-    | folder - a folder prefix for storing all generated files inside.
-    | path   - the public path relative to the application base URL,
-    |          or you can specify a full URL path.
-    */
-
-    'storage' => [
-
-        'uploads' => [
-            'disk'   => 'local',
-            'folder' => 'uploads',
-            'path'   => '/storage/app/uploads',
-        ],
-
-        'media' => [
-            'disk'   => 'local',
-            'folder' => 'media',
-            'path'   => '/storage/app/media',
-        ],
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Convert Line Endings
-    |--------------------------------------------------------------------------
-    |
-    | Determines if October should convert line endings from the windows style
-    | \r\n to the unix style \n.
-    |
-    */
-
-    'convertLineEndings' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Linking policy
-    |--------------------------------------------------------------------------
-    |
-    | Controls how URL links are generated throughout the application.
-    |
-    | detect   - detect hostname and use the current schema
-    | secure   - detect hostname and force HTTPS schema
-    | insecure - detect hostname and force HTTP schema
-    | force    - force hostname and schema using app.url config value
-    |
-    */
-
-    'linkPolicy' => env('LINK_POLICY', 'detect'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default permission mask
-    |--------------------------------------------------------------------------
-    |
-    | Specifies a default file and folder permission for newly created objects.
-    |
-    */
-
-    'defaultMask' => ['file' => null, 'folder' => null],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Safe mode
-    |--------------------------------------------------------------------------
-    |
-    | If safe mode is enabled, the PHP code section is disabled in the CMS
-    | for security reasons. If set to null, safe mode is enabled when
-    | debug mode (app.debug) is disabled.
-    |
-    */
-
-    'enableSafeMode' => env('SAFE_MODE', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cross Site Request Forgery (CSRF) Protection
-    |--------------------------------------------------------------------------
-    |
-    | If the CSRF protection is enabled, all "postback" requests are checked
-    | for a valid security token.
-    |
-    */
-
-    'enableCsrfProtection' => env('ENABLE_CSRF', false),
+    'enable_asset_deep_hashing' => env('CMS_ASSET_DEEP_HASHING', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -345,6 +162,6 @@ return [
     |
     */
 
-    'forceBytecodeInvalidation' => true,
+    'force_bytecode_invalidation' => true,
 
 ];

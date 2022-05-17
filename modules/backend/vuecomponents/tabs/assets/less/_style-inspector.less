@@ -1,0 +1,48 @@
+&.style-inspector {
+    > .tablist-container {
+        background: white;
+        padding-top: 15px;
+
+        .tablist {
+            &:after {
+                .full-width-border();
+                background-color: @color-grey-3;
+                z-index: 0;
+            }
+
+            button {
+                overflow: visible;
+                text-overflow: clip;
+                color:  @color-text-grey-1;
+                font-weight: 500;
+
+                // Important - setting anything else for z-index
+                // breaks styles for Inspector dropdown controls
+                // overlapping tabs.
+                //
+                z-index: auto; 
+
+                margin-right: 15px;
+                padding: 0 0 4px;
+
+                &.active {
+                    color: @brand-primary;
+
+                    &:after {
+                        .full-width-border();
+                        z-index: 1;
+                        background-color: @brand-primary;
+                    }
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

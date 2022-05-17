@@ -1,0 +1,52 @@
+.top-ruler {
+    background-color: @color-grey-3;
+    height: 14px;
+    border-bottom: @color-grey-3 1px solid;
+
+    .width-indicator {
+        height: 13px;
+        max-width: 100% !important;
+        background: white;
+        position: relative;
+
+        .width-tick {
+            position: absolute;
+            width: 1px;
+            background: #bdc3c7;
+
+            &.tick-major {
+                top: 2px;
+                height: 9px;
+            }
+
+            &.tick-minor {
+                top: 5px;
+                height: 3px;
+            }
+        }
+
+        .width-drag-handle {
+            .triangle(down, 15px, 8px, #3498DB);
+            width: 15px;
+            position: absolute;
+            right: -7px;
+            bottom: 0;
+            opacity: 0.85;
+            cursor: ew-resize;
+        }
+    }
+}
+
+&.resizing-ui {
+    .fr-box.fr-basic .fr-wrapper {
+        background-color: @color-panel-light;
+    }
+
+    .fr-element.fr-view {
+        background: white;
+        box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
+        margin: 0 auto;
+        display: block;
+        max-width: 100% !important;
+    }
+}

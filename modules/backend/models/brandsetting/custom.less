@@ -1,0 +1,57 @@
+//
+// Coded variables
+//
+// @logo-image
+// @brand-primary
+// @brand-secondary
+// @brand-accent
+// @brand-selection
+// @login-bg-color
+// @login-wallpaper
+// @login-wallpaper-size
+//
+
+//
+// Brand
+//
+
+:root {
+    --brand-primary: @brand-primary;
+    --brand-secondary: @brand-secondary;
+    --brand-accent: @brand-accent;
+    --brand-selection: @brand-selection;
+}
+
+//
+// Logos
+//
+
+.oc-logo-transparent when not (@logo-image = '') {
+    background-image: url('@{logo-image}') !important;
+}
+
+.oc-logo when not (@logo-image = '') {
+    background-image: url('@{logo-image}');
+}
+
+//
+// Login page
+//
+
+.setLoginWallpaper(@login-wallpaper) when not (@login-wallpaper = '') {
+    background-image: url('@{login-wallpaper}');
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: @login-wallpaper-size;
+}
+
+.setLoginWallpaper(@login-wallpaper) when (@login-wallpaper = '') {
+    background-image: none;
+}
+
+body.outer {
+    .layout > .layout-row > .layout-cell.theme-cell {
+        background-color: @login-bg-color;
+        .setLoginWallpaper(@login-wallpaper);
+    }
+}

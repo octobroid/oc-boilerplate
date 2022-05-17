@@ -1,0 +1,79 @@
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor > .tablist-container .tablist button {
+  font-weight: 500;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor > .tablist-container .tablist button span.tab-icon {
+  top: 9px;
+  box-shadow: none !important;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor > .tablist-container .tablist button span.tab-icon .tab-icon-background {
+  background-color: transparent !important;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor > .tablist-container .tablist button span.tab-icon .tab-icon-background i {
+  left: 0;
+  top: 0;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs-dark > .tablist-container {
+  background: #2d2d2d;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs-dark > .tablist-container .tablist button {
+  border-right: 1px solid #1e1e1e;
+  color: #969696;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs-dark > .tablist-container .tablist button.active {
+  color: white;
+  background: #1e1e1e;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-hc-black > .tablist-container {
+  background: #2d2d2d;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-hc-black > .tablist-container .tablist button {
+  border-right: 1px solid #000000;
+  color: #969696;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-hc-black > .tablist-container .tablist button.active {
+  color: white;
+  background: #000000;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs > .tablist-container {
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs > .tablist-container .tabs-scrollable {
+  overflow: visible;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs > .tablist-container .tablist button {
+  border-right: 1px solid #d7e1eA;
+  overflow: visible;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs > .tablist-container .tablist button.active {
+  color: #2C3E4F;
+}
+.component-backend-monaco-editor .component-backend-tabs.style-monaco-editor.monaco-tabs-vs > .tablist-container .tablist button.active span[role=text]:after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: #ffffff;
+}
+.component-backend-monaco-editor .editor-container.editor-container-vs-dark {
+  background: #1e1e1e;
+}
+.component-backend-monaco-editor .monaco-editor .suggest-widget a:hover {
+  text-decoration: none;
+}
+.component-backend-monaco-editor .monaco-editor .rename-box {
+  top: 0;
+}
+.component-backend-monaco-editor .monaco-menu .action-menu-item {
+  text-decoration: none !important;
+}
+.component-backend-monaco-editor .monaco-menu .action-menu-item:hover {
+  color: white !important;
+  background: #6a6cf7 !important;
+}
+.component-backend-monaco-editor .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-name-container > .label-name {
+  text-decoration: none !important;
+}

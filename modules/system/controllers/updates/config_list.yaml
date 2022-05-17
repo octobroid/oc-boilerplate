@@ -1,0 +1,18 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+# Manage Updates
+title: system::lang.updates.title
+
+list: ~/modules/system/models/pluginversion/columns.yaml
+
+modelClass: System\Models\PluginVersion
+
+# There are no records in this view
+noRecordsMessage: backend::lang.list.no_records
+
+recordUrl: system/market/plugin/:slug
+
+toolbar:
+    buttons: list_toolbar

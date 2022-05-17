@@ -1,0 +1,102 @@
+ul.mainmenu-items {
+    &.mainmenu-submenu-dropdown {
+        display: none;
+        position: absolute;
+        background: @color-mainmenu;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        z-index: @zindex-popover+1;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        user-select: none;
+        padding: 0;
+        margin: 0;
+
+        &.show {
+            display: block;
+        }
+
+        > li.mainmenu-item {
+            a {
+                padding: 7px 17px 7px 47px;
+            }
+
+            .nav-label, .nav-icon {
+                opacity: 1;
+            }
+
+            .nav-icon {
+                left: 17px;
+                width: 20px;
+                line-height: 34px;
+
+                .svg-icon {
+                    width: 20px;
+                }
+
+                i {
+                    font-size: 20px;
+                    line-height: inherit;
+                }
+            }
+
+            span.counter {
+                font-size: 12px;
+                padding: 2px 3px;
+                margin: 2px 0 0 10px;
+            }
+
+            &:last-child {
+                margin-bottom: 6px;
+            }
+
+            &.divider {
+                height: 1px;
+                margin: 5px 0;
+                background: rgba(255, 255, 255, 0.6);
+            }
+
+            &.section-title {
+                color: white;
+                padding: 7px 17px;
+                white-space: nowrap;
+                font-weight: 500;
+
+                .nav-label {
+                    margin-right: 0;
+                    display: block;
+                    overflow: hidden;
+                    max-width: 250px;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}
+
+div.mainmenu-submenu-overlay {
+    position: fixed;
+    z-index: @zindex-popover;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0,0,0,0.01);
+    opacity: 0.01;
+
+    &.show {
+        display: block;
+    }
+}
+
+html.mobile {
+    ul.mainmenu-items {
+        &.mainmenu-submenu-dropdown {
+            > li.mainmenu-item {
+                .nav-icon {
+                    line-height: 38px;
+                }
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@
 
 ## Prerequisites
 
-1. PHP > 7.1
+1. PHP >= 7.4
 1. MySQL or MariaDB
 1. [Composer](http://getcomposer.org)
 1. [Yarn](https://yarnpkg.com)
@@ -44,7 +44,7 @@
 5. Migrate October database.
 
 	```
-	php artisan october:up
+	php artisan october:migrate
 	```
 
 6. Install frontend library using Yarn. Go to theme directory first.
@@ -65,10 +65,10 @@
 In this boilerplate, **we've installed**:
 
 1. [RainLab.User](https://octobercms.com/plugin/rainlab-user)
+1. [RainLab.Debugbar](https://github.com/rainlab/debugbar-plugin)
 1. [RainLab.Pages](https://octobercms.com/plugin/rainlab-pags)
 1. [RainLab.Sitemap](https://octobercms.com/plugin/rainlab-sitemap)
 1. [RainLab.GoogleAnalytics](https://octobercms.com/plugin/rainlab-googleanalytics)
-1. [October.Drivers](https://octobercms.com/plugin/october-drivers)
 1. [Bedard.Debugbar](https://octobercms.com/plugin/bedard-debugbar)
 1. [Mja.Mail](https://octobercms.com/plugin/mja-mail)
 1. [Jacob.Horizon](https://octobercms.com/plugin/jacob-horizon)
@@ -89,7 +89,7 @@ php artisan plugin:install <plugin-name>
 To enable Laravel Horizon, run the command:
 
 ```
-php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
+php artisan horizon:assets
 ```
 
 ## Frontend Libraries

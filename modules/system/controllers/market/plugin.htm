@@ -1,0 +1,98 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('system/updates') ?>"><?= e(trans('system::lang.updates.menu_label')) ?></a></li>
+        <li><a href="<?= Backend::url('system/market') ?>"><?= e(trans('system::lang.market.menu_label')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="mw-950">
+
+        <?= $this->makePartial('details_scoreboard') ?>
+
+        <div class="callout <?= !$product->installed() ? 'callout-info' : 'callout-danger' ?> no-icon no-subheader no-title">
+            <div class="content">
+                <?php if (!$product->installed()): ?>
+                    <code>php artisan plugin:install <?= e($product->code) ?></code>
+                <?php else: ?>
+                    <code>php artisan plugin:remove <?= e($product->code) ?></code>
+                <?php endif ?>
+            </div>
+        </div>
+
+        <?php /*
+        <div class="row">
+            <div class="col-sm-10">
+                <?= $this->makePartial('details_scoreboard') ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $this->makePartial('details_toolbar') ?>
+            </div>
+        </div>
+        */ ?>
+
+        <div class="control-tabs primary-tabs" data-control="tab">
+            <ul class="nav nav-tabs">
+                <li class="<?= $activeTab == 'readme' ? 'active' : '' ?>">
+                    <a
+                        href="#readme"
+                        data-tab-url="<?= Backend::url('system/market/plugin/'.$urlCode.'/readme') ?>">
+                        <?= e(trans('system::lang.updates.details_readme')) ?>
+                    </a>
+                </li>
+                <li class="<?= $activeTab == 'upgrades' ? 'active' : '' ?>">
+                    <a
+                        href="#upgrades"
+                        data-tab-url="<?= Backend::url('system/market/plugin/'.$urlCode.'/upgrades') ?>">
+                        <?= e(trans('system::lang.updates.details_upgrades')) ?>
+                    </a>
+                </li>
+                <li class="<?= $activeTab == 'license' ? 'active' : '' ?>">
+                    <a
+                        href="#license"
+                        data-tab-url="<?= Backend::url('system/market/plugin/'.$urlCode.'/license') ?>">
+                        <?= e(trans('system::lang.updates.details_licence')) ?>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane <?= $activeTab == 'readme' ? 'active' : '' ?>">
+                    <div class="plugin-details-content">
+                        <?php if ($product->contentHtml): ?>
+                            <?= $product->contentHtml ?>
+                        <?php else: ?>
+                            <p><?= e(trans('system::lang.updates.details_readme_missing')) ?></p>
+                        <?php endif ?>
+                    </div>
+                </div>
+                <div class="tab-pane <?= $activeTab == 'upgrades' ? 'active' : '' ?>">
+                    <div class="plugin-details-content">
+                        <?php if ($product->upgradeHtml): ?>
+                            <?= $product->upgradeHtml ?>
+                        <?php else: ?>
+                            <p><?= e(trans('system::lang.updates.details_upgrades_missing')) ?></p>
+                        <?php endif ?>
+                    </div>
+                </div>
+                <div class="tab-pane <?= $activeTab == 'license' ? 'active' : '' ?>">
+                    <div class="plugin-details-content">
+                        <?php if ($product->licenseHtml): ?>
+                            <?= $product->licenseHtml ?>
+                        <?php else: ?>
+                            <p><?= e(trans('system::lang.updates.details_licence_missing')) ?></p>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('system/updates') ?>" class="btn btn-default"><?= e(trans('system::lang.settings.return')) ?></a></p>
+
+<?php endif ?>

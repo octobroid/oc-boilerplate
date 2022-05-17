@@ -1,0 +1,27 @@
+.nested-form {
+  position: relative;
+  min-height: 30px;
+}
+.nested-form .control-tabs.primary-tabs .nav-tabs {
+  margin: 0 !important;
+}
+.nested-form.is-paneled {
+  background: #f0f4f8;
+  border: 1px solid #CFD7E1;
+  border-radius: 4px;
+  box-shadow: none;
+  margin-top: 5px;
+  padding: 10px 15px 0 15px !important;
+}
+.nested-form.is-paneled .control-tabs.primary-tabs .nav-tabs {
+  margin-left: -15px !important;
+  margin-right: -15px !important;
+}
+.nested-form.is-paneled .control-tabs.primary-tabs .nav-tabs > li.active > a:before {
+  background-color: #f0f4f8;
+  border-color: #f0f4f8;
+}
+.nested-form.is-paneled .control-tabs.primary-tabs .nav-tabs > li > a > span.title:before,
+.nested-form.is-paneled .control-tabs.primary-tabs .nav-tabs > li > a > span.title:after {
+  background-color: #f0f4f8;
+}

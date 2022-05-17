@@ -1,0 +1,378 @@
+[
+    {
+        "label": "abs",
+        "hoverKeyword": "abs",
+        "documentation": "cms::lang.intellisense.docs.abs_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/abs.html",
+        "insertText": "abs",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "batch",
+        "hoverKeyword": "batch",
+        "documentation": "cms::lang.intellisense.docs.batch_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/batch.html",
+        "insertText": "batch(${1:size}, ${2:fill}, ${3:preserve_keys})",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "capitalize",
+        "hoverKeyword": "capitalize",
+        "documentation": "cms::lang.intellisense.docs.capitalize_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/capitalize.html",
+        "insertText": "capitalize",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "column",
+        "hoverKeyword": "column",
+        "documentation": "cms::lang.intellisense.docs.column_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/column.html",
+        "insertText": "column(\"${1:name}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "convert_encoding",
+        "hoverKeyword": "convert_encoding",
+        "documentation": "cms::lang.intellisense.docs.convert_encoding_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/convert_encoding.html",
+        "insertText": "convert_encoding(\"${1:to}\", \"${2:from}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "country_name",
+        "hoverKeyword": "country_name",
+        "documentation": "cms::lang.intellisense.docs.country_name_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/country_name.html",
+        "insertText": "country_name",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "currency_name",
+        "hoverKeyword": "currency_name",
+        "documentation": "cms::lang.intellisense.docs.currency_name_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/currency_name.html",
+        "insertText": "currency_name",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "currency_symbol",
+        "hoverKeyword": "currency_symbol",
+        "documentation": "cms::lang.intellisense.docs.currency_symbol_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/currency_symbol.html",
+        "insertText": "currency_symbol",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "data_uri",
+        "hoverKeyword": "data_uri",
+        "documentation": "cms::lang.intellisense.docs.data_uri_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/data_uri.html",
+        "insertText": "data_uri",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "date",
+        "hoverKeyword": "date",
+        "documentation": "cms::lang.intellisense.docs.date_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/date.html",
+        "insertText": "date(\"${1:format}\", \"${2:timezone}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "date_modify",
+        "hoverKeyword": "date_modify",
+        "documentation": "cms::lang.intellisense.docs.date_modify_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/date_modify.html",
+        "insertText": "date_modify(\"${1:modifier}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "default",
+        "hoverKeyword": "default",
+        "documentation": "cms::lang.intellisense.docs.default_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/default.html",
+        "insertText": "default(\"${1:default}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "escape",
+        "hoverKeyword": "escape",
+        "documentation": "cms::lang.intellisense.docs.escape_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/escape.html",
+        "insertText": "escape",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "e",
+        "hoverKeyword": "e",
+        "documentation": "cms::lang.intellisense.docs.escape_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/escape.html",
+        "insertText": "e",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "filter",
+        "hoverKeyword": "filter",
+        "documentation": "cms::lang.intellisense.docs.filter_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/filter.html",
+        "insertText": "filter(${1:item} => $0})",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "first",
+        "hoverKeyword": "first",
+        "documentation": "cms::lang.intellisense.docs.first_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/first.html",
+        "insertText": "first",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "format",
+        "hoverKeyword": "format",
+        "documentation": "cms::lang.intellisense.docs.format_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/format.html",
+        "insertText": "format(\"${1:foo}\", \"${2:bar}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "format_currency",
+        "hoverKeyword": "format_currency",
+        "documentation": "cms::lang.intellisense.docs.format_currency_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/format_currency.html",
+        "insertText": "format_currency(\"${1:EUR}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "join",
+        "hoverKeyword": "join",
+        "documentation": "cms::lang.intellisense.docs.join_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/join.html",
+        "insertText": "join(\"${1:, }\", \"${2: and }\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "json_encode",
+        "hoverKeyword": "json_encode",
+        "documentation": "cms::lang.intellisense.docs.json_encode_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/json_encode.html",
+        "insertText": "json_encode",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "keys",
+        "hoverKeyword": "keys",
+        "documentation": "cms::lang.intellisense.docs.keys_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/keys.html",
+        "insertText": "keys",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "last",
+        "hoverKeyword": "last",
+        "documentation": "cms::lang.intellisense.docs.last_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/last.html",
+        "insertText": "last",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "length",
+        "hoverKeyword": "length",
+        "documentation": "cms::lang.intellisense.docs.length_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/length.html",
+        "insertText": "length",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "lower",
+        "hoverKeyword": "lower",
+        "documentation": "cms::lang.intellisense.docs.lower_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/lower.html",
+        "insertText": "lower",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "map",
+        "hoverKeyword": "map",
+        "documentation": "cms::lang.intellisense.docs.map_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/map.html",
+        "insertText": "map(${1:item} => $0)",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "merge",
+        "hoverKeyword": "merge",
+        "documentation": "cms::lang.intellisense.docs.merge_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/merge.html",
+        "insertText": "merge(${1:items})",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "nl2br",
+        "hoverKeyword": "nl2br",
+        "documentation": "cms::lang.intellisense.docs.nl2br_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/nl2br.html",
+        "insertText": "nl2br",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "number_format",
+        "hoverKeyword": "number_format",
+        "documentation": "cms::lang.intellisense.docs.number_format_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/number_format.html",
+        "insertText": "number_format(${1:2}, \"${2:.}\", \"${3:,}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "reduce",
+        "hoverKeyword": "reduce",
+        "documentation": "cms::lang.intellisense.docs.reduce_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/reduce.html",
+        "insertText": "reduce((${1:carry}, ${2:value}) => $0)",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "replace",
+        "hoverKeyword": "replace",
+        "documentation": "cms::lang.intellisense.docs.replace_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/reduce.html",
+        "insertText": "replace({\"${1:from}\": \"${2:to}\"})",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "reverse",
+        "hoverKeyword": "reverse",
+        "documentation": "cms::lang.intellisense.docs.reverse_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/reverse.html",
+        "insertText": "reverse",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "round",
+        "hoverKeyword": "round",
+        "documentation": "cms::lang.intellisense.docs.round_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/round.html",
+        "insertText": "round(${1:1}, \"${2:floor}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "slice",
+        "hoverKeyword": "slice",
+        "documentation": "cms::lang.intellisense.docs.slice_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/slice.html",
+        "insertText": "slice(${1:0}, ${2:5})",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "sort",
+        "hoverKeyword": "sort",
+        "documentation": "cms::lang.intellisense.docs.sort_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/sort.html",
+        "insertText": "sort",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "spaceless",
+        "hoverKeyword": "spaceless",
+        "documentation": "cms::lang.intellisense.docs.spaceless_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/spaceless.html",
+        "insertText": "spaceless",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "split",
+        "hoverKeyword": "split",
+        "documentation": "cms::lang.intellisense.docs.split_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/split.html",
+        "insertText": "split(\"${1:,}\")",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "striptags",
+        "hoverKeyword": "striptags",
+        "documentation": "cms::lang.intellisense.docs.striptags_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/striptags.html",
+        "insertText": "striptags",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "title",
+        "hoverKeyword": "title",
+        "documentation": "cms::lang.intellisense.docs.title_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/title.html",
+        "insertText": "title",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "trim",
+        "hoverKeyword": "trim",
+        "documentation": "cms::lang.intellisense.docs.trim_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/trim.html",
+        "insertText": "trim",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "upper",
+        "hoverKeyword": "upper",
+        "documentation": "cms::lang.intellisense.docs.upper_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/upper.html",
+        "insertText": "upper",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "url_encode",
+        "hoverKeyword": "url_encode",
+        "documentation": "cms::lang.intellisense.docs.url_encode_filter",
+        "docUrl": "https://twig.symfony.com/doc/2.x/filters/url_encode.html",
+        "insertText": "url_encode",
+        "isNativeTwigFilter": true
+    },
+    {
+        "label": "page",
+        "hoverKeyword": "page",
+        "documentation": "cms::lang.intellisense.docs.page_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-page",
+        "insertText": "page",
+        "isNativeTwigFilter": false
+    },
+    {
+        "label": "theme",
+        "hoverKeyword": "theme",
+        "documentation": "cms::lang.intellisense.docs.theme_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-theme",
+        "insertText": "theme",
+        "isNativeTwigFilter": false
+    },
+    {
+        "label": "app",
+        "hoverKeyword": "app",
+        "documentation": "cms::lang.intellisense.docs.app_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-app",
+        "insertText": "app",
+        "isNativeTwigFilter": false
+    },
+    {
+        "label": "media",
+        "hoverKeyword": "media",
+        "documentation": "cms::lang.intellisense.docs.media_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-media",
+        "insertText": "media",
+        "isNativeTwigFilter": false
+    },
+    {
+        "label": "md",
+        "hoverKeyword": "md",
+        "documentation": "cms::lang.intellisense.docs.md_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-md",
+        "insertText": "md",
+        "isNativeTwigFilter": false
+    },
+    {
+        "label": "raw",
+        "hoverKeyword": "raw",
+        "documentation": "cms::lang.intellisense.docs.raw_filter",
+        "docUrl": "https://octobercms.com/docs/markup/filter-raw",
+        "insertText": "raw",
+        "isNativeTwigFilter": false
+    }
+]

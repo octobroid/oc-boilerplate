@@ -1,0 +1,195 @@
+.browse-products {
+  padding: 0;
+}
+.browse-products a.product-card {
+  width: 287px;
+  min-height: 170px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid #E7E9EA;
+  background: #F9FBFB;
+  border-radius: 4px;
+  position: relative;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  text-decoration: none;
+}
+.browse-products a.product-card .details {
+  margin-right: 75px;
+  padding: 10px;
+}
+.browse-products a.product-card .details h4 {
+  font-size: 16px;
+  margin: 0;
+  padding-bottom: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #213F50;
+}
+.browse-products a.product-card .details p {
+  font-size: 13px;
+  line-height: 130%;
+  margin-bottom: 10px;
+  color: #586667;
+}
+.browse-products a.product-card .bottom-controls {
+  padding: 0 10px;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+.browse-products a.product-card .bottom-controls .author-details {
+  color: #586667;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.browse-products a.product-card:hover {
+  color: #333;
+  background: #f9f9f9;
+  border: 1px solid #6A6CF7;
+}
+.browse-products a.product-card:hover .image img {
+  opacity: 0.9;
+}
+.browse-products a.product-card:hover .details h4 {
+  color: #111;
+}
+.browse-products a.product-card:hover .bottom-controls .author-details {
+  color: #222;
+}
+.browse-products a.product-card.product-plugin .image {
+  float: right;
+  text-align: center;
+  width: 64px;
+  margin-top: 3px;
+}
+.browse-products a.product-card.product-plugin .image img {
+  width: 64px;
+  height: 64px;
+  display: block;
+}
+.browse-products a.product-card.product-theme {
+  width: 287px;
+}
+.browse-products a.product-card.product-theme .image {
+  border-bottom: 1px solid #E7E9EA;
+  margin: 0;
+}
+.browse-products a.product-card.product-theme .image img {
+  max-width: 100%;
+  width: 100%;
+}
+.browse-products a.product-card.product-theme .details {
+  margin-bottom: 10px;
+}
+.project-table .image img {
+  max-width: 100px;
+}
+/*!
+ * Typeahead
+ */
+.product-search {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 0 auto;
+  text-align: left;
+  padding-bottom: 15px;
+}
+.product-search > i.icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  font-size: 24px;
+  margin-top: -20px;
+  color: rgba(0, 0, 0, 0.35);
+}
+.product-search > i.icon.loading {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: url('../../../../system/assets/ui/images/loader-transparent.svg') 50% 50%;
+  background-size: 24px 24px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+.twitter-typeahead {
+  width: 100%;
+}
+.typeahead,
+.tt-hint {
+  width: 100%;
+  height: 46px;
+  padding: 8px 12px;
+  font-size: 24px;
+  line-height: 30px;
+  border: 1px solid #024e6a;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  outline: none;
+}
+.typeahead {
+  background-color: #fff;
+  border-color: #e0e0e0;
+}
+.tt-input {
+  font-weight: 200;
+}
+.tt-input:focus {
+  border-color: #E6E9E9;
+}
+.tt-hint {
+  color: #999;
+  font-weight: 200;
+}
+.tt-dropdown-menu {
+  width: 100%;
+  margin-top: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.tt-suggestion {
+  font-size: 14px;
+  line-height: 18px;
+}
+.tt-suggestion + .tt-suggestion {
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+}
+.tt-suggestions .product-details {
+  padding: 5px;
+  overflow: hidden;
+  position: relative;
+}
+.tt-suggestions .product-image {
+  float: left;
+  margin-right: 10px;
+}
+.tt-suggestions .product-image img {
+  height: 45px;
+  width: 45px;
+}
+.tt-suggestions .product-name {
+  font-size: 20px;
+  padding-top: 5px;
+}
+.tt-suggestion.tt-cursor {
+  cursor: pointer;
+}
+.tt-suggestion.tt-cursor .product-details {
+  color: #333;
+  background: #f9f9f9;
+  border-color: #f0f0f0;
+}
+.tt-suggestion.tt-cursor .product-details .product-image img {
+  opacity: 0.9;
+}

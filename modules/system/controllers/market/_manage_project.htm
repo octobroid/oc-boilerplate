@@ -1,0 +1,107 @@
+<div>
+    <!-- Manage Project -->
+    <div class="browse-products-container" style="max-width: 960px">
+
+        <div class="scoreboard">
+            <div data-control="toolbar">
+                <div class="scoreboard-item title-value">
+                    <h4><?= e(trans('system::lang.project.name')) ?></h4>
+                    <p><?= $projectDetails->name ?></p>
+                    <p class="description">
+                        <?= e(trans('system::lang.project.owner_label')) ?>: <?= $projectDetails->owner ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <?php /*
+        <div class="row">
+            <div class="col-sm-9">
+
+            </div>
+            <div class="col-sm-3">
+                <div data-control="toolbar" class="loading-indicator-container m-y text-right">
+                    <a
+                        href="javascript:;"
+                        data-control="popup"
+                        data-handler="<?= $this->updaterWidget->getEventHandler('onSyncProject') ?>"
+                        class="btn btn-primary oc-icon-plus">
+                        Install All
+                    </a>
+                </div>
+            </div>
+        </div>
+        */ ?>
+
+        <div class="callout callout-info no-icon no-subheader no-title">
+            <div class="content">
+                <code>php artisan project:sync</code>
+            </div>
+        </div>
+
+        <div class="loading-indicator-container p-t-lg" id="manageProjectLoader">
+            <div class="loading-indicator is-transparent">
+                <span></span>
+                <div><?= e(trans('system::lang.market.content_loading')) ?></div>
+            </div>
+        </div>
+
+        <table class="table project-table m-b-0">
+            <tbody
+                id="manageProject"
+                class="manage-project"
+                data-handler="onBrowseProject"
+                data-view="project/product"
+                style="display: none">
+                    <tr>
+                        <td>
+                            <p>
+                                Project has no plugins or themes.
+                                Visit the
+                                <a href="https://octobercms.com/plugins" target="_blank">October CMS Marketplace</a>
+                                to add some.
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/template" data-partial="project/product">
+    <tr>
+        <td style="width: 100px">
+            <div class="image text-center"><img src="{{image}}" alt=""></div>
+        </td>
+        <td>
+            <div class="details">
+                <h4><a href="{{detailUrl}}">{{name}}</a> by {{author}}</h4>
+                <p class="description">{{description}}</p>
+            </div>
+        </td>
+        <!--
+        <td class="controls p-t text-right">
+            {{^installed}}
+                <a
+                    href="javascript:;"
+                    data-control="popup"
+                    data-handler="{{handler}}"
+                    data-request-data="code: '{{code}}'"
+                    class="btn btn-success oc-icon-plus">
+                    Install
+                </a>
+            {{/installed}}
+            {{#installed}}
+                <a
+                    href="javascript:;"
+                    data-control="popup"
+                    data-handler="{{handler}}"
+                    data-request-data="code: '{{code}}'"
+                    class="btn btn-danger oc-icon-trash-o">
+                    Remove
+                </a>
+            {{/installed}}
+        </td>
+        -->
+    </tr>
+</script>

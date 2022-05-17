@@ -1,0 +1,5 @@
+<div data-control="toolbar">
+    <a href="<?= Backend::url('backend/usergroups/create') ?>" class="btn btn-primary oc-icon-plus">
+        <?= e(trans('backend::lang.user.group.new')) ?>
+    </a>
+</div>

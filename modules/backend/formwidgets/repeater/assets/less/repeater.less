@@ -1,0 +1,179 @@
+@import "../../../../assets/less/core/boot.less";
+@import "repeater.item.less";
+@import "repeater.group.less";
+@import "repeater.toolbar.less";
+
+@repeater-icon-size: 24px;
+
+.field-repeater {
+    padding-top: 5px;
+
+    > .field-repeater-builder > .field-repeater-groups,
+    > ul.field-repeater-items {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    > .field-repeater-builder > ul > li.field-repeater-group,
+    > ul > li.field-repeater-item {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+        list-style: none;
+    }
+
+    .repeater-item-icon {
+        width: @repeater-icon-size;
+        height: @repeater-icon-size;
+        line-height: @repeater-icon-size;
+        color: #536061;
+        display: block;
+        margin: -2px 2px;
+    }
+
+    .repeater-item-checkbox {
+        .checkbox {
+            margin: 0;
+            padding-left: 20px;
+            min-height: 0;
+        }
+        .custom-checkbox {
+            position: relative;
+            top: -14px;
+            label {
+                margin-right: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    a.repeater-item-menu,
+    a.repeater-item-handle {
+        width: @repeater-icon-size;
+        height: @repeater-icon-size;
+        line-height: @repeater-icon-size;
+        display: block;
+        background: #F7F9FB;
+        color: #536061;
+        text-decoration: none;
+        border-radius: 3px;
+        text-align: center;
+        margin: -2px 2px;
+
+        [class^="octo-icon"] {
+            position: relative;
+            top: 1px;
+        }
+
+        .octo-icon-list-reorder {
+            font-size: 24px;
+        }
+    }
+
+    a.repeater-item-handle {
+        cursor: move;
+        &:active {
+            background: @background-color-focus;
+        }
+    }
+
+    .repeater-item-dropdown.open a.repeater-item-menu,
+    a.repeater-item-menu:hover {
+        background: @background-color-focus;
+    }
+
+    .repeater-item-dropdown {
+        padding-right: 3px;
+        .dropdown-menu-right {
+            right: -5px;
+        }
+    }
+}
+
+.form-group.span-adaptive {
+    > .field-repeater {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: white;
+        padding: @padding-standard;
+        overflow: auto;
+
+        &[data-external-toolbar-app-state] {
+            > .field-repeater-toolbar {
+                display: none;
+            }
+
+            > .field-repeater-builder {
+                > .field-repeater-toolbar {
+                    display: none;
+                }
+
+                > .field-repeater-groups {
+                    padding-top: 0!important;
+                }
+            }
+        }
+
+        &.repeater-empty {
+            background-image: url('../../../../../backend/assets/images/no-blocks.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}
+
+.field-repeater.repeater-mode-builder {
+    display: flex;
+
+    > ul.field-repeater-items {
+        flex-grow: 1;
+
+        > li {
+            display: none;
+            &.is-selected {
+                display: block;
+            }
+        }
+    }
+
+    > .field-repeater-builder {
+        width: 250px;
+        padding-right: 20px;
+        flex-shrink: 0;
+        flex-basis: 250px;
+    }
+}
+
+@media (max-width: @form-breakpoint-max) {
+    .field-repeater.repeater-mode-builder {
+        flex-direction: column;
+
+        > .field-repeater-builder {
+            width: 100%;
+            padding-right: 0;
+            flex-basis: auto;
+
+            > ul {
+                overflow-x: auto;
+                white-space: nowrap;
+                margin-bottom: 5px;
+            }
+
+            > ul > li {
+                .group-description {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            > ul > li.field-repeater-group {
+                width: 250px;
+                display: inline-block;
+                margin-right: 10px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

@@ -1,0 +1,133 @@
+//
+// List Data Table
+//
+
+@tree-control-size: 24px;
+
+table.table.data {
+    //
+    // Trees
+    //
+
+    tr:hover .list-reorder {
+        span.list-reorder-handle {
+            display: block;
+        }
+    }
+
+    tbody.tree-drag-mode {
+        &, * {
+            cursor: move!important;
+        }
+
+        td.list-reorder span.list-reorder-handle {
+            display: none;
+        }
+
+        tr.sortable-chosen td.list-reorder span.list-reorder-handle {
+            display: block;
+        }
+    }
+
+    tbody.tree-drag-updated {
+        td.list-reorder span.list-reorder-handle {
+            display: none !important;
+        }
+    }
+
+    th.list-reorder,
+    td.list-reorder {
+        width: @tree-control-size;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    td.list-reorder {
+        vertical-align: middle;
+        position: relative;
+
+        span.list-reorder-handle {
+            display: none;
+            background: white;
+            text-align: center;
+            cursor: move;
+            left: -6px;
+
+            width: @tree-control-size;
+            height: @tree-control-size;
+            position: absolute;
+            top: calc(50% - 12px);
+            border-radius: 3px;
+            text-decoration: none;
+
+            i {
+                font-size: 24px;
+                top: 2px;
+            }
+
+            &:active {
+                background: @background-color-focus;
+            }
+        }
+    }
+
+    td.list-cell-tree {
+        vertical-align: middle;
+        position: relative;
+        -webkit-transition: padding 0.3s ease;
+        transition: padding 0.3s ease;
+
+        a.tree-expand-collapse {
+            width: @tree-control-size;
+            height: @tree-control-size;
+            display: block;
+            position: absolute;
+            top: calc(50% - 12px);
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+        a.tree-expand-collapse {
+            margin-left: -25px;
+
+            > span {
+                position: absolute;
+                display: inline-block;
+                left: 0;
+                top: 0;
+                width: @tree-control-size;
+                height: @tree-control-size;
+
+                &:after {
+                    .icon(@angle-right);
+                    position: absolute;
+                    left: calc(100% - 15px);
+                    top: 2px;
+                    width: @tree-control-size;
+                    height: @tree-control-size;
+                    font-size: 15px;
+                    color: #333333;
+                    text-indent: 0;
+                }
+            }
+
+            &.is-expanded span:after {
+                .icon(@angle-down);
+                left: calc(100% - 17px);
+            }
+        }
+    }
+}
+
+.control-list.list-checkboxes table.table.data {
+    th.list-reorder,
+    td.list-reorder {
+        width: @tree-control-size - 6px;
+    }
+
+    td.list-reorder {
+        span.list-reorder-handle {
+            left: -13px;
+        }
+    }
+}

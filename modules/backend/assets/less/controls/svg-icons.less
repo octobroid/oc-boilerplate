@@ -1,0 +1,30 @@
+.svg-icon-container {
+    img.svg-icon {
+        display: inline-block;
+    }
+
+    &.svg-active-effects {
+        img.svg-icon {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        &.active {
+            img.svg-icon {
+                -webkit-filter: none;
+                filter: none;
+            }
+        }
+    }
+}
+
+body:not(.drag) {
+    .svg-icon-container {
+        &.svg-active-effects:hover {
+            img.svg-icon {
+                -webkit-filter: none;
+                filter: none;
+            }
+        }
+    }
+}

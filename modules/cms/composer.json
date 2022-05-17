@@ -1,0 +1,20 @@
+{
+    "name": "october/cms",
+    "type": "october-module",
+    "description": "CMS module for October CMS",
+    "homepage": "https://octobercms.com",
+    "keywords": ["october cms", "october", "cms"],
+    "authors": [
+        {
+            "name": "Alexey Bobkov",
+            "email": "aleksey.bobkov@gmail.com"
+        },
+        {
+            "name": "Samuel Georges",
+            "email": "daftspunky@gmail.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}

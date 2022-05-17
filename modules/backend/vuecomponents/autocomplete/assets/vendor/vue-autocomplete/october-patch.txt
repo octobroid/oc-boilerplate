@@ -1,0 +1,4 @@
+The vue-autocomplete.min.js script is patched:
+
+1. Added self-invoking function around the file contents.
+2. Global Autocomplete object moved to window.vueAutocomplete

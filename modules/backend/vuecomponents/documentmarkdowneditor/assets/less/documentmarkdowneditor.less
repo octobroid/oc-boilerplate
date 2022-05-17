@@ -1,0 +1,46 @@
+@import "../../../../assets/less/core/boot.less";
+
+.component-backend-documentmarkdowneditor {
+    .EasyMDEContainer {
+        .editor-toolbar,
+        .editor-statusbar {
+            display: none;
+        }
+
+        .editor-preview-side {
+            background: white;
+            border: none;
+            border-left: @color-grey-3 1px solid;
+        }
+
+        .CodeMirror {
+            border: none;
+            border-radius: 0;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .CodeMirror-sided.sided--no-fullscreen {
+        flex: none;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50%;
+        z-index: 0;
+    }
+
+    .editor-preview-active-side.sided--no-fullscreen {
+        flex: none;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%;
+        z-index: 0;
+    }
+
+    @import "../../../../assets/less/core/base-editor-styles.less";
+}

@@ -1,0 +1,59 @@
+.relation-behavior {
+    &.relation-view-multi, &.relation-view-single {
+        margin-bottom: 20px;
+        border-radius: @input-border-radius;
+        border: 1px solid @color-form-field-border;
+        background: white;
+        overflow: hidden;
+
+        .relation-toolbar .control-toolbar {
+            padding: 0;
+
+            .loading-indicator-container.size-input-text .loading-indicator > span {
+                top: 7px;
+            }
+
+            .toolbar-item.toolbar-primary {
+                padding: 3px;
+            }
+
+            .search-input-container {
+                &:before {
+                    right: 10px;
+                    top: 11px;
+                }
+
+                .form-control {
+                    .border-radius(0);
+                    border-top: none;
+                    border-bottom: none;
+                    border-right: none;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                }
+            }
+        }
+
+        .control-list {
+            margin-bottom: 0;
+            border: none;
+
+            table.table.data {
+                border-bottom: none;
+            }
+        }
+    }
+
+    &.relation-view-single {
+        background: transparent;
+
+        .relation-toolbar .control-toolbar {
+            background: white;
+            border-bottom: 1px solid @color-grey-3;
+        }
+
+        > .relation-manager {
+            padding: 20px 20px 0 20px;
+        }
+    }
+}

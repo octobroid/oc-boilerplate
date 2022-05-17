@@ -1,0 +1,42 @@
+{
+    "asset-dir-create": {
+        "title": "cms::lang.asset.directory_popup_title",
+        "config": [
+            {
+                "property": "name",
+                "title": "cms::lang.asset.directory_name",
+                "type": "string",
+                "defaultFocus": true,
+                "validation": {
+                    "required": {
+                        "message": "cms::lang.asset.directory_name_required"
+                    },
+                    "regex": {
+                        "message": "cms::lang.asset.invalid_name",
+                        "pattern": "^[0-9a-zA-Z\\.\\s_\\-]+$"
+                    }
+                }
+            }
+        ]
+    },
+    "asset-rename": {
+        "title": "cms::lang.asset.rename_popup_title",
+        "config": [
+            {
+                "property": "name",
+                "title": "cms::lang.asset.rename_new_name",
+                "type": "string",
+                "defaultFocus": true,
+                "validation": {
+                    "required": {
+                        "message": "cms::lang.asset.rename_name_required"
+                    },
+                    "regex": {
+                        "message": "cms::lang.asset.invalid_name",
+                        "pattern": "^[0-9a-zA-Z\\.\\s_\\-]+$"
+                    }
+                }
+            }
+        ]
+    }
+}

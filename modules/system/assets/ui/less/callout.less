@@ -1,0 +1,254 @@
+//
+// Dependencies
+// --------------------------------------------------
+
+@import "global.less";
+
+// Callouts
+// --------------------------------------------------
+@callout-info-bg:               #E6E7FC;
+@callout-info-icon:             #6A6CF7;
+@callout-warning-bg:            #faf6e2;
+@callout-warning-icon:          #e1b810;
+@callout-danger-bg:             #fadad7;
+@callout-danger-content-bg:     #fadad7;
+@callout-danger-icon:           #ff3e1d;
+@callout-success-bg:            #ECF7DA;
+@callout-success-icon:          #86CB43;
+
+//
+// Callouts
+// --------------------------------------------------
+
+.callout {
+    font-size: @font-size-base;
+    margin-bottom: @line-height-computed;
+
+    &.fade {
+        opacity: 0;
+        .transition(~'all 0.5s, width 0s');
+        .transform(~'scale(0.9)');
+    }
+
+    &.fade.in {
+        opacity: 1;
+        .transform( ~'scale(1)');
+    }
+
+    > .close {
+        width: 22px;
+        height: 22px;
+        margin: 15px 15px 0;
+        position: relative;
+        .hide-text();
+        opacity: 1;
+
+        &:before {
+            .icon-OctoFont();
+            content: @octo-icon-cross;
+            color: @color-grey-1;
+            font-size: 16px;
+            position: relative;
+        }
+
+        &:hover:before {
+            color: @brand-danger;
+        }
+    }
+
+    &.callout-danger {
+        > .header {
+            background: @callout-danger-bg;
+
+            &:before {
+                content: @octo-icon-callout-danger;
+                color: @callout-danger-icon;
+            }
+        }
+        > .content {
+            background: @callout-danger-bg;
+        }
+    }
+
+    &.callout-info {
+        > .header {
+            background: @callout-info-bg;
+
+            &:before {
+                content: @octo-icon-callout-info;
+                color: @callout-info-icon;
+            }
+        }
+        > .content {
+            background: @callout-info-bg;
+        }
+    }
+
+    &.callout-success {
+        > .header {
+            background: @callout-success-bg;
+
+            &:before {
+                content: @octo-icon-callout-success;
+                color: @callout-success-icon;
+            }
+        }
+        > .content {
+            background: @callout-success-bg;
+        }
+    }
+
+    &.callout-warning {
+        > .header {
+            background: @callout-warning-bg;
+            border-bottom-color: @callout-warning-bg;
+
+            &:before {
+                content: @octo-icon-callout-danger;
+                color: @callout-warning-icon;
+            }
+        }
+        > .content {
+            background: @callout-warning-bg;
+        }
+    }
+
+    > .header + .content {
+        border-top: none;
+    }
+
+    > .header {
+        padding: 15px 20px 5px;
+        .border-radius(4px 4px 0 0);
+        color: @color-grey-1;
+        border-bottom: 1px solid white;
+        margin-bottom: -1px;
+
+        > i {
+            display: none;
+        }
+
+        &:before {
+            .icon-OctoFont();
+            float: left;
+            font-size: 22px;
+            position: relative;
+            left: -3px;
+        }
+
+        h3 {
+            letter-spacing: 0;
+            margin: 0 0 7px 0;
+            font-size: @font-size-base;
+            font-weight: 600;
+            line-height: 150%;
+        }
+
+        h3,
+        p,
+        ul,
+        ol {
+            margin-left: 32px;
+        }
+
+        ul,
+        ol {
+            padding-left: @padding-standard;
+        }
+
+        &:last-child {
+            .border-radius(4px);
+        }
+    }
+
+    > .content {
+        color: @color-grey-1;
+        padding: 0 20px 15px 52px;
+        .border-radius(0 0 4px 4px);
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: @color-grey-1;
+            text-transform: none;
+            margin: 20px 0 5px 0;
+            line-height: 150%;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+        h2 {
+            font-size: 26px;
+        }
+        h3 {
+            font-size: 24px;
+        }
+        h4 {
+            font-size: 20px;
+        }
+        h5 {
+            font-size: 18px;
+        }
+        h6 {
+            font-size: 16px;
+        }
+
+        *:last-child {
+            margin-bottom: 0;
+        }
+
+        ul,
+        ol {
+            padding-left: @padding-standard;
+
+            li {
+                margin-bottom: 5px;
+            }
+        }
+
+        .action-panel {
+            padding: 10px 0 0 0;
+        }
+    }
+
+    &.no-title {
+        > .content {
+            padding-top: 15px;
+            .border-radius(4px);
+        }
+    }
+
+    &.no-subheader {
+        > .header {
+            padding-bottom: 10px;
+        }
+    }
+
+    &.no-icon {
+        > .header {
+            h3,
+            p,
+            ul,
+            ol {
+                margin-left: 0;
+            }
+
+            &:before {
+                display: none;
+            }
+        }
+
+        > .content {
+            padding-left: 20px;
+        }
+    }
+}
+
+.form-group > .callout {
+    margin-bottom: 0;
+}

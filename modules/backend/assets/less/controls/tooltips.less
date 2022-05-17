@@ -1,0 +1,49 @@
+.october-tooltip {
+    display: inline-block;
+    padding: 4px 8px 5px;
+    position: absolute;
+    border-radius: 4px;
+    max-width: 300px;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    opacity: 1;
+    color: white;
+    background: @color-text-grey-1;
+    font-size: 13px;
+    line-height: 140%;
+    z-index: @zindex-tooltip;
+
+    .transform(~'scale(1)');
+
+    .tooltip-hotkey {
+        display: inline-block;
+        margin-left: 5px;
+        letter-spacing: 1px;
+
+        &:empty {
+            display: none;
+        }
+
+        i {
+            font-style: normal;
+            margin-left: 5px;
+            padding: 0 2px;
+            display: inline-block;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.11);
+            color: rgba(255, 255, 255, 0.6);
+
+            &:last-child {
+                margin-right: -3px;
+            }
+        }
+    }
+
+    &.tooltip-hidden {
+        display: none;
+    }
+
+    &.tooltip-invisible {
+        opacity: 0;
+        .transform(~'scale(0.95)');
+    }
+}

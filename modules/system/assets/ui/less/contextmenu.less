@@ -1,0 +1,108 @@
+.control-contextmenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*width: 200px;*/
+    padding: 0;
+    margin: 0;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translate(0, 15px) scale(0.95);
+    transition: opacity 0.1s ease-out;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    pointer-events: none;
+    z-index: 5000;
+
+    .contextmenu-item {
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+
+        .contextmenu-title,
+        .contextmenu-btn {
+            line-height: normal;
+            overflow: visible;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            display: block;
+            width: 100%;
+            color: #444;
+            font-family: sans-serif;
+            text-align: left;
+            border: 1px solid transparent;
+            white-space: nowrap;
+
+            .contextmenu-label {
+                background: #e0e0e0;
+                border-radius: 20px;
+                font-size: 12px;
+                color: #333;
+                padding: 2px 5px;
+                margin-left: 15px;
+            }
+        }
+
+
+        .contextmenu-title {
+            font-size: 14px;
+            background: #eeeeee;
+            padding: 12px 16px;
+        }
+
+        .contextmenu-btn {
+            font-size: 13px;
+            background: none;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .contextmenu-btn::-moz-focus-inner,
+        .contextmenu-btn::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+
+        .contextmenu-icon {
+            font-size: 16px;
+            margin-right: 15px;
+        }
+
+        .contextmenu-text {
+            font-size: 14px;
+        }
+
+        &:hover > .contextmenu-btn {
+            outline: none;
+            background-color: #6A6CF7;
+            color: #fff;
+        }
+
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            .contextmenu-btn {
+                cursor: default;
+            }
+        }
+
+        .contextmenu-separator {
+            display: block;
+            margin: 7px 5px;
+            height: 1px;
+            border-bottom: 1px solid #fff;
+            background-color: #aaa;
+        }
+    }
+
+    &.is-visible {
+        opacity: 1;
+        -webkit-transform: translate(0, 0) scale(1);
+        transform: translate(0, 0) scale(1);
+        pointer-events: auto;
+    }
+}

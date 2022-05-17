@@ -1,0 +1,326 @@
+.component-backend-document .document-header-container {
+  opacity: 1;
+  padding: 10px 20px;
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-document .document-header-container .document-header {
+  position: relative;
+}
+.component-backend-document .document-header-container .document-header.has-document-icon {
+  padding-left: 30px;
+}
+.component-backend-document .document-header-container .document-header.has-close-icon {
+  padding-right: 30px;
+}
+.component-backend-document .document-header-container .close-icon {
+  position: absolute;
+  top: 11px;
+  right: 0;
+  width: 19px;
+  height: 19px;
+  border-radius: 20px;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  font-size: 0;
+  color: transparent;
+}
+.component-backend-document .document-header-container .close-icon:after {
+  display: none!important;
+}
+.component-backend-document .document-header-container .close-icon:focus {
+  outline: none;
+  background-color: rgba(215, 225, 234, 0.7);
+}
+.component-backend-document .document-header-container .close-icon:before {
+  display: block;
+  width: 11px;
+  height: 11px;
+  position: absolute;
+  background-position: -253px 0;
+  top: 4px;
+  right: 4px;
+}
+.component-backend-document .document-header-container .close-icon:focus:before,
+.component-backend-document .document-header-container .close-icon:hover:before {
+  background-position: -268px 0;
+}
+.component-backend-document .document-header-container .document-icon {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
+.component-backend-document .document-header-container .document-icon i {
+  display: block;
+  color: white;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  font-size: 10px;
+}
+.component-backend-document .document-header-container input.header-title,
+.component-backend-document .document-header-container input.header-subtitle {
+  border: 1px solid #FAFBFD;
+  outline: none;
+  background: transparent;
+  border-radius: 4px;
+  padding: 1px;
+  -webkit-appearance: none;
+}
+.component-backend-document .document-header-container input.header-title[disabled],
+.component-backend-document .document-header-container input.header-subtitle[disabled] {
+  color: #5E6D8C;
+}
+.component-backend-document .document-header-container input.header-title {
+  display: block;
+  font-size: 24px;
+  width: 100%;
+  margin: 0 -2px;
+}
+.component-backend-document .document-header-container .subtitle-label {
+  color: #5E6D8C;
+  margin-right: 3px;
+}
+.component-backend-document .document-header-fade-enter-active {
+  transition: opacity 0.3s;
+}
+.component-backend-document .document-header-fade-leave-active {
+  transition: opacity 0.1s;
+}
+.component-backend-document .document-header-fade-enter,
+.component-backend-document .document-header-fade-leave-to {
+  opacity: 0;
+}
+.component-backend-document.no-header-elements .document-header-container {
+  padding: 0;
+}
+html:not(.user-touch) .component-backend-document .document-header-container input.header-title:not([disabled]):hover,
+html:not(.user-touch) .component-backend-document .document-header-container input.header-subtitle:not([disabled]):hover {
+  border: 1px solid #d7e1eA;
+}
+.component-backend-document .document-content-container {
+  background: white;
+}
+.component-backend-document .document-progress-indicator {
+  position: absolute;
+  top: -1px;
+}
+.component-backend-document .processing-fade-in-enter-active {
+  transition: opacity 0.3s;
+}
+.component-backend-document .processing-fade-in-enter {
+  opacity: 0;
+}
+.component-backend-document .document-loading-error {
+  position: relative;
+  padding-left: 45px;
+  max-width: 550px;
+  margin: 0 30px;
+}
+.component-backend-document .document-loading-error:before {
+  display: block;
+  width: 27px;
+  height: 31px;
+  background-position: 0 -35px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.component-backend-document .document-loading-error h3 {
+  font-size: 16px;
+  margin: 0;
+  padding: 6px 0 9px 0;
+}
+.component-backend-document .document-toolbar-container {
+  border-bottom: 1px solid #d7e1eA;
+}
+.component-backend-document .document-toolbar-container > div {
+  font-size: 0;
+  white-space: nowrap;
+  padding: 3px 0;
+}
+.component-backend-document.no-toolbar-elements .document-toolbar-container {
+  display: none;
+}
+.component-backend-document .document-toolbar-scrollable {
+  width: 100%;
+  overflow: hidden;
+}
+.component-backend-document .document-toolbar-element {
+  display: inline-block;
+  font-size: 14px;
+  color: #536061;
+  line-height: 33px;
+  margin-right: 8px;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.component-backend-document .document-toolbar-element.button-icon-only + .button-icon-only {
+  margin-left: -6px;
+}
+.component-backend-document .document-toolbar-element:first-child {
+  margin-left: -4px;
+  padding-left: 20px;
+}
+.component-backend-document .document-toolbar-element:last-child {
+  margin-right: 0;
+  padding-right: 20px;
+}
+.component-backend-document .document-toolbar-element.element-type-separator {
+  border-right: 1px solid #d7e1eA;
+  height: 25px;
+  position: relative;
+  top: 5px;
+}
+.component-backend-document .document-toolbar-element.element-type-separator:first-child {
+  border-right: none;
+  padding-left: 0!important;
+}
+.component-backend-document .document-toolbar-element.element-type-separator:last-child {
+  display: none;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button {
+  vertical-align: top;
+  text-align: left;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.icon-only {
+  text-align: center;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.has-menu-trigger {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.menu-trigger {
+  padding: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 18px;
+  min-width: 0;
+  position: relative;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.menu-trigger:before {
+  content: '';
+  display: block;
+  border-right: 1px solid #d7e1eA;
+  height: 15px;
+  position: absolute;
+  top: 10px;
+  margin-left: -2px;
+  transition: top 0.1s, height 0.1s;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.menu-trigger.pressed:before {
+  border-right-color: #39905a;
+  opacity: 0.5;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.menu-trigger:after {
+  font-family: 'octo-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\e90a";
+  font-size: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button.pressed {
+  background: rgba(107, 196, 141, 0.2) !important;
+  color: #39905a;
+}
+.component-backend-document .document-toolbar-element .backend-toolbar-button .button-label {
+  display: inline-block;
+}
+.component-backend-document .document-toolbar-element:hover .backend-toolbar-button {
+  background: rgba(215, 225, 234, 0.7);
+}
+.component-backend-document .document-toolbar-element:hover .backend-toolbar-button.menu-trigger:before {
+  border-right: 1px solid #95A5A6;
+  top: 7px;
+  height: 20px;
+}
+.component-backend-document.built-in-mode .document-toolbar-element:first-child {
+  margin-left: 0;
+  padding-left: 4px;
+}
+.component-backend-document.built-in-mode .document-toolbar-element:last-child {
+  padding-right: 4px!important;
+}
+.component-backend-document .fixed-right:after,
+.component-backend-document .document-toolbar-scroll-container:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 5px;
+  height: 39px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.component-backend-document .fixed-right {
+  position: relative;
+}
+.component-backend-document .fixed-right:after {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+  left: -5px;
+  top: -3px;
+}
+.component-backend-document .fixed-right .document-toolbar-element:first-child {
+  margin-left: 0;
+  padding-left: 5px;
+}
+.component-backend-document .fixed-right .document-toolbar-element:last-child {
+  padding-right: 14px;
+}
+.component-backend-document .document-toolbar-scroll-container {
+  position: relative;
+}
+.component-backend-document .document-toolbar-scroll-container:before {
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+}
+.component-backend-document .document-toolbar-scroll-container.scroll-before:before {
+  opacity: 0.15;
+}
+.component-backend-document .document-toolbar-scroll-container.scroll-after .fixed-right:after {
+  opacity: 0.15;
+}
+.backend-component-document-toolbar-button-length-tester {
+  white-space: pre-wrap;
+  font-size: 14px;
+  position: fixed;
+  visibility: hidden;
+  left: -1000em;
+  top: -1000em;
+}
+.component-backend-document.full-screen {
+  background: #FAFBFD;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 600;
+}
+.component-backend-document .document-fade-in-enter-active {
+  transition: opacity 0.3s;
+}
+.component-backend-document .document-fade-in-enter {
+  opacity: 0;
+}
+body.backend-document-layout {
+  overflow-x: hidden;
+}
+body.component-backend-document-fullscreen {
+  overflow: hidden;
+}

@@ -1,0 +1,119 @@
+
+// Layout for "Outside" pages, such as the Login screen
+//
+
+html body.outer {
+    background: white;
+}
+
+body.outer {
+    .layout {
+        > .layout-row {
+            > .layout-cell {
+                vertical-align: top;
+
+                &.form-cell {
+                    width: 350px;
+                    padding: @padding-standard*2;
+                    border-right: 1px solid #ECF0F1;
+                }
+
+                &.theme-cell {
+                    background-color: #FEF6EB;
+                    vertical-align: middle;
+                    text-align: center;
+                    overflow: hidden;
+
+                    img {
+                        display: inline-block;
+                        margin: 0 auto;
+                    }
+                }
+
+                h1 {
+                    margin: 0 0 20px 0;
+                    padding: 0;
+                    text-align: center;
+                    .hide-text();
+
+                    img {
+                        max-width: 180px;
+                        width: 100%;
+                        display: inline-block;
+                        border-radius: 6px;
+                    }
+                }
+
+                .outer-form-container {
+                    margin: 0 auto;
+
+                    p {
+                        color: @color-grey-7;
+                    }
+
+                    h2 {
+                        font-size: 22px;
+                        font-family: @font-family-serif;
+                        margin: 0;
+                        padding: 10px 0 30px 0;
+                        color: @color-grey-7;
+                        text-align: center;
+
+                        &:empty {
+                            padding: 0;
+                        }
+
+                        &:after {
+                            content: '';
+                            display: block;
+                            height: 2px;
+                            width: 60px;
+                            margin: 30px auto 20px;
+                            background: @color-text-grey-1;
+                        }
+                    }
+
+                    .forgot-password {
+                        margin-top: 8px;
+
+                        a {
+                            color: @color-text-grey-1;
+                            text-decoration: underline;
+                        }
+                    }
+
+                    // Fix for some third-party plugins
+                    //
+                    .horizontal-form {
+                        input.form-control {
+                            margin-bottom: 20px;
+                        }
+
+                        + .pull-right.forgot-password {
+                            margin-top: -47px;
+                            position: relative;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+body.outer.setup .layout > .layout-row > .layout-cell.form-cell {
+    width: 500px;
+}
+
+@media (max-width: @screen-xs) {
+    body.outer .layout {
+        > .layout-row > .layout-cell {
+            &.form-cell {
+                width: 100% !important;
+            }
+
+            &.form-theme {
+                display: none;
+            }
+        }
+    }
+}

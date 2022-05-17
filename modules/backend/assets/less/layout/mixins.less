@@ -1,0 +1,23 @@
+.svg-fix-load() {
+    /* Fix for SVG icons not rendering on initial page load until repaint (hover, move, etc) */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.backend-icon-sprite(@offsetX, @offsetY) {
+    background-image: url('../images/backend-icons.png?3');
+    background-size: 300px 300px;
+    background-position: -(@offsetX) -(@offsetY);
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+        background-image: url('../images/backend-icons@2x.png?3');
+    }
+}
+
+.backend-icon-sprite-pseudo(@width, @height, @offsetX: 0, @offsetY: 0) {
+    content: '';
+    width: @width;
+    height: @height;
+    display: inline-block;
+    .backend-icon-sprite(@offsetX, @offsetY);
+}

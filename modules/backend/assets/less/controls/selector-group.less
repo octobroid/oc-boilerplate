@@ -1,0 +1,41 @@
+.nav.selector-group {
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+
+    li {
+        padding: 0 3px;
+        margin: 0;
+
+        a {
+            padding: 7px 20px 7px 23px;
+            color: @color-text-grey-1;
+            border-radius: @border-radius-base;
+
+            &:hover {
+                background-color: @background-color-focus;
+            }
+        }
+
+        &.active {
+            a {
+                background: @brand-selection;
+                padding-left: 20px;
+                color: white;
+            }
+        }
+
+        i[class^="icon-"] {
+            font-size: 17px;
+            margin-right: 6px;
+            position: relative;
+            top: 1px;
+        }
+    }
+}
+
+div.panel {
+    .nav.selector-group {
+        margin: 0 -20px 20px -20px;
+    }
+}

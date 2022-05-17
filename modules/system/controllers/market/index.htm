@@ -1,0 +1,62 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('system/updates') ?>"><?= e(trans('system::lang.updates.menu_label')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="control-tabs content-tabs" data-control="tab">
+        <ul class="nav nav-tabs">
+            <?php if ($projectDetails): ?>
+                <li class="<?= $activeTab == 'project' ? 'active' : '' ?>">
+                    <a
+                        href="#tabProject"
+                        data-tab-url="<?= Backend::url('system/market/index/project') ?>">
+                        <?= e(trans('system::lang.project.name')) ?>
+                    </a>
+                </li>
+            <?php endif ?>
+            <li class="<?= $activeTab == 'plugins' ? 'active' : '' ?>">
+                <a
+                    href="#tabPlugins"
+                    data-tab-url="<?= Backend::url('system/market/index/plugins') ?>">
+                    <?= e(trans('system::lang.updates.plugins')) ?>
+                </a>
+            </li>
+            <li class="<?= $activeTab == 'themes' ? 'active' : '' ?>">
+                <a
+                    href="#tabThemes"
+                    data-tab-url="<?= Backend::url('system/market/index/themes') ?>">
+                    <?= e(trans('system::lang.updates.themes')) ?>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <?php if ($projectDetails): ?>
+                <div class="tab-pane pane-bordered <?= $activeTab == 'project'? 'active' : '' ?>">
+                    <div class="padded-container">
+                        <?= $this->makePartial('manage_project') ?>
+                    </div>
+                </div>
+            <?php endif ?>
+            <div class="tab-pane pane-bordered <?= $activeTab == 'plugins' ? 'active' : '' ?>">
+                <div class="padded-container">
+                    <?= $this->makePartial('install_plugins') ?>
+                </div>
+            </div>
+            <div class="tab-pane pane-bordered <?= $activeTab == 'themes' ? 'active' : '' ?>">
+                <div class="padded-container">
+                    <?= $this->makePartial('install_themes') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('system/updates') ?>" class="btn btn-default"><?= e(trans('system::lang.settings.return')) ?></a></p>
+
+<?php endif ?>

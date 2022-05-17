@@ -1,0 +1,30 @@
+.btn-primary-action {
+    background: @brand-primary;
+    color: white;
+    font-weight: 500;
+    padding: 9px 13px 0 13px;
+    border-radius: 5px;
+    height: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
+    position: relative;
+
+    &:hover {
+        background: @primary-darker;
+    }
+
+    &.add-button {
+        padding-right: 38px;
+
+        &:after {
+            .backend-icon-sprite-pseudo(12px, 12px, 110px, 0);
+            position: absolute;
+            top: 13px;
+            right: 13px;
+        }
+    }
+}
+
+button.btn-primary-action {
+    padding-top: 0;
+    padding-bottom: 0;
+}

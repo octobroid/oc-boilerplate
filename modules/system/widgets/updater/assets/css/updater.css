@@ -1,0 +1,46 @@
+.control-executeoutput {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.control-executeoutput .update-item {
+  border-bottom: 1px solid #ccc;
+}
+.control-executeoutput .update-item dl {
+  padding: 10px;
+  margin-bottom: 0;
+}
+.control-executeoutput .update-item dl:before,
+.control-executeoutput .update-item dl:after {
+  content: " ";
+  display: table;
+}
+.control-executeoutput .update-item dl:after {
+  clear: both;
+}
+.control-executeoutput .update-item dl dt,
+.control-executeoutput .update-item dl dd {
+  float: left;
+  padding: 5px 0;
+  line-height: 20px;
+}
+.control-executeoutput .update-item dl dt.text-muted,
+.control-executeoutput .update-item dl dd.text-muted {
+  color: #999 !important;
+}
+.control-executeoutput .update-item dl dt {
+  width: 7%;
+  clear: left;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2b3e50;
+}
+.control-executeoutput .update-item dl dd {
+  width: 93%;
+  font-size: 12px;
+  color: #455152;
+}
+.control-executeoutput .update-item:last-child {
+  border-bottom: none;
+}

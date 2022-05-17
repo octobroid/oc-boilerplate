@@ -1,0 +1,144 @@
+# ==================================='
+#  Field' Definitions
+# ==================================='
+
+tabs:
+    fields:
+
+        app_name:
+            label: backend::lang.branding.app_name
+            commentAbove: backend::lang.branding.app_name_description
+            tab: backend::lang.branding.brand
+            span: left
+
+        app_tagline:
+            label: backend::lang.branding.app_tagline
+            commentAbove: backend::lang.branding.app_tagline_description
+            tab: backend::lang.branding.brand
+            span: right
+
+        logo:
+            label: backend::lang.branding.logo
+            type: fileupload
+            commentAbove: backend::lang.branding.logo_description
+            mode: image
+            imageHeight: 170
+            tab: backend::lang.branding.brand
+            span: left
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
+
+        favicon:
+            label: backend::lang.branding.favicon
+            type: fileupload
+            commentAbove: backend::lang.branding.favicon_description
+            mode: image
+            imageHeight: 32
+            tab: backend::lang.branding.brand
+            span: right
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg,ico
+
+        # primary_color:
+        #     label: backend::lang.branding.primary_color
+        #     type: colorpicker
+        #     tab: backend::lang.branding.colors
+        #     availableColors: ['#6a6cf7', '#16a085', '#27ae60', '#6bc48d', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6']
+
+        # secondary_color:
+        #     label: backend::lang.branding.secondary_color
+        #     type: colorpicker
+        #     tab: backend::lang.branding.colors
+        #     availableColors: ['#6a6cf7', '#16a085', '#27ae60', '#6bc48d', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6']
+
+        # accent_color:
+        #     label: backend::lang.branding.accent_color
+        #     type: colorpicker
+        #     tab: backend::lang.branding.colors
+        #     availableColors: ['#6a6cf7', '#16a085', '#27ae60', '#6bc48d', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6']
+
+        # selection_color:
+        #     label: backend::lang.branding.selection_color
+        #     type: colorpicker
+        #     tab: backend::lang.branding.colors
+        #     availableColors: ['#6a6cf7', '#16a085', '#27ae60', '#6bc48d', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6']
+
+        login_background_type:
+            label: backend::lang.branding.login_background_type
+            tab: backend::lang.branding.login_page
+            type: dropdown
+            default: color
+            options:
+                color: backend::lang.branding.background_flat_color
+                wallpaper: backend::lang.branding.background_wallpaper
+            span: left
+
+        login_background_color:
+            label: backend::lang.branding.background_color
+            tab: backend::lang.branding.login_page
+            type: colorpicker
+            availableColors: ['#6a6cf7', '#16a085', '#27ae60', '#6bc48d', '#3498db', '#9b59b6', '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6']
+            span: left
+            trigger:
+                action: show
+                field: login_background_type
+                condition: value[color]
+
+        login_background_wallpaper:
+            label: backend::lang.branding.background_wallpaper_image
+            type: fileupload
+            mode: image
+            tab: backend::lang.branding.login_page
+            span: left
+            fileTypes: jpg,jpeg,png
+            trigger:
+                action: show
+                field: login_background_type
+                condition: value[wallpaper]
+
+        login_background_wallpaper_size:
+            label: backend::lang.branding.background_wallpaper_image_size
+            tab: backend::lang.branding.login_page
+            span: left
+            type: dropdown
+            default: auto
+            trigger:
+                action: show
+                field: login_background_type
+                condition: value[wallpaper]
+            options:
+                auto: backend::lang.branding.background_wallpaper_size_auto
+                cover: backend::lang.branding.background_wallpaper_size_cover
+
+
+        login_image_type:
+            label: backend::lang.branding.login_image
+            tab: backend::lang.branding.login_page
+            type: dropdown
+            options:
+                autumn_images: backend::lang.branding.login_image_random_autumn_images
+                custom: backend::lang.branding.login_image_custom
+            span: left
+
+        login_custom_image:
+            label: backend::lang.branding.login_page_image
+            type: fileupload
+            mode: image
+            tab: backend::lang.branding.login_page
+            span: left
+            fileTypes: jpg,jpeg,png
+            trigger:
+                action: show
+                field: login_image_type
+                condition: value[custom]
+
+        menu_mode:
+            label: backend::lang.branding.menu_mode
+            tab: backend::lang.branding.navigation
+            type: partial
+            path: ~/modules/backend/models/brandsetting/_menu_mode.htm
+
+        custom_css:
+            label: backend::lang.branding.custom_stylesheet
+            type: codeeditor
+            tab: backend::lang.branding.styles
+            size: giant
+            language: css

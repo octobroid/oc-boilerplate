@@ -1,0 +1,29 @@
+//
+// Dependencies
+// --------------------------------------------------
+
+@import "global.variables.less";
+@import "select.variables.less";
+
+
+// Taglist preview mode
+//------------------------------------
+
+.taglist--preview {
+    overflow: hidden;
+    list-style-type: none;
+    padding-top: 0;
+    padding-left: 0;
+    padding-bottom: 8px;
+    margin: 0;
+
+    .taglist__item {
+        color: white;
+        background: @color-select-choice-bg;
+        border-radius: 6px;
+        cursor: default;
+        float: left;
+        margin: (@padding-base-vertical - 2) 0 0 @padding-base-horizontal/2;
+        padding: 1px 6px 2px 6px;
+    }
+}

@@ -1,8 +1,5 @@
 description = "Default layout"
 
-[session]
-security = "all"
-
 ==
 <!DOCTYPE html>
 <html>
@@ -18,39 +15,20 @@ security = "all"
         <![endif]-->
     </head>
     <body>
+
         {% partial 'header' %}
 
-        {% page %}
-
-        {% partial 'footer' %}
+        <main class="container">
+            {% page %}
+        </main>
 
         <script src="{{ [
             '@jquery',
             '@framework',
             '@framework.extras',
-
-            'vendor/popper.js/dist/umd/popper.min.js',
-
-            'vendor/bootstrap/js/dist/util.js',
-            'vendor/bootstrap/js/dist/alert.js',
-            'vendor/bootstrap/js/dist/button.js',
-            'vendor/bootstrap/js/dist/carousel.js',
-            'vendor/bootstrap/js/dist/collapse.js',
-            'vendor/bootstrap/js/dist/dropdown.js',
-            'vendor/bootstrap/js/dist/modal.js',
-            'vendor/bootstrap/js/dist/scrollspy.js',
-            'vendor/bootstrap/js/dist/tab.js',
-            'vendor/bootstrap/js/dist/tooltip.js',
-            'vendor/bootstrap/js/dist/popover.js',
-
-            'vendor/fastclick/lib/fastclick.js',
-            'vendor/bootbox/bootbox.js',
-
-            'assets/js/app.js']|theme }}"></script>
+            ]|theme }}"></script>
 
         {% scripts %}
-
-        {% partial 'tracker' %}
 
         {% partial 'flash' %}
 

@@ -1,0 +1,249 @@
+//
+// Side navigation bar
+// --------------------------------------------------
+
+.layout-sidenav-container {
+    width: 240px;
+}
+
+nav.layout-sidenav {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    .box-sizing(border-box);
+    font-size: @font-size-base;
+    background: @color-grey-3-light;
+
+    ul {
+        position: relative;
+        margin: 0;
+        padding: 25px 25px 25px 0;
+        height: 100%;
+        overflow: hidden;
+
+        > li.mainmenu-item {
+            margin: 0 0 10px 0;
+
+            > a {
+                padding: 7px 10px 7px 58px;
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+                margin: 0;
+                transition: padding 0.1s;
+
+                .flex-display();
+                .flex-direction-row();
+
+                &:hover {
+                    background: transparent;
+                }
+
+                .nav-icon {
+                    left: 25px;
+                    width: 20px;
+                    line-height: 34px;
+                    opacity: 1;
+                    text-align: center;
+
+                    .svg-icon {
+                        width: 20px;
+
+                        -webkit-filter: grayscale(100%) invert(100%);
+                        filter: grayscale(100%) invert(100%);
+                    }
+
+                    i {
+                        font-size: 20px;
+                        line-height: inherit;
+                        color: @color-text-grey-1;
+                    }
+                }
+
+                .nav-label {
+                    color: @color-text-grey-1;
+                    font-size: @font-size-base;
+                    opacity: 1;
+                    overflow: hidden;
+                }
+
+                span.counter {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 12px;
+                    transition: all 0.1s;
+                }
+            }
+
+            &.has-counter > a {
+                padding-right: 25px;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &.active {
+                > a {
+                    background: white;
+                    border-left: 3px solid @brand-primary;
+                    padding-left: 55px;
+
+                    .nav-label {
+                        color: @text-color;
+                        font-weight: 500;
+                    }
+
+                    .nav-icon {
+                        opacity: 1;
+                        left: 22px;
+
+                        i {
+                            color: @text-color;
+                        }
+                    }
+                }
+            }
+
+            &.sidebar-button {
+                margin-bottom: 25px;
+
+                > a {
+                    margin-left: 25px;
+                    background: @color-grey-6;
+                    padding: 9px 38px 0 13px;
+                    border-radius: 5px;
+                    transition: border-radius 0.1s ease-in-out;
+                    height: 40px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
+
+                    &:hover {
+                        background: @color-grey-6-darker;
+                    }
+
+                    &:active {
+                        box-shadow: none;
+                    }
+
+                    .nav-icon {
+                        right: 7px;
+                        left: auto;
+                        text-align: left;
+
+                        .svg-icon, i {
+                            display: none;
+                        }
+                    }
+
+                    .nav-label {
+                        color: white;
+                        font-weight: 500;
+                        opacity: 1;
+                    }
+                }
+
+                &.button-active > a {
+                    background: @brand-primary;
+
+                    &:hover {
+                        background: @primary-darker;
+                    }
+                }
+
+                &.add-button {
+                    > a {
+                        .nav-icon {
+                            &:after {
+                                .backend-icon-sprite-pseudo(12px, 12px, 110px, 0);
+                                position: absolute;
+                                top: 14px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: @screen-md-max) {
+    .layout-sidenav-container {
+        width: 70px;
+    }
+
+    #layout-sidenav {
+        transition: width 0.1s, box-shadow 0.1s ease-in-out;
+        box-shadow: none;
+    }
+
+    #layout-sidenav:not(:hover) {
+        ul {
+            > li.mainmenu-item {
+                > a {
+                    padding-right: 0;
+
+                    .nav-label {
+                        visibility: hidden;
+                    }
+
+                    span.counter {
+                        top: -8px;
+                        right: 1px;
+                    }
+                }
+
+                &.sidebar-button > a {
+                    margin-left: 15px;
+                    border-radius: 25px;
+                    width: 40px;
+                    padding: 9px 13px 0 0;
+
+                    .nav-icon {
+                        right: 6px;
+                    }
+                }
+            }
+        }
+    }
+
+    #layout-sidenav:hover {
+        z-index: 20;
+        width: 240px;
+        box-shadow: 5px 0 5px rgba(0,0,0,0.1);
+        transition-delay: .25s;
+
+        ul > li.mainmenu-item > a {
+            transition-delay: .25s;
+        }
+
+        ul > li.mainmenu-item > a span.counter {
+            top: 9px;
+            right: 10px;
+            transition-delay: .25s;
+        }
+    }
+}
+
+body:not(.drag) {
+    #layout-sidenav {
+        ul > li.mainmenu-item:not(.sidebar-button) > a:hover {
+            background: white;
+        }
+    }
+}
+
+.hide-sidenav() {
+    .layout > .layout-cell.layout-sidenav-container {
+        display: none!important;
+    }
+}
+
+body.sidenav-responsive,
+html.user-touch {
+    // Touch devices use responsive secondary nav
+    .hide-sidenav();
+}
+
+@media (max-width: @screen-xs-max) {
+    .hide-sidenav();
+}
