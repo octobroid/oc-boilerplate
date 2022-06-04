@@ -33,6 +33,29 @@ class ThemeManager
     protected $themeDirs;
 
     /**
+     * bootAllFrontend
+     */
+    public function bootAllFrontend()
+    {
+        $theme = CmsTheme::getActiveTheme();
+        if (!$theme) {
+            return;
+        }
+
+        $langPath = $theme->getPath() . '/lang';
+        if (is_dir($langPath)) {
+            Lang::addJsonPath($langPath);
+        }
+
+        if ($parent = $theme->getParentTheme()) {
+            $langPath = $parent->getPath() . '/lang';
+            if (is_dir($langPath)) {
+                Lang::addJsonPath($langPath);
+            }
+        }
+    }
+
+    /**
      * bootAllBackend will boot language messages for the active theme as `theme.acme::lang.*`
      */
     public function bootAllBackend()
@@ -43,13 +66,15 @@ class ThemeManager
         }
 
         $langPath = $theme->getPath() . '/lang';
-        if (File::isDirectory($langPath)) {
+        if (is_dir($langPath)) {
+            Lang::addJsonPath($langPath);
             Lang::addNamespace("theme.{$theme->getId()}", $langPath);
         }
 
         if ($parent = $theme->getParentTheme()) {
             $langPath = $parent->getPath() . '/lang';
-            if (File::isDirectory($langPath)) {
+            if (is_dir($langPath)) {
+                Lang::addJsonPath($langPath);
                 Lang::addNamespace("theme.{$parent->getId()}", $langPath);
             }
         }
@@ -261,7 +286,7 @@ class ThemeManager
         $sourcePath = $theme->getPath();
         $destinationPath = themes_path().'/'.$newDirName;
 
-        if (File::isDirectory($destinationPath)) {
+        if (is_dir($destinationPath)) {
             return false;
         }
 
@@ -360,11 +385,9 @@ class ThemeManager
 
         $theme->removeCustomData();
 
-        /*
-         * Delete from file system
-         */
+        // Delete from file system
         $themePath = $theme->getPath();
-        if (File::isDirectory($themePath)) {
+        if (is_dir($themePath)) {
             File::deleteDirectory($themePath);
         }
     }

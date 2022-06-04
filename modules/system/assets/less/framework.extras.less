@@ -64,11 +64,11 @@ body.oc-loading, body.oc-loading * {
 // Flash Messages
 // --------------------------------------------------
 
-@color-flash-success-bg:                     #8da85e;
-@color-flash-error-bg:                       #cc3300;
-@color-flash-warning-bg:                     #f0ad4e;
-@color-flash-info-bg:                        #5fb6f5;
-@color-flash-text:                           #ffffff;
+@color-flash-success-bg: #8da85e;
+@color-flash-error-bg: #cc3300;
+@color-flash-warning-bg: #f0ad4e;
+@color-flash-info-bg: #5fb6f5;
+@color-flash-text: #ffffff;
 
 body > p.flash-message {
     position: fixed;
@@ -92,7 +92,7 @@ body > p.flash-message {
         .transform(~'scale(0.9)');
     }
 
-    &.fade.in {
+    &.fade.show {
         opacity: 1;
         .transform( ~'scale(1)');
     }
@@ -152,6 +152,48 @@ body > p.flash-message {
 }
 
 //
+// Pagination
+// --------------------------------------------------
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+
+    > .page-item {
+        > .page-link {
+            margin-left: -1px;
+            padding: 5px 15px;
+            color: #666666;
+            background-color: #FFFFFF;
+            border: 1px solid #EBEBEB;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+        }
+
+        &.active > .page-link {
+            color: #000000;
+            font-weight: bold;
+
+            &:hover {
+                background-color: #FFFFFF;
+            }
+        }
+
+        &.disabled > .page-link {
+            color: #A1A1A1;
+
+            &:hover {
+                background-color: #FFFFFF;
+            }
+        }
+    }
+}
+
+//
 // Element Loader
 // --------------------------------------------------
 
@@ -171,22 +213,6 @@ a.oc-loading, button.oc-loading, span.oc-loading {
     }
 }
 
-@-moz-keyframes oc-rotate-loader {
-    0%    { -moz-transform: rotate(0deg); }
-    100%  { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes oc-rotate-loader {
-    0%    { -webkit-transform: rotate(0deg); }
-    100%  { -webkit-transform: rotate(360deg); }
-}
-@-o-keyframes oc-rotate-loader {
-    0%    { -o-transform: rotate(0deg); }
-    100%  { -o-transform: rotate(360deg); }
-}
-@-ms-keyframes oc-rotate-loader {
-    0%    { -ms-transform: rotate(0deg); }
-    100%  { -ms-transform: rotate(360deg); }
-}
 @keyframes oc-rotate-loader {
     0%    { transform: rotate(0deg); }
     100%  { transform: rotate(360deg); }
@@ -196,27 +222,16 @@ a.oc-loading, button.oc-loading, span.oc-loading {
 // Infinite loading animation
 // --------------------------------------------------
 
-@startVal: 100%;
-@start: 0;
-
-.infinite-class (@index, @val) when (@index < 101) {
-    @tmpSelector: ~"@{index}%";
-    @{tmpSelector} { transform: translateX(-@val); }
-    .infinite-class(@index + 10, @val - @val / 2);
-}
-
-@-moz-keyframes oc-infinite-loader {
-    .infinite-class(@start, @startVal);
-}
-@-webkit-keyframes oc-infinite-loader {
-    .infinite-class(@start, @startVal);
-}
-@-o-keyframes oc-infinite-loader {
-    .infinite-class(@start, @startVal);
-}
-@-ms-keyframes oc-infinite-loader {
-    .infinite-class(@start, @startVal);
-}
 @keyframes oc-infinite-loader {
-    .infinite-class(@start, @startVal);
+    0%   { transform: translateX(-100%); }
+    10%  { transform: translateX(-50%); }
+    20%  { transform: translateX(-25%); }
+    30%  { transform: translateX(-12.5%); }
+    40%  { transform: translateX(-6.25%); }
+    50%  { transform: translateX(-3.125%); }
+    60%  { transform: translateX(-1.5625%); }
+    70%  { transform: translateX(-0.78125%); }
+    80%  { transform: translateX(-0.390625%); }
+    90%  { transform: translateX(-0.1953125%); }
+    100% { transform: translateX(-0.09765625%); }
 }

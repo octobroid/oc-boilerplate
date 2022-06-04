@@ -91,7 +91,14 @@
                 // If the saved title is the default new item title, use reference title,
                 // removing CMS page [base file name] suffix
                 if (selectedTitle && self.properties.title === self.$popupForm.attr('data-new-item-title')) {
-                    $titleField.val($.trim(selectedTitle.replace(/\s*\[.*\]$/, '')))
+                    var title = $.trim(selectedTitle.replace(/\s*\[.*\]$/, ''))
+                    $titleField.val(title)
+                    
+                    // Support for RainLab.Translate
+                    var defaultLocale = $('[data-control="multilingual"]').data('default-locale')
+                    if (defaultLocale) {
+                        $('[name="RLTranslate['+defaultLocale+'][title]"]', self.$popupContainer).val(title)
+                    }
                 }
             })
 
@@ -183,11 +190,23 @@
             }
         }
 
+        var defaultLocale = $('[data-control="multilingual"]').data('default-locale')
         $.each(properties, function(property, val) {
             if (property == 'viewBag') {
                 $.each(val, function(vbProperty, vbVal) {
                     var $input = $('[name="viewBag['+vbProperty+']"]', $popupContainer).not('[type=hidden]')
                     setPropertyOnElement($input, vbVal)
+                    // Ensure that locale specific data is made available in the RainLab.Translate data holders
+                    if (vbProperty === 'locale') {
+                        $.each(vbVal, function(locale, fields) {
+                            $.each(fields, function(fieldName, fieldValue) {
+                                var $locker = $('[name="RLTranslate['+locale+']['+fieldName+']"]', $popupContainer)
+                                if ($locker) {
+                                    $locker.val(fieldValue)
+                                }
+                            })
+                        })
+                    }
                 })
 
                 /**
@@ -238,6 +257,11 @@
             else {
                 var $input = $('[name="'+property+'"]', $popupContainer).not('[type=hidden]')
                 setPropertyOnElement($input, val)
+                // If the RainLab.Translate default locale data locker fields are available make sure that they are properly populated
+                var $defaultLocaleField = $('[name="RLTranslate['+defaultLocale+']['+property+']"]', self.$popupContainer)
+                if ($defaultLocaleField) {
+                    $defaultLocaleField.val($input.val());
+                }
             }
         })
     }
@@ -384,9 +408,27 @@
             typeInfo = {},
             validationErrorFound = false
 
+        // Ensure that locale specific data is made available in the RainLab.Translate data holders
+        $('[name^="viewBag[locale]"]', self.$popupContainer).each(function() {
+            var locale = $(this).data('locale')
+            var fieldName = $(this).data('field-name')
+            var $localeField = $('[name="RLTranslate['+locale+']['+fieldName+']"]', self.$popupContainer)
+            $(this).val($localeField.val())
+        });
+
+        var defaultLocale = $('[data-control="multilingual"]').data('default-locale')
+
         $.each(propertyNames, function() {
             var propertyName = this,
                 $input = $('[name="'+propertyName+'"]', self.$popupContainer).not('[type=hidden]')
+
+            // If the RainLab.Translate default locale data locker fields are available make sure the regular inputs are properly populated
+            if (defaultLocale) {
+                var $defaultLocaleField = $('[name="RLTranslate['+defaultLocale+']['+propertyName+']"]', self.$popupContainer)
+                if ($defaultLocaleField && $defaultLocaleField.val()) {
+                    $input.val($defaultLocaleField.val())
+                }
+            }
 
             if ($input.prop('type') !== 'checkbox') {
                 data[propertyName] = $.trim($input.val())

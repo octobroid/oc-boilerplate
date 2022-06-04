@@ -9,7 +9,7 @@ use System\Classes\SettingsManager;
 use Backend\Models\Preference as PreferenceModel;
 
 /**
- * Editor Settings controller
+ * Preferences controller
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
@@ -22,17 +22,17 @@ class Preferences extends Controller
     ];
 
     /**
-     * @var array `FormController` configuration.
+     * @var array formConfig `FormController` configuration.
      */
     public $formConfig = 'config_form.yaml';
 
     /**
-     * @var array Permissions required to view this page.
+     * @var array requiredPermissions to view this page.
      */
-    public $requiredPermissions = ['backend.manage_preferences'];
+    public $requiredPermissions = ['preferences'];
 
     /**
-     * Constructor.
+     * __construct
      */
     public function __construct()
     {
@@ -46,6 +46,9 @@ class Preferences extends Controller
         SettingsManager::setContext('October.Backend', 'preferences');
     }
 
+    /**
+     * index
+     */
     public function index()
     {
         $this->pageTitle = 'backend::lang.backend_preferences.menu_label';
@@ -53,20 +56,26 @@ class Preferences extends Controller
     }
 
     /**
-     * Remove the code editor tab if there is no permission.
+     * formExtendFields removes the code editor tab if there is no permission.
      */
     public function formExtendFields($form)
     {
-        if (!$this->user->hasAccess('backend.manage_editor')) {
+        if (!$this->user->hasAccess('preferences.code_editor')) {
             $form->removeTab('backend::lang.backend_preferences.code_editor');
         }
     }
 
+    /**
+     * index_onSave
+     */
     public function index_onSave()
     {
         return $this->asExtension('FormController')->update_onSave();
     }
 
+    /**
+     * index_onResetDefault
+     */
     public function index_onResetDefault()
     {
         $model = $this->formFindModelObject();
@@ -77,6 +86,9 @@ class Preferences extends Controller
         return Backend::redirect('backend/preferences');
     }
 
+    /**
+     * formFindModelObject
+     */
     public function formFindModelObject()
     {
         return PreferenceModel::instance();

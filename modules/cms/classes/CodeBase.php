@@ -4,7 +4,7 @@ use ArrayAccess;
 use October\Rain\Extension\Extendable;
 
 /**
- * Parent class for PHP classes created for layout and page code sections.
+ * CodeBase is a parent class for PHP classes created for layout and page code sections.
  *
  * @package october\cms
  * @author Alexey Bobkov, Samuel Georges
@@ -25,6 +25,11 @@ class CodeBase extends Extendable implements ArrayAccess
      * @var \Cms\Classes\controller Specifies the CMS controller
      */
     public $controller;
+
+    /**
+     * @var array vars is a list of variables passed to the page.
+     */
+    public $vars = [];
 
     /**
      * Creates the object instance.
@@ -66,39 +71,39 @@ class CodeBase extends Extendable implements ArrayAccess
     }
 
     /**
-     * ArrayAccess implementation
+     * offsetExists implementation
      */
-    public function offsetSet($offset, $value)
-    {
-        $this->controller->vars[$offset] = $value;
-    }
-
-    /**
-     * ArrayAccess implementation
-     */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->controller->vars[$offset]);
     }
 
     /**
-     * ArrayAccess implementation
+     * offsetSet implementation
      */
-    public function offsetUnset($offset)
+    public function offsetSet($offset, $value): void
+    {
+        $this->controller->vars[$offset] = $this->vars[$offset] = $value;
+    }
+
+    /**
+     * offsetUnset implementation
+     */
+    public function offsetUnset($offset): void
     {
         unset($this->controller->vars[$offset]);
     }
 
     /**
-     * ArrayAccess implementation
+     * offsetGet implementation
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->controller->vars[$offset] ?? null;
     }
 
     /**
-     * Dynamically handle calls into the controller instance.
+     * __call dynamically handles calls into the controller instance.
      * @param string $method
      * @param array $parameters
      * @return mixed
@@ -113,7 +118,7 @@ class CodeBase extends Extendable implements ArrayAccess
     }
 
     /**
-     * This object is referenced as $this->page in Cms\Classes\ComponentBase,
+     * __get is referenced as $this->page in Cms\Classes\ComponentBase,
      * so to avoid $this->page->page this method will proxy there. This is also
      * used as a helper for accessing controller variables/components easier
      * in the page code, eg. $this->foo instead of $this['foo']
@@ -138,7 +143,7 @@ class CodeBase extends Extendable implements ArrayAccess
     }
 
     /**
-     * This will set a property on the CMS Page object.
+     * __set a property on the CMS Page object.
      * @param  string  $name
      * @param  mixed   $value
      * @return void
@@ -149,7 +154,7 @@ class CodeBase extends Extendable implements ArrayAccess
     }
 
     /**
-     * This will check if a property is set on the CMS Page object.
+     * __isset checks if a property is set on the CMS Page object.
      * @param string $name
      * @return bool
      */

@@ -18,28 +18,20 @@
         </div>
         <?php if (!$this->previewMode): ?>
             <div class="repeater-item-checkbox">
-                <div class="checkbox custom-checkbox nolabel">
-                    <input
-                        type="checkbox"
-                        name="checked[]"
-                        id="<?= $this->getId('item'.$indexValue) ?>"
-                        value=""
-                    />
-                    <label
-                        class="storm-icon-pseudo"
-                        for="<?= $this->getId('item'.$indexValue) ?>"
-                    ><?= e(trans('backend::lang.list.check')) ?></label>
-                </div>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="checked[]"
+                    id="<?= $this->getId('item'.$indexValue) ?>"
+                    value=""
+                    title="<?= e(trans('backend::lang.list.check')) ?>"
+                />
             </div>
             <div class="repeater-item-dropdown dropdown">
-                <a href="javascript:;" class="repeater-item-menu" data-toggle="dropdown">
+                <a href="javascript:;" class="repeater-item-menu" data-bs-toggle="dropdown">
                     <i class="octo-icon-cog"></i>
                 </a>
-                <ul
-                    class="dropdown-menu dropdown-menu-right"
-                    role="menu"
-                    data-dropdown-title="<?= __("Manage Item") ?>"
-                ></ul>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
             </div>
             <?php if ($showReorder): ?>
                 <div class="repeater-item-reorder">

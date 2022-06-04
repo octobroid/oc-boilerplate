@@ -13,8 +13,8 @@
         this.$el = $(element);
         this.options = options || {};
 
-        this.$head = $('thead', this.$el);
-        this.$body = $('tbody', this.$el);
+        this.$head = $('thead:first', this.$el);
+        this.$body = $('tbody:first', this.$el);
         this.$lastCheckbox = null;
         this.isLastChecked = true;
 
@@ -32,18 +32,10 @@
     }
 
     ListWidget.prototype.init = function() {
-        var scrollClassContainer = this.options.scrollClassContainer !== undefined
-            ? this.options.scrollClassContainer
-            : this.$el.parent();
-
-        this.$el.dragScroll({
-            scrollClassContainer: scrollClassContainer,
-            scrollSelector: 'thead',
-            dragSelector: 'thead'
-        });
+        this.bindScrollableContent();
 
         this.$el.on('ajaxSetup', this.proxy(this.beforeAjaxRequest));
-        this.$body.on('click', '.list-checkbox > .checkbox', this.proxy(this.clickBodyCheckbox));
+        this.$body.on('click', '.list-checkbox > input[type=checkbox]', this.proxy(this.clickBodyCheckbox));
         this.$body.on('change', this.options.checkboxSelector, this.proxy(this.toggleBodyCheckbox));
         this.$head.on('change', this.options.checkboxSelector, this.proxy(this.toggleHeadCheckbox));
 
@@ -54,7 +46,7 @@
 
     ListWidget.prototype.dispose = function() {
         this.$el.off('ajaxSetup', this.proxy(this.beforeAjaxRequest));
-        this.$body.off('click', '.list-checkbox > .checkbox', this.proxy(this.clickBodyCheckbox));
+        this.$body.off('click', '.list-checkbox > input[type=checkbox]', this.proxy(this.clickBodyCheckbox));
         this.$body.off('change', this.options.checkboxSelector, this.proxy(this.toggleBodyCheckbox));
         this.$head.off('change', this.options.checkboxSelector, this.proxy(this.toggleHeadCheckbox));
 
@@ -68,6 +60,19 @@
         this.options = null;
 
         BaseProto.dispose.call(this);
+    }
+
+    ListWidget.prototype.bindScrollableContent = function() {
+        var $content = $('.list-content:first', this.$el);
+        var scrollClassContainer = this.options.scrollClassContainer !== undefined
+            ? this.options.scrollClassContainer
+            : this.$el;
+
+        $content.dragScroll({
+            scrollClassContainer: scrollClassContainer,
+            scrollSelector: 'thead',
+            dragSelector: 'thead'
+        });
     }
 
     ListWidget.prototype.updateUi = function() {
@@ -87,14 +92,10 @@
             checkedCount = $all.filter(':checked').length;
 
         if (checkedCount && $all.length !== checkedCount) {
-            $headCb
-                .addClass('is-indeterminate')
-                .prop('indeterminate', true);
+            $headCb.prop('indeterminate', true);
         }
         else {
-            $headCb
-                .removeClass('is-indeterminate')
-                .prop('indeterminate', false);
+            $headCb.prop('indeterminate', false);
         }
 
         $headCb.prop('checked', !!checkedCount);
@@ -274,15 +275,11 @@
     }
 
     $.oc.listToggleChecked = function(el) {
-        $(el)
-            .closest('[data-control="listwidget"]')
-            .listWidget('toggleChecked', el);
+        $(el).closest('.control-list').listWidget('toggleChecked', el);
     }
 
     $.oc.listGetChecked = function(el) {
-        return $(el)
-            .closest('[data-control="listwidget"]')
-            .listWidget('getChecked');
+        return $(el).closest('.control-list').listWidget('getChecked');
     }
 
     // LIST WIDGET DATA-API
@@ -329,7 +326,10 @@
             }
 
             $buttonEl.on('ajaxSetup', function (ev, context) {
-                context.options.data.checked = $.oc.listGetChecked('#' + listId + ' > .control-list:first');
+                var checked = $.oc.listGetChecked('#' + listId + ' > .control-list:first');
+                if (checked.length) {
+                    context.options.data.checked = checked;
+                }
             });
 
             $buttonEl.data('oc.listCheckedRequest', true);

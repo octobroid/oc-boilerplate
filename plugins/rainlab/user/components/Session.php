@@ -5,15 +5,14 @@ use Auth;
 use Event;
 use Flash;
 use Request;
-use Response;
 use Redirect;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\UserGroup;
-use ValidationException;
+use SystemException;
 
 /**
- * User session
+ * Session component
  *
  * This will inject the user object to every page and provide the ability for
  * the user to sign out. This can also be used to restrict access to pages.
@@ -62,11 +61,17 @@ class Session extends ComponentBase
         ];
     }
 
+    /**
+     * getRedirectOptions
+     */
     public function getRedirectOptions()
     {
         return [''=>'- none -'] + Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
     }
 
+    /**
+     * getAllowedUserGroupsOptions
+     */
     public function getAllowedUserGroupsOptions()
     {
         return UserGroup::lists('name','code');
@@ -77,9 +82,12 @@ class Session extends ComponentBase
      */
     public function init()
     {
-        if (Request::ajax() && !$this->checkUserSecurity()) {
-            abort(403, 'Access denied');
-        }
+        // Inject security logic pre-AJAX
+        $this->controller->bindEvent('page.init', function() {
+            if (Request::ajax() && ($redirect = $this->checkUserSecurityRedirect())) {
+                return ['X_OCTOBER_REDIRECT' => $redirect->getTargetUrl()];
+            }
+        });
     }
 
     /**
@@ -87,13 +95,8 @@ class Session extends ComponentBase
      */
     public function onRun()
     {
-        if (!$this->checkUserSecurity()) {
-            if (empty($this->property('redirect'))) {
-                throw new \InvalidArgumentException('Redirect property is empty');
-            }
-            
-            $redirectUrl = $this->controller->pageUrl($this->property('redirect'));
-            return Redirect::guest($redirectUrl);
+        if ($redirect = $this->checkUserSecurityRedirect()) {
+            return $redirect;
         }
 
         $this->page['user'] = $this->user();
@@ -172,13 +175,31 @@ class Session extends ComponentBase
     }
 
     /**
-     * Checks if the user can access this page based on the security rules
-     * @return bool
+     * checkUserSecurityRedirect will return a redirect if the user cannot access the page.
      */
-    protected function checkUserSecurity()
+    protected function checkUserSecurityRedirect()
+    {
+        // No security layer enabled
+        if ($this->checkUserSecurity()) {
+            return;
+        }
+
+        if (!$this->property('redirect')) {
+            throw new SystemException('Redirect property is empty on Session component.');
+        }
+
+        $redirectUrl = $this->controller->pageUrl($this->property('redirect'));
+
+        return Redirect::guest($redirectUrl);
+    }
+
+    /**
+     * checkUserSecurity checks if the user can access this page based on the security rules.
+     */
+    protected function checkUserSecurity(): bool
     {
         $allowedGroup = $this->property('security', self::ALLOW_ALL);
-        $allowedUserGroups = $this->property('allowedUserGroups', []);
+        $allowedUserGroups = (array) $this->property('allowedUserGroups', []);
         $isAuthenticated = Auth::check();
 
         if ($isAuthenticated) {

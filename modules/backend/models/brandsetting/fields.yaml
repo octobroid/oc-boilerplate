@@ -134,7 +134,7 @@ tabs:
             label: backend::lang.branding.menu_mode
             tab: backend::lang.branding.navigation
             type: partial
-            path: ~/modules/backend/models/brandsetting/_menu_mode.htm
+            path: ~/modules/backend/models/brandsetting/_menu_mode.php
 
         custom_css:
             label: backend::lang.branding.custom_stylesheet

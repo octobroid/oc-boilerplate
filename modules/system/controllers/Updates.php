@@ -39,7 +39,7 @@ class Updates extends Controller
     /**
      * @var array requiredPermissions to view this page.
      */
-    public $requiredPermissions = ['system.manage_updates'];
+    public $requiredPermissions = ['general.backend.perform_updates'];
 
     /**
      * @var System\Widgets\Changelog
@@ -105,7 +105,7 @@ class Updates extends Controller
      */
     public function manage()
     {
-        $this->pageTitle = 'system::lang.plugins.manage';
+        $this->pageTitle = 'Manage Plugins';
         PluginManager::instance()->clearDisabledCache();
         return $this->asExtension('ListController')->index();
     }

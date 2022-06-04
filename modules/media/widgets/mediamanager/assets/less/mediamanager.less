@@ -1,10 +1,12 @@
 @import "../../../../../backend/assets/less/core/boot.less";
 
-@color-media-list-hover-bg: #4ea5e0;
+@mediamanager-active-text: #000000;
+@mediamanager-hover-bg-active: darken(#FFF5CB, 5%);
+@mediamanager-hover-bg: #4ea5e0;
 
 .media-selected-tiles() {
     .icon-container {
-        background: @color-media-list-hover-bg !important;
+        background: @mediamanager-hover-bg !important;
         border-color: #2581b8;
 
         i, p {
@@ -18,7 +20,7 @@
 }
 
 .media-selected-list() {
-    background: @color-media-list-hover-bg !important;
+    background: @mediamanager-hover-bg !important;
 
     i, p.size {
         color: #ecf0f1;
@@ -29,7 +31,7 @@
     }
 
     .icon-container {
-        border-right-color: @color-media-list-hover-bg !important;
+        border-right-color: @mediamanager-hover-bg !important;
     }
 }
 
@@ -39,7 +41,7 @@ div[data-control="media-manager"] {
     }
 
     .loading-indicator-pseudo-absolute(@size) {
-        background-image: url('../../../../../../modules/system/assets/ui/images/loader-transparent.svg');
+        background-image: url('../../../../../../modules/backend/assets/images/loader-transparent.svg');
         background-position: 50% 50%;
         content: ' ';
         .animation(spin 1s linear infinite);
@@ -50,8 +52,8 @@ div[data-control="media-manager"] {
         height: @size;
         top: 50%;
         left: 50%;
-        margin-top: -@size/2;
-        margin-left: -@size/2;
+        margin-top: -(@size / 2);
+        margin-left: -(@size / 2);
     }
 
     audio, video {
@@ -188,7 +190,7 @@ div[data-control="media-manager"] {
             }
 
             &[data-item-type=folder] i {
-                color: @color-media-list-hover-bg;
+                color: @mediamanager-hover-bg;
             }
         }
 
@@ -380,9 +382,13 @@ div[data-control="media-manager"] {
         }
 
         table.table.data {
+            > :not(:first-child) {
+                border-top: none;
+            }
+
             tbody tr:not(.no-data):active td {
-                background: @color-list-hover-bg-active !important;
-                color: @color-list-active-text;
+                background: @mediamanager-hover-bg-active !important;
+                color: @mediamanager-active-text;
             }
         }
     }
@@ -438,7 +444,7 @@ div[data-control="media-manager"] {
         }
 
         tr[data-item-type=folder] i.icon-folder {
-            color: @color-media-list-hover-bg;
+            color: @mediamanager-hover-bg;
         }
 
         tr:focus {

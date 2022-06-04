@@ -4,7 +4,7 @@ use File;
 use Event;
 use System;
 use Config;
-use StdClass;
+use stdClass;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -65,6 +65,8 @@ class OctoberMirror extends Command
         'modules/*/widgets/*/resources',
         'modules/*/formwidgets/*/assets',
         'modules/*/formwidgets/*/resources',
+        'modules/*/filterwidgets/*/assets',
+        'modules/*/filterwidgets/*/resources',
         'modules/*/reportwidgets/*/assets',
         'modules/*/reportwidgets/*/resources',
         'modules/*/vuecomponents/*/assets',
@@ -78,6 +80,8 @@ class OctoberMirror extends Command
         'plugins/*/*/reportwidgets/*/resources',
         'plugins/*/*/formwidgets/*/assets',
         'plugins/*/*/formwidgets/*/resources',
+        'plugins/*/*/filterwidgets/*/assets',
+        'plugins/*/*/filterwidgets/*/resources',
         'plugins/*/*/widgets/*/assets',
         'plugins/*/*/widgets/*/resources',
         'plugins/*/*/vuecomponents/*/assets',
@@ -104,9 +108,9 @@ class OctoberMirror extends Command
 
         $this->getDestinationPath();
 
-        $this->output->writeln(sprintf('<info>Mirror Path: [%s]</info>', $this->destinationPath));
+        $this->line(sprintf('<info>Mirror Path:</info> [%s]', $this->destinationPath));
 
-        $paths = new StdClass();
+        $paths = new stdClass;
         $paths->files = $this->files;
         $paths->directories = $this->directories;
         $paths->wildcards = $this->wildcards;
@@ -160,7 +164,7 @@ class OctoberMirror extends Command
 
         $this->makeSymlink($src, $dest);
 
-        $this->output->writeln(sprintf('<info> - Mirrored: %s</info>', $src));
+        $this->info(" - Mirrored: {$src}");
     }
 
     /**
@@ -188,7 +192,7 @@ class OctoberMirror extends Command
 
         $this->makeSymlink($src, $dest);
 
-        $this->output->writeln(sprintf('<info> - Mirrored: %s</info>', $src));
+        $this->info(" - Mirrored: {$src}");
     }
 
     /**

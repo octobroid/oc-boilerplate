@@ -1,2 +1,0 @@
-
-<?= $this->relationRender('users') ?>

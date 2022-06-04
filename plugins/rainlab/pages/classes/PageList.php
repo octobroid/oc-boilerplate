@@ -28,7 +28,7 @@ class PageList
      * Returns a list of static pages in the specified theme.
      * This method is used internally by the system.
      * @param boolean $skipCache Indicates if objects should be reloaded from the disk bypassing the cache.
-     * @return array Returns an array of static pages.
+     * @return object Returns an array of static pages.
      */
     public function listPages($skipCache = false)
     {
@@ -48,26 +48,21 @@ class PageList
         $pages = $this->listPages($skipCache);
         $config = $this->getPagesConfig();
 
-        $iterator = function($configPages) use (&$iterator, &$pages) {
+        // Make the $pages collection an associative array for performance
+        $pagesArray = $pages->keyBy(function ($page) {
+            return $page->getBaseFileName();
+        })->all();
+
+        $iterator = function($configPages) use (&$iterator, $pagesArray) {
             $result = [];
 
             foreach ($configPages as $fileName => $subpages) {
-                $pageObject = null;
-                foreach ($pages as $page) {
-                    if ($page->getBaseFileName() == $fileName) {
-                        $pageObject = $page;
-                        break;
-                    }
+                if (isset($pagesArray[$fileName])) {
+                    $result[] = (object) [
+                        'page'     => $pagesArray[$fileName],
+                        'subpages' => $iterator($subpages),
+                    ];
                 }
-
-                if ($pageObject === null) {
-                    continue;
-                }
-
-                $result[] = (object)[
-                    'page'     => $pageObject,
-                    'subpages' => $iterator($subpages)
-                ];
             }
 
             return $result;

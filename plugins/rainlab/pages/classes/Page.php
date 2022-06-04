@@ -117,8 +117,8 @@ class Page extends ContentBase
         parent::__construct($attributes);
 
         $this->customMessages = [
-            'url.regex'      => Lang::get('rainlab.pages::lang.page.invalid_url'),
-            'url.unique_url' => Lang::get('rainlab.pages::lang.page.url_not_unique')
+            'url.regex'      => 'rainlab.pages::lang.page.invalid_url',
+            'url.unique_url' => 'rainlab.pages::lang.page.url_not_unique',
         ];
     }
 
@@ -246,16 +246,17 @@ class Page extends ContentBase
         }
 
         /*
-         * Remove from meta
-         */
-        $this->removeFromMeta();
-
-        /*
          * Delete the object
          */
         $result = array_merge($result, [$this->getBaseFileName()]);
 
         parent::delete();
+
+        /*
+         * Remove from meta
+         */
+        $this->removeFromMeta();
+
 
         return $result;
     }
@@ -477,10 +478,13 @@ class Page extends ContentBase
 
             $type = $node->hasAttribute('type') ? trim($node->getAttribute('type')) : null;
             $ignore = $node->hasAttribute('ignore') ? trim($node->getAttribute('ignore')) : false;
+            if ($type === 'hidden') {
+                $ignore = true;
+            }
 
             $placeholderInfo = [
-                'title'  => $title,
-                'type'   => $type ?: 'html',
+                'title' => $title,
+                'type' => $type ?: 'html',
                 'ignore' => $ignore
             ];
 
@@ -535,8 +539,21 @@ class Page extends ContentBase
                 continue;
             }
 
-            $bodyNode = $node->getNode('body');
-            $result[$node->getAttribute('name')] = trim($bodyNode->getAttribute('data'));
+            // October CMS v2.2 and above
+            if (class_exists('System') && version_compare(\System::VERSION, '2.1') === 1) {
+                $names = $node->getNode('names');
+                $values = $node->getNode('values');
+                $isCapture = $node->getAttribute('capture');
+                if ($isCapture) {
+                    $name = $names->getNode(0);
+                    $result[$name->getAttribute('name')] = trim($values->getAttribute('data'));
+                }
+            }
+            // Legacy PutNode support
+            else {
+                $values = $node->getNode('body');
+                $result[$node->getAttribute('name')] = trim($values->getAttribute('data'));
+            }
         }
 
         $this->attributes['placeholders'] = $result;
@@ -577,6 +594,9 @@ class Page extends ContentBase
         $this->attributes['placeholders'] = $placeholders;
     }
 
+    /**
+     * getProcessedMarkup will return the processed markup of a page
+     */
     public function getProcessedMarkup()
     {
         if ($this->processedMarkupCache !== false) {
@@ -599,6 +619,11 @@ class Page extends ContentBase
         if (!empty($globalVars)) {
             $markup = TextParser::parse($markup, $globalVars);
         }
+
+        /*
+         * Event hook
+         */
+        Event::fire('pages.page.getProcessedMarkup', [&$markup]);
 
         return $this->processedMarkupCache = $markup;
     }
@@ -625,6 +650,11 @@ class Page extends ContentBase
         if (!empty($globalVars)) {
             $markup = TextParser::parse($markup, $globalVars);
         }
+        
+        /*
+         * Event hook
+         */
+        Event::fire('pages.page.getProcessedPlaceholderMarkup', [&$markup]);
 
         return $this->processedBlockMarkupCache[$placeholderName] = $markup;
     }
@@ -673,6 +703,17 @@ class Page extends ContentBase
     protected static function getMenuCacheKey($theme)
     {
         $key = crc32($theme->getPath()).'static-page-menu';
+        /**
+         * @event pages.page.getMenuCacheKey
+         * Enables modifying the key used to reference cached RainLab.Pages menu trees
+         *
+         * Example usage:
+         *
+         *     Event::listen('pages.page.getMenuCacheKey', function (&$key) {
+         *          $key = $key . '-' . App::getLocale();
+         *     });
+         *
+         */
         Event::fire('pages.page.getMenuCacheKey', [&$key]);
         return $key;
     }
@@ -802,8 +843,9 @@ class Page extends ContentBase
     /**
      * Handler for the backend.richeditor.getTypeInfo event.
      * Returns a menu item type information. The type information is returned as array
+     *
      * @param string $type Specifies the page link type
-     * @return array
+     * @return array Array of available link targets keyed by URL ['https://example.com/' => 'Homepage]
      */
     public static function getRichEditorTypeInfo($type)
     {
@@ -893,7 +935,8 @@ class Page extends ContentBase
         $iterator($pageList->getPageTree(), null, 0);
 
         self::$menuTreeCache = $menuTree;
-        $expiresAt = now()->addMinutes(Config::get('cms.parsedPageCacheTTL', 10));
+        $comboConfig = Config::get('cms.parsedPageCacheTTL', Config::get('cms.template_cache_ttl', 10));
+        $expiresAt = now()->addMinutes($comboConfig);
         Cache::put($key, serialize($menuTree), $expiresAt);
 
         return self::$menuTreeCache;

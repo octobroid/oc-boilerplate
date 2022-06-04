@@ -172,7 +172,7 @@
         this.$icon.css({
             visibility: 'hidden'
         });
-        this.$loader.removeClass('hide');
+        this.$loader.removeClass('oc-hide');
 
         this.$input.request(this.options.revealHandler, {
             success: function (data) {
@@ -182,7 +182,7 @@
                 self.$icon.css({
                     visibility: 'visible'
                 });
-                self.$loader.addClass('hide');
+                self.$loader.addClass('oc-hide');
 
                 self.toggleVisibility();
 

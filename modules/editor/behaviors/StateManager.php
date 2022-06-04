@@ -39,6 +39,7 @@ class StateManager extends ControllerBehavior
 
         $result['langStrings'] = $this->getEditorLangStrings();
         $result['userData'] = $this->loadUserData();
+        $result['inspectorConfigs'] = $this->loadGlobalInspectorConfigs();
 
         return $result;
     }
@@ -61,6 +62,8 @@ class StateManager extends ControllerBehavior
             {
                 $extensionNode->setUserDataElement('editorNamespace', $namespace);
             }
+
+            $section->setUserDataElement('editorNamespace', $namespace);
         }
 
         return $sectionList->toArray();
@@ -111,6 +114,10 @@ class StateManager extends ControllerBehavior
             'editor::lang.common.error',
             'editor::lang.common.reveal_in_sidebar',
             'editor::lang.common.apply_and_save',
+            'editor::lang.filesystem.delete_confirm',
+            'editor::lang.filesystem.delete_confirm_single',
+            'editor::lang.filesystem.moving',
+            'editor::lang.filesystem.moved',
         ];
 
         foreach ($result as $stringCode) {
@@ -120,10 +127,30 @@ class StateManager extends ControllerBehavior
         return $result;
     }
 
+    /**
+     * loadUserData
+     */
     private function loadUserData()
     {
         return [
-            'useMediaManager' => BackendAuth::userHasAccess('media.manage_media')
+            'useMediaManager' => BackendAuth::userHasAccess('media.library')
         ];
+    }
+
+    /**
+     * loadGlobalInspectorConfigs
+     */
+    private function loadGlobalInspectorConfigs()
+    {
+        $path = __DIR__.'/statemanager/inspector-configs.json';
+        $contents = json_decode(file_get_contents($path), true);
+
+        array_walk_recursive($contents, function(&$value, $key) {
+            if (is_string($value)) {
+                $value = trans($value);
+            }
+        });
+
+        return $contents;
     }
 }

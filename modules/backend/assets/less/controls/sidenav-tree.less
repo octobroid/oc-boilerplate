@@ -10,25 +10,20 @@ html .sidenav-tree {
     //     display: none !important;
     // }
 
-    .control-toolbar {
-        padding: 0;
+    .settings-search-toolbar-item  {
+        display: block;
+        background: white;
+        position: relative;
 
-        .toolbar-item {
+        &:before {
             display: block;
-            background: white;
-            position: relative;
-
-            &:before {
-                display: block;
-                width: 15px;
-                height: 15px;
-                position: absolute;
-                background-position: -238px 0;
-                top: 19px;
-                right: 11px;
-                left: auto!important;
-                font-size: 0;
-            }
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            background-position: -238px 0;
+            top: 13px;
+            right: 15px;
+            font-size: 0;
         }
 
         input.form-control {
@@ -332,13 +327,14 @@ body.sidenav-tree-expanded {
 
     .settings-search-toolbar-item {
         margin: 0px 10px 10px 10px;
-        .border-radius(20px)!important;
+        border-radius: 20px !important;
 
         input.form-control {
             border: 1px solid @color-grey-3;
-            .border-radius(20px)!important;
+            border-radius: 20px !important;
             padding-left: 15px;
             line-height: 40px;
+            height: 40px;
 
             &:focus {
                 border-color: @color-form-field-border-focus;

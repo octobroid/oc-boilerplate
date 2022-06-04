@@ -1,10 +1,11 @@
 <?php namespace System\Classes;
 
-use Yaml;
 use Backend;
+use October\Contracts\Support\OctoberPackage;
 use Illuminate\Support\ServiceProvider as ServiceProviderBase;
-use SystemException;
 use ReflectionClass;
+use SystemException;
+use Yaml;
 
 /**
  * PluginBase class
@@ -12,15 +13,10 @@ use ReflectionClass;
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
  */
-class PluginBase extends ServiceProviderBase
+class PluginBase extends ServiceProviderBase implements OctoberPackage
 {
     /**
-     * @var boolean loadedYamlConfiguration
-     */
-    protected $loadedYamlConfiguration = false;
-
-    /**
-     * @var array require rlugin dependencies
+     * @var array require plugin dependencies.
      */
     public $require = [];
 
@@ -28,6 +24,11 @@ class PluginBase extends ServiceProviderBase
      * @var boolean disabled determines if this plugin should be loaded (false) or not (true).
      */
     public $disabled = false;
+
+    /**
+     * @var bool loadedYamlConfiguration
+     */
+    protected $loadedYamlConfiguration = false;
 
     /**
      * pluginDetails returns information about this plugin, including plugin name and developer name.
@@ -46,20 +47,18 @@ class PluginBase extends ServiceProviderBase
             $thisClass
         ));
 
-        if (!array_key_exists('plugin', $configuration)) {
-            throw new SystemException(sprintf(
-                'The plugin configuration file plugin.yaml should contain the "plugin" section: %s.',
-                $thisClass
-            ));
+        if (array_key_exists('plugin', $configuration)) {
+            return $configuration['plugin'];
         }
 
-        return $configuration['plugin'];
+        throw new SystemException(sprintf(
+            'The plugin configuration file plugin.yaml should contain the "plugin" section: %s.',
+            $thisClass
+        ));
     }
 
     /**
      * register method, called when the plugin is first registered.
-     *
-     * @return void
      */
     public function register()
     {
@@ -67,17 +66,13 @@ class PluginBase extends ServiceProviderBase
 
     /**
      * boot method, called right before the request route.
-     *
-     * @return void
      */
     public function boot()
     {
     }
 
     /**
-     * registerMarkupTags registers CMS markup tags introduced by this plugin.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerMarkupTags()
     {
@@ -85,9 +80,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerComponents registers any front-end components implemented in this plugin.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerComponents()
     {
@@ -95,23 +88,23 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerNavigation registers back-end navigation items for this plugin.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerNavigation()
     {
         $configuration = $this->getConfigurationFromYaml();
+
         if (!array_key_exists('navigation', $configuration)) {
-            return;
+            return [];
         }
 
         $navigation = $configuration['navigation'];
+
         if (!is_array($navigation)) {
-            return;
+            return [];
         }
 
-        array_walk_recursive($navigation, function (&$item, $key) {
+        array_walk_recursive($navigation, static function (&$item, $key) {
             if ($key === 'url') {
                 $item = Backend::url($item);
             }
@@ -121,35 +114,34 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerPermissions registers any back-end permissions used by this plugin.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerPermissions()
     {
         $configuration = $this->getConfigurationFromYaml();
+
         if (!array_key_exists('permissions', $configuration)) {
-            return;
+            return [];
         }
 
         return $configuration['permissions'];
     }
 
     /**
-     * registerSettings registers any back-end configuration links used by this plugin.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerSettings()
     {
         $configuration = $this->getConfigurationFromYaml();
+
         if (!array_key_exists('settings', $configuration)) {
-            return;
+            return [];
         }
 
         $settings = $configuration['settings'];
+
         if (!is_array($settings)) {
-            return;
+            return [];
         }
 
         array_walk_recursive($settings, function (&$item, $key) {
@@ -162,31 +154,14 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerSchedule registers scheduled tasks that are executed on a regular basis.
-     *
-     * @param Illuminate\Console\Scheduling\Schedule $schedule
-     * @return void
+     * @inheritDoc
      */
     public function registerSchedule($schedule)
     {
     }
 
     /**
-     * registerReportWidgets registers any report widgets provided by this plugin.
-     * The widgets must be returned in the following format:
-     *
-     *     return [
-     *         'className1'=>[
-     *             'label'    => 'My widget 1',
-     *             'context' => ['context-1', 'context-2'],
-     *         ],
-     *         'className2' => [
-     *             'label'    => 'My widget 2',
-     *             'context' => 'context-1'
-     *         ]
-     *     ];
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerReportWidgets()
     {
@@ -194,15 +169,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerFormWidgets registers any form widgets implemented in this plugin.
-     * The widgets must be returned in the following format:
-     *
-     *     return [
-     *         ['className1' => 'alias'],
-     *         ['className2' => 'anotherAlias']
-     *     ];
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerFormWidgets()
     {
@@ -210,10 +177,15 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerListColumnTypes registers custom back-end list column types introduced
-     * by this plugin.
-     *
-     * @return array
+     * @inheritDoc
+     */
+    public function registerFilterWidgets()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
      */
     public function registerListColumnTypes()
     {
@@ -221,15 +193,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerMailLayouts registers any mail layouts implemented by this plugin.
-     * The layouts must be returned in the following format:
-     *
-     *     return [
-     *         'marketing' => 'acme.blog::layouts.marketing',
-     *         'notification' => 'acme.blog::layouts.notification',
-     *     ];
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerMailLayouts()
     {
@@ -237,15 +201,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerMailTemplates registers any mail templates implemented by this plugin.
-     * The templates must be returned in the following format:
-     *
-     *     return [
-     *         'acme.blog::mail.welcome',
-     *         'acme.blog::mail.forgot_password',
-     *     ];
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerMailTemplates()
     {
@@ -253,15 +209,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerMailPartials registers any mail partials implemented by this plugin.
-     * The partials must be returned in the following format:
-     *
-     *     return [
-     *         'tracking' => 'acme.blog::partials.tracking',
-     *         'promotion' => 'acme.blog::partials.promotion',
-     *     ];
-     *
-     * @return array
+     * @inheritDoc
      */
     public function registerMailPartials()
     {
@@ -269,7 +217,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * registerConsoleCommand registers a new console (artisan) command
+     * registerConsoleCommand registers a new console (artisan) command.
      * @param string $key The command name
      * @param string $class The command class
      * @return void
@@ -284,7 +232,7 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
-     * getConfigurationFromYaml reads configuration from YAML file
+     * getConfigurationFromYaml reads configuration from YAML file.
      * @param string|null $exceptionMessage
      * @return array|bool
      * @throws SystemException
@@ -298,18 +246,22 @@ class PluginBase extends ServiceProviderBase
         $reflection = new ReflectionClass(get_class($this));
         $yamlFilePath = dirname($reflection->getFileName()).'/plugin.yaml';
 
-        if (!file_exists($yamlFilePath)) {
-            if ($exceptionMessage) {
+        if (file_exists($yamlFilePath)) {
+            $this->loadedYamlConfiguration = Yaml::parse(file_get_contents($yamlFilePath));
+
+            if (!is_array($this->loadedYamlConfiguration)) {
+                throw new SystemException(sprintf(
+                    'Invalid format of the plugin configuration file: %s. The file should define an array.',
+                    $yamlFilePath
+                ));
+            }
+        }
+        else {
+            if ($exceptionMessage !== null) {
                 throw new SystemException($exceptionMessage);
             }
 
             $this->loadedYamlConfiguration = [];
-        }
-        else {
-            $this->loadedYamlConfiguration = Yaml::parse(file_get_contents($yamlFilePath));
-            if (!is_array($this->loadedYamlConfiguration)) {
-                throw new SystemException(sprintf('Invalid format of the plugin configuration file: %s. The file should define an array.', $yamlFilePath));
-            }
         }
 
         return $this->loadedYamlConfiguration;

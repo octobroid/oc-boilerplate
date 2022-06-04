@@ -32,9 +32,9 @@ class Plugin extends PluginBase
     public function register()
     {
         $alias = AliasLoader::getInstance();
-        $alias->alias('Auth', 'RainLab\User\Facades\Auth');
+        $alias->alias('Auth', \RainLab\User\Facades\Auth::class);
 
-        App::singleton('user.auth', function() {
+        App::singleton('user.auth', function () {
             return \RainLab\User\Classes\AuthManager::instance();
         });
 
@@ -56,7 +56,7 @@ class Plugin extends PluginBase
         /*
          * Apply user-based mail blocking
          */
-        Event::listen('mailer.prepareSend', function($mailer, $view, $message) {
+        Event::listen('mailer.prepareSend', function ($mailer, $view, $message) {
             return MailBlocker::filterMessage($view, $message);
         });
 
@@ -69,8 +69,8 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            \RainLab\User\Components\Session::class       => 'session',
-            \RainLab\User\Components\Account::class       => 'account',
+            \RainLab\User\Components\Session::class => 'session',
+            \RainLab\User\Components\Account::class => 'account',
             \RainLab\User\Components\ResetPassword::class => 'resetPassword'
         ];
     }
@@ -133,7 +133,7 @@ class Plugin extends PluginBase
                 'label'       => 'rainlab.user::lang.settings.menu_label',
                 'description' => 'rainlab.user::lang.settings.menu_description',
                 'category'    => SettingsManager::CATEGORY_USERS,
-                'icon'        => 'icon-cog',
+                'icon'        => class_exists('System') ? 'octo-icon-user-actions-key' : 'icon-cog',
                 'class'       => 'RainLab\User\Models\Settings',
                 'order'       => 500,
                 'permissions' => ['rainlab.users.access_settings']
@@ -184,7 +184,7 @@ class Plugin extends PluginBase
             'rainlab.user.register' => \RainLab\User\NotifyRules\UserRegisteredEvent::class
         ]);
 
-        Notifier::instance()->registerCallback(function($manager) {
+        Notifier::instance()->registerCallback(function ($manager) {
             $manager->registerGlobalParams([
                 'user' => Auth::getUser()
             ]);

@@ -24,9 +24,9 @@ class Resources extends ComponentBase
     public $lessDir = 'less';
 
     /**
-     * @var string sassDir for SASS files.
+     * @var string scssDir for SCSS files.
      */
-    public $sassDir = 'sass';
+    public $scssDir = 'scss';
 
     /**
      * componentDetails
@@ -59,9 +59,9 @@ class Resources extends ComponentBase
                 'type' => 'stringList',
                 'showExternalParam' => false
             ],
-            'sass' => [
-                'title' => 'SASS',
-                'description' => 'SASS file(s) in the assets/sass folder',
+            'scss' => [
+                'title' => 'SCSS',
+                'description' => 'SCSS file(s) in the assets/scss folder',
                 'type' => 'stringList',
                 'showExternalParam' => false
             ],
@@ -94,7 +94,7 @@ class Resources extends ComponentBase
         $this->assetPath = $this->controller->assetPath;
         $this->assetLocalPath = $this->controller->assetLocalPath;
         $this->jsDir = $this->guessAssetDirectory(['js', 'javascript'], $this->jsDir);
-        $this->sassDir = $this->guessAssetDirectory(['sass', 'scss'], $this->sassDir);
+        $this->scssDir = $this->guessAssetDirectory(['scss', 'sass'], $this->scssDir);
     }
 
     /**
@@ -116,10 +116,10 @@ class Resources extends ComponentBase
             }
         }
 
-        // SASS
-        if ($assets = $this->property('sass')) {
+        // SCSS
+        if ($assets = $this->property('scss')) {
             foreach ((array) $assets as $asset) {
-                $this->controller->addCssBundle($this->prefixSass($asset), 'cms-sass');
+                $this->controller->addCssBundle($this->prefixScss($asset), 'cms-scss');
             }
         }
 
@@ -171,15 +171,15 @@ class Resources extends ComponentBase
     }
 
     /**
-     * prefixSass
+     * prefixScss
      */
-    protected function prefixSass($value)
+    protected function prefixScss($value)
     {
-        return 'assets/'.$this->sassDir.'/'.trim($value);
+        return 'assets/'.$this->scssDir.'/'.trim($value);
     }
 
     /**
-     * guessAssetDirectory determines an inner asset directory, eg: sass or scss
+     * guessAssetDirectory determines an inner asset directory, eg: scss or sass
      */
     protected function guessAssetDirectory(array $possible, $default = null)
     {

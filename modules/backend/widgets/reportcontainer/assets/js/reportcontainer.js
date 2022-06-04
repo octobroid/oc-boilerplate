@@ -59,7 +59,7 @@
         this.$el.on('hidden.oc.inspector', '[data-inspectable]', function() {
             var values = $('[data-inspector-values]', this).val(),
                 parsedValues = JSON.parse(values),
-                li = $(this).closest('li').get(0)
+                li = $(this).closest('li').get(0);
 
             self.$form.request(self.alias + '::onUpdateWidget', {
                 data: {
@@ -68,31 +68,31 @@
                 },
                 success: function(data) {
                     this.success(data).done(function() {
-                        li.className = li.className.replace(/width\-[0-9]+/g, '')
-                        $(li).addClass('width-'+parsedValues['ocWidgetWidth'])
-                        $(li).toggleClass('new-line', parsedValues['ocWidgetNewRow'] == 1)
+                        li.className = li.className.replace(/width\-[0-9]+/g, '');
+                        $(li).addClass('width-'+parsedValues['ocWidgetWidth']);
+                        $(li).toggleClass('new-line', parsedValues['ocWidgetNewRow'] == 1);
 
-                        self.updateSeparators()
-                        self.redraw()
-                    })
+                        self.updateSeparators();
+                        self.redraw();
+                    });
                 }
-            })
-        })
+            });
+        });
 
-        this.$el.on('click', '.content > button.close', function() {
-            var $btn = $(this)
+        this.$el.on('click', '.content > button[data-remove-widget]', function() {
+            var $btn = $(this);
             $.oc.confirm($.oc.lang.get('alert.widget_remove_confirm'), function() {
                 self.$form.request(self.alias + '::onRemoveWidget', {
                     data: {
                         'alias': $('[data-widget-alias]', $btn.closest('div.content')).val()
                     }
-                })
+                });
 
-                $btn.closest('li').remove()
-                self.redraw()
-                self.setSortOrders()
-            })
-        })
+                $btn.closest('li').remove();
+                self.redraw();
+                self.setSortOrders();
+            });
+        });
 
         $(window).on('oc.reportWidgetAdded', function() {
             self.redraw()

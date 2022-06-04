@@ -2,14 +2,6 @@
 #  Field Definitions
 # ===================================
 
-fields:
-    is_superuser:
-        context: [create, update]
-        tab: backend::lang.user.permissions
-        label: backend::lang.user.superuser
-        type: switch
-        comment: backend::lang.user.superuser_comment
-
 tabs:
     defaultTab: backend::lang.user.account
 
@@ -53,13 +45,24 @@ tabs:
             label: backend::lang.user.role_field
             commentAbove: backend::lang.user.role_comment
             type: radio
+            permissions: admins.manage.roles
 
         groups:
-            context: [create, update]
             label: backend::lang.user.groups
             commentAbove: backend::lang.user.groups_comment
             type: checkboxlist
             tab: backend::lang.user.groups
+            permissions: admins.manage.groups
+
+        permissions:
+            context: [create, update]
+            tab: backend::lang.user.permissions
+            type: Backend\FormWidgets\PermissionEditor
+            permissions: admins.manage.roles
+            trigger:
+                action: disable
+                field: is_superuser
+                condition: checked
 
 secondaryTabs:
     fields:

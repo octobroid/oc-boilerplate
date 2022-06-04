@@ -36,7 +36,7 @@ class ThemeLogs extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['system.access_logs'];
+    public $requiredPermissions = ['utilities.logs'];
 
     /**
      * Constructor.

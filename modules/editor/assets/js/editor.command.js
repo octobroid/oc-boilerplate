@@ -1,24 +1,29 @@
-$.oc.module.register('editor.command', function () {
+$.oc.module.register('editor.command', function() {
     'use strict';
     /**
      * Represents Editor client-side commands.
      * Command syntax: "namespace:command@parameter". The namespace
      * and parameter parts are optional.
      */
+    class EditorCommand {
+        namespace;
+        command;
+        parameter;
+        fullCommand;
+        userData;
 
-    var EditorCommand = function () {
-        function EditorCommand(commandString, userData) {
-            babelHelpers.classCallCheck(this, EditorCommand);
-
-            if ((typeof commandString === 'undefined' ? 'undefined' : babelHelpers.typeof(commandString)) === 'object' && commandString instanceof EditorCommand) {
+        constructor(commandString, userData) {
+            if (typeof commandString === 'object' && commandString instanceof EditorCommand) {
                 return commandString;
             }
 
-            var re = /^(([^:]+):)?([^@]+)(@(.*))?$/; // Can't use named capture groups because of IE11
-            var matchData = commandString.match(re);
+            const re = /^(([^:]+):)?([^@]+)(@(.*))?$/; // Can't use named capture groups because of IE11
+            const matchData = commandString.match(re);
 
             if (!matchData.length) {
-                throw new Error('Editor commands must have format "command", "namespace:command" or "namespace:command@parameter". Invalid command string: ' + commandString);
+                throw new Error(
+                    `Editor commands must have format "command", "namespace:command" or "namespace:command@parameter". Invalid command string: ${commandString}`
+                );
             }
 
             this.fullCommand = commandString;
@@ -28,36 +33,30 @@ $.oc.module.register('editor.command', function () {
             this.userData = userData === undefined ? {} : userData;
         }
 
-        babelHelpers.createClass(EditorCommand, [{
-            key: 'matches',
-            value: function matches(commandObject) {
-                if (commandObject.fullCommand == this.fullCommand) {
-                    return true;
-                }
+        get hasParameter() {
+            return this.parameter != null;
+        }
 
-                if (commandObject.hasParameter) {
-                    return false;
-                }
+        get basePart() {
+            if (this.namespace === null) {
+                return this.command;
+            }
 
-                return this.basePart == commandObject.basePart;
-            }
-        }, {
-            key: 'hasParameter',
-            get: function get() {
-                return this.parameter != null;
-            }
-        }, {
-            key: 'basePart',
-            get: function get() {
-                if (this.namespace === null) {
-                    return this.command;
-                }
+            return this.namespace + ':' + this.command;
+        }
 
-                return this.namespace + ':' + this.command;
+        matches(commandObject) {
+            if (commandObject.fullCommand == this.fullCommand) {
+                return true;
             }
-        }]);
-        return EditorCommand;
-    }();
+
+            if (commandObject.hasParameter) {
+                return false;
+            }
+
+            return this.basePart == commandObject.basePart;
+        }
+    }
 
     return EditorCommand;
 });

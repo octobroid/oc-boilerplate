@@ -5,6 +5,7 @@ use SystemException;
 use Backend\Classes\FormField;
 use Backend\Classes\WidgetManager;
 use Backend\Classes\FormWidgetBase;
+use October\Rain\Html\Helper as HtmlHelper;
 
 /**
  * HasFormWidgets concern
@@ -12,7 +13,7 @@ use Backend\Classes\FormWidgetBase;
 trait HasFormWidgets
 {
     /**
-     * @var array Collection of all form widgets used in this form.
+     * @var array formWidgets collection of all form widgets used in this form.
      */
     protected $formWidgets = [];
 
@@ -63,10 +64,10 @@ trait HasFormWidgets
 
         $widget = $this->makeFormWidget($widgetClass, $field, $widgetConfig);
 
-        // If options config is defined, request options from the model.
-        if (isset($field->config['options'])) {
-            $field->options(function () use ($field) {
-                $fieldOptions = $field->config['options'];
+        // If no options defined, request options from the model.
+        if (!$field->hasOptions()) {
+            $fieldOptions = $field->options;
+            $field->options(function () use ($field, $fieldOptions) {
                 return $field->getOptionsFromModel($this->model, $fieldOptions, $this->data);
             });
         }
@@ -93,7 +94,7 @@ trait HasFormWidgets
             return false;
         }
 
-        if (is_subclass_of($widgetClass, 'Backend\Classes\FormWidgetBase')) {
+        if (is_subclass_of($widgetClass, \Backend\Classes\FormWidgetBase::class)) {
             return true;
         }
 
@@ -119,5 +120,15 @@ trait HasFormWidgets
         }
 
         return null;
+    }
+
+    /**
+     * nameToId is a helper method to convert a field name to a valid ID attribute
+     * @param $input
+     * @return string
+     */
+    public function nameToId($input)
+    {
+        return HtmlHelper::nameToId($input);
     }
 }

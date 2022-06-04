@@ -25,7 +25,7 @@
             data-trigger=".control-list input[type=checkbox]"
             data-trigger-condition="checked"
             data-toggle="dropdown">
-            <span class="caret"></span>
+            <i class="icon-angle-down"></i>
         </button>
         <ul class="dropdown-menu" data-dropdown-title="<?= e(trans('rainlab.user::lang.users.bulk_actions')) ?>">
             <li>
@@ -63,5 +63,22 @@
             </li>
         </ul>
     </div>
+
+    <?=
+        /**
+         * @event rainlab.user.view.extendListToolbar
+         * Fires when user list toolbar is rendered.
+         *
+         * Example usage:
+         *
+         *     Event::listen('rainlab.user.view.extendListToolbar', function (
+         *         (RainLab\User\Controllers\Users) $controller
+         *     ) {
+         *         return $controller->makePartial('~/path/to/partial');
+         *     });
+         *
+         */
+        $this->fireViewEvent('rainlab.user.view.extendListToolbar');
+    ?>
 
 </div>

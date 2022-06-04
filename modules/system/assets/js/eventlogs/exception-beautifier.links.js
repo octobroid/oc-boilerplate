@@ -7,6 +7,7 @@
     var ExceptionBeautifier = $.fn.exceptionBeautifier.Constructor
 
     ExceptionBeautifier.EDITORS = {
+        vscode: {scheme: 'vscode://file/%file&line=%line', name: 'VSCode (vscode://)'},
         subl: {scheme: 'subl://open?url=file://%file&line=%line', name: 'Sublime (subl://)'},
         txmt: {scheme: 'txmt://open/?url=file://%file&line=%line', name: 'TextMate (txmt://)'},
         mvim: {scheme: 'mvim://open/?url=file://%file&line=%line', name: 'MacVim (mvim://)'},
@@ -36,27 +37,29 @@
                 rememberChoice = $.oc.lang.get('eventlog.editor.remember_choice'),
                 open = $.oc.lang.get('eventlog.editor.open'),
                 cancel = $.oc.lang.get('eventlog.editor.cancel'),
-                popup = $('                                                                                            \
-<div>                                                                                                                  \
-    <div class="modal-header">                                                                                         \
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                   \
-        <h4 class="modal-title">' + title + '</h4>                                                                     \
-    </div>                                                                                                             \
-    <div class="modal-body">                                                                                           \
-        <p>' + description + '</p>                                                                                     \
-        <div class="form-group">                                                                                       \
-            <label class="control-label">' + openWith + ':</label>                                                     \
-            <select class="form-control" name="select-exception-link-editor"></select>                                 \
-        </div>                                                                                                         \
-        <div class="checkbox custom-checkbox">                                                                         \
-            <input name="checkbox" value="1" type="checkbox" id="editor-remember-choice" />                            \
-            <label for="editor-remember-choice">' + rememberChoice + '</label>                                         \
-        </div>                                                                                                         \
-    </div>                                                                                                             \
-    <div class="modal-footer">                                                                                         \
-        <button type="button" class="btn btn-primary" data-action="submit" data-dismiss="modal">' + open + '</button>  \
-        <button type="button" class="btn btn-default" data-dismiss="popup">' + cancel + '</button>                     \
-    </div>                                                                                                             \
+                popup = $('                                                                                                \
+<div>                                                                                                                      \
+    <div class="modal-header">                                                                                             \
+        <h4 class="modal-title">' + title + '</h4>                                                                         \
+        <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>                          \
+    </div>                                                                                                                 \
+    <div class="modal-body">                                                                                               \
+        <p>' + description + '</p>                                                                                         \
+        <div class="form-group">                                                                                           \
+            <label class="form-label">' + openWith + '</label>                                                         \
+            <select class="form-control" name="select-exception-link-editor"></select>                                     \
+        </div>                                                                                                             \
+        <div class="form-group">                                                                                           \
+            <div class="form-check">                                                                                       \
+                <input class="form-check-input" name="checkbox" value="1" type="checkbox" id="editor-remember-choice" />   \
+                <label class="form-check-label" for="editor-remember-choice">' + rememberChoice + '</label>                \
+            </div>                                                                                                         \
+        </div>                                                                                                             \
+    </div>                                                                                                                 \
+    <div class="modal-footer">                                                                                             \
+        <button type="button" class="btn btn-primary" data-action="submit" data-dismiss="modal">' + open + '</button>      \
+        <button type="button" class="btn btn-default" data-dismiss="popup">' + cancel + '</button>                         \
+    </div>                                                                                                                 \
 </div>'
                 ),
                 select = $('select', popup)

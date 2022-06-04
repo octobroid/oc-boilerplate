@@ -254,7 +254,7 @@
 
         this.editor = null
 
-        this.$toolbar.find('>ul>li>a').tooltip('destroy')
+        this.$toolbar.find('>ul>li>a').tooltip('dispose');
         this.$el.removeData('oc.codeEditor')
         this.$el.hotKey('dispose')
     }

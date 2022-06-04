@@ -1,63 +1,52 @@
-$.oc.module.register('cms.editor.extension.documentcontroller.content', function () {
+$.oc.module.register('cms.editor.extension.documentcontroller.content', function() {
     'use strict';
 
-    var DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
+    const DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
 
-    var treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
+    const treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
 
-    var DocumentControllerContent = function (_DocumentControllerBa) {
-        babelHelpers.inherits(DocumentControllerContent, _DocumentControllerBa);
-
-        function DocumentControllerContent() {
-            babelHelpers.classCallCheck(this, DocumentControllerContent);
-            return babelHelpers.possibleConstructorReturn(this, (DocumentControllerContent.__proto__ || Object.getPrototypeOf(DocumentControllerContent)).apply(this, arguments));
+    class DocumentControllerContent extends DocumentControllerBase {
+        get documentType() {
+            return 'cms-content';
         }
 
-        babelHelpers.createClass(DocumentControllerContent, [{
-            key: 'initListeners',
-            value: function initListeners() {
-                this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
-            }
-        }, {
-            key: 'getAllContentFilenames',
-            value: function getAllContentFilenames() {
-                if (this.cachedContentList) {
-                    return this.cachedContentList;
-                }
+        get vueEditorComponentName() {
+            return 'cms-editor-component-content-editor';
+        }
 
-                var contentNavigatorNode = treeviewUtils.findNodeByKeyInSections(this.parentExtension.state.navigatorSections, 'cms:cms-content');
+        initListeners() {
+            this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
+        }
 
-                var contentList = [];
+        getAllContentFilenames() {
+            if (this.cachedContentList) {
+                return this.cachedContentList;
+            }
 
-                if (contentNavigatorNode) {
-                    contentList = treeviewUtils.getFlattenNodes(contentNavigatorNode.nodes).map(function (contentNode) {
-                        return contentNode.userData.filename;
-                    });
-                } else {
-                    contentList = this.parentExtension.state.customData.content;
-                }
+            const contentNavigatorNode = treeviewUtils.findNodeByKeyInSections(
+                this.parentExtension.state.navigatorSections,
+                'cms:cms-content'
+            );
 
-                this.cachedContentList = contentList;
-                return contentList;
+            let contentList = [];
+
+            if (contentNavigatorNode) {
+                contentList = treeviewUtils.getFlattenNodes(contentNavigatorNode.nodes).map((contentNode) => {
+                    return contentNode.userData.filename;
+                });
             }
-        }, {
-            key: 'onNavigatorNodesUpdated',
-            value: function onNavigatorNodesUpdated(cmd) {
-                this.cachedContentList = null;
+            else {
+                contentList = this.parentExtension.state.customData.content;
             }
-        }, {
-            key: 'documentType',
-            get: function get() {
-                return 'cms-content';
-            }
-        }, {
-            key: 'vueEditorComponentName',
-            get: function get() {
-                return 'cms-editor-component-content-editor';
-            }
-        }]);
-        return DocumentControllerContent;
-    }(DocumentControllerBase);
+
+            this.cachedContentList = contentList;
+            return contentList;
+        }
+
+        onNavigatorNodesUpdated(cmd) {
+            this.cachedContentList = null;
+        }
+    }
 
     return DocumentControllerContent;
 });

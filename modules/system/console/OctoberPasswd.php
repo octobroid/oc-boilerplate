@@ -61,7 +61,7 @@ class OctoberPasswd extends Command
         $this->output->success('Password successfully changed');
 
         if ($this->displayPassword) {
-            $this->output->writeLn('Password set to <info>' . $password . '</info>.');
+            $this->line('Password set to <info>' . $password . '</info>.');
         }
     }
 

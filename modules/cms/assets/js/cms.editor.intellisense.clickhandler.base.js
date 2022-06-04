@@ -1,68 +1,61 @@
-$.oc.module.register('cms.editor.intellisense.clickhandler.base', function () {
+$.oc.module.register('cms.editor.intellisense.clickhandler.base', function() {
     'use strict';
 
-    var ClickHandlerBase = function () {
-        function ClickHandlerBase(intellisense, options) {
-            babelHelpers.classCallCheck(this, ClickHandlerBase);
+    class ClickHandlerBase {
+        intellisense;
+        options;
 
+        constructor(intellisense, options) {
             this.intellisense = intellisense;
             this.options = options;
         }
 
-        babelHelpers.createClass(ClickHandlerBase, [{
-            key: 'getFileExtension',
-            value: function getFileExtension(fileName) {
-                var parts = fileName.split('/').pop().split('.');
-                if (parts.length < 2) {
-                    return null;
+        get utils() {
+            return this.intellisense.utils;
+        }
+
+        getFileExtension(fileName) {
+            const parts = fileName.split('/').pop().split('.');
+            if (parts.length < 2) {
+                return null;
+            }
+
+            return parts.pop();
+        }
+
+        addExtensionIfMissing(fileName, extension) {
+            if (this.getFileExtension(fileName) !== null) {
+                return fileName;
+            }
+
+            return fileName + '.' + extension;
+        }
+
+        resolveRelativeFilePath(base, relative) {
+            const parts = relative.split('/');
+            let stack = base.split('/');
+
+            stack.pop();
+            parts.forEach((part) => {
+                if (part === '.') {
+                    return;
                 }
 
-                return parts.pop();
-            }
-        }, {
-            key: 'addExtensionIfMissing',
-            value: function addExtensionIfMissing(fileName, extension) {
-                if (this.getFileExtension(fileName) !== null) {
-                    return fileName;
+                if (part === '..') {
+                    stack.pop();
                 }
+                else {
+                    stack.push(part);
+                }
+            });
 
-                return fileName + '.' + extension;
-            }
-        }, {
-            key: 'resolveRelativeFilePath',
-            value: function resolveRelativeFilePath(base, relative) {
-                var parts = relative.split('/');
-                var stack = base.split('/');
+            return stack.join('/');
+        }
 
-                stack.pop();
-                parts.forEach(function (part) {
-                    if (part === '.') {
-                        return;
-                    }
+        provideLinks(model, token) {}
 
-                    if (part === '..') {
-                        stack.pop();
-                    } else {
-                        stack.push(part);
-                    }
-                });
-
-                return stack.join('/');
-            }
-        }, {
-            key: 'provideLinks',
-            value: function provideLinks(model, token) {}
-        }, {
-            key: 'resolveLink',
-            value: function resolveLink(link, token) {}
-        }, {
-            key: 'utils',
-            get: function get() {
-                return this.intellisense.utils;
-            }
-        }]);
-        return ClickHandlerBase;
-    }();
+        resolveLink(link, token) {}
+    }
 
     return ClickHandlerBase;
 });

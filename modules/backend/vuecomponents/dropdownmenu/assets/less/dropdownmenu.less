@@ -5,6 +5,11 @@
     top: auto;
     left: auto;
 
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
     .dropdown-container {
         > ul {
             overflow: visible; // Visible is required for submenus
@@ -245,15 +250,15 @@
                         > a, > button {
                             font-size: @font-size-base + 2;
                             line-height: 50px;
-    
+
                             i {
                                 top: 17px;
-    
+
                                 &.submenu-indicator {
                                     top: 20px;
                                 }
                             }
-    
+
                             &[aria-checked=true] {
                                 &[role="menuitemradio"],
                                 &[role="menuitemcheckbox"] {

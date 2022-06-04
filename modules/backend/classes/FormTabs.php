@@ -5,6 +5,17 @@ use October\Rain\Element\Form\FieldsetDefinition;
 /**
  * FormTabs is a fieldset definition for backend tabs
  *
+ * @method FormTabs section(string $section) section specifies the form section these tabs belong to
+ * @method FormTabs lazy(array $lazy) lazy is the names of tabs to lazy load
+ * @method FormTabs adaptive(array $adaptive) adaptive is the names of tabs that use the entire screen space
+ * @method FormTabs defaultTab(string $defaultTab) defaultTab is default tab label to use when none is specified
+ * @method FormTabs activeTab(string $activeTab) activeTab is the selected tab when the form first loads, name or index.
+ * @method FormTabs icons(array $icons) icons lists of icons for their corresponding tabs
+ * @method FormTabs stretch(bool $stretch) stretch should these tabs stretch to the bottom of the page layout
+ * @method FormTabs cssClass(string $cssClass) cssClass cpecifies a CSS class to attach to the tab container
+ * @method FormTabs paneCssClass(array $paneCssClass) paneCssClass specifies a CSS class to an individual tab pane
+ * @method FormTabs linkable(bool $linkable) linkable means tab gets url fragment to be linkable
+ *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
  */
@@ -14,119 +25,39 @@ class FormTabs extends FieldsetDefinition
     const SECTION_PRIMARY = 'primary';
     const SECTION_SECONDARY = 'secondary';
 
-    //
-    // Configurable properties
-    //
-
     /**
-     * @var string section specifies the form section these tabs belong to
+     * initDefaultValues for this scope
      */
-    public $section = 'outside';
-
-    /**
-     * @var array lazy is the names of tabs to lazy load
-     */
-    public $lazy = [];
-
-    /**
-     * @var array adaptive is the names of tabs that use the entire screen space
-     */
-    public $adaptive = [];
-
-    /**
-     * @var string defaultTab is default tab label to use when none is specified
-     */
-    public $defaultTab = 'backend::lang.form.undefined_tab';
-
-    /**
-     * @var string activeTab is the selected tab when the form first loads, name or index.
-     */
-    public $activeTab;
-
-    /**
-     * @var array icons lists of icons for their corresponding tabs
-     */
-    public $icons = [];
-
-    /**
-     * @var bool stretch should these tabs stretch to the bottom of the page layout
-     */
-    public $stretch;
-
-    /**
-     * @var string cssClass cpecifies a CSS class to attach to the tab container
-     */
-    public $cssClass;
-
-    /**
-     * @var array paneCssClass specifies a CSS class to an individual tab pane
-     */
-    public $paneCssClass;
-
-    /**
-     * @var bool linkable means tab gets url fragment to be linkable
-     */
-    public $linkable = true;
-
-    /**
-     * __construct specifies a tabs rendering section. Supported sections are:
-     * - outside - stores a section of "tabless" fields.
-     * - primary - tabs section for primary fields.
-     * - secondary - tabs section for secondary fields.
-     * @param string $section Specifies a section as described above.
-     * @param array $config A list of render mode specific config.
-     */
-    public function __construct($section, $config = [])
+    protected function initDefaultValues()
     {
-        $this->section = strtolower($section) ?: $this->section;
+        parent::initDefaultValues();
 
-        if ($config && is_array($config)) {
-            $this->useConfig($config);
-        }
+        $this
+            ->section(self::SECTION_OUTSIDE)
+            ->defaultTab('backend::lang.form.undefined_tab')
+            ->linkable()
+            ->icons([])
+            ->lazy([])
+            ->adaptive([])
+        ;
+    }
 
-        if ($this->section === self::SECTION_OUTSIDE) {
-            $this->suppressTabs = true;
+    /**
+     * evalConfig
+     */
+    public function evalConfig(array $config)
+    {
+        if (isset($config['section']) && $config['section'] === self::SECTION_OUTSIDE) {
+            $this->suppressTabs();
         }
     }
 
     /**
-     * evalConfig process options and apply them to this object
+     * newInSection constructs a set of tabs within a section.
      */
-    protected function evalConfig(array $config): void
+    public static function newInSection($section, $config = []): FormTabs
     {
-        parent::evalConfig($config);
-
-        if (array_key_exists('activeTab', $config)) {
-            $this->activeTab = $config['activeTab'];
-        }
-
-        if (array_key_exists('icons', $config)) {
-            $this->icons = $config['icons'];
-        }
-
-        if (array_key_exists('stretch', $config)) {
-            $this->stretch = $config['stretch'];
-        }
-
-        if (array_key_exists('cssClass', $config)) {
-            $this->cssClass = $config['cssClass'];
-        }
-
-        if (array_key_exists('paneCssClass', $config)) {
-            $this->paneCssClass = $config['paneCssClass'];
-        }
-
-        if (array_key_exists('lazy', $config)) {
-            $this->lazy = $config['lazy'];
-        }
-
-        if (array_key_exists('adaptive', $config)) {
-            $this->adaptive = $config['adaptive'];
-        }
-
-        if (array_key_exists('linkable', $config)) {
-            $this->linkable = (bool) $config['linkable'];
-        }
+        return new static(['section' => $section] + ((array) $config));
     }
 
     /**
@@ -134,7 +65,7 @@ class FormTabs extends FieldsetDefinition
      */
     public function isLazy($tabName): bool
     {
-        return in_array($tabName, $this->lazy);
+        return in_array($tabName, $this->config['lazy']);
     }
 
     /**
@@ -142,7 +73,7 @@ class FormTabs extends FieldsetDefinition
      */
     public function addLazy($tabName)
     {
-        $this->lazy = array_merge((array) $this->lazy, (array) $tabName);
+        $this->config['lazy'] = array_merge((array) $this->config['lazy'], (array) $tabName);
     }
 
     /**
@@ -150,7 +81,7 @@ class FormTabs extends FieldsetDefinition
      */
     public function isAdaptive($tabName): bool
     {
-        return in_array($tabName, $this->adaptive);
+        return in_array($tabName, $this->config['adaptive']);
     }
 
     /**
@@ -158,7 +89,7 @@ class FormTabs extends FieldsetDefinition
      */
     public function addAdaptive($tabName)
     {
-        $this->adaptive = array_merge((array) $this->adaptive, (array) $tabName);
+        $this->config['adaptive'] = array_merge((array) $this->config['adaptive'], (array) $tabName);
     }
 
     /**
@@ -168,8 +99,8 @@ class FormTabs extends FieldsetDefinition
      */
     public function getIcon($name)
     {
-        if (!empty($this->icons[$name])) {
-            return $this->icons[$name];
+        if (!empty($this->config['icons'][$name])) {
+            return $this->config['icons'][$name];
         }
     }
 
@@ -181,19 +112,23 @@ class FormTabs extends FieldsetDefinition
      */
     public function getPaneCssClass($index = null, $label = null)
     {
-        if (is_string($this->paneCssClass)) {
-            return $this->paneCssClass;
+        if (!isset($this->config['paneCssClass'])) {
+            return '';
         }
 
-        if ($index !== null && isset($this->paneCssClass[$index])) {
-            return $this->paneCssClass[$index];
+        if (is_string($this->config['paneCssClass'])) {
+            return $this->config['paneCssClass'];
         }
 
-        if ($label !== null && isset($this->paneCssClass[$label])) {
-            return $this->paneCssClass[$label];
+        if ($index !== null && isset($this->config['paneCssClass'][$index])) {
+            return $this->config['paneCssClass'][$index];
         }
 
-        return $this->paneCssClass['*'] ?? '';
+        if ($label !== null && isset($this->config['paneCssClass'][$label])) {
+            return $this->config['paneCssClass'][$label];
+        }
+
+        return $this->config['paneCssClass']['*'] ?? '';
     }
 
     /**
@@ -201,16 +136,16 @@ class FormTabs extends FieldsetDefinition
      */
     public function setPaneCssClass($tabNameOrIndex, string $cssClass, bool $overwrite = false)
     {
-        if (is_string($this->paneCssClass)) {
-            $this->paneCssClass = ['*' => $this->paneCssClass];
+        if (is_string($this->config['paneCssClass'])) {
+            $this->config['paneCssClass'] = ['*' => $this->config['paneCssClass']];
         }
 
         if ($overwrite) {
-            $this->paneCssClass[$tabNameOrIndex] = $cssClass;
+            $this->config['paneCssClass'][$tabNameOrIndex] = $cssClass;
         }
         else {
-            $currentValue = $this->paneCssClass[$tabNameOrIndex] ?? '';
-            $this->paneCssClass[$tabNameOrIndex] = trim($currentValue . ' ' . $cssClass);
+            $currentValue = $this->config['paneCssClass'][$tabNameOrIndex] ?? '';
+            $this->config['paneCssClass'][$tabNameOrIndex] = trim($currentValue . ' ' . $cssClass);
         }
     }
 

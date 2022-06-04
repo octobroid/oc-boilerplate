@@ -65,6 +65,9 @@ $.oc.module.register('backend.component.toolbar', function () {
         watch: {
             elements: function watchElements() {
                 $(this.$refs.scrollable).dragScroll('fixScrollClasses');
+            },
+            disabled: function watchDisabled() {
+                Vue.nextTick($.oc.octoberTooltips.clear, 1);
             }
         },
         template: '#backend_vuecomponents_document_toolbar'

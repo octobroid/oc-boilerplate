@@ -3,7 +3,7 @@
 use Event;
 
 /**
- * Adds system event related features to any class.
+ * EventEmitter adds system event related features to any class.
  *
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
@@ -14,7 +14,7 @@ trait EventEmitter
     use \October\Rain\Support\Traits\Emitter;
 
     /**
-     * Fires a combination of local and global events. The first segment is removed
+     * fireSystemEvent fires a combination of local and global events. The first segment is removed
      * from the event name locally and the local object is passed as the first
      * argument to the event globally. Halting is also enabled by default.
      *
@@ -41,9 +41,7 @@ trait EventEmitter
 
         $longArgs = array_merge([$this], $params);
 
-        /*
-         * Local event first
-         */
+        // Local event first
         if ($response = $this->fireEvent($shortEvent, $params, $halt)) {
             if ($halt) {
                 return $response;
@@ -52,9 +50,7 @@ trait EventEmitter
             $result = array_merge($result, $response);
         }
 
-        /*
-         * Global event second
-         */
+        // Global event second
         if ($response = Event::fire($event, $longArgs, $halt)) {
             if ($halt) {
                 return $response;
@@ -67,7 +63,7 @@ trait EventEmitter
     }
 
     /**
-     * Special event function used for extending within view files,
+     * fireViewEvent is a special event function used for extending within view files,
      * allowing HTML to be injected multiple times.
      *
      * For example:

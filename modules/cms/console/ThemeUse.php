@@ -2,8 +2,6 @@
 
 use Cms\Classes\Theme;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 /**
  * ThemeUse switches the active theme to another one, saved to the database.
@@ -16,9 +14,11 @@ class ThemeUse extends Command
     use \Illuminate\Console\ConfirmableTrait;
 
     /**
-     * @var string name of console command
+     * @var string signature of console command
      */
-    protected $name = 'theme:use';
+    protected $signature = 'theme:use
+        {name : The directory name of the theme.}
+        {--F|force : Force the operation to run.}';
 
     /**
      * @var string description of the console command
@@ -49,25 +49,5 @@ class ThemeUse extends Command
         $this->info(sprintf('Switching theme from %s to %s', $from, $newTheme->getId()));
 
         Theme::setActiveTheme($newThemeName);
-    }
-
-    /**
-     * getArguments get the console command arguments
-     */
-    protected function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The directory name of the theme.'],
-        ];
-    }
-
-    /**
-     * getOptions get the console command options
-     */
-    protected function getOptions()
-    {
-        return [
-            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run.'],
-        ];
     }
 }

@@ -10,6 +10,7 @@ use Backend\Classes\WidgetManager;
 use Backend\Models\UserPreference;
 use System\Models\Parameter as SystemParameters;
 use ApplicationException;
+use ForbiddenException;
 
 /**
  * Report Container Widget
@@ -146,8 +147,8 @@ class ReportContainer extends WidgetBase
 
     public function onMakeLayoutDefault()
     {
-        if (!BackendAuth::getUser()->hasAccess('backend.manage_default_dashboard')) {
-            throw new ApplicationException("You do not have permission to do that.");
+        if (!BackendAuth::userHasAccess('dashboard.defaults')) {
+            throw new ForbiddenException;
         }
 
         $widgets = $this->getWidgetsFromUserPreferences();

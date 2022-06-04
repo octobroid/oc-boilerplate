@@ -36,9 +36,6 @@ trait ResponseMaker
     public function setStatusCode($code)
     {
         $this->statusCode = (int) $code;
-
-        // @deprecated
-        return $this;
     }
 
      /**
@@ -59,9 +56,6 @@ trait ResponseMaker
     public function setResponse($response)
     {
         $this->responseOverride = $response;
-
-        // @deprecated
-        return $this;
     }
 
     /**
@@ -79,9 +73,6 @@ trait ResponseMaker
         }
 
         $this->responseHeaderBag->set($key, $values, $replace);
-
-        // @deprecated
-        return $this;
     }
 
     /**
@@ -101,9 +92,6 @@ trait ResponseMaker
         }
 
         $this->responseHeaderBag->setCookie($cookie);
-
-        // @deprecated
-        return $this;
     }
 
     /**

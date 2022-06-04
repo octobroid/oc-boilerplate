@@ -1,306 +1,291 @@
-$.oc.module.register('backend.vuecomponents.richeditordocumentconnector.utils', function () {
+$.oc.module.register('backend.vuecomponents.richeditordocumentconnector.utils', function() {
     'use strict';
 
-    var Utils = function () {
-        function Utils() {
-            babelHelpers.classCallCheck(this, Utils);
+    class Utils {
+        isLastElementSeparator(component) {
+            const elements = component.toolbarContainer;
+            const element = elements[elements.length - 1];
+
+            if (!element) {
+                return false;
+            }
+
+            return element.type === 'separator';
         }
 
-        babelHelpers.createClass(Utils, [{
-            key: 'isLastElementSeparator',
-            value: function isLastElementSeparator(component) {
-                var elements = component.toolbarContainer;
-                var element = elements[elements.length - 1];
-
-                if (!element) {
-                    return false;
-                }
-
-                return element.type === 'separator';
+        mapIconName(component, editorIconName) {
+            if (component.iconMap[editorIconName] === undefined) {
+                return editorIconName;
             }
-        }, {
-            key: 'mapIconName',
-            value: function mapIconName(component, editorIconName) {
-                if (component.iconMap[editorIconName] === undefined) {
-                    return editorIconName;
-                }
 
-                return component.iconMap[editorIconName];
+            return component.iconMap[editorIconName];
+        }
+
+        addSeparator(component) {
+            if (!this.isLastElementSeparator(component)) {
+                component.toolbarContainer.push({ type: 'separator' });
             }
-        }, {
-            key: 'addSeparator',
-            value: function addSeparator(component) {
-                if (!this.isLastElementSeparator(component)) {
-                    component.toolbarContainer.push({ type: 'separator' });
-                }
+        }
+
+        buttonFromButton(component, $button) {
+            const cmd = $button.attr('data-cmd');
+
+            const $wrapper = $button.closest('.fr-btn-wrap');
+            if ($wrapper.length && $button.next('.fr-btn.fr-dropdown')) {
+                // Dropdowns have two buttons,
+                // ignore the first one.
+                return;
             }
-        }, {
-            key: 'buttonFromButton',
-            value: function buttonFromButton(component, $button) {
-                var cmd = $button.attr('data-cmd');
 
-                var $wrapper = $button.closest('.fr-btn-wrap');
-                if ($wrapper.length && $button.next('.fr-btn.fr-dropdown')) {
-                    // Dropdowns have two buttons,
-                    // ignore the first one.
-                    return;
-                }
-
-                var buttonCmd = cmd;
-                var knownButtonConfig = component.buttonConfig[cmd];
-                if (knownButtonConfig && knownButtonConfig.cmd) {
-                    buttonCmd = knownButtonConfig.cmd;
-                }
-
-                var codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
-
-                component.toolbarContainer.push({
-                    type: 'button',
-                    icon: 'octo-icon-' + this.mapIconName(component, cmd),
-                    command: 'richeditor-toolbar-' + buttonCmd,
-                    tooltip: $button.attr('title'),
-                    pressed: $button.hasClass('fr-active') || codeEditing && cmd === 'html',
-                    disabled: $button.hasClass('fr-disabled') || codeEditing && cmd !== 'html'
-                });
+            let buttonCmd = cmd;
+            const knownButtonConfig = component.buttonConfig[cmd];
+            if (knownButtonConfig && knownButtonConfig.cmd) {
+                buttonCmd = knownButtonConfig.cmd;
             }
-        }, {
-            key: 'dropdownFromButton',
-            value: function dropdownFromButton(component, $button, updateDropdownId) {
-                var cmd = $button.attr('data-cmd');
-                var knownButtonConfig = component.buttonConfig[cmd];
 
-                if (knownButtonConfig && knownButtonConfig.convertToButtonGroup) {
-                    return this.buttonGroupFromButton(component, $button);
-                }
+            const codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
 
-                var buttonId = $button.attr('data-oc-button-id');
-                if (!buttonId) {
-                    buttonId = $.oc.domIdManager.generate('oc-richedit-button');
-                    $button.attr('data-oc-button-id', buttonId);
-                }
+            component.toolbarContainer.push({
+                type: 'button',
+                icon: 'octo-icon-' + this.mapIconName(component, cmd),
+                command: 'richeditor-toolbar-' + buttonCmd,
+                tooltip: $button.attr('title'),
+                pressed: $button.hasClass('fr-active') || (codeEditing && cmd === 'html'),
+                disabled: $button.hasClass('fr-disabled') || (codeEditing && cmd !== 'html')
+            });
+        }
 
-                if (updateDropdownId && buttonId !== updateDropdownId) {
-                    return;
-                }
+        dropdownFromButton(component, $button, updateDropdownId) {
+            let cmd = $button.attr('data-cmd');
+            const knownButtonConfig = component.buttonConfig[cmd];
 
-                var $wrapper = $button.closest('.fr-btn-wrap');
-                var isWrapped = $wrapper.length > 0;
+            if (knownButtonConfig && knownButtonConfig.convertToButtonGroup) {
+                return this.buttonGroupFromButton(component, $button);
+            }
 
-                var $items = null;
-                if (!knownButtonConfig || !knownButtonConfig.dropdown) {
-                    $items = $wrapper.find('.fr-dropdown-menu li > a');
-                    if ($items.length === 0) {
-                        $items = $button.next('.fr-dropdown-menu').find('li a');
-                    }
-                }
+            let buttonId = $button.attr('data-oc-button-id');
+            if (!buttonId) {
+                buttonId = $.oc.domIdManager.generate('oc-richedit-button');
+                $button.attr('data-oc-button-id', buttonId);
+            }
 
-                var buttonIconName = '';
-                var buttonTitle = '';
-                var pressed = false;
-                var noPressedState = knownButtonConfig && knownButtonConfig.noPressedState;
+            if (updateDropdownId && buttonId !== updateDropdownId) {
+                return;
+            }
 
-                if (isWrapped) {
-                    var $prevButton = $button.prev('.fr-btn');
-                    buttonIconName = $wrapper.find('.fr-btn i').attr('class');
-                    buttonTitle = $prevButton.find('.fr-sr-only').text();
-                    cmd = $prevButton.attr('data-cmd');
-                    pressed = !noPressedState && $prevButton.hasClass('fr-active');
-                } else {
-                    buttonIconName = $button.find('i').attr('class');
-                    buttonTitle = $button.find('.fr-sr-only').text();
-                    pressed = !noPressedState && $button.hasClass('fr-active');
-                }
+            const $wrapper = $button.closest('.fr-btn-wrap');
+            const isWrapped = $wrapper.length > 0;
 
-                var type = 'button';
-                var dropdownItemType = 'text';
-
-                if (knownButtonConfig && knownButtonConfig.checkboxDropdown) {
-                    dropdownItemType = 'checkbox';
-                }
-
-                if (knownButtonConfig && knownButtonConfig.dropdownOnly || !isWrapped) {
-                    type = 'dropdown';
-                }
-
-                var buttonConfig = {};
-                var emitCommandBeforeMenu = null;
-
-                if (dropdownItemType == 'checkbox') {
-                    emitCommandBeforeMenu = 'richeditor-toolbar-' + cmd + '@oc-dropdown|' + buttonId;
-                }
-
-                if (!updateDropdownId && knownButtonConfig && knownButtonConfig.separatorBefore) {
-                    this.addSeparator(component);
-                }
-
-                if (!updateDropdownId) {
-                    var labelFromSelectedItem = knownButtonConfig && knownButtonConfig.checkedToLabel;
-                    var mappedIcon = this.mapIconName(component, buttonIconName);
-
-                    var codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
-
-                    buttonConfig = {
-                        type: type,
-                        icon: mappedIcon ? 'octo-icon-' + mappedIcon : null,
-                        command: 'richeditor-toolbar-' + cmd,
-                        emitCommandBeforeMenu: emitCommandBeforeMenu,
-                        tooltip: buttonTitle,
-                        pressed: pressed,
-                        menuitems: [],
-                        richeditorButtonId: buttonId,
-                        labelFromSelectedItem: labelFromSelectedItem,
-                        disabled: $button.hasClass('fr-disabled') || codeEditing
-                    };
-                } else {
-                    buttonConfig = component.toolbarContainer.find(function (buttonElement) {
-                        return buttonElement.richeditorButtonId === updateDropdownId;
-                    });
-                    buttonConfig.menuitems = [];
-                }
-
-                var firstItem = null;
-                var checkedFound = false;
-
-                if ($items !== null) {
-                    $items.each(function () {
-                        var $item = $(this);
-                        var cmd = $item.attr('data-cmd');
-                        var param = $item.attr('data-param1');
-                        var menuItem = {
-                            type: dropdownItemType,
-                            command: 'richeditor-toolbar-' + cmd + '@' + param,
-                            label: $item.text(),
-                            checked: $item.attr('aria-selected') === 'true'
-                        };
-
-                        if (knownButtonConfig && knownButtonConfig.applyItemStyle) {
-                            menuItem.style = $item.attr('style');
-                        }
-
-                        checkedFound = checkedFound || menuItem.checked;
-
-                        if (!firstItem) {
-                            firstItem = menuItem;
-                        }
-
-                        buttonConfig.menuitems.push(menuItem);
-                    });
-                }
-
-                if (knownButtonConfig && knownButtonConfig.dropdown) {
-                    knownButtonConfig.dropdown.forEach(function (customDropdownItem) {
-                        buttonConfig.menuitems.push({
-                            type: dropdownItemType,
-                            command: 'richeditor-toolbar-' + customDropdownItem.command,
-                            label: component.trans(customDropdownItem.label)
-                        });
-                    });
-                }
-
-                if (!checkedFound && firstItem) {
-                    firstItem.checked = true;
-                }
-
-                if (!updateDropdownId) {
-                    component.toolbarContainer.push(buttonConfig);
-                    if (knownButtonConfig && knownButtonConfig.separatorAfter) {
-                        this.addSeparator(component);
-                    }
+            let $items = null;
+            if (!knownButtonConfig || !knownButtonConfig.dropdown) {
+                $items = $wrapper.find('.fr-dropdown-menu li > a');
+                if ($items.length === 0) {
+                    $items = $button.next('.fr-dropdown-menu').find('li a');
                 }
             }
-        }, {
-            key: 'buttonGroupFromButton',
-            value: function buttonGroupFromButton(component, $button) {
-                this.addSeparator(component);
-                var $dropdownItems = $button.next('.fr-dropdown-menu').find('li > a');
-                var buttonIconName = $button.find('i').attr('class');
-                var that = this;
 
-                $dropdownItems.each(function () {
-                    var $dropdownButton = $(this);
-                    var cmd = $dropdownButton.attr('data-cmd');
-                    var param = $dropdownButton.attr('data-param1');
+            let buttonIconName = '';
+            let buttonTitle = '';
+            let pressed = false;
+            const noPressedState = knownButtonConfig && knownButtonConfig.noPressedState;
 
-                    var codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
+            if (isWrapped) {
+                const $prevButton = $button.prev('.fr-btn');
+                buttonIconName = $wrapper.find('.fr-btn i').attr('class');
+                buttonTitle = $prevButton.find('.fr-sr-only').text();
+                cmd = $prevButton.attr('data-cmd');
+                pressed = !noPressedState && $prevButton.hasClass('fr-active');
+            }
+            else {
+                buttonIconName = $button.find('i').attr('class');
+                buttonTitle = $button.find('.fr-sr-only').text();
+                pressed = !noPressedState && $button.hasClass('fr-active');
+            }
 
-                    var buttonConfig = {
-                        type: 'button',
-                        icon: 'octo-icon-' + that.mapIconName(component, cmd + '-' + param),
-                        command: 'richeditor-toolbar-' + cmd + '@' + param,
-                        tooltip: $dropdownButton.attr('title'),
-                        buttonGroup: true,
-                        disabled: $button.hasClass('fr-disabled') || codeEditing
-                    };
+            let type = 'button';
+            let dropdownItemType = 'text';
 
-                    if ($dropdownButton.find('i').attr('class') == buttonIconName) {
-                        buttonConfig.pressed = true;
-                    }
+            if (knownButtonConfig && knownButtonConfig.checkboxDropdown) {
+                dropdownItemType = 'checkbox';
+            }
 
-                    component.toolbarContainer.push(buttonConfig);
-                });
+            if ((knownButtonConfig && knownButtonConfig.dropdownOnly) || !isWrapped) {
+                type = 'dropdown';
+            }
 
+            let buttonConfig = {};
+            let emitCommandBeforeMenu = null;
+
+            if (dropdownItemType == 'checkbox') {
+                emitCommandBeforeMenu = 'richeditor-toolbar-' + cmd + '@oc-dropdown|' + buttonId;
+            }
+
+            if (!updateDropdownId && knownButtonConfig && knownButtonConfig.separatorBefore) {
                 this.addSeparator(component);
             }
-        }, {
-            key: 'parseCommandString',
-            value: function parseCommandString(command) {
-                if (!/^richeditor\-toolbar-/.test(command) || !/^[0-9a-z\-\@:\|;,\s]+$/i.test(command)) {
-                    return null;
-                }
 
-                var froalaCommand = command.substring(19);
-                var parameter = '';
-                var cmdParts = froalaCommand.split('@');
-                if (cmdParts.length > 1) {
-                    froalaCommand = cmdParts[0];
-                    parameter = cmdParts[1];
-                }
+            if (!updateDropdownId) {
+                const labelFromSelectedItem = knownButtonConfig && knownButtonConfig.checkedToLabel;
+                const mappedIcon = this.mapIconName(component, buttonIconName);
 
-                var parameterParts = parameter.split('|');
-                var ocParameter = null;
-                if (parameterParts.length > 1) {
-                    parameter = parameterParts[0];
-                    ocParameter = parameterParts[1];
-                }
+                const codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
 
-                var isOctoberCommand = froalaCommand.substring(0, 3) === 'oc-';
-
-                return {
-                    froalaCommand: froalaCommand,
-                    isOctoberCommand: isOctoberCommand,
-                    parameter: parameter,
-                    ocParameter: ocParameter
+                buttonConfig = {
+                    type: type,
+                    icon: mappedIcon ? 'octo-icon-' + mappedIcon : null,
+                    command: 'richeditor-toolbar-' + cmd,
+                    emitCommandBeforeMenu: emitCommandBeforeMenu,
+                    tooltip: buttonTitle,
+                    pressed: pressed,
+                    menuitems: [],
+                    richeditorButtonId: buttonId,
+                    labelFromSelectedItem: labelFromSelectedItem,
+                    disabled: $button.hasClass('fr-disabled') || codeEditing
                 };
             }
-        }, {
-            key: 'hasActiveFroalaPopup',
-            value: function hasActiveFroalaPopup() {
-                return $(document.body).find('.fr-popup.fr-active').length > 0;
+            else {
+                buttonConfig = component.toolbarContainer.find((buttonElement) => {
+                    return buttonElement.richeditorButtonId === updateDropdownId;
+                });
+                buttonConfig.menuitems = [];
             }
-        }, {
-            key: 'makeTicks',
-            value: function makeTicks(component, interval) {
-                var tickCount = Math.ceil(component.size / interval);
-                var result = [];
-                for (var index = 0; index < tickCount; index++) {
-                    result.push({
-                        style: {
-                            left: index * interval + 'px'
-                        }
+
+            let firstItem = null;
+            let checkedFound = false;
+
+            if ($items !== null) {
+                $items.each(function() {
+                    const $item = $(this);
+                    const cmd = $item.attr('data-cmd');
+                    const param = $item.attr('data-param1');
+                    const menuItem = {
+                        type: dropdownItemType,
+                        command: 'richeditor-toolbar-' + cmd + '@' + param,
+                        label: $item.text(),
+                        checked: $item.attr('aria-selected') === 'true'
+                    };
+
+                    if (knownButtonConfig && knownButtonConfig.applyItemStyle) {
+                        menuItem.style = $item.attr('style');
+                    }
+
+                    checkedFound = checkedFound || menuItem.checked;
+
+                    if (!firstItem) {
+                        firstItem = menuItem;
+                    }
+
+                    buttonConfig.menuitems.push(menuItem);
+                });
+            }
+
+            if (knownButtonConfig && knownButtonConfig.dropdown) {
+                knownButtonConfig.dropdown.forEach((customDropdownItem) => {
+                    buttonConfig.menuitems.push({
+                        type: dropdownItemType,
+                        command: 'richeditor-toolbar-' + customDropdownItem.command,
+                        label: component.trans(customDropdownItem.label)
                     });
+                });
+            }
+
+            if (!checkedFound && firstItem) {
+                firstItem.checked = true;
+            }
+
+            if (!updateDropdownId) {
+                component.toolbarContainer.push(buttonConfig);
+                if (knownButtonConfig && knownButtonConfig.separatorAfter) {
+                    this.addSeparator(component);
+                }
+            }
+        }
+
+        buttonGroupFromButton(component, $button) {
+            this.addSeparator(component);
+            const $dropdownItems = $button.next('.fr-dropdown-menu').find('li > a');
+            const buttonIconName = $button.find('i').attr('class');
+            const that = this;
+
+            $dropdownItems.each(function() {
+                const $dropdownButton = $(this);
+                const cmd = $dropdownButton.attr('data-cmd');
+                const param = $dropdownButton.attr('data-param1');
+
+                const codeEditing = component.loadingCodeEditingMode || component.codeEditingMode;
+
+                const buttonConfig = {
+                    type: 'button',
+                    icon: 'octo-icon-' + that.mapIconName(component, cmd + '-' + param),
+                    command: 'richeditor-toolbar-' + cmd + '@' + param,
+                    tooltip: $dropdownButton.attr('title'),
+                    buttonGroup: true,
+                    disabled: $button.hasClass('fr-disabled') || codeEditing
+                };
+
+                if ($dropdownButton.find('i').attr('class') == buttonIconName) {
+                    buttonConfig.pressed = true;
                 }
 
-                return result;
+                component.toolbarContainer.push(buttonConfig);
+            });
+
+            this.addSeparator(component);
+        }
+
+        parseCommandString(command) {
+            if (!/^richeditor\-toolbar-/.test(command) || !/^[0-9a-z\-\@:\|;,\s]+$/i.test(command)) {
+                return null;
             }
-        }, {
-            key: 'updateEditorHtml',
-            value: function updateEditorHtml(component, html) {
-                component.$textarea.froalaEditor('html.set', html);
-                component.$textarea.trigger('froalaEditor.contentChanged.richeditor');
+
+            let froalaCommand = command.substring(19);
+            let parameter = '';
+            const cmdParts = froalaCommand.split('@');
+            if (cmdParts.length > 1) {
+                froalaCommand = cmdParts[0];
+                parameter = cmdParts[1];
             }
-        }]);
-        return Utils;
-    }();
+
+            const parameterParts = parameter.split('|');
+            let ocParameter = null;
+            if (parameterParts.length > 1) {
+                parameter = parameterParts[0];
+                ocParameter = parameterParts[1];
+            }
+
+            const isOctoberCommand = froalaCommand.substring(0, 3) === 'oc-';
+
+            return {
+                froalaCommand,
+                isOctoberCommand,
+                parameter,
+                ocParameter
+            };
+        }
+
+        hasActiveFroalaPopup() {
+            return $(document.body).find('.fr-popup.fr-active').length > 0;
+        }
+
+        makeTicks(component, interval) {
+            const tickCount = Math.ceil(component.size / interval);
+            const result = [];
+            for (var index = 0; index < tickCount; index++) {
+                result.push({
+                    style: {
+                        left: index * interval + 'px'
+                    }
+                });
+            }
+
+            return result;
+        }
+
+        updateEditorHtml(component, html) {
+            component.$textarea.froalaEditor('html.set', html);
+            component.$textarea.trigger('froalaEditor.contentChanged.richeditor');
+        }
+    }
 
     return new Utils();
 });

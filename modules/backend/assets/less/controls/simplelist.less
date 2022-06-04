@@ -19,9 +19,9 @@
 //   <div class="control-simplelist with-checkboxes">
 //       <ul>
 //           <li>
-//               <div class="checkbox custom-checkbox">
-//                   <input id="checkbox-example1" name="checkbox" value="1" type="checkbox">
-//                   <label class="choice" for="checkbox-example1"> Dodge Viper</label>
+//               <div class="form-check">
+//                   <input class="form-check-input" id="checkbox-example1" name="checkbox" value="1" type="checkbox">
+//                   <label class="form-check-label" for="checkbox-example1"> Dodge Viper</label>
 //               </div>
 //           </li>
 //       </ul>
@@ -63,7 +63,6 @@
 //
 
 .control-simplelist {
-    font-size: 13px;
     padding: 20px 20px 2px 20px;
     margin-bottom: @padding-standard;
     border: 1px solid @input-border;
@@ -98,9 +97,8 @@
 
     &.with-checkboxes {
         li {
-            margin-top: -5px;
-
-            div.custom-checkbox {
+            div.custom-checkbox,
+            div.form-check {
                 display: inline-block;
             }
 
@@ -109,7 +107,8 @@
             }
 
             &:last-child {
-                div.custom-checkbox {
+                div.custom-checkbox,
+                div.form-check {
                     margin-bottom: 0;
 
                     label {
@@ -121,40 +120,36 @@
     }
 
     &.is-sortable {
-        li .drag-handle {
-            width: 22px;
-            height: 19px;
-            cursor: move;
-            color: @input-border;
-            margin-left: -5px;
-
-            &:hover {
-                color: darken(@input-border, 10%);
-            }
-
-            &:before {
-                .icon(@bars);
-                font-size: 14px;
-                padding: 0 5px;
-            }
-        }
-
-        li.placeholder {
+        li {
             position: relative;
-            &:before {
-                top: -10px;
-                position: absolute;
-                .triangle(right, 5px, 9px, @color-sortable-caret);
+            padding: 2px 0 2px 24px;
+        }
+
+        li .drag-handle {
+            width: 24px;
+            height: 24px;
+            cursor: move;
+            text-align: center;
+            color: #536061;
+
+            background: white;
+            border-radius: 3px;
+            text-decoration: none;
+
+            position: absolute;
+            top: 1px;
+            left: -6px;
+
+            > i {
+                font-size: 24px;
             }
         }
 
-        li.dragged {
-            position: absolute;
-            opacity: .5;
-            z-index: 2000;
-            color: @color-sortable-active;
-
-            width: auto !important; // Prevent browser scrollbars
+        li.sortable-chosen.sortable-ghost {
+            position: relative;
+            .drag-handle {
+                background: @background-color-focus;
+            }
         }
     }
 
@@ -176,6 +171,7 @@
             .heading {
                 font-size: 14px;
                 font-weight: 500;
+                margin-top: 10px;
             }
 
             .description {}

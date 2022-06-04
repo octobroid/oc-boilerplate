@@ -11,6 +11,7 @@ use Backend\VueComponents\TreeView\SectionList;
 abstract class ExtensionBase
 {
     use \System\Traits\EventEmitter;
+    use \Editor\Traits\FileSystemFunctions;
 
     /**
      * getNamespace returns unique extension namespace, for example 'cms'.
@@ -105,10 +106,18 @@ abstract class ExtensionBase
     /**
      * runCommand handles client-side requests
      */
-    public function runCommand($command)
+    public function runCommand($command, $controller)
     {
         $commandName = 'command_'.$command;
-        return $this->$commandName();
+        return $this->$commandName($controller);
+    }
+
+    /**
+     * getExtensionSortOrder affects the extension position in the Editor Navigator
+     */
+    public function getExtensionSortOrder()
+    {
+        return 10;
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php namespace System\Classes;
 
 use App;
+use System;
 use Markdown;
 use System\Models\MailPartial;
 use System\Models\MailTemplate;
@@ -124,7 +125,7 @@ class MailManager
      * between `addRawContentToMailer` and `addContentToMailer`
      *
      * @param \Illuminate\Mail\Message $message
-     * @param string $template
+     * @param MailTemplate $template
      * @param array $data
      * @param bool $plainOnly Add only plain text content to the message
      * @return void
@@ -142,31 +143,27 @@ class MailManager
         /*
          * Subject
          */
-        $swiftMessage = $message->getSwiftMessage();
+        $sMessage = $message->getSymfonyMessage();
 
-        if (empty($swiftMessage->getSubject())) {
+        if (empty($sMessage->getSubject())) {
             $message->subject($this->parseTwig($template->subject, $data));
         }
 
         $data += [
-            'subject' => $swiftMessage->getSubject()
+            'subject' => $sMessage->getSubject()
         ];
 
+        // HTML contents
         if (!$plainOnly) {
-            /*
-             * HTML contents
-             */
             $html = $this->renderTemplate($template, $data);
 
-            $message->setBody($html, 'text/html');
+            $message->html($html);
         }
 
-        /*
-         * Text contents
-         */
+        // Text contents
         $text = $this->renderTextTemplate($template, $data);
 
-        $message->addPart($text, 'text/plain');
+        $message->text($text);
     }
 
     //
@@ -187,7 +184,7 @@ class MailManager
 
         $html = $this->parseTwig($content, $data);
 
-        $html = Markdown::parseSafe($html);
+        $html = Markdown::parseIndent($html);
 
         return $html;
     }
@@ -252,7 +249,7 @@ class MailManager
 
         $templateText = $template->content_text;
 
-        if (!strlen($template->content_text)) {
+        if (!empty($template->content_text)) {
             $templateText = $template->content_html;
         }
 
@@ -305,36 +302,66 @@ class MailManager
     //
 
     /**
-     * Loads registered mail templates from modules and plugins
+     * loadRegisteredTemplates loads registered mail templates from modules and plugins
      * @return void
      */
     public function loadRegisteredTemplates()
     {
+        // Load external templates
         foreach ($this->callbacks as $callback) {
             $callback($this);
         }
 
-        $plugins = PluginManager::instance()->getPlugins();
-        foreach ($plugins as $pluginId => $pluginObj) {
-            $layouts = $pluginObj->registerMailLayouts();
-            if (is_array($layouts)) {
+        // Load module items
+        foreach (System::listModules() as $module) {
+            if ($provider = App::getProvider($module . '\\ServiceProvider')) {
+                if (is_array($layouts = $provider->registerMailLayouts())) {
+                    $this->registerMailLayouts($layouts);
+                }
+
+                if (is_array($templates = $provider->registerMailTemplates())) {
+                    $this->registerMailTemplates($templates);
+                }
+
+                if (is_array($partials = $provider->registerMailPartials())) {
+                    $this->registerMailPartials($partials);
+                }
+            }
+        }
+
+        // Load plugin widgets
+        foreach (PluginManager::instance()->getPlugins() as $pluginObj) {
+            if (is_array($layouts = $pluginObj->registerMailLayouts())) {
                 $this->registerMailLayouts($layouts);
             }
 
-            $templates = $pluginObj->registerMailTemplates();
-            if (is_array($templates)) {
+            if (is_array($templates = $pluginObj->registerMailTemplates())) {
                 $this->registerMailTemplates($templates);
             }
 
-            $partials = $pluginObj->registerMailPartials();
-            if (is_array($partials)) {
+            if (is_array($partials = $pluginObj->registerMailPartials())) {
+                $this->registerMailPartials($partials);
+            }
+        }
+
+        // Load app widgets
+        if ($app = App::getProvider(\App\Provider::class)) {
+            if (is_array($layouts = $app->registerMailLayouts())) {
+                $this->registerMailLayouts($layouts);
+            }
+
+            if (is_array($templates = $app->registerMailTemplates())) {
+                $this->registerMailTemplates($templates);
+            }
+
+            if (is_array($partials = $app->registerMailPartials())) {
                 $this->registerMailPartials($partials);
             }
         }
     }
 
     /**
-     * Returns a list of the registered templates.
+     * listRegisteredTemplates returns a list of the registered templates.
      * @return array
      */
     public function listRegisteredTemplates()
@@ -347,7 +374,7 @@ class MailManager
     }
 
     /**
-     * Returns a list of the registered partials.
+     * listRegisteredPartials returns a list of the registered partials.
      * @return array
      */
     public function listRegisteredPartials()
@@ -360,7 +387,7 @@ class MailManager
     }
 
     /**
-     * Returns a list of the registered layouts.
+     * listRegisteredLayouts returns a list of the registered layouts.
      * @return array
      */
     public function listRegisteredLayouts()
@@ -373,7 +400,7 @@ class MailManager
     }
 
     /**
-     * Registers a callback function that defines mail templates.
+     * registerCallback registers a callback function that defines mail templates.
      * The callback function should register templates by calling the manager's
      * registerMailTemplates() function. Thi instance is passed to the
      * callback function as an argument. Usage:
@@ -390,7 +417,7 @@ class MailManager
     }
 
     /**
-     * Registers mail views and manageable templates.
+     * registerMailTemplates registers mail views and manageable templates.
      */
     public function registerMailTemplates(array $definitions)
     {
@@ -409,7 +436,7 @@ class MailManager
     }
 
     /**
-     * Registers mail views and manageable layouts.
+     * registerMailPartials registers mail views and manageable layouts.
      */
     public function registerMailPartials(array $definitions)
     {
@@ -421,7 +448,7 @@ class MailManager
     }
 
     /**
-     * Registers mail views and manageable layouts.
+     * registerMailLayouts registers mail views and manageable layouts.
      */
     public function registerMailLayouts(array $definitions)
     {

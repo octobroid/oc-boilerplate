@@ -1,21 +1,22 @@
 <?php namespace Backend\Database\Seeds;
 
 use Seeder;
-use Eloquent;
+use Model;
 
+/**
+ * DatabaseSeeder
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * run the database seeds.
      */
     public function run()
     {
-        Eloquent::unguard();
+        Model::unguard();
 
-        $this->call('Backend\Database\Seeds\SeedSetupAdmin');
+        $this->call(\Backend\Database\Seeds\SeedSetupAdmin::class, true);
 
-        Eloquent::reguard();
+        Model::reguard();
     }
 }

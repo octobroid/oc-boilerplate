@@ -35,7 +35,7 @@ class Engine implements EngineInterface
     {
         $this->loader->addCacheItem($path);
 
-        $template = $this->environment->loadTemplate($path);
+        $template = $this->environment->load($path);
 
         return $template->render($vars);
     }

@@ -1,5 +1,5 @@
 @import "../../../../../backend/assets/less/core/boot.less";
-@import "../../../../../backend/assets/less/controls/backend-toolbar-buttons-mixin.less";
+
 /*
  * General control styling
  */
@@ -27,6 +27,7 @@
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
+        position: relative;
 
         td, th {
             padding: 0;
@@ -339,38 +340,9 @@ ul.table-widget-autocomplete {
 
 .control-table {
     td[data-column-type=checkbox] {
-        div[data-checkbox-element] {
-            width: 16px;
-            height: 16px;
-            border-radius: @border-radius-base;
-            background-color: #FFFFFF;
-            border: 1px solid @color-custom-input-border;
-            margin: 5px 5px 5px 10px;
-            cursor: pointer;
-
-            .user-select(none);
-
-            &:hover {
-                border-color: darken(@color-custom-input-border, 10%);
-                color: darken(@color-custom-input-icon, 10%);
-            }
-
-            &.checked {
-                border-width: 2px;
-
-                &:before {
-                    .icon(@check);
-                    font-size: 10px;
-                    position: relative;
-                    left: 1px;
-                    top: -4px;
-                }
-            }
-
-            &:focus {
-                border-color: @color-focus;
-                outline: none;
-            }
+        input[data-checkbox-element] {
+            font-size: 1rem;
+            margin-left: 10px;
         }
     }
 }
@@ -440,7 +412,7 @@ ul.table-widget-autocomplete {
 html.cssanimations {
     .control-table td[data-column-type=dropdown] {
         [data-view-container].loading:after {
-            background: url('../../../../../../modules/system/assets/ui/images/loader-transparent.svg') 50% 50%;
+            background: url('../../../../../../modules/backend/assets/images/loader-transparent.svg') 50% 50%;
             background-size: 15px 15px;
             position: absolute;
             width: 15px;

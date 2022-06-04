@@ -1,6 +1,5 @@
 <?php namespace RainLab\Pages\FormWidgets;
 
-use Request;
 use Backend\Classes\FormWidgetBase;
 use RainLab\Pages\Classes\MenuItem;
 
@@ -31,7 +30,7 @@ class MenuItems extends FormWidgetBase
     public $urlRequiredMessage = 'rainlab.pages::lang.menuitem.url_required';
 
     public $cmsPageRequiredMessage = 'rainlab.pages::lang.menuitem.cms_page_required';
-    
+
     public $newItemTitle = 'rainlab.pages::lang.menuitem.new_item';
 
     /**
@@ -80,7 +79,7 @@ class MenuItems extends FormWidgetBase
      */
     protected function loadAssets()
     {
-        $this->addJs('js/menu-items-editor.js', 'core');
+        $this->addJs('js/menu-items-editor.js', 'RainLab.Pages');
     }
 
     /**
@@ -98,7 +97,7 @@ class MenuItems extends FormWidgetBase
     /**
      * Returns the item reference description.
      * @param \RainLab\Pages\Classes\MenuItem $item Specifies the menu item
-     * @return string 
+     * @return string
      */
     protected function getReferenceDescription($item)
     {

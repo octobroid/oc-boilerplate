@@ -87,7 +87,7 @@ class MediaFinder extends FormWidgetBase
             $this->previewMode = true;
         }
 
-        if (!BackendAuth::userHasAccess('media.manage_media')) {
+        if (!BackendAuth::userHasAccess('media.library')) {
             $this->previewMode = true;
         }
 

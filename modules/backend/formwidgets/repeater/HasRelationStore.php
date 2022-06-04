@@ -93,6 +93,24 @@ trait HasRelationStore
     }
 
     /**
+     * duplicateRelationAtIndex
+     */
+    protected function duplicateRelationAtIndex(int $fromIndex, int $index, string $groupCode = null)
+    {
+        $model = $this->getModelFromIndex($fromIndex)->replicate();
+
+        if ($this->useGroups) {
+            $this->setGroupCodeOnRelation($model, $groupCode);
+        }
+
+        $model->save();
+
+        $this->getRelationObject()->add($model, $this->sessionKey);
+
+        $this->relatedRecords[$index] = $model;
+    }
+
+    /**
      * deleteRelationAtIndex
      */
     protected function deleteRelationAtIndex(int $index)

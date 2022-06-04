@@ -1,16 +1,24 @@
 <?php namespace Backend\Elements;
 
+use Backend\Classes\UiElement;
+
 /**
  * ContentPlaceholder
+ *
+ * @method ContentPlaceholder stack(array $stack) stack
+ *
+ * @package october\backend
+ * @author Alexey Bobkov, Samuel Georges
  */
-class ContentPlaceholder
+class ContentPlaceholder extends UiElement
 {
-    use \Backend\Traits\ElementRenderer;
-
     /**
-     * @var array
+     * initDefaultValues override method
      */
-    protected $stack;
+    protected function initDefaultValues()
+    {
+        $this->stack([]);
+    }
 
     /**
      * render the element
@@ -52,7 +60,7 @@ class ContentPlaceholder
      */
     public function addHeader(): ContentPlaceholder
     {
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-heading' => [
                 'heading-content' => [
                     'heading-title'
@@ -68,7 +76,7 @@ class ContentPlaceholder
      */
     public function addHeaderImage(): ContentPlaceholder
     {
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-heading' => [
                 'heading-img',
                 'heading-content' => [
@@ -85,7 +93,7 @@ class ContentPlaceholder
      */
     public function addHeaderSubtitle(): ContentPlaceholder
     {
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-heading' => [
                 'heading-content' => [
                     'heading-title',
@@ -102,7 +110,7 @@ class ContentPlaceholder
      */
     public function addHeaderSubtitleImage(): ContentPlaceholder
     {
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-heading' => [
                 'heading-img',
                 'heading-content' => [
@@ -120,7 +128,7 @@ class ContentPlaceholder
      */
     public function addImage(): ContentPlaceholder
     {
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-img'
         ];
 
@@ -137,7 +145,7 @@ class ContentPlaceholder
             $lineDivs[] = 'text-line';
         }
 
-        $this->stack[] = [
+        $this->config['stack'][] = [
             'placeholder-text' => $lineDivs
         ];
 

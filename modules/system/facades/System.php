@@ -20,7 +20,7 @@ class System extends Facade
     /**
      * @var string VERSION for October CMS, including major and minor.
      */
-    const VERSION = '2.2';
+    const VERSION = '3.0';
 
     /**
      * getFacadeAccessor gets the registered name of the component.

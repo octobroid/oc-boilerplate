@@ -51,7 +51,7 @@ trait FieldProcessor
         foreach ($fields as $fieldName => $field) {
             if (
                 $field->permissions &&
-                !BackendAuth::getUser()->hasAccess($field->permissions, false)
+                !BackendAuth::userHasAccess($field->permissions, false)
             ) {
                 $this->removeField($fieldName);
             }
@@ -77,9 +77,7 @@ trait FieldProcessor
 
             $field->useConfig($newConfig)->displayAs('widget');
 
-            /*
-             * Create form widget instance and bind to controller
-             */
+            // Create form widget instance and bind to controller
             $this->makeFormFieldWidget($field)->bindToController();
         }
     }
@@ -112,14 +110,12 @@ trait FieldProcessor
             }
 
             // Specified explicitly on the object already
-            if ($field->hasOptions() && is_array($field->options)) {
+            if ($field->hasOptions()) {
                 continue;
             }
 
-            // Look at config value in case it was missed
-            $fieldOptions = $field->options ?: ($field->config['options'] ?? null);
-
             // Defer the execution of option data collection
+            $fieldOptions = $field->options;
             $field->options(function () use ($field, $fieldOptions) {
                 return $field->getOptionsFromModel($this->model, $fieldOptions, $this->data);
             });

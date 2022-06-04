@@ -4,92 +4,97 @@
 
 fields:
     step1_section:
-        label: backend::lang.import_export.upload_csv_file
+        label: "1. Upload an Import File"
         type: section
 
-    import_file:
-        label: backend::lang.import_export.import_file
-        type: fileupload
-        mode: file
-        span: left
-        fileTypes: csv
-        useCaption: false
-
-    format_preset:
-        label: backend::lang.import_export.file_format
+    file_format:
+        label: File Format
         type: dropdown
         default: standard
         options:
-            standard: backend::lang.import_export.standard_format
-            custom: backend::lang.import_export.custom_format
+            json: JSON
+            csv: CSV
+            csv_custom: CSV Custom
         span: right
 
+    import_file:
+        label: Import File
+        type: fileupload
+        mode: file
+        span: left
+        fileTypes: [csv, json]
+        useCaption: false
+
     format_delimiter:
-        label: backend::lang.import_export.delimiter_char
+        label: Delimiter Character
         default: ','
         span: left
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     format_enclosure:
-        label: backend::lang.import_export.enclosure_char
+        label: Enclosure Character
         span: auto
         default: '"'
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     format_escape:
-        label: backend::lang.import_export.escape_char
+        label: Escape Character
         span: auto
         default: '\'
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     format_encoding:
-        label: backend::lang.import_export.encoding_format
+        label: File Encoding
         span: auto
         default: UTF-8
         type: dropdown
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     first_row_titles:
-        label: backend::lang.import_export.first_row_contains_titles
-        comment: backend::lang.import_export.first_row_contains_titles_desc
+        label: First row contains column titles
+        comment: Leave this checked if the first row in the CSV is used as the column titles.
         type: checkbox
         default: true
         span: left
+        trigger:
+            action: show
+            condition: value[csv][csv_custom]
+            field: file_format
 
     step2_section:
-        label: backend::lang.import_export.match_columns
+        label: "2. Match the file columns to database fields"
         type: section
 
     column_control_panel:
         type: partial
-        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_toolbar.htm
+        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_toolbar.php
 
     import_file_columns:
-        label: backend::lang.import_export.file_columns
+        label: File columns
         type: partial
-        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_file_columns.htm
-        dependsOn: [import_file, first_row_titles, format_delimiter, format_enclosure, format_escape, format_encoding]
+        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_file_columns.php
+        dependsOn: [import_file, file_format, first_row_titles, format_delimiter, format_enclosure, format_escape, format_encoding]
         span: left
 
     import_db_columns:
-        label: backend::lang.import_export.database_fields
+        label: Database fields
         type: partial
-        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_db_columns.htm
-        dependsOn: [import_file, first_row_titles, format_delimiter, format_enclosure, format_escape, format_encoding]
+        path: ~/modules/backend/behaviors/importexportcontroller/partials/_import_db_columns.php
+        dependsOn: [import_file, file_format, first_row_titles, format_delimiter, format_enclosure, format_escape, format_encoding]
         span: right
 
     step3_section:
-        label: backend::lang.import_export.set_import_options
+        label: "3. Set import options"
         type: section

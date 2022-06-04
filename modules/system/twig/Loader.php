@@ -45,7 +45,7 @@ class Loader implements TwigLoaderInterface
      * Returns the Twig content string.
      * This step is cached internally by Twig.
      */
-    public function getSourceContext($name)
+    public function getSourceContext(string $name): TwigSource
     {
         return new TwigSource(File::get($this->findTemplate($name)), $name);
     }
@@ -53,7 +53,7 @@ class Loader implements TwigLoaderInterface
     /**
      * Returns the Twig cache key.
      */
-    public function getCacheKey($name)
+    public function getCacheKey(string $name): string
     {
         return $this->findTemplate($name);
     }
@@ -61,7 +61,7 @@ class Loader implements TwigLoaderInterface
     /**
      * Determines if the content is fresh.
      */
-    public function isFresh($name, $time)
+    public function isFresh(string $name, int $time): bool
     {
         return File::lastModified($this->findTemplate($name)) <= $time;
     }
@@ -77,7 +77,7 @@ class Loader implements TwigLoaderInterface
     /**
      * Checks that the template exists.
      */
-    public function exists($name)
+    public function exists(string $name)
     {
         try {
             $this->findTemplate($name);

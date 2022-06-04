@@ -33,12 +33,9 @@ class OctoberMigrate extends Command
             return $this->handleRollback();
         }
 
-        $this->output->writeln('<info>Migrating application and plugins...</info>');
+        $this->line('Migrating Application and Plugins');
 
-        UpdateManager::instance()
-            ->setNotesOutput($this->output)
-            ->update()
-        ;
+        UpdateManager::instance()->setNotesCommand($this)->update();
     }
 
     /**
@@ -50,10 +47,7 @@ class OctoberMigrate extends Command
             return;
         }
 
-        UpdateManager::instance()
-            ->setNotesOutput($this->output)
-            ->uninstall()
-        ;
+        UpdateManager::instance()->setNotesCommand($this)->uninstall();
     }
 
     /**

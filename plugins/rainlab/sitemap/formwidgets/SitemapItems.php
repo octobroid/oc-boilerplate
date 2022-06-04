@@ -1,6 +1,5 @@
 <?php namespace RainLab\Sitemap\FormWidgets;
 
-use Request;
 use RainLab\Sitemap\Classes\DefinitionItem as SitemapItem;
 use Backend\Classes\FormWidgetBase;
 
@@ -50,6 +49,7 @@ class SitemapItems extends FormWidgetBase
     {
         $sitemapItem = new SitemapItem;
 
+        $this->vars['name'] = $this->getFieldName();
         $this->vars['itemProperties'] = json_encode($sitemapItem->fillable);
         $this->vars['items'] = $this->model->items;
 
@@ -61,7 +61,7 @@ class SitemapItems extends FormWidgetBase
 
         $this->vars['emptyItem'] = $emptyItem;
 
-        $widgetConfig = $this->makeConfig('~/plugins/rainlab/sitemap/classes/definitionitem/fields.yaml');
+        $widgetConfig = $this->makeConfig('$/rainlab/sitemap/classes/definitionitem/fields.yaml');
         $widgetConfig->model = $sitemapItem;
         $widgetConfig->alias = $this->alias.'SitemapItem';
 
@@ -91,7 +91,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * Returns the item reference description.
      * @param \RainLab\Pages\Classes\SitemapItem $item Specifies the sitemap item
-     * @return string 
+     * @return string
      */
     protected function getReferenceDescription($item)
     {
@@ -103,7 +103,7 @@ class SitemapItems extends FormWidgetBase
             $this->typeInfoCache[$item->type] = SitemapItem::getTypeInfo($item->type);
         }
 
-        if (isset($this->typeInfoCache[$item->type])) {
+        if (isset($this->typeListCache[$item->type])) {
             $result = trans($this->typeListCache[$item->type]);
 
             if ($item->type !== 'url') {
@@ -124,7 +124,7 @@ class SitemapItems extends FormWidgetBase
 
     protected function findReferenceName($search, $typeOptionList)
     {
-        $iterator = function($optionList, $path) use ($search, &$iterator)
+        $iterator = function ($optionList, $path) use ($search, &$iterator)
         {
             foreach ($optionList as $reference => $info) {
                 if ($reference == $search) {

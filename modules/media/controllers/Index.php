@@ -15,7 +15,7 @@ class Index extends Controller
     /**
      * @var array requiredPermissions to view this page.
      */
-    public $requiredPermissions = ['media.*'];
+    public $requiredPermissions = ['media.library'];
 
     /**
      * __construct

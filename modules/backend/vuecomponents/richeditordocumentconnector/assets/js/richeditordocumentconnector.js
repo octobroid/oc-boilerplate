@@ -1,6 +1,6 @@
 $.oc.module.register('backend.component.richeditor.document.connector', function () {
-    var utils = $.oc.module.import('backend.vuecomponents.richeditordocumentconnector.utils');
-    var octoberCommands = $.oc.module.import('backend.vuecomponents.richeditordocumentconnector.octobercommands');
+    const utils = $.oc.module.import('backend.vuecomponents.richeditordocumentconnector.utils');
+    const octoberCommands = $.oc.module.import('backend.vuecomponents.richeditordocumentconnector.octobercommands');
 
     Vue.component('backend-component-richeditor-document-connector', {
         props: {
@@ -27,25 +27,33 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
             },
             externalToolbarEventBus: String
         },
-        data: function data() {
-            var imageDropdownItems = [{
-                command: 'oc-upload-image',
-                label: 'command_upload_from_computer'
-            }];
-            var fileDropdownItems = [{
-                command: 'oc-upload-file',
-                label: 'command_upload_from_computer'
-            }];
+        data: function() {
+            const imageDropdownItems = [
+                {
+                    command: 'oc-upload-image',
+                    label: 'command_upload_from_computer'
+                }
+            ];
+            const fileDropdownItems = [
+                {
+                    command: 'oc-upload-file',
+                    label: 'command_upload_from_computer'
+                }
+            ];
 
-            var videoDropdownOptions = [{
-                command: 'oc-embed-video',
-                label: 'embedding_code'
-            }];
+            const videoDropdownOptions = [
+                {
+                    command: 'oc-embed-video',
+                    label: 'embedding_code'
+                }
+            ];
 
-            var audioDropdownOptions = [{
-                command: 'oc-embed-audio',
-                label: 'embedding_code'
-            }];
+            const audioDropdownOptions = [
+                {
+                    command: 'oc-embed-audio',
+                    label: 'embedding_code'
+                }
+            ];
 
             if (this.useMediaManager) {
                 imageDropdownItems.push({
@@ -214,7 +222,8 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
 
                 if (this.allowResizing) {
                     result += ' resizing-ui';
-                } else {
+                }
+                else {
                     result += ' no-resizing-ui';
                 }
 
@@ -236,7 +245,7 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
             },
 
             rulerStyle: function computeRulerStyle() {
-                var result = {
+                const result = {
                     width: this.size + 'px'
                 };
 
@@ -255,12 +264,12 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                 }
 
                 // Expected format: tailor.app::eventBus
-                var parts = this.externalToolbarEventBus.split('::');
+                const parts = this.externalToolbarEventBus.split('::');
                 if (parts.length !== 2) {
                     throw new Error('Invalid externalToolbarEventBus format. Expected format: module.name::stateElementName');
                 }
-
-                var module = $.oc.module.import(parts[0]);
+    
+                const module = $.oc.module.import(parts[0]);
                 return module.state[parts[1]];
             },
 
@@ -273,7 +282,7 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                 if (!this.$buttons) {
                     this.$buttons = $(this.$el).find('.fr-toolbar .fr-btn, .fr-toolbar .fr-separator');
                 }
-                var that = this;
+                const that = this;
 
                 if (!dropdownId) {
                     this.toolbarContainer.splice(0, this.toolbarContainer.length);
@@ -289,8 +298,8 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                     this.openDropdown('paragraphFormat');
                 }
 
-                this.$buttons.each(function () {
-                    var $button = $(this);
+                this.$buttons.each(function() {
+                    const $button = $(this);
 
                     if (!dropdownId && $button.hasClass('fr-separator')) {
                         utils.addSeparator(that);
@@ -301,16 +310,17 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                         return;
                     }
 
-                    var cmd = $button.attr('data-cmd');
+                    const cmd = $button.attr('data-cmd');
                     if (that.buttonConfig[cmd] && that.buttonConfig[cmd].ignore) {
                         return;
                     }
 
-                    var hasCustomDropdown = that.buttonConfig[cmd] && that.buttonConfig[cmd].dropdown;
+                    const hasCustomDropdown = that.buttonConfig[cmd] && that.buttonConfig[cmd].dropdown;
 
                     if (!$button.hasClass('fr-dropdown') && !hasCustomDropdown) {
                         utils.buttonFromButton(that, $button);
-                    } else {
+                    }
+                    else {
                         utils.dropdownFromButton(that, $button, dropdownId);
                     }
                 });
@@ -373,27 +383,32 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
 
             initListeners: function initListeners() {
                 this.$textarea = $(this.$el).find('.editor-element');
-                this.$textarea.on(['froalaEditor.click.connector', 'froalaEditor.input.connector', 'froalaEditor.keyup.connector'].join(' '), this.onEditorContextChanged);
+                this.$textarea.on(
+                    [
+                        'froalaEditor.click.connector',
+                        'froalaEditor.input.connector',
+                        'froalaEditor.keyup.connector'
+                    ].join(' '),
+                    this.onEditorContextChanged
+                );
             },
 
             openDropdown: function openDropdown(cmd) {
-                var $button = $(this.$el).find('.fr-toolbar button[data-cmd="' + cmd + '"]');
+                const $button = $(this.$el).find('.fr-toolbar button[data-cmd="' + cmd + '"]');
                 this.triggerEditorButtonClick($button);
             },
 
             triggerEditorButtonClick: function triggerEditorCommandClick($button) {
-                var ev1 = jQuery.Event('mouseup');
+                const ev1 = jQuery.Event('mouseup');
                 ev1.which = 1;
                 $button.addClass('fr-selected').trigger(ev1).removeClass('fr-selected');
             },
 
             toggleCodeEditing: function toggleCodeEditing() {
-                var _this = this;
-
-                var EditorModelDefinition = $.oc.module.import('backend.vuecomponents.monacoeditor.modeldefinition');
+                const EditorModelDefinition = $.oc.module.import('backend.vuecomponents.monacoeditor.modeldefinition');
 
                 if (!this.codeEditingMode) {
-                    var basePath = this.configuration.vendorPath;
+                    const basePath = this.configuration.vendorPath;
                     this.loadingCodeEditingMode = true;
 
                     require.config({
@@ -405,15 +420,22 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
 
                     // require is provided by the Monaco editor loader
                     //
-                    require(['beautify', 'beautifyHtml'], function (js, html) {
-                        _this.htmlCode = html.html_beautify(_this.$textarea.froalaEditor('html.get'));
-                        var defMarkup = new EditorModelDefinition('html', 'HTML', {}, 'htmlCode', 'backend-icon-background monaco-document html');
-                        defMarkup.setHolderObject(_this);
-                        _this.codeEditorModelDefinitions = [defMarkup];
+                    require(['beautify', 'beautifyHtml'], (js, html) => {
+                        this.htmlCode = html.html_beautify(this.$textarea.froalaEditor('html.get'));
+                        const defMarkup = new EditorModelDefinition(
+                            'html',
+                            'HTML',
+                            {},
+                            'htmlCode',
+                            'backend-icon-background monaco-document html'
+                        );
+                        defMarkup.setHolderObject(this);
+                        this.codeEditorModelDefinitions = [defMarkup];
 
-                        _this.codeEditingMode = true;
+                        this.codeEditingMode = true;
                     });
-                } else {
+                }
+                else {
                     this.codeEditingMode = false;
                     this.loadingCodeEditingMode = false;
                     utils.updateEditorHtml(this, this.htmlCode);
@@ -431,19 +453,19 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
             },
 
             alignEditorToolbars: function alignEditorToolbars($button) {
-                var $popup = $(this.$el).find('.fr-toolbar .fr-popup.fr-desktop.fr-active');
+                const $popup = $(this.$el).find('.fr-toolbar .fr-popup.fr-desktop.fr-active');
                 if (!$popup.length) {
                     return;
                 }
 
                 $popup.css('visibility', 'hidden');
-                var buttonPosition = $button.position();
+                const buttonPosition = $button.position();
 
                 $popup.css('left', buttonPosition.left + 'px');
-                var popupOffset = $popup.offset();
-                var popupRight = popupOffset.left + $popup.width();
-                var documentWidth = $(document).width();
-                var correction = popupRight - documentWidth;
+                const popupOffset = $popup.offset();
+                const popupRight = popupOffset.left + $popup.width();
+                const documentWidth = $(document).width();
+                const correction = popupRight - documentWidth;
                 if (correction > 0) {
                     $popup.css('left', buttonPosition.left - correction - 15 + 'px');
                 }
@@ -479,7 +501,8 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
 
                 if (delta <= 0) {
                     this.size = Math.max(this.size + delta, this.minSize);
-                } else {
+                }
+                else {
                     this.size = Math.min(this.size + delta, this.containerSize);
                 }
             },
@@ -496,14 +519,14 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                 this.updateUi();
             },
 
-            onToolbarExternalCommand: function onToolbarExternalCommand(command) {
+            onToolbarExternalCommand: function (command) {
                 if ($(this.$el).is(":visible")) {
                     this.onToolbarCommand(command);
                 }
             },
 
-            onToolbarCommand: function onToolbarCommand(commandData) {
-                var command = utils.parseCommandString(commandData.command);
+            onToolbarCommand: function(commandData) {
+                const command = utils.parseCommandString(commandData.command);
                 if (command === null) {
                     return;
                 }
@@ -512,7 +535,7 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
                     this.onOctoberCommand(command);
                 }
 
-                var $button = $(this.$el).find('.fr-toolbar [data-cmd="' + command.froalaCommand + '"]');
+                let $button = $(this.$el).find('.fr-toolbar [data-cmd="' + command.froalaCommand + '"]');
 
                 if (command.parameter && command.parameter.substring(0, 11) !== 'oc-dropdown') {
                     $button = $button.filter('[data-param1="' + command.parameter + '"]');
@@ -537,28 +560,27 @@ $.oc.module.register('backend.component.richeditor.document.connector', function
             }
         },
         mounted: function onMounted() {
-            var _this2 = this;
-
-            Vue.nextTick(function () {
+            Vue.nextTick(() => {
                 // Richeditor Vue component initializes Froala in the next tick
                 // after mount()
                 // 
-                var size = parseInt(localStorage.getItem(_this2.storageKey + '-size'));
+                var size = parseInt(localStorage.getItem(this.storageKey + '-size'));
 
                 if (size) {
-                    _this2.size = size;
+                    this.size = size;
                 }
 
-                if (!_this2.hasExternalToolbar) {
-                    _this2.extendToolbar();
-                } else {
-                    _this2.extendExternalToolbar();
+                if (!this.hasExternalToolbar) {
+                    this.extendToolbar();
+                }
+                else {
+                    this.extendExternalToolbar();
                 }
 
-                _this2.mountEventBus();
-                _this2.initListeners();
-                _this2.$on('toolbarcmd', _this2.onToolbarCommand);
-                _this2.updateSize();
+                this.mountEventBus();
+                this.initListeners();
+                this.$on('toolbarcmd', this.onToolbarCommand);
+                this.updateSize();
             });
         },
         beforeDestroy: function beforeDestroy() {

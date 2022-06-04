@@ -343,6 +343,7 @@ class FileUpload extends FormWidgetBase
     public function onSortAttachments()
     {
         if ($sortData = post('sortOrder')) {
+            asort($sortData);
             $ids = array_keys($sortData);
             $orders = array_values($sortData);
 

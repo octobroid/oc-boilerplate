@@ -43,9 +43,9 @@ class ActiveTheme extends ReportWidgetBase
     {
         return [
             'title' => [
-                'title'             => 'backend::lang.dashboard.widget_title_label',
-                'default'           => 'cms::lang.dashboard.active_theme.widget_title_default',
-                'type'              => 'string',
+                'title' => 'backend::lang.dashboard.widget_title_label',
+                'default' => 'cms::lang.dashboard.active_theme.widget_title_default',
+                'type' => 'string',
                 'validationPattern' => '^.+$',
                 'validationMessage' => 'backend::lang.dashboard.widget_title_error',
             ]
@@ -71,7 +71,7 @@ class ActiveTheme extends ReportWidgetBase
 
         $this->vars['theme'] = $theme;
         $this->vars['inMaintenance'] = MaintenanceSetting::get('is_enabled');
-        $this->vars['canManage'] = BackendAuth::getUser()->hasAccess('cms.manage_themes');
-        $this->vars['canConfig'] = BackendAuth::getUser()->hasAccess('cms.manage_theme_options');
+        $this->vars['canManage'] = BackendAuth::userHasAccess('cms.themes');
+        $this->vars['canConfig'] = BackendAuth::userHasAccess('cms.theme_customize');
     }
 }

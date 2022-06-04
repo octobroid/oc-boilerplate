@@ -23,6 +23,9 @@
   padding: 5px;
   overflow: auto;
 }
+.import-db-columns > ul {
+    min-height: 380px;
+}
 .import-behavior .import-file-columns .upload-prompt {
   display: block;
   text-align: center;

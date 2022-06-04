@@ -1,4 +1,4 @@
-$.oc.module.register('backend.vuecomponents.uploader.queue', function () {
+$.oc.module.register('backend.vuecomponents.uploader.queue', function() {
     'use strict';
 
     function uploadAjaxRequest(handler, requestData, onProgress, cancelHolder) {
@@ -6,9 +6,10 @@ $.oc.module.register('backend.vuecomponents.uploader.queue', function () {
             throw new Error('Invalid handler name. The correct handler name format is: "onEvent".');
         }
 
-        return new Promise(function (resolve, reject, onCancel) {
+        return new Promise(function(resolve, reject, onCancel) {
             if (!onCancel) {
-                var err = 'The Uploader promises must be cancellable. Make sure you use BlueBird promises with the `cancellation` option ON.';
+                const err =
+                    'The Uploader promises must be cancellable. Make sure you use BlueBird promises with the `cancellation` option ON.';
                 console.error(err);
                 throw new Error(err);
             }
@@ -18,10 +19,10 @@ $.oc.module.register('backend.vuecomponents.uploader.queue', function () {
                 return resolve();
             }
 
-            var xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.open('POST', window.location.href);
 
-            var token = getToken();
+            const token = getToken();
             if (token) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', token);
             }
@@ -31,26 +32,35 @@ $.oc.module.register('backend.vuecomponents.uploader.queue', function () {
                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             }
 
-            xhr.upload.addEventListener('progress', function (e) {
-                if (e.lengthComputable) {
-                    onProgress(Math.round(e.loaded * 100 / e.total));
-                }
-            }, false);
+            xhr.upload.addEventListener(
+                'progress',
+                (e) => {
+                    if (e.lengthComputable) {
+                        onProgress(Math.round(e.loaded * 100 / e.total));
+                    }
+                },
+                false
+            );
 
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     onProgress(100);
                     resolve(xhr.response);
-                } else {
+                }
+                else {
                     reject(xhr.response);
                 }
             };
 
-            xhr.upload.addEventListener('error', function (e) {
-                reject(e);
-            }, false);
+            xhr.upload.addEventListener(
+                'error',
+                (e) => {
+                    reject(e);
+                },
+                false
+            );
 
-            onCancel(function () {
+            onCancel(function() {
                 xhr.abort();
             });
 
@@ -62,42 +72,38 @@ $.oc.module.register('backend.vuecomponents.uploader.queue', function () {
         return $('meta[name="csrf-token"]').attr('content');
     }
 
-    var UploaderQueue = function () {
-        function UploaderQueue() {
-            babelHelpers.classCallCheck(this, UploaderQueue);
+    class UploaderQueue {
+        queue;
 
-            var maxConcurrent = 5;
+        constructor() {
+            const maxConcurrent = 5;
             this.queue = new Queue(maxConcurrent, 10000);
         }
 
-        babelHelpers.createClass(UploaderQueue, [{
-            key: 'add',
-            value: function add(handlerName, formFieldName, fileData, fileName, onProgress, cancelHolder, extraData) {
-                var data = new FormData();
-                data.append(formFieldName, fileData, fileName);
+        add(handlerName, formFieldName, fileData, fileName, onProgress, cancelHolder, extraData) {
+            const data = new FormData();
+            data.append(formFieldName, fileData, fileName);
 
-                if ((typeof extraData === 'undefined' ? 'undefined' : babelHelpers.typeof(extraData)) === 'object') {
-                    Object.keys(extraData).forEach(function (key) {
-                        data.append(key, extraData[key]);
-                    });
-                }
-
-                if (handlerName === 'mediamanager') {
-                    data.append('X_OCTOBER_MEDIA_MANAGER_QUICK_UPLOAD', 1);
-
-                    var token = getToken();
-                    if (token) {
-                        data.append('_token', token);
-                    }
-                }
-
-                return this.queue.add(function () {
-                    return uploadAjaxRequest(handlerName, data, onProgress, cancelHolder);
+            if (typeof extraData === 'object') {
+                Object.keys(extraData).forEach((key) => {
+                    data.append(key, extraData[key]);
                 });
             }
-        }]);
-        return UploaderQueue;
-    }();
+
+            if (handlerName === 'mediamanager') {
+                data.append('X_OCTOBER_MEDIA_MANAGER_QUICK_UPLOAD', 1);
+
+                const token = getToken();
+                if (token) {
+                    data.append('_token', token);
+                }
+            }
+
+            return this.queue.add(function() {
+                return uploadAjaxRequest(handlerName, data, onProgress, cancelHolder);
+            });
+        }
+    }
 
     return UploaderQueue;
 });

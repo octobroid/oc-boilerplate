@@ -128,7 +128,7 @@ tabs:
             label: backend::lang.editor.toolbar_buttons_preset
             tab: backend::lang.editor.toolbar_buttons
             type: partial
-            path: ~/modules/backend/models/editorsetting/_toolbar_presets.htm
+            path: ~/modules/backend/models/editorsetting/_toolbar_presets.php
             span: right
 
         html_allow_attrs:

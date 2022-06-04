@@ -1,29 +1,32 @@
 <?= Form::open() ?>
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="popup">&times;</button>
         <h4 class="modal-title"><?= e(trans('backend::lang.list.setup_title')) ?></h4>
+        <button type="button" class="btn-close" data-dismiss="popup"></button>
     </div>
     <div class="modal-body">
-        <p class="help-block before-field"><?= e(trans('backend::lang.list.setup_help')) ?></p>
+        <p class="form-text before-field"><?= e(trans('backend::lang.list.setup_help')) ?></p>
 
         <div class="control-simplelist with-checkboxes is-sortable" data-control="simplelist">
             <ul>
                 <?php foreach ($columns as $key => $column): ?>
                     <li>
-                        <span class="drag-handle"></span>
-                        <div class="checkbox custom-checkbox">
+                        <span class="drag-handle" title="<?= __("Reorder") ?>">
+                            <i class="octo-icon-list-reorder"></i>
+                        </span>
+                        <div class="form-check">
                             <input
                                 type="hidden"
                                 name="column_order[]"
                                 value="<?= e($column->columnName) ?>" />
                             <input
+                                class="form-check-input"
                                 id="<?= $this->getId('setupCheckbox-'.$column->columnName) ?>"
                                 name="visible_columns[]"
                                 value="<?= e($column->columnName) ?>"
                                 <?= $column->invisible ? '' : 'checked="checked"' ?>
                                 type="checkbox" />
                             <label
-                                class="choice storm-icon-pseudo"
+                                class="form-check-label"
                                 for="<?= $this->getId('setupCheckbox-'.$column->columnName) ?>">
                                     <?= e(trans($column->label)) ?>
                             </label>
@@ -36,7 +39,7 @@
         <?php if ($this->showPagination): ?>
             <div class="form-group">
                 <label><?= e(trans('backend::lang.list.records_per_page')) ?></label>
-                <p class="help-block before-field">
+                <p class="form-text before-field">
                     <?= e(trans('backend::lang.list.records_per_page_help')) ?>
                 </p>
                 <select class="form-control custom-select select-no-search" name="records_per_page">
@@ -66,7 +69,7 @@
 
         <button
             type="button"
-            class="btn btn-link pull-right p-r-0"
+            class="btn btn-link pull-right"
             data-request="<?= $this->getEventHandler('onResetSetup') ?>"
             data-dismiss="popup"
             data-stripe-load-indicator>

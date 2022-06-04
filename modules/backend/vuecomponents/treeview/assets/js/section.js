@@ -27,12 +27,16 @@ $.oc.module.register('backend.component.treeview.section', function () {
             createMenuItems: Array,
             nodes: Array,
             hideSections: Boolean,
-            defaultFolderIcon: Object
+            defaultFolderIcon: Object,
+            hasApiMenuItems: {
+                type: Boolean,
+                default: false
+            },
+            userData: Object
         },
         data: function () {
             return {
                 expanded: true,
-                hasApiMenuItems: false,
                 menuId: $.oc.domIdManager.generate('dropdown-menu'),
                 menuButtonId: $.oc.domIdManager.generate('treeview-menu-button'),
                 menuLabelId: $.oc.domIdManager.generate('treeview-menu-label'),
@@ -53,9 +57,15 @@ $.oc.module.register('backend.component.treeview.section', function () {
             },
 
             nodeData: function computeNodeData() {
-                return {
-                    hasApiMenuItems: false
-                };
+                var result = {};
+                if (this.userData) {
+                    result = this.userData;
+                }
+
+                result.userData = this.userData;
+                result.hasApiMenuItems = this.hasApiMenuItems;
+
+                return result;
             },
 
             cssClass: function computeCssClass() {

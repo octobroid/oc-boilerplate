@@ -41,7 +41,7 @@
 
         // Locals
         this.$sidebar = $('> .field-repeater-builder > .field-repeater-groups:first', this.$el);
-        this.$sidebar.on('click', '> li', this.proxy(this.clickBuilderItem));
+        this.$sidebar.on('click', '> li:not(.is-placeholder)', this.proxy(this.clickBuilderItem));
 
         // Core logic
         $(document).on('render', this.proxy(this.builderOnRender));
@@ -51,9 +51,13 @@
     }
 
     RepeaterBuilder.prototype.disposeBuilderMode = function() {
-        this.$sidebar = null;
+        // Locals
+        this.$sidebar.off('click', '> li:not(.is-placeholder)', this.proxy(this.clickBuilderItem));
 
+        // Core logic
         $(document).off('render', this.proxy(this.builderOnRender));
+
+        this.$sidebar = null;
     }
 
     RepeaterBuilder.prototype.builderMenuFilter = function($item, $list) {

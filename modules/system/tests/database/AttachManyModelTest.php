@@ -51,28 +51,24 @@ class AttachManyModelTest extends PluginTestCase
         $this->assertNull(FileModel::find($photoId));
     }
 
-    /**
-     * @deprecated Removing arbitrary models soon unsupported
-     * @see isModelRemovable
-     */
-    // public function testRemovalProtection()
-    // {
-    //     Model::unguard();
-    //     $user1 = User::create(['name' => 'Stevie', 'email' => 'stevie@email.tld']);
-    //     $user2 = User::create(['name' => 'Jerry', 'email' => 'jerry@email.tld']);
-    //     Model::reguard();
+    public function testRemovalProtection()
+    {
+        Model::unguard();
+        $user1 = User::create(['name' => 'Stevie', 'email' => 'stevie@email.tld']);
+        $user2 = User::create(['name' => 'Jerry', 'email' => 'jerry@email.tld']);
+        Model::reguard();
 
-    //     $user1->photos()->create(['data' => base_path() . '/modules/system/tests/fixtures/plugins/database/tester/assets/images/avatar.png']);
-    //     $user2->photos()->create(['data' => base_path() . '/modules/system/tests/fixtures/plugins/database/tester/assets/images/avatar.png']);
+        $user1->photos()->create(['data' => base_path() . '/modules/system/tests/fixtures/plugins/database/tester/assets/images/avatar.png']);
+        $user2->photos()->create(['data' => base_path() . '/modules/system/tests/fixtures/plugins/database/tester/assets/images/avatar.png']);
 
-    //     $user1Photo = $user1->photos->first();
-    //     $user1PhotoId = $user1Photo->id;
+        $user1Photo = $user1->photos->first();
+        $user1PhotoId = $user1Photo->id;
 
-    //     // Attempt to remove user 1's photo from user 2
-    //     $user2->photos()->remove($user1Photo);
-    //     $this->assertNotNull(FileModel::find($user1PhotoId));
+        // Attempt to remove user 1's photo from user 2
+        $user2->photos()->remove($user1Photo);
+        $this->assertNotNull(FileModel::find($user1PhotoId));
 
-    //     $user2Photo = $user2->photos->first();
-    //     $this->assertNotNull($user2Photo);
-    // }
+        $user2Photo = $user2->photos->first();
+        $this->assertNotNull($user2Photo);
+    }
 }

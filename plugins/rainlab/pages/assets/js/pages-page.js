@@ -205,14 +205,14 @@
             $tabPane = $form.closest('.tab-pane')
 
          // Update the visibilities of the commit & reset buttons
-        $('[data-control=commit-button]', $form).toggleClass('hide', !data.canCommit)
-        $('[data-control=reset-button]', $form).toggleClass('hide', !data.canReset)
+        $('[data-control=commit-button]', $form).toggleClass('oc-hide hide', !data.canCommit)
+        $('[data-control=reset-button]', $form).toggleClass('oc-hide hide', !data.canReset)
 
         if (data.objectPath !== undefined) {
             $('input[name=objectPath]', $form).val(data.objectPath)
             $('input[name=objectMtime]', $form).val(data.objectMtime)
-            $('[data-control=delete-button]', $form).removeClass('hide')
-            $('[data-control=preview-button]', $form).removeClass('hide')
+            $('[data-control=delete-button]', $form).removeClass('oc-hide hide')
+            $('[data-control=preview-button]', $form).removeClass('oc-hide hide')
 
             if (data.pageUrl !== undefined)
                 $('[data-control=preview-button]', $form).attr('href', data.pageUrl)
@@ -235,7 +235,8 @@
         if (objectType.length > 0 &&
             (context.handler == 'onSave' || context.handler == 'onCommit' || context.handler == 'onReset')
         )
-           this.updateObjectList(objectType)
+
+        this.updateObjectList(objectType);
 
         if (context.handler == 'onSave' && (!data['X_OCTOBER_ERROR_FIELDS'] && !data['X_OCTOBER_ERROR_MESSAGE']))
             $form.trigger('unchange.oc.changeMonitor')
@@ -251,6 +252,18 @@
             $tabPane = $(form).closest('.tab-pane')
 
         this.updateContentEditorMode($tabPane, false)
+    }
+
+    PagesPage.prototype.onDeletePageSingle  = function(el) {
+        var $el = $(el);
+
+        $el.request('onDelete', {
+            success: function(data) {
+                $.oc.pagesPage.closeTabs(data, 'page');
+                $.oc.pagesPage.updateObjectList('page');
+                $(this).trigger('close.oc.tab', [{force: true}]);
+            }
+        });
     }
 
     /*
@@ -275,7 +288,7 @@
             }
         }).always(function(){
             $.oc.stripeLoadIndicator.hide()
-        })
+        });
     }
 
     /*
@@ -453,59 +466,62 @@
         if ($(e.target).attr('id') != 'pages-master-tabs')
             return
 
-            var $collapseIcon = $('<a href="javascript:;" class="tab-collapse-icon tabless"><i class="icon-chevron-up"></i></a>'),
-                $panel = $('.form-tabless-fields', data.pane),
-                $secondaryPanel = $('.control-tabs.secondary-tabs', data.pane),
-                $primaryPanel = $('.control-tabs.primary-tabs', data.pane),
-                hasSecondaryTabs = $secondaryPanel.length > 0
+        var $collapseIcon = $('<a href="javascript:;" class="tab-collapse-icon tabless"><i class="icon-chevron-up"></i></a>'),
+            $panel = $('.form-tabless-fields', data.pane),
+            $secondaryPanel = $('.control-tabs.secondary-tabs', data.pane),
+            $primaryPanel = $('.control-tabs.primary-tabs', data.pane),
+            hasSecondaryTabs = $secondaryPanel.length > 0
 
-            $secondaryPanel.addClass('secondary-content-tabs')
+        $secondaryPanel.addClass('secondary-content-tabs')
 
-            $panel.append($collapseIcon)
+        $panel.append($collapseIcon)
 
-            if (!hasSecondaryTabs) {
-                $('.primary-tabs').parent().removeClass('min-size')
-            }
+        if (!hasSecondaryTabs) {
+            $primaryPanel.parent().removeClass('min-size');
+        }
 
-            $collapseIcon.click(function(){
-                $panel.toggleClass('collapsed')
+        $secondaryPanel.find('> .tab-content > .tab-pane').not(':has(>.form-group[data-field-name=markup],>div>div.stretch)').addClass('padded-pane');
+        $secondaryPanel.find('> .layout-row > .nav-tabs > li:gt(0)').addClass('tab-content-bg');
 
+        $collapseIcon.click(function(){
+            $panel.toggleClass('collapsed')
+
+            if (typeof(localStorage) !== 'undefined')
+                localStorage.ocPagesTablessCollapsed = $panel.hasClass('collapsed') ? 1 : 0
+
+            window.setTimeout(function(){
+                $(window).trigger('oc.updateUi')
+            }, 500)
+
+            return false
+        })
+
+        var $primaryCollapseIcon = $('<a href="javascript:;" class="tab-collapse-icon primary"><i class="icon-chevron-down"></i></a>')
+
+        if ($primaryPanel.length > 0) {
+            $secondaryPanel.append($primaryCollapseIcon)
+
+            $primaryCollapseIcon.click(function(){
+                $primaryPanel.toggleClass('collapsed')
+                $secondaryPanel.toggleClass('primary-collapsed')
+                $(window).trigger('oc.updateUi')
                 if (typeof(localStorage) !== 'undefined')
-                    localStorage.ocPagesTablessCollapsed = $panel.hasClass('collapsed') ? 1 : 0
-
-                window.setTimeout(function(){
-                    $(window).trigger('oc.updateUi')
-                }, 500)
-
+                    localStorage.ocPagesPrimaryCollapsed = $primaryPanel.hasClass('collapsed') ? 1 : 0
                 return false
             })
+        } else {
+            $secondaryPanel.addClass('primary-collapsed')
+        }
 
-            var $primaryCollapseIcon = $('<a href="javascript:;" class="tab-collapse-icon primary"><i class="icon-chevron-down"></i></a>')
+        if (typeof(localStorage) !== 'undefined') {
+            if (!$('a', data.tab).hasClass('new-template') && localStorage.ocPagesTablessCollapsed == 1)
+                $panel.addClass('collapsed')
 
-            if ($primaryPanel.length > 0) {
-                $secondaryPanel.append($primaryCollapseIcon)
-
-                $primaryCollapseIcon.click(function(){
-                    $primaryPanel.toggleClass('collapsed')
-                    $secondaryPanel.toggleClass('primary-collapsed')
-                    $(window).trigger('oc.updateUi')
-                    if (typeof(localStorage) !== 'undefined')
-                        localStorage.ocPagesPrimaryCollapsed = $primaryPanel.hasClass('collapsed') ? 1 : 0
-                    return false
-                })
-            } else {
+            if (localStorage.ocPagesPrimaryCollapsed == 1 && hasSecondaryTabs) {
+                $primaryPanel.addClass('collapsed')
                 $secondaryPanel.addClass('primary-collapsed')
             }
-
-            if (typeof(localStorage) !== 'undefined') {
-                if (!$('a', data.tab).hasClass('new-template') && localStorage.ocPagesTablessCollapsed == 1)
-                    $panel.addClass('collapsed')
-
-                if (localStorage.ocPagesPrimaryCollapsed == 1 && hasSecondaryTabs) {
-                    $primaryPanel.addClass('collapsed')
-                    $secondaryPanel.addClass('primary-collapsed')
-                }
-            }
+        }
 
         var $form = $('form', data.pane),
             self = this,
@@ -515,8 +531,8 @@
 
         $form.on('changed.oc.changeMonitor', function() {
             $panel.trigger('modified.oc.tab')
-            $panel.find('[data-control=commit-button]').addClass('hide');
-            $panel.find('[data-control=reset-button]').addClass('hide');
+            $panel.find('[data-control=commit-button]').addClass('oc-hide hide');
+            $panel.find('[data-control=reset-button]').addClass('oc-hide hide');
             self.updateModifiedCounter()
         })
 
@@ -550,11 +566,11 @@
             return result
         }
 
-        data.options.data['itemData'] = iterator($items)
+        data.options.data['itemData'] = JSON.stringify(iterator($items))
     }
 
     /*
-     * Updates the content editor to correspond the conten file extension
+     * Updates the content editor to correspond to the content file extension
      */
     PagesPage.prototype.updateContentEditorMode = function(pane, initialization) {
         if ($('[data-toolbar-type]', pane).data('toolbar-type') !== 'content')

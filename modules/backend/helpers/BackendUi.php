@@ -1,5 +1,11 @@
 <?php namespace Backend\Helpers;
 
+use Backend\Elements\Button;
+use Backend\Elements\AjaxButton;
+use Backend\Elements\FormToolbar;
+use Backend\Elements\Callout;
+use Backend\Elements\ContentPlaceholder;
+
 /**
  * BackendUi Helper
  *
@@ -12,40 +18,40 @@ class BackendUi
     /**
      * button
      */
-    public function button(...$args): \Backend\Elements\Button
+    public function button(...$args): Button
     {
-        return new \Backend\Elements\Button(...$args);
+        return new Button(...$args);
     }
 
     /**
      * ajaxButton
      */
-    public function ajaxButton(...$args): \Backend\Elements\AjaxButton
+    public function ajaxButton(...$args): AjaxButton
     {
-        return new \Backend\Elements\AjaxButton(...$args);
+        return new AjaxButton(...$args);
     }
 
     /**
      * formToolbar
      */
-    public function formToolbar(...$args): \Backend\Elements\FormToolbar
+    public function formToolbar(...$args): FormToolbar
     {
-        return new \Backend\Elements\FormToolbar(...$args);
+        return new FormToolbar(...$args);
     }
 
     /**
      * callout
      */
-    public function callout(...$args): \Backend\Elements\Callout
+    public function callout(...$args): Callout
     {
-        return new \Backend\Elements\Callout(...$args);
+        return new Callout(...$args);
     }
 
     /**
      * contentPlaceholder
      */
-    public function contentPlaceholder(...$args): \Backend\Elements\ContentPlaceholder
+    public function contentPlaceholder(...$args): ContentPlaceholder
     {
-        return new \Backend\Elements\ContentPlaceholder(...$args);
+        return new ContentPlaceholder(...$args);
     }
 }

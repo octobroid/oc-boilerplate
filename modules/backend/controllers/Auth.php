@@ -98,15 +98,17 @@ class Auth extends Controller
             throw new ValidationException($validation);
         }
 
-        if (is_null($remember = Config::get('backend.force_remember', true))) {
-            $remember = (bool) post('remember');
+        // Determine remember policy
+        $remember = Config::get('backend.force_remember');
+        if ($remember === null) {
+            $remember = post('remember');
         }
 
         // Authenticate user
         $user = BackendAuth::authenticate([
             'login' => post('login'),
             'password' => post('password')
-        ], $remember);
+        ], (bool) $remember);
 
         // Log the sign in event
         AccessLog::add($user);

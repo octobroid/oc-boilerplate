@@ -1,8 +1,8 @@
-$.oc.module.register('backend.vuecomponents.uploader.utils', function () {
+$.oc.module.register('backend.vuecomponents.uploader.utils', function() {
     function makeUploaderInstance() {
-        var uploaderClass = Vue.extend(Vue.options.components['backend-component-uploader']);
+        const uploaderClass = Vue.extend(Vue.options.components['backend-component-uploader']);
 
-        var uploaderInstance = new uploaderClass({
+        const uploaderInstance = new uploaderClass({
             propsData: {}
         });
 
@@ -12,103 +12,96 @@ $.oc.module.register('backend.vuecomponents.uploader.utils', function () {
         return uploaderInstance;
     }
 
-    var UploaderUtils = function () {
-        function UploaderUtils() {
-            babelHelpers.classCallCheck(this, UploaderUtils);
+    class UploaderUtils {
+        uploaderInstance;
 
+        constructor() {
             this.uploaderInstance = null;
         }
 
-        babelHelpers.createClass(UploaderUtils, [{
-            key: 'uploadMediaManagerFile',
-            value: function uploadMediaManagerFile(file) {
-                if (!this.uploaderInstance) {
-                    this.uploaderInstance = makeUploaderInstance();
-                }
-
-                return this.uploaderInstance.addMediaManagerFile(file);
+        uploadMediaManagerFile(file) {
+            if (!this.uploaderInstance) {
+                this.uploaderInstance = makeUploaderInstance();
             }
-        }, {
-            key: 'selectAndUploadMediaManagerFiles',
-            value: function selectAndUploadMediaManagerFiles(callback, multiple, accept) {
-                var uploaderUtils = $.oc.module.import('backend.vuecomponents.uploader.utils');
-                var $input = $('<input type="file" style="display:none" name="file"/>');
 
-                if (multiple) {
-                    $input.attr('multiple', 'multiple');
-                }
+            return this.uploaderInstance.addMediaManagerFile(file);
+        }
 
-                if (typeof accept === 'string') {
-                    $input.attr('accept', accept);
-                }
+        selectAndUploadMediaManagerFiles(callback, multiple, accept) {
+            const uploaderUtils = $.oc.module.import('backend.vuecomponents.uploader.utils');
+            const $input = $('<input type="file" style="display:none" name="file"/>');
 
-                $(document.body).append($input);
+            if (multiple) {
+                $input.attr('multiple', 'multiple');
+            }
 
-                $input.one('change', function () {
-                    var files = $input.get(0).files;
-                    var promises = [];
+            if (typeof accept === 'string') {
+                $input.attr('accept', accept);
+            }
 
-                    var _loop = function _loop(i) {
-                        var promise = uploaderUtils.uploadMediaManagerFile(files[i]).then(function (response) {
-                            var data = JSON.parse(response);
+            $(document.body).append($input);
+
+            $input.one('change', () => {
+                const files = $input.get(0).files;
+                const promises = [];
+                for (let i = 0; i < files.length; i++) {
+                    const promise = uploaderUtils.uploadMediaManagerFile(files[i]).then(
+                        (response) => {
+                            const data = JSON.parse(response);
 
                             callback(data.link, files.length > 1, i == files.length - 1);
-                        }, function () {});
+                        },
+                        () => {}
+                    );
 
-                        promises.push(promises);
-                    };
+                    promises.push(promises);
+                }
 
-                    for (var i = 0; i < files.length; i++) {
-                        _loop(i);
-                    }
-
-                    Promise.all(promises.map(function (p) {
-                        return Promise.resolve(p).then(function () {}, function () {});
-                    })).then(function () {
-                        $input.remove();
-                    });
+                Promise.all(promises.map((p) => Promise.resolve(p).then(() => {}, () => {}))).then(() => {
+                    $input.remove();
                 });
+            });
 
-                $input.click();
+            $input.click();
+        }
+
+        uploadFile(handlerName, file, formFieldName, extraData) {
+            if (!this.uploaderInstance) {
+                this.uploaderInstance = makeUploaderInstance();
             }
-        }, {
-            key: 'uploadFile',
-            value: function uploadFile(handlerName, file, formFieldName, extraData) {
-                if (!this.uploaderInstance) {
-                    this.uploaderInstance = makeUploaderInstance();
-                }
 
-                var fileArr = [];
-                if (file instanceof FileList) {
-                    fileArr = file;
-                } else if (Array.isArray(file)) {
-                    fileArr = file;
-                } else {
-                    fileArr.push(file);
-                }
+            let fileArr = [];
+            if (file instanceof FileList) {
+                fileArr = file;
+            }
+            else if (Array.isArray(file)) {
+                fileArr = file;
+            }
+            else {
+                fileArr.push(file);
+            }
 
-                var promises = [];
-                for (var i = 0; i < fileArr.length; i++) {
-                    promises.push(this.uploaderInstance.addFile(handlerName, fileArr[i], formFieldName, extraData));
-                }
+            const promises = [];
+            for (let i = 0; i < fileArr.length; i++) {
+                promises.push(this.uploaderInstance.addFile(handlerName, fileArr[i], formFieldName, extraData));
+            }
 
-                return Promise.all(promises.map(function (p) {
-                    return Promise.resolve(p).then(function (value) {
-                        return {
+            return Promise.all(
+                promises.map((p) =>
+                    Promise.resolve(p).then(
+                        (value) => ({
                             status: 'fulfilled',
-                            value: value
-                        };
-                    }, function (reason) {
-                        return {
+                            value
+                        }),
+                        (reason) => ({
                             status: 'rejected',
-                            reason: reason
-                        };
-                    });
-                }));
-            }
-        }]);
-        return UploaderUtils;
-    }();
+                            reason
+                        })
+                    )
+                )
+            );
+        }
+    }
 
     return new UploaderUtils();
 });

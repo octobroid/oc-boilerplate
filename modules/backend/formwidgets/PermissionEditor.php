@@ -1,11 +1,11 @@
 <?php namespace Backend\FormWidgets;
 
+use Backend\Classes\RoleManager;
 use Backend\Classes\FormWidgetBase;
 use BackendAuth;
 
 /**
- * User/group permission editor
- * This widget is used by the system internally on the System / Administrators pages.
+ * PermissionEditor is used by the system internally on the System / Administrators pages.
  *
  * Available Modes:
  *
@@ -36,6 +36,9 @@ use BackendAuth;
  */
 class PermissionEditor extends FormWidgetBase
 {
+    /**
+     * @var \Backend\Models\User user
+     */
     protected $user;
 
     /**
@@ -85,7 +88,7 @@ class PermissionEditor extends FormWidgetBase
         }
 
         $this->vars['mode'] = $this->mode;
-        $this->vars['permissions'] = $this->getFilteredPermissions();
+        $this->vars['permissions'] = $this->getViewPermissions();
         $this->vars['baseFieldName'] = $this->getFieldName();
         $this->vars['permissionsData'] = $permissionsData;
         $this->vars['field'] = $this->formField;
@@ -113,8 +116,8 @@ class PermissionEditor extends FormWidgetBase
     }
 
     /**
-     * Returns a safely parsed set of permissions, ensuring the user cannot elevate
-     * their own permissions or permissions of another user above their own.
+     * getSaveValueSecure returns a safely parsed set of permissions, ensuring the user cannot
+     * elevate their own permissions or permissions of another user above their own.
      *
      * @param string $value
      * @return array
@@ -123,51 +126,98 @@ class PermissionEditor extends FormWidgetBase
     {
         $newPermissions = is_array($value) ? array_map('intval', $value) : [];
 
-        if (!empty($newPermissions)) {
-            $existingPermissions = $this->model->permissions ?: [];
-
-            $allowedPermissions = array_map(function ($permissionObject) {
-                return $permissionObject->code;
-            }, array_flatten($this->getFilteredPermissions()));
-
-            foreach ($newPermissions as $permission => $code) {
-                if (in_array($permission, $allowedPermissions)) {
-                    $existingPermissions[$permission] = $code;
-                }
-            }
-
-            $newPermissions = $existingPermissions;
+        if (!$newPermissions) {
+            return [];
         }
 
-        return $newPermissions;
+        $existingPermissions = $this->model->permissions ?: [];
+
+        $allowedPermissions = array_map(function ($permissionObject) {
+            return $permissionObject->code;
+        }, $this->getFilteredPermissions());
+
+        foreach ($newPermissions as $permission => $code) {
+            if (in_array($permission, $allowedPermissions)) {
+                $existingPermissions[$permission] = $code;
+            }
+        }
+
+        return $existingPermissions;
     }
 
     /**
-     * Returns the available permissions; removing those that the logged-in user does not have access to
+     * getFilteredPermissions returns the available permissions, removing those that
+     * the logged-in user does not have access to. In the format of:
      *
-     * @return array The permissions that the logged-in user does have access to ['permission-tab' => $arrayOfAllowedPermissionObjects]
+     *     ['permission-tab' => $arrayOfAllowedPermissionObjects]
+     *
+     * @return array
      */
     protected function getFilteredPermissions()
     {
-        $permissions = BackendAuth::listTabbedPermissions();
+        $permissions = RoleManager::instance()->listPermissionsForUser($this->user);
 
-        foreach ($permissions as $tab => $permissionsArray) {
-            foreach ($permissionsArray as $index => $permission) {
-                if (!$this->user->hasAccess($permission->code) || (
-                    is_array($this->availablePermissions) &&
-                    !in_array($permission->code, $this->availablePermissions)
-                )) {
-                    unset($permissionsArray[$index]);
-                }
+        if (!is_array($this->availablePermissions)) {
+            return $permissions;
+        }
+
+        return array_filter($permissions, function ($permission) {
+            return $permission->code && in_array($permission->code, $this->availablePermissions);
+        });
+    }
+
+    /**
+     * getViewPermissions
+     */
+    protected function getViewPermissions()
+    {
+        $permissions = $this->getFilteredPermissions();
+        $permissions = $this->makeTabbedPermissions($permissions);
+        $permissions = array_map(function($tabbed) {
+            return $this->makeNestedPermissions($tabbed);
+        }, $permissions);
+
+        return $permissions;
+    }
+
+    /**
+     * makeTabbedPermissions
+     */
+    protected function makeTabbedPermissions($permissions)
+    {
+        $tabs = [];
+
+        foreach ($permissions as $permission) {
+            $tab = $permission->tab ?? 'backend::lang.form.undefined_tab';
+
+            if (!array_key_exists($tab, $tabs)) {
+                $tabs[$tab] = [];
             }
 
-            if (empty($permissionsArray)) {
-                unset($permissions[$tab]);
-            }
-            else {
-                $permissions[$tab] = $permissionsArray;
+            $tabs[$tab][$permission->code] = $permission;
+        }
+
+        return $tabs;
+    }
+
+    /**
+     * makeNestedPermissions
+     */
+    protected function makeNestedPermissions($permissions)
+    {
+        $forget = [];
+
+        foreach ($permissions as $permission) {
+            $code = $permission->code;
+            $parentCode = substr($code, 0, strrpos($code, '.'));
+
+            if (isset($permissions[$parentCode])) {
+                $permissions[$parentCode]->addChild($permission);
+                $forget[] = $code;
             }
         }
+
+        array_forget($permissions, $forget);
 
         return $permissions;
     }

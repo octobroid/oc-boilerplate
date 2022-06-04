@@ -1,10 +1,8 @@
 <?php namespace Backend\FormWidgets;
 
 use Carbon\Carbon;
-use Backend\Classes\FormField;
 use Backend\Classes\FormWidgetBase;
 use System\Helpers\DateTime as DateTimeHelper;
-use Backend\Models\Preference as BackendPreference;
 
 /**
  * DatePicker renders a date picker field

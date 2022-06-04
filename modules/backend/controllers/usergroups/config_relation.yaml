@@ -5,6 +5,5 @@
 users:
     label: backend::lang.user.group.users_count
     list: ~/modules/backend/models/user/columns.yaml
-    form: ~/modules/backend/models/user/fields.yaml
     view:
         toolbarButtons: add|remove

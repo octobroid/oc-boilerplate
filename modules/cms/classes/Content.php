@@ -4,7 +4,7 @@ use File;
 use Markdown;
 
 /**
- * The CMS content file class.
+ * Content file class.
  *
  * @package october\cms
  * @author Alexey Bobkov, Samuel Georges

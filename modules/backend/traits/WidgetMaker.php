@@ -2,10 +2,11 @@
 
 use Lang;
 use Backend\Classes\FormField;
+use Backend\Classes\FilterScope;
 use SystemException;
 
 /**
- * Widget Maker Trait
+ * WidgetMaker Trait
  *
  * Adds widget based methods to a controller class, or a class that
  * contains a `$controller` property referencing a controller.
@@ -16,7 +17,7 @@ use SystemException;
 trait WidgetMaker
 {
     /**
-     * Makes a widget object with the supplied configuration file.
+     * makeWidget object with the supplied configuration file.
      * @param string $class Widget class name
      * @param array $widgetConfig An array of config.
      * @return \Backend\Classes\WidgetBase The widget object
@@ -37,7 +38,7 @@ trait WidgetMaker
     }
 
     /**
-     * Makes a form widget object with the supplied form field and widget configuration.
+     * makeFormWidget object with the supplied form field and widget configuration.
      * @param string $class Widget class name
      * @param mixed $fieldConfig A field name, an array of config or a FormField object.
      * @param array $widgetConfig An array of config.
@@ -56,14 +57,15 @@ trait WidgetMaker
         }
 
         if (is_string($fieldConfig)) {
-            $fieldConfig = ['name' => $fieldConfig];
+            $fieldConfig = ['fieldName' => $fieldConfig];
         }
 
         if (is_array($fieldConfig)) {
-            $formField = new FormField(
-                array_get($fieldConfig, 'name'),
-                array_get($fieldConfig, 'label')
-            );
+            if (isset($fieldConfig['name'])) {
+                $fieldConfig['fieldName'] = $fieldConfig['name'];
+            }
+
+            $formField = new FormField($fieldConfig);
             $formField->displayAs('widget', $fieldConfig);
         }
         else {

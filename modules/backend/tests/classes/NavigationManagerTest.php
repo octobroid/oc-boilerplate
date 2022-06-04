@@ -1,6 +1,5 @@
 <?php
 
-use Backend\Classes\Controller;
 use Backend\Classes\NavigationManager;
 
 class NavigationManagerTest extends TestCase
@@ -13,10 +12,10 @@ class NavigationManagerTest extends TestCase
 
         $manager->registerMenuItems('October.Test', [
             'dashboard' => [
-                'label'       => 'Dashboard',
-                'icon'        => 'icon-dashboard',
-                'url'         => 'http://dashboard.tld',
-                'order'       => 100
+                'label' => 'Dashboard',
+                'icon' => 'icon-dashboard',
+                'url' => 'http://dashboard.tld',
+                'order' => 100
             ]
         ]);
 
@@ -24,14 +23,15 @@ class NavigationManagerTest extends TestCase
         $this->assertArrayHasKey('OCTOBER.TEST.DASHBOARD', $items);
 
         $item = $items['OCTOBER.TEST.DASHBOARD'];
-        $this->assertObjectHasAttribute('code', $item);
-        $this->assertObjectHasAttribute('label', $item);
-        $this->assertObjectHasAttribute('icon', $item);
-        $this->assertObjectHasAttribute('url', $item);
-        $this->assertObjectHasAttribute('owner', $item);
-        $this->assertObjectHasAttribute('order', $item);
-        $this->assertObjectHasAttribute('permissions', $item);
-        $this->assertObjectHasAttribute('sideMenu', $item);
+        $itemArr = $item->toArray();
+        $this->assertArrayHasKey('code', $itemArr);
+        $this->assertArrayHasKey('label', $itemArr);
+        $this->assertArrayHasKey('icon', $itemArr);
+        $this->assertArrayHasKey('url', $itemArr);
+        $this->assertArrayHasKey('owner', $itemArr);
+        $this->assertArrayHasKey('order', $itemArr);
+        $this->assertArrayHasKey('permissions', $itemArr);
+        $this->assertArrayHasKey('sideMenu', $itemArr);
 
         $this->assertEquals('dashboard', $item->code);
         $this->assertEquals('Dashboard', $item->label);
@@ -63,20 +63,22 @@ class NavigationManagerTest extends TestCase
         $this->assertArrayHasKey('posts', $items);
         $this->assertArrayHasKey('categories', $items);
 
-        $this->assertIsObject($items['posts']);
-        $this->assertObjectHasAttribute('code', $items['posts']);
-        $this->assertObjectHasAttribute('owner', $items['posts']);
-        $this->assertEquals('posts', $items['posts']->code);
-        $this->assertEquals('October.Tester', $items['posts']->owner);
+        $item = $items['posts'];
+        $otherItem = $items['categories'];
+        $this->assertIsObject($item);
+        $this->assertArrayHasKey('code', $item);
+        $this->assertArrayHasKey('owner', $item);
+        $this->assertEquals('posts', $item->code);
+        $this->assertEquals('October.Tester', $item->owner);
 
-        $this->assertObjectHasAttribute('permissions', $items['posts']);
-        $this->assertIsArray($items['posts']->permissions);
-        $this->assertCount(1, $items['posts']->permissions);
+        $this->assertArrayHasKey('permissions', $item);
+        $this->assertIsArray($item->permissions);
+        $this->assertCount(1, $item->permissions);
 
-        $this->assertObjectHasAttribute('order', $items['posts']);
-        $this->assertObjectHasAttribute('order', $items['categories']);
-        $this->assertEquals(100, $items['posts']->order);
-        $this->assertEquals(200, $items['categories']->order);
+        $this->assertArrayHasKey('order', $item);
+        $this->assertArrayHasKey('order', $otherItem);
+        $this->assertEquals(100, $item->order);
+        $this->assertEquals(200, $otherItem->order);
     }
 
     public function testAddMainMenuItems()
@@ -130,9 +132,9 @@ class NavigationManagerTest extends TestCase
 
         $manager->addSideMenuItems('October.Tester', 'blog', [
             'foo' => [
-                'label'       => 'Bar',
-                'icon'        => 'icon-derp',
-                'url'         => 'http://google.com',
+                'label' => 'Bar',
+                'icon' => 'icon-derp',
+                'url' => 'http://google.com',
                 'permissions' => [
                     'october.tester.access_foo',
                     'october.tester.access_bar'
@@ -146,20 +148,21 @@ class NavigationManagerTest extends TestCase
         $this->assertIsArray($items);
         $this->assertArrayHasKey('foo', $items);
 
-        $this->assertIsObject($items['foo']);
-        $this->assertObjectHasAttribute('code', $items['foo']);
-        $this->assertObjectHasAttribute('owner', $items['foo']);
-        $this->assertObjectHasAttribute('order', $items['foo']);
+        $item = $items['foo'];
+        $this->assertIsObject($item);
+        $this->assertArrayHasKey('code', $item);
+        $this->assertArrayHasKey('owner', $item);
+        $this->assertArrayHasKey('order', $item);
 
-        $this->assertEquals(-1, $items['foo']->order);
-        $this->assertEquals('foo', $items['foo']->code);
-        $this->assertEquals('October.Tester', $items['foo']->owner);
+        $this->assertEquals(-1, $item->order);
+        $this->assertEquals('foo', $item->code);
+        $this->assertEquals('October.Tester', $item->owner);
 
-        $this->assertObjectHasAttribute('permissions', $items['foo']);
-        $this->assertIsArray($items['foo']->permissions);
-        $this->assertCount(2, $items['foo']->permissions);
-        $this->assertContains('october.tester.access_foo', $items['foo']->permissions);
-        $this->assertContains('october.tester.access_bar', $items['foo']->permissions);
+        $this->assertArrayHasKey('permissions', $item);
+        $this->assertIsArray($item->permissions);
+        $this->assertCount(2, $item->permissions);
+        $this->assertContains('october.tester.access_foo', $item->permissions);
+        $this->assertContains('october.tester.access_bar', $item->permissions);
     }
 
     public function testRemoveSideMenuItem()

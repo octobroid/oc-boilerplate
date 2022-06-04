@@ -4,6 +4,7 @@ use Auth;
 use Lang;
 use Flash;
 use Response;
+use Redirect;
 use BackendMenu;
 use BackendAuth;
 use Backend\Classes\Controller;
@@ -222,6 +223,20 @@ class Users extends Controller
     }
 
     /**
+     * Unsuspend this user
+     */
+    public function preview_onUnsuspendUser($recordId)
+    {
+        $model = $this->formFindModelObject($recordId);
+
+        $model->unsuspend();
+
+        Flash::success(Lang::get('rainlab.user::lang.users.unsuspend_success'));
+
+        return Redirect::refresh();
+    }
+
+    /**
      * Force delete a user.
      */
     public function update_onDelete($recordId = null)
@@ -264,6 +279,7 @@ class Users extends Controller
                         break;
 
                     case 'deactivate':
+                        $user->clearPersistCode();
                         $user->delete();
                         break;
 

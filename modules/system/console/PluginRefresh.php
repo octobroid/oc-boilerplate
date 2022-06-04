@@ -57,11 +57,11 @@ class PluginRefresh extends Command
     protected function handleRefresh($name)
     {
         // Rollback plugin migration
-        $manager = UpdateManager::instance()->setNotesOutput($this->output);
+        $manager = UpdateManager::instance()->setNotesCommand($this);
         $manager->rollbackPlugin($name);
 
         // Rerun migration
-        $this->output->writeln('<info>Reinstalling plugin...</info>');
+        $this->line('Reinstalling plugin...');
         $manager->updatePlugin($name);
     }
 
@@ -71,7 +71,7 @@ class PluginRefresh extends Command
     protected function handleRollback($name)
     {
         // Rollback plugin migration
-        $manager = UpdateManager::instance()->setNotesOutput($this->output);
+        $manager = UpdateManager::instance()->setNotesCommand($this);
 
         if ($toVersion = $this->option('rollback')) {
             $manager->rollbackPluginToVersion($name, $toVersion);

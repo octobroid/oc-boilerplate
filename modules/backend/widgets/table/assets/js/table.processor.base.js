@@ -55,14 +55,14 @@
 
     /*
      * Registers event handlers required for the cell processor.
-     * Event handers should be bound to the container control element 
+     * Event handers should be bound to the container control element
      * (not to the table element).
      */
     Base.prototype.registerHandlers = function() {
     }
 
     /*
-     * Unregisters event handlers previously registered with 
+     * Unregisters event handlers previously registered with
      * registerHandlers().
      */
     Base.prototype.unregisterHandlers = function() {
@@ -74,7 +74,6 @@
      */
     Base.prototype.onFocus = function(cellElement, isClick) {
     }
-
 
     /*
      * Forces the processor to hide the editor when the user navigates
@@ -107,7 +106,7 @@
     /*
      * Determines if the keyboard navigation in the specified direction is allowed
      * by the cell processor. Some processors could reject the navigation, for example
-     * the string processor could cancel the left array navigation if the caret 
+     * the string processor could cancel the left array navigation if the caret
      * in the text input is not in the beginning of the text.
      */
     Base.prototype.keyNavigationAllowed = function(ev, direction) {
@@ -129,7 +128,7 @@
     }
 
     /*
-     * Creates a cell view data container (a DIV element that contains 
+     * Creates a cell view data container (a DIV element that contains
      * the current cell value). This functionality is required for most
      * of the processors, perhaps except the checkbox cell processor.
      */
@@ -162,7 +161,7 @@
      * Hides the view container
      */
     Base.prototype.hideViewContainer = function(cellElement) {
-        return this.getViewContainer(cellElement).setAttribute('class', 'hide')
+        return this.getViewContainer(cellElement).setAttribute('class', 'oc-hide')
     }
 
     /*
@@ -173,7 +172,7 @@
     }
 
     /*
-     * Determines whether the specified element is some element created by the 
+     * Determines whether the specified element is some element created by the
      * processor.
      */
     Base.prototype.elementBelongsToProcessor = function(element) {

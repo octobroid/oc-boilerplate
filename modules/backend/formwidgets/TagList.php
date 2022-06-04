@@ -60,6 +60,11 @@ class TagList extends FormWidgetBase
     //
 
     /**
+     * @var bool useOptions if they are supplied by the model or array
+     */
+    protected $useOptions = false;
+
+    /**
      * @inheritDoc
      */
     protected $defaultAlias = 'taglist';
@@ -80,6 +85,8 @@ class TagList extends FormWidgetBase
         ]);
 
         $this->processMode();
+
+        $this->useOptions = $this->formField->options !== null;
     }
 
     /**
@@ -172,7 +179,7 @@ class TagList extends FormWidgetBase
     {
         $options = [];
 
-        if ($this->formField->hasOptions()) {
+        if ($this->useOptions) {
             $options = $this->formField->options();
         }
         elseif ($this->mode === static::MODE_RELATION) {

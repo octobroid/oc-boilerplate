@@ -14,3 +14,7 @@ create:
 update:
     redirect: backend/users
     redirectClose: backend/users
+
+permissions:
+    modelCreate: admins.manage.create
+    modelDelete: admins.manage.delete

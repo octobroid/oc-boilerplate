@@ -37,7 +37,7 @@ class EventLogs extends Controller
     /**
      * @var array requiredPermissions to view this page
      */
-    public $requiredPermissions = ['system.access_logs'];
+    public $requiredPermissions = ['utilities.logs'];
 
     /**
      * __construct

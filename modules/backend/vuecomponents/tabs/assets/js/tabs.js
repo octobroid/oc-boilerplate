@@ -284,6 +284,17 @@ $.oc.module.register('backend.component.tabs', function () {
                 return result[0];
             },
 
+            getTabComponent: function getTabComponent(tabKey) {
+                var refName = 'tab-component-' + tabKey;
+                var result = this.$refs[refName];
+
+                if (result === undefined || !result.length) {
+                    return null;
+                }
+
+                return result[0];
+            },
+
             onKeyDown: function onKeyDown(ev) {
                 // Right/left arrow handling. See w3.org accessibility
                 // requirements for details.
@@ -326,6 +337,10 @@ $.oc.module.register('backend.component.tabs', function () {
                 Vue.nextTick(function () {
                     $(that.$refs.tabList).children().eq(that.focusedTabKeyIndex).focus();
                 });
+            },
+
+            onMiddleClick: function onMiddleClick(tab) {
+                this.onCloseClick(tab);
             },
 
             onCloseClick: function onCloseClick(tab) {

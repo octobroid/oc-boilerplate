@@ -1,5 +1,6 @@
 <?php namespace Backend\Classes;
 
+use App;
 use Log;
 use Event;
 use System;
@@ -58,44 +59,41 @@ class NavigationManager
     protected static $menuDisplayTree;
 
     /**
-     * @var System\Classes\PluginManager pluginManager
-     */
-    protected $pluginManager;
-
-    /**
-     * init this singleton.
-     */
-    protected function init()
-    {
-        $this->pluginManager = PluginManager::instance();
-    }
-
-    /**
      * loadItems from modules and plugins
      */
     protected function loadItems()
     {
         $this->items = [];
 
-        /*
-         * Load module items
-         */
+        // Load external items
         foreach ($this->callbacks as $callback) {
             $callback($this);
         }
 
-        /*
-         * Load plugin items
-         */
-        $plugins = $this->pluginManager->getPlugins();
-
-        foreach ($plugins as $id => $plugin) {
-            $items = $plugin->registerNavigation();
-            if (!is_array($items)) {
-                continue;
+        // Load module items
+        foreach (System::listModules() as $module) {
+            if ($provider = App::getProvider($module . '\\ServiceProvider')) {
+                $items = $provider->registerNavigation();
+                if (is_array($items)) {
+                    $this->registerMenuItems('October.'.$module, $items);
+                }
             }
+        }
 
-            $this->registerMenuItems($id, $items);
+        // Load plugin items
+        foreach (PluginManager::instance()->getPlugins() as $id => $plugin) {
+            $items = $plugin->registerNavigation();
+            if (is_array($items)) {
+                $this->registerMenuItems($id, $items);
+            }
+        }
+
+        // Load app items
+        if ($app = App::getProvider(\App\Provider::class)) {
+            $items = $app->registerNavigation();
+            if (is_array($items)) {
+                $this->registerMenuItems('October.App', $items);
+            }
         }
 
         /**
@@ -113,46 +111,37 @@ class NavigationManager
          */
         Event::fire('backend.menu.extendItems', [$this]);
 
-        /*
-         * Sort menu items
-         */
+        // Sort menu items
         uasort($this->items, static function ($a, $b) {
             return $a->order - $b->order;
         });
 
-        /*
-         * Filter items user lacks permission for
-         */
+        // Filter items user lacks permission for
         $user = BackendAuth::getUser();
         $this->items = $this->filterItemPermissions($user, $this->items);
 
         foreach ($this->items as $item) {
-            if (!$item->sideMenu || !count($item->sideMenu)) {
+            $sideMenu = $item->sideMenu;
+            if (!$sideMenu || !count($sideMenu)) {
                 continue;
             }
 
-            /*
-             * Apply incremental default orders
-             */
+            // Apply incremental default orders
             $orderCount = 0;
-            foreach ($item->sideMenu as $sideMenuItem) {
+            foreach ($sideMenu as $sideMenuItem) {
                 if ($sideMenuItem->order !== -1) {
                     continue;
                 }
                 $sideMenuItem->order = ($orderCount += 100);
             }
 
-            /*
-             * Sort side menu items
-             */
-            uasort($item->sideMenu, static function ($a, $b) {
+            // Sort side menu items
+            uasort($sideMenu, static function ($a, $b) {
                 return $a->order - $b->order;
             });
 
-            /*
-             * Filter items user lacks permission for
-             */
-            $item->sideMenu = $this->filterItemPermissions($user, $item->sideMenu);
+            // Filter items user lacks permission for
+            $item->sideMenu($this->filterItemPermissions($user, $sideMenu));
         }
     }
 

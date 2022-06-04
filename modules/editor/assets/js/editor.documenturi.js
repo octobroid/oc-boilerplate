@@ -1,4 +1,4 @@
-$.oc.module.register('editor.documenturi', function () {
+$.oc.module.register('editor.documenturi', function() {
     'use strict';
     /**
      * Represents Editor document URI. Document URIs are fully qualified document identifiers.
@@ -8,45 +8,42 @@ $.oc.module.register('editor.documenturi', function () {
      * The document unique key can be empty, which corresponds to root
      * Navigator nodes.
      */
+    class DocumentUri {
+        namespace;
+        documentType;
+        uniqueKey;
 
-    var DocumentUri = function () {
-        function DocumentUri(namespace, documentType, uniqueKey) {
-            babelHelpers.classCallCheck(this, DocumentUri);
-
+        constructor(namespace, documentType, uniqueKey) {
             this.namespace = namespace;
             this.documentType = documentType;
             this.uniqueKey = uniqueKey;
         }
 
-        babelHelpers.createClass(DocumentUri, [{
-            key: 'uri',
-            get: function get() {
-                return this.namespaceAndDocType + ':' + this.uniqueKey;
-            }
-        }, {
-            key: 'namespaceAndDocType',
-            get: function get() {
-                return this.namespace + ':' + this.documentType;
-            }
-        }], [{
-            key: 'parse',
-            value: function parse(uriString, silent) {
-                var re = /^([^:]+):([^:]+):?([^:]*)$/; // Can't use named capture groups because of IE11
-                var matchData = uriString.match(re);
+        static parse(uriString, silent) {
+            const re = /^([^:]+):([^:]+):?([^:]*)$/; // Can't use named capture groups because of IE11
+            const matchData = uriString.match(re);
 
-                if (!matchData || !matchData.length) {
-                    if (silent) {
-                        return false;
-                    }
-
-                    throw new Error('Editor document URL must have format "namespace:document-type:document-unique-key". Invalid URI string: ' + uriString);
+            if (!matchData || !matchData.length) {
+                if (silent) {
+                    return false;
                 }
 
-                return new DocumentUri(matchData[1], matchData[2], matchData[3]);
+                throw new Error(
+                    `Editor document URL must have format "namespace:document-type:document-unique-key". Invalid URI string: ${uriString}`
+                );
             }
-        }]);
-        return DocumentUri;
-    }();
+
+            return new DocumentUri(matchData[1], matchData[2], matchData[3]);
+        }
+
+        get uri() {
+            return this.namespaceAndDocType + ':' + this.uniqueKey;
+        }
+
+        get namespaceAndDocType() {
+            return this.namespace + ':' + this.documentType;
+        }
+    }
 
     return DocumentUri;
 });

@@ -2,62 +2,25 @@
 
 use Html;
 use Backend;
+use Backend\Classes\UiElement;
 
 /**
  * Button
+ *
+ * @method Button label(string $label) label for the button
+ * @method Button linkUrl(string $linkUrl) linkUrl will use an anchor button
+ * @method Button cssClass(string $cssClass) cssClass for the button
+ * @method Button replaceCssClass(string $replaceCssClass) replaceCssClass defaults for the button
+ * @method Button hotkey(...$hotkey) hotkey patterns
+ * @method Button type(string $type) type of button
+ * @method Button attributes(array $attributes) attributes in HTML
+ * @method Button isPrimary(string $isPrimary) isPrimary button
+ *
+ * @package october\backend
+ * @author Alexey Bobkov, Samuel Georges
  */
-class Button
+class Button extends UiElement
 {
-    use \Backend\Traits\ElementRenderer;
-
-    /**
-     * @var string label for the button
-     */
-    protected $label;
-
-    /**
-     * @var string linkUrl will use an anchor button
-     */
-    protected $linkUrl;
-
-    /**
-     * @var string cssClass for the button
-     */
-    protected $cssClass;
-
-    /**
-     * @var string replaceCssClass defaults for the button
-     */
-    protected $replaceCssClass;
-
-    /**
-     * @var array hotkey patterns
-     */
-    protected $hotkey;
-
-    /**
-     * @var string type of button
-     */
-    protected $type;
-
-    /**
-     * @var array attributes in HTML
-     */
-    protected $attributes;
-
-    /**
-     * @var bool isPrimary button
-     */
-    protected $isPrimary = false;
-
-    /**
-     * __construct
-     */
-    public function __construct(string $label)
-    {
-        $this->label = $label;
-    }
-
     /**
      * render the element
      */
@@ -136,81 +99,11 @@ class Button
     }
 
     /**
-     * label
-     */
-    public function label(string $label): Button
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
      * linkTo
      */
-    public function linkTo(string $linkUrl, bool $isRaw = false): Button
+    public function linkTo(string $linkUrl, bool $isRaw = false): static
     {
         $this->linkUrl = $isRaw ? $linkUrl : Backend::url($linkUrl);
-
-        return $this;
-    }
-
-    /**
-     * cssClass
-     */
-    public function replaceCssClass(string $replaceCssClass): Button
-    {
-        $this->replaceCssClass = $replaceCssClass;
-
-        return $this;
-    }
-
-    /**
-     * cssClass
-     */
-    public function cssClass(string $cssClass): Button
-    {
-        $this->cssClass = $cssClass;
-
-        return $this;
-    }
-
-    /**
-     * type
-     */
-    public function type(string $type): Button
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * hotkey
-     */
-    public function hotkey(...$hotkey): Button
-    {
-        $this->hotkey = $hotkey;
-
-        return $this;
-    }
-
-    /**
-     * attributes
-     */
-    public function attributes(array $attributes): Button
-    {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * isPrimary
-     */
-    public function primary(): Button
-    {
-        $this->isPrimary = true;
 
         return $this;
     }

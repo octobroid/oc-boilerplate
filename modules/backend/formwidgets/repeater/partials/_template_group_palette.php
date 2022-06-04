@@ -1,9 +1,9 @@
 <script type="text/template" data-group-palette-template>
     <div class="popover-head">
         <h3><?= e(trans($prompt)) ?></h3>
-        <button type="button" class="close"
+        <button type="button" class="btn-close"
             data-dismiss="popover"
-            aria-hidden="true">&times;</button>
+            aria-label="<?= __("Close") ?>"></button>
     </div>
     <div class="popover-fixed-height w-300">
         <div class="control-scrollpad" data-control="scrollpad">

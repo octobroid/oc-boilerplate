@@ -1,8 +1,14 @@
 Vue.component('cms-editor-component-asset-editor', {
     extends: $.oc.module.import('cms.editor.extension.documentcomponent.base'),
-    data: function data() {
-        var EditorModelDefinition = $.oc.module.import('backend.vuecomponents.monacoeditor.modeldefinition');
-        var defMarkup = new EditorModelDefinition('html', this.trans('cms::lang.content.editor_content'), {}, 'content', 'backend-icon-background monaco-document html');
+    data: function() {
+        const EditorModelDefinition = $.oc.module.import('backend.vuecomponents.monacoeditor.modeldefinition');
+        const defMarkup = new EditorModelDefinition(
+            'html',
+            this.trans('cms::lang.content.editor_content'),
+            {},
+            'content',
+            'backend-icon-background monaco-document html'
+        );
 
         defMarkup.setModelTags(['cms-asset-contents']);
 
@@ -21,50 +27,60 @@ Vue.component('cms-editor-component-asset-editor', {
     },
     computed: {
         toolbarElements: function computeToolbarElements() {
-            return this.postProcessToolbarElements([{
-                type: 'button',
-                icon: 'octo-icon-save',
-                label: this.trans('backend::lang.form.save'),
-                hotkey: 'ctrl+s, cmd+s',
-                tooltip: this.trans('backend::lang.form.save'),
-                tooltipHotkey: '⌃S, ⌘S',
-                command: 'save'
-            }, {
-                type: 'button',
-                icon: 'octo-icon-settings',
-                label: this.trans('editor::lang.common.settings'),
-                command: 'settings',
-                hidden: !this.hasSettingsForm
-            }, {
-                type: 'separator'
-            }, {
-                type: 'button',
-                icon: 'octo-icon-info',
-                label: this.trans('cms::lang.editor.info'),
-                command: 'show-template-info',
-                disabled: this.isNewDocument
-            }, {
-                type: 'separator'
-            }, {
-                type: 'button',
-                icon: 'octo-icon-delete',
-                disabled: this.isNewDocument,
-                command: 'delete',
-                hotkey: 'shift+option+d',
-                tooltip: this.trans('backend::lang.form.delete'),
-                tooltipHotkey: '⇧⌥D'
-            }, {
-                type: 'button',
-                icon: this.documentHeaderCollapsed ? 'octo-icon-angle-down' : 'octo-icon-angle-up',
-                command: 'document:toggleToolbar',
-                fixedRight: true,
-                tooltip: this.trans('editor::lang.common.toggle_document_header')
-            }], true // No database template features
+            return this.postProcessToolbarElements(
+                [
+                    {
+                        type: 'button',
+                        icon: 'octo-icon-save',
+                        label: this.trans('backend::lang.form.save'),
+                        hotkey: 'ctrl+s, cmd+s',
+                        tooltip: this.trans('backend::lang.form.save'),
+                        tooltipHotkey: '⌃S, ⌘S',
+                        command: 'save'
+                    },
+                    {
+                        type: 'button',
+                        icon: 'octo-icon-settings',
+                        label: this.trans('editor::lang.common.settings'),
+                        command: 'settings',
+                        hidden: !this.hasSettingsForm
+                    },
+                    {
+                        type: 'separator'
+                    },
+                    {
+                        type: 'button',
+                        icon: 'octo-icon-info',
+                        label: this.trans('cms::lang.editor.info'),
+                        command: 'show-template-info',
+                        disabled: this.isNewDocument
+                    },
+                    {
+                        type: 'separator'
+                    },
+                    {
+                        type: 'button',
+                        icon: 'octo-icon-delete',
+                        disabled: this.isNewDocument,
+                        command: 'delete',
+                        hotkey: 'shift+option+d',
+                        tooltip: this.trans('backend::lang.form.delete'),
+                        tooltipHotkey: '⇧⌥D'
+                    },
+                    {
+                        type: 'button',
+                        icon: this.documentHeaderCollapsed ? 'octo-icon-angle-down' : 'octo-icon-angle-up',
+                        command: 'document:toggleToolbar',
+                        fixedRight: true,
+                        tooltip: this.trans('editor::lang.common.toggle_document_header')
+                    }
+                ],
+                true // No database template features
             );
         }
     },
     methods: {
-        getRootProperties: function getRootProperties() {
+        getRootProperties: function() {
             return ['fileName', 'content'];
         },
 
@@ -73,7 +89,7 @@ Vue.component('cms-editor-component-asset-editor', {
         },
 
         updateNavigatorNodeUserData: function updateNavigatorNodeUserData(title) {
-            this.documentNavigatorNode.userData.filename = this.documentMetadata.path;
+            this.documentNavigatorNode.userData.filename = this.documentMetadata.fileName;
             this.documentNavigatorNode.userData.path = this.documentMetadata.navigatorPath;
         },
 
@@ -86,7 +102,8 @@ Vue.component('cms-editor-component-asset-editor', {
                 this.$refs.editor.updateValue(this.defMarkup, this.documentData.content);
                 this.$refs.editor.updateLanguage(this.defMarkup, this.getDocumentLanguage(this.documentData.fileName));
                 this.$refs.editor.setModelCustomAttribute(this.defMarkup, 'filePath', this.documentData.fileName);
-            } else {
+            }
+            else {
                 this.defMarkup.setModelCustomAttribute('filePath', this.documentData.fileName);
             }
         },

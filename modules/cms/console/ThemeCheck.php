@@ -26,7 +26,7 @@ class ThemeCheck extends Command
      */
     public function handle()
     {
-        $this->output->writeln('<info>Checking Themes...</info>');
+        $this->line('Checking Themes...');
 
         $this->lockReadonlyThemes();
     }
@@ -49,7 +49,7 @@ class ThemeCheck extends Command
             }
         }
 
-        $this->output->writeln('<info>All themes checked</info>');
+        $this->info('All themes checked');
     }
 
     /**

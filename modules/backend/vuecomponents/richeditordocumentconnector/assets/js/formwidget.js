@@ -1,11 +1,11 @@
-$.oc.module.register('backend.vuecomponents.richeditordocumentconnector.formwidget', function () {
+$.oc.module.register('backend.vuecomponents.richeditordocumentconnector.formwidget', function() {
     'use strict';
 
-    var FormWidget = function () {
-        function FormWidget(element, options, changeCallback) {
-            babelHelpers.classCallCheck(this, FormWidget);
-
-            var widgetConnectorClass = Vue.extend(Vue.options.components['backend-component-richeditor-document-connector-formwidgetconnector']);
+    class FormWidget {
+        constructor(element, options, changeCallback) {
+            const widgetConnectorClass = Vue.extend(
+                Vue.options.components['backend-component-richeditor-document-connector-formwidgetconnector']
+            );
 
             this.connectorInstance = new widgetConnectorClass({
                 propsData: {
@@ -17,16 +17,16 @@ $.oc.module.register('backend.vuecomponents.richeditordocumentconnector.formwidg
             });
 
             if (changeCallback) {
-                this.connectorInstance.$on('change', function () {
+                this.connectorInstance.$on('change', function() {
                     changeCallback();
                 });
             }
 
-            this.connectorInstance.$on('focus', function () {
+            this.connectorInstance.$on('focus', function() {
                 $(element).closest('.editor-write').addClass('editor-focus');
             });
 
-            this.connectorInstance.$on('blur', function () {
+            this.connectorInstance.$on('blur', function() {
                 $(element).closest('.editor-write').removeClass('editor-focus');
             });
 
@@ -34,33 +34,27 @@ $.oc.module.register('backend.vuecomponents.richeditordocumentconnector.formwidg
             element.parentNode.appendChild(this.connectorInstance.$el);
         }
 
-        babelHelpers.createClass(FormWidget, [{
-            key: 'getEditor',
-            value: function getEditor() {
-                if (this.connectorInstance) {
-                    return this.connectorInstance.getEditor();
-                }
+        getEditor() {
+            if (this.connectorInstance) {
+                return this.connectorInstance.getEditor();
             }
-        }, {
-            key: 'setContent',
-            value: function setContent(str) {
-                if (this.connectorInstance) {
-                    this.connectorInstance.setContent(str);
-                }
-            }
-        }, {
-            key: 'remove',
-            value: function remove() {
-                if (this.connectorInstance) {
-                    this.connectorInstance.$destroy();
-                    $(this.connectorInstance.$el).remove();
-                }
+        }
 
-                this.connectorInstance = null;
+        setContent(str) {
+            if (this.connectorInstance) {
+                this.connectorInstance.setContent(str);
             }
-        }]);
-        return FormWidget;
-    }();
+        }
+
+        remove() {
+            if (this.connectorInstance) {
+                this.connectorInstance.$destroy();
+                $(this.connectorInstance.$el).remove();
+            }
+
+            this.connectorInstance = null;
+        }
+    }
 
     return FormWidget;
 });

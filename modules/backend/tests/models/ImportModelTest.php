@@ -6,23 +6,8 @@ if (!class_exists('Model')) {
     class_alias('October\Rain\Database\Model', 'Model');
 }
 
-class ExampleImportModel extends ImportModel
-{
-    public $rules = [];
-
-    public function importData($results, $sessionKey = null)
-    {
-        return [];
-    }
-}
-
 class ImportModelTest extends TestCase
 {
-
-    //
-    // Tests
-    //
-
     public function testDecodeArrayValue()
     {
         $model = new ExampleImportModel;
@@ -37,5 +22,15 @@ class ImportModelTest extends TestCase
         $data = 'art direction-roman empire-sci\-fi';
         $result = self::callProtectedMethod($model, 'decodeArrayValue', [$data, '-']);
         $this->assertEquals(['art direction', 'roman empire', 'sci-fi'], $result);
+    }
+}
+
+class ExampleImportModel extends ImportModel
+{
+    public $rules = [];
+
+    public function importData($results, $sessionKey = null)
+    {
+        return [];
     }
 }

@@ -66,11 +66,11 @@
         // Items
         var headSelect = this.selectorHeader;
         this.$el.on('change', headSelect + ' input[type=checkbox]', this.proxy(this.clickItemCheckbox));
-        this.$el.on('click', headSelect + ' .repeater-item-menu', this.proxy(this.clickItemMenu));
         this.$el.on('click', headSelect + ' [data-repeater-move-up]', this.proxy(this.clickMoveItemUp));
         this.$el.on('click', headSelect + ' [data-repeater-move-down]', this.proxy(this.clickMoveItemDown));
         this.$el.on('click', headSelect + ' [data-repeater-remove]', this.proxy(this.clickRemoveItem));
         this.$el.on('click', headSelect + ' [data-repeater-duplicate]', this.proxy(this.clickDuplicateItem));
+        this.$el.on('show.bs.dropdown', headSelect + ' .repeater-item-dropdown', this.proxy(this.showItemMenu));
 
         // Toolbar
         this.$toolbar = $(this.selectorToolbar, this.$el);
@@ -105,11 +105,11 @@
         // Items
         var headSelect = this.selectorHeader;
         this.$el.off('change', headSelect + ' input[type=checkbox]', this.proxy(this.clickItemCheckbox));
-        this.$el.off('click', headSelect + ' .repeater-item-menu', this.proxy(this.clickItemMenu));
         this.$el.off('click', headSelect + ' [data-repeater-move-up]', this.proxy(this.clickMoveItemUp));
         this.$el.off('click', headSelect + ' [data-repeater-move-down]', this.proxy(this.clickMoveItemDown));
         this.$el.off('click', headSelect + ' [data-repeater-remove]', this.proxy(this.clickRemoveItem));
         this.$el.off('click', headSelect + ' [data-repeater-duplicate]', this.proxy(this.clickDuplicateItem));
+        this.$el.off('show.bs.dropdown', headSelect + ' .repeater-item-dropdown', this.proxy(this.showItemMenu));
 
         // Toolbar
         this.$toolbar.off('click', '> [data-repeater-cmd=add-group]', this.proxy(this.clickAddGroupButton));
@@ -126,11 +126,6 @@
         this.options = null;
 
         BaseProto.dispose.call(this);
-    }
-
-    // @deprecated
-    Repeater.prototype.unbind = function() {
-        this.dispose();
     }
 
     Repeater.prototype.bindSorting = function() {
@@ -165,7 +160,7 @@
         }
     }
 
-    Repeater.prototype.clickItemMenu = function(ev) {
+    Repeater.prototype.showItemMenu = function(ev) {
         var templateHtml = $('> [data-item-menu-template]', this.$el).html(),
             $target = $(ev.target),
             $item = $target.closest('li'),
@@ -224,6 +219,7 @@
     }
 
     Repeater.prototype.clickDuplicateItem = function(ev) {
+        this.eventOnAddItem && this.eventOnAddItem();
         this.onDuplicateItem(this.findItemFromTarget(ev.target));
     }
 

@@ -27,7 +27,7 @@ class GetAttrNode extends GetAttrExpression
     /**
      * @inheritdoc
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $env = $compiler->getEnvironment();
 
@@ -104,8 +104,23 @@ class GetAttrNode extends GetAttrExpression
                 $ignoreStrictCheck = true;
             }
 
-            // Related attributes are lazy loaded and are therefore always defined
+            // Halycon relies on fillable to know what is a certain attribute
+            if ($object instanceof \October\Rain\Halcyon\Model) {
+                if ($object->isFillable($item)) {
+                    return $object->$item;
+                }
+            }
+
+            // Checks if the item is an attribute or a relation, related attributes
+            // are lazy loaded and are therefore always defined
             if ($object instanceof \October\Rain\Database\Model) {
+                if (
+                    array_key_exists($item, $object->attributes) ||
+                    $object->hasGetMutator($item)
+                ) {
+                    return $object->$item;
+                }
+
                 if ($object->hasRelation($item)) {
                     $value = $object->$item;
 

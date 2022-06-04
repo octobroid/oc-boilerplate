@@ -76,7 +76,13 @@ return [
     ],
     'content' => [
         'menu_label' => 'Content',
+        'saved' => 'The content has been successfully saved.',
         'cant_save_to_dir' => 'Saving content files to the static-pages directory is not allowed.',
+    ],
+    'template' => [
+        'order_by' => 'Order by',
+        'no_list_records' => 'No records found',
+        'delete_confirm' => 'Delete selected templates?',
     ],
     'sidebar' => [
         'add' => 'Add',
@@ -84,6 +90,7 @@ return [
     ],
     'object' => [
         'invalid_type' => 'Unknown object type',
+        'unauthorized_type' => 'You are not authorized to manage :type objects',
         'not_found' => 'The requested object was not found.',
     ],
     'editor' => [
@@ -104,14 +111,22 @@ return [
     ],
     'snippet' => [
         'partialtab' => 'Snippet',
+        'settings_popup_title' => 'Static Pages Snippet',
         'code' => 'Snippet code',
         'code_comment' => 'Enter a code to make this partial available as a snippet in the Static Pages plugin.',
+        'code_required' => 'Please enter tne snippet code',
         'name' => 'Name',
         'name_comment' => 'The name is displayed in the snippet list in the Static Pages sidebar and on a Page when a snippet is added.',
+        'name_required' => 'Please enter tne snippet name',
         'no_records' => 'No snippets found',
         'menu_label' => 'Snippets',
-        'column_property' => 'Property title',
+        'properties' => 'Snippet properties',
+        'column_property' => 'Property Title',
+        'title_required' => 'Please provide the property title',
+        'type_required' => 'Please select the property type',
+        'property_required' => 'Please provide the property name',
         'column_type' => 'Type',
+        'column_type_placeholder' => 'Select',
         'column_code' => 'Code',
         'column_default' => 'Default',
         'column_options' => 'Options',

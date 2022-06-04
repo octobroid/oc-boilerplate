@@ -1,18 +1,24 @@
-$.oc.module.register('backend.vuecomponents.uploader.file', function () {
+$.oc.module.register('backend.vuecomponents.uploader.file', function() {
     'use strict';
 
-    var lastFileId = 0;
+    let lastFileId = 0;
 
     function makeUniqueFileKey() {
         return ++lastFileId;
     }
 
-    var File = function () {
-        function File(queue, handlerName, file, formFieldName, extraData) {
-            var _this = this;
+    class File {
+        name;
+        status;
+        progress;
+        key;
+        size;
+        promise;
+        isCancelled;
+        errorMessage;
+        participatesInTotal;
 
-            babelHelpers.classCallCheck(this, File);
-
+        constructor(queue, handlerName, file, formFieldName, extraData) {
             this.name = file.name;
             this.progress = 0;
             this.bytesLoaded = 0;
@@ -20,31 +26,38 @@ $.oc.module.register('backend.vuecomponents.uploader.file', function () {
             this.size = file.size;
             this.key = makeUniqueFileKey();
             this.participatesInTotal = true;
-            this.promise = queue.add(handlerName, formFieldName, file, file.name, function (progress) {
-                _this.progress = progress;
-            }, this, extraData);
+            this.promise = queue.add(
+                handlerName,
+                formFieldName,
+                file,
+                file.name,
+                (progress) => {
+                    this.progress = progress;
+                },
+                this,
+                extraData
+            );
 
-            this.promise.then(function () {
-                _this.progress = 100;
-                _this.status = 'completed';
-            }, function (err) {
-                _this.status = 'error';
-                if (typeof err === 'string') {
-                    _this.errorMessage = err;
+            this.promise.then(
+                () => {
+                    this.progress = 100;
+                    this.status = 'completed';
+                },
+                (err) => {
+                    this.status = 'error';
+                    if (typeof err === 'string') {
+                        this.errorMessage = err;
+                    }
                 }
-            });
+            );
         }
 
-        babelHelpers.createClass(File, [{
-            key: 'abort',
-            value: function abort() {
-                this.isCancelled = true;
-                this.promise.cancel();
-                this.promise = null;
-            }
-        }]);
-        return File;
-    }();
+        abort() {
+            this.isCancelled = true;
+            this.promise.cancel();
+            this.promise = null;
+        }
+    }
 
     return File;
 });

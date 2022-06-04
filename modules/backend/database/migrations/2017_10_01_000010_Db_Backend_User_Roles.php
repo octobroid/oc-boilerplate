@@ -12,9 +12,11 @@ class DbBackendUserRoles extends Migration
             $table->increments('id');
             $table->string('name')->unique('role_unique');
             $table->string('code')->nullable()->index('role_code_index');
+            $table->string('color_background')->nullable();
             $table->text('description')->nullable();
-            $table->text('permissions')->nullable();
+            $table->mediumText('permissions')->nullable();
             $table->boolean('is_system')->default(0);
+            $table->integer('sort_order')->nullable();
             $table->timestamps();
         });
     }

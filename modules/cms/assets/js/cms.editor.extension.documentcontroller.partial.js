@@ -1,63 +1,52 @@
-$.oc.module.register('cms.editor.extension.documentcontroller.partial', function () {
+$.oc.module.register('cms.editor.extension.documentcontroller.partial', function() {
     'use strict';
 
-    var DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
+    const DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
 
-    var treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
+    const treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
 
-    var DocumentControllerPartial = function (_DocumentControllerBa) {
-        babelHelpers.inherits(DocumentControllerPartial, _DocumentControllerBa);
-
-        function DocumentControllerPartial() {
-            babelHelpers.classCallCheck(this, DocumentControllerPartial);
-            return babelHelpers.possibleConstructorReturn(this, (DocumentControllerPartial.__proto__ || Object.getPrototypeOf(DocumentControllerPartial)).apply(this, arguments));
+    class DocumentControllerPartial extends DocumentControllerBase {
+        get documentType() {
+            return 'cms-partial';
         }
 
-        babelHelpers.createClass(DocumentControllerPartial, [{
-            key: 'initListeners',
-            value: function initListeners() {
-                this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
-            }
-        }, {
-            key: 'getAllPartialFilenames',
-            value: function getAllPartialFilenames() {
-                if (this.cachedPartialList) {
-                    return this.cachedPartialList;
-                }
+        get vueEditorComponentName() {
+            return 'cms-editor-component-partial-editor';
+        }
 
-                var partialsNavigatorNode = treeviewUtils.findNodeByKeyInSections(this.parentExtension.state.navigatorSections, 'cms:cms-partial');
+        initListeners() {
+            this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
+        }
 
-                var partialList = [];
+        getAllPartialFilenames() {
+            if (this.cachedPartialList) {
+                return this.cachedPartialList;
+            }
 
-                if (partialsNavigatorNode) {
-                    partialList = treeviewUtils.getFlattenNodes(partialsNavigatorNode.nodes).map(function (partialNode) {
-                        return partialNode.userData.filename;
-                    });
-                } else {
-                    partialList = this.parentExtension.state.customData.partials;
-                }
+            const partialsNavigatorNode = treeviewUtils.findNodeByKeyInSections(
+                this.parentExtension.state.navigatorSections,
+                'cms:cms-partial'
+            );
 
-                this.cachedPartialList = partialList;
-                return partialList;
+            let partialList = [];
+
+            if (partialsNavigatorNode) {
+                partialList = treeviewUtils.getFlattenNodes(partialsNavigatorNode.nodes).map((partialNode) => {
+                    return partialNode.userData.filename;
+                });
             }
-        }, {
-            key: 'onNavigatorNodesUpdated',
-            value: function onNavigatorNodesUpdated(cmd) {
-                this.cachedPartialList = null;
+            else {
+                partialList = this.parentExtension.state.customData.partials;
             }
-        }, {
-            key: 'documentType',
-            get: function get() {
-                return 'cms-partial';
-            }
-        }, {
-            key: 'vueEditorComponentName',
-            get: function get() {
-                return 'cms-editor-component-partial-editor';
-            }
-        }]);
-        return DocumentControllerPartial;
-    }(DocumentControllerBase);
+
+            this.cachedPartialList = partialList;
+            return partialList;
+        }
+
+        onNavigatorNodesUpdated(cmd) {
+            this.cachedPartialList = null;
+        }
+    }
 
     return DocumentControllerPartial;
 });

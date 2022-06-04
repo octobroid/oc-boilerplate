@@ -219,20 +219,16 @@
                 return;
             }
 
-            /*
-             * Check each tab pane for form field groups
-             */
+            // Check each tab pane for form field groups
             $('.tab-pane:not(.is-lazy):not(.nohide)', tabControl).each(function() {
                 var hasControls = $('.form-group:not(:empty):not(.hide)', $(this)).length;
 
-                $('[data-target="#' + $(this).attr('id') + '"]', tabControl)
+                $('[data-bs-target="#' + $(this).attr('id') + '"]', tabControl)
                     .closest('li')
                     .toggle(!!hasControls);
             });
 
-            /*
-             * If a hidden tab was selected, select the first visible tab
-             */
+            // If a hidden tab was selected, select the first visible tab
             if (!$('> li.active:visible', tabContainer).length) {
                 $('> li:visible:first', tabContainer)
                     .find('> a:first')

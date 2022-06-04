@@ -2,12 +2,12 @@
     <ul class="pagination">
         {#-- Previous Page Link --#}
         {% if paginator.onFirstPage %}
-            <li class="disabled" aria-disabled="true" aria-label="{{ 'system::lang.pagination.previous'|trans }}">
-                <span aria-hidden="true">&lsaquo;</span>
+            <li class="page-item first disabled" aria-disabled="true" aria-label="{{ 'system::lang.pagination.previous'|trans }}">
+                <span class="page-link" aria-hidden="true">&larr;</span>
             </li>
         {% else %}
-            <li>
-                <a href="{{ paginator.previousPageUrl }}" rel="prev" aria-label="{{ 'system::lang.pagination.previous'|trans }}">&lsaquo;</a>
+            <li class="page-item first">
+                <a class="page-link" href="{{ paginator.previousPageUrl }}" rel="prev" aria-label="{{ 'system::lang.pagination.previous'|trans }}">&larr;</a>
             </li>
         {% endif %}
 
@@ -16,28 +16,26 @@
             {% if element is iterable %}
                 {#-- Array Of Links --#}
                 {% for page, url in element %}
-                    {% if $page == paginator.currentPage %}
-                        <li class="active" aria-current="page"><span>{{ page }}</span></li>
+                    {% if page == paginator.currentPage %}
+                        <li class="page-item active" aria-current="page"><span class="page-link">{{ page }}</span></li>
                     {% else %}
-                        <li><a href="{{ url }}">{{ page }}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{ url }}">{{ page }}</a></li>
                     {% endif %}
                 {% endfor %}
             {% else %}
                 {#-- "Three Dots" Separator --#}
-                {% if is_string($element) %}
-                    <li class="disabled" aria-disabled="true"><span>{{ element }}</span></li>
-                {% endif %}
+                <li class="page-item middle disabled" aria-disabled="true"><span class="page-link">{{ element }}</span></li>
             {% endif %}
         {% endfor %}
 
         {#-- Next Page Link --#}
         {% if paginator.hasMorePages %}
-            <li>
-                <a href="{{ paginator.nextPageUrl }}" rel="next" aria-label="{{ 'system::lang.pagination.next'|trans }}">&rsaquo;</a>
+            <li class="page-item last">
+                <a class="page-link" href="{{ paginator.nextPageUrl }}" rel="next" aria-label="{{ 'system::lang.pagination.next'|trans }}">&rarr;</a>
             </li>
         {% else %}
-            <li class="disabled" aria-disabled="true" aria-label="{{ 'system::lang.pagination.next'|trans }}">
-                <span aria-hidden="true">&rsaquo;</span>
+            <li class="page-item last disabled" aria-disabled="true" aria-label="{{ 'system::lang.pagination.next'|trans }}">
+                <span class="page-link" aria-hidden="true">&rarr;</span>
             </li>
         {% endif %}
     </ul>

@@ -268,7 +268,7 @@ class ListStructure extends Lists
      */
     protected function reorderForSortable($item)
     {
-        $item->setSortableOrder(post('sort_orders'), array_keys((array) post('sort_orders')));
+        $item->setSortableOrder(post('sort_orders'));
     }
 
     /**

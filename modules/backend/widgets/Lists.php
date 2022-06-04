@@ -16,6 +16,7 @@ use Backend\Classes\WidgetBase;
 use October\Rain\Database\Model;
 use October\Rain\Element\Lists\ColumnDefinition;
 use October\Contracts\Element\ListElement;
+use Illuminate\Pagination\UrlWindow;
 use ApplicationException;
 use BackendAuth;
 use Exception;
@@ -266,6 +267,7 @@ class Lists extends WidgetBase implements ListElement
             $this->putSession('lastVisitedPage', $this->vars['pageCurrent']);
 
             if ($this->showPageNumbers) {
+                $this->vars['recordElements'] = $this->getPaginationElements($this->records);
                 $this->vars['recordTotal'] = $this->records->total();
                 $this->vars['pageLast'] = $this->records->lastPage();
                 $this->vars['pageFrom'] = $this->records->firstItem();
@@ -282,7 +284,26 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Event handler for refreshing the list.
+     * getPaginationElements get the array of elements to pass to the view.
+     * @return array
+     */
+    protected function getPaginationElements($records)
+    {
+        $records->onEachSide(1);
+
+        $window = UrlWindow::make($records);
+
+        return array_filter([
+            $window['first'],
+            is_array($window['slider']) ? '...' : null,
+            $window['slider'],
+            is_array($window['last']) ? '...' : null,
+            $window['last'],
+        ]);
+    }
+
+    /**
+     * onRefresh event handler for refreshing the list.
      */
     public function onRefresh()
     {
@@ -836,7 +857,10 @@ class Lists extends WidgetBase implements ListElement
      */
     public function defineColumn(string $columnName = null, string $label = null): ColumnDefinition
     {
-        return $this->allColumns[$columnName] = new ListColumn($columnName, $label);
+        return $this->allColumns[$columnName] = new ListColumn([
+            'columnName' => $columnName,
+            'label' => $label
+        ]);
     }
 
     /**
@@ -942,7 +966,7 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Programatically add columns, used internally and for extensibility.
+     * addColumns programatically add columns, used internally and for extensibility.
      * @param array $columns Column definitions
      */
     public function addColumns(array $columns)
@@ -953,7 +977,7 @@ class Lists extends WidgetBase implements ListElement
         foreach ($columns as $columnName => $config) {
             // Check if user has permissions to show this column
             $permissions = array_get($config, 'permissions');
-            if (!empty($permissions) && !BackendAuth::getUser()->hasAccess($permissions, false)) {
+            if (!empty($permissions) && !BackendAuth::userHasAccess($permissions, false)) {
                 continue;
             }
 
@@ -962,7 +986,7 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Programatically remove a column, used for extensibility.
+     * removeColumn programatically removes a column, used for extensibility.
      * @param string $column Column name
      */
     public function removeColumn($columnName)
@@ -973,12 +997,13 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Creates a list column object from it's name and configuration.
+     * makeListColumn creates a list column object from it's name and configuration.
      */
     protected function makeListColumn($name, $config)
     {
         if (is_string($config)) {
             $label = $config;
+            $config = [];
         }
         elseif (isset($config['label'])) {
             $label = $config['label'];
@@ -987,9 +1012,7 @@ class Lists extends WidgetBase implements ListElement
             $label = studly_case($name);
         }
 
-        /*
-         * Auto configure pivot relation
-         */
+        // Auto configure pivot relation
         if (starts_with($name, 'pivot[') && strpos($name, ']') !== false) {
             $_name = HtmlHelper::nameToArray($name);
             $relationName = array_shift($_name);
@@ -1003,9 +1026,7 @@ class Lists extends WidgetBase implements ListElement
             $config['valueFrom'] = $valueFrom;
             $config['searchable'] = false;
         }
-        /*
-         * Auto configure standard relation
-         */
+        // Auto configure standard relation
         elseif (strpos($name, '[') !== false && strpos($name, ']') !== false) {
             $config['valueFrom'] = $name;
             $config['sortable'] = false;
@@ -1014,15 +1035,25 @@ class Lists extends WidgetBase implements ListElement
 
         $columnType = $config['type'] ?? null;
 
-        $column = new ListColumn($name, $label);
-        $column->displayAs($columnType, $config);
+        $column = new ListColumn([
+            'columnName' => $name,
+            'label' => $label
+        ]);
+
+        if ($config) {
+            $column->useConfig($config);
+        }
+
+        if ($columnType) {
+            $column->displayAs($columnType);
+        }
 
         return $column;
     }
 
     /**
-     * Calculates the total columns used in the list, including checkboxes
-     * and other additions.
+     * getTotalColumns calculates the total columns used in the list, including
+     * checkboxes and other additions.
      */
     protected function getTotalColumns()
     {
@@ -1041,11 +1072,16 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Looks up the column header
+     * getHeaderValue looks up the column header
      */
     public function getHeaderValue($column)
     {
-        $value = Lang::get($column->label);
+        if ($column->shortLabel !== null) {
+            $value = Lang::get($column->shortLabel);
+        }
+        else {
+            $value = Lang::get($column->label);
+        }
 
         /**
          * @event backend.list.overrideHeaderValue
@@ -1101,17 +1137,13 @@ class Lists extends WidgetBase implements ListElement
                 $value = null;
             }
         }
-        /*
-         * Handle taking value from model attribute.
-         */
+        // Handle taking value from model attribute.
         elseif ($column->valueFrom) {
             $value = $column->getValueFromData($record);
         }
-        /*
-         * Otherwise, if the column is a relation, it will be a custom select,
-         * so prevent the Model from attempting to load the relation
-         * if the value is NULL.
-         */
+        // Otherwise, if the column is a relation, it will be a custom select,
+        // so prevent the Model from attempting to load the relation
+        // if the value is NULL.
         else {
             if (
                 $record->hasRelation($columnName) &&
@@ -1158,23 +1190,17 @@ class Lists extends WidgetBase implements ListElement
      */
     public function getColumnValue($record, $column)
     {
-        /*
-         * Custom display attribute that pulls directly from the model
-         */
+        // Custom display attribute that pulls directly from the model
         if ($column->displayFrom) {
             $columnName = $column->displayFrom;
             $value = $record->{$columnName};
         }
-        /*
-         * Standard value
-         */
+        // Standard value
         else {
             $value = $this->getColumnValueRaw($record, $column);
         }
 
-        /*
-         * Apply filters
-         */
+        // Apply filters
         if (method_exists($this, 'eval'. studly_case($column->type) .'TypeValue')) {
             $value = $this->{'eval'. studly_case($column->type) .'TypeValue'}($record, $column, $value);
         }
@@ -1182,9 +1208,7 @@ class Lists extends WidgetBase implements ListElement
             $value = $this->evalCustomListType($column->type, $record, $column, $value);
         }
 
-        /*
-         * Apply default value.
-         */
+        // Apply default value.
         if ($value === '' || $value === null) {
             $value = $column->defaults;
         }
@@ -1244,7 +1268,7 @@ class Lists extends WidgetBase implements ListElement
     }
 
     /**
-     * Adds a custom CSS class string to a record row
+     * getRowClass adds a custom CSS class string to a record row
      * @param  Model $record Populated model
      * @return string
      */
@@ -1295,13 +1319,13 @@ class Lists extends WidgetBase implements ListElement
     //
 
     /**
-     * Process a custom list types registered by plugins.
+     * evalCustomListType processes a custom list types registered by plugins and the app.
      */
     protected function evalCustomListType($type, $record, $column, $value)
     {
-        $plugins = PluginManager::instance()->getRegistrationMethodValues('registerListColumnTypes');
-
-        foreach ($plugins as $availableTypes) {
+        // Load plugin and app column types
+        $methodValues = PluginManager::instance()->getRegistrationMethodValues('registerListColumnTypes');
+        foreach ($methodValues as $availableTypes) {
             if (!isset($availableTypes[$type])) {
                 continue;
             }
@@ -1360,37 +1384,38 @@ class Lists extends WidgetBase implements ListElement
         $isDefaultSize = !isset($config['width']) && !isset($config['height']);
 
         $colName = $column->columnName;
-        $image = null;
+        $images = [];
 
         // File model
         if (isset($record->attachMany[$colName])) {
-            $image = $value ? $value->first() : null;
+            $images = $value->count() ? $value : [];
         }
         elseif (isset($record->attachOne[$colName])) {
-            $image = $value;
+            $images = $value ? [$value] : [];
         }
         // Media item
         else {
-            if (is_array($value)) {
-                $value = array_unshift($value);
-            }
-
-            if (strpos($value, '://') !== false) {
-                $image = $value;
-            }
-            elseif (strlen($value)) {
-                $image = \Media\Classes\MediaLibrary::url($value);
+            foreach ((array) $value as $val) {
+                if (strpos($val, '://') !== false) {
+                    $images[] = $val;
+                }
+                elseif (strlen($val)) {
+                    $images[] = \Media\Classes\MediaLibrary::url($val);
+                }
             }
         }
 
-        if (!$image) {
+        if (!$images) {
             return '';
         }
 
-        $imageUrl = \System\Classes\ResizeImages::resize($image, $width, $height, $options);
+        $imageUrls = [];
+        foreach ($images as $image) {
+            $imageUrls[] = \System\Classes\ResizeImages::resize($image, $width, $height, $options);
+        }
 
         return $this->makePartial('column_image', [
-            'imageUrl' => $imageUrl,
+            'imageUrls' => $imageUrls,
             'isDefaultSize' => $isDefaultSize,
             'width' => $width,
             'height' => $height
@@ -1589,7 +1614,10 @@ class Lists extends WidgetBase implements ListElement
      */
     protected function evalSelectableTypeValue($record, $column, $value)
     {
-        $formField = new \Backend\Classes\FormField($column->columnName, $column->label);
+        $formField = new \Backend\Classes\FormField([
+            'fieldName' => $column->columnName,
+            'label' => $column->label
+        ]);
 
         $fieldOptions = $column->config['options'] ?? null;
 

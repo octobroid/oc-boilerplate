@@ -46,6 +46,11 @@
     > .repeater-header {
         border-bottom-color: transparent;
         border-radius: @border-radius-base;
+
+        .repeater-item-checkbox .form-check-input {
+            top: 0;
+            left: -5px;
+        }
     }
 
     > .repeater-content {
@@ -53,10 +58,15 @@
     }
 }
 
-// Accordion Mode
-.field-repeater.repeater-mode-accordion {
+// Accordion Mode, Grouped
+.field-repeater.repeater-mode-accordion.is-grouped {
     > ul > li.field-repeater-item > .repeater-header {
         cursor: pointer;
+
+        .repeater-item-checkbox .form-check-input {
+            top: 0;
+            left: -5px;
+        }
     }
 }
 
@@ -94,12 +104,6 @@
         a.repeater-item-menu,
         a.repeater-item-handle {
             margin: 2px 0;
-        }
-
-        .repeater-item-checkbox {
-            .checkbox {
-                padding-left: 26px;
-            }
         }
     }
 }

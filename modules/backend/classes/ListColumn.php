@@ -5,8 +5,19 @@ use October\Rain\Html\Helper as HtmlHelper;
 use October\Rain\Element\Lists\ColumnDefinition;
 
 /**
- * List Columns definition
- * A translation of the list column configuration
+ * ListColumn definition is a translation of the list column configuration
+ *
+ * @method ListColumn valueFrom(string $valueFrom) valueFrom is a model attribute to use for the accessed value
+ * @method ListColumn displayFrom(string $displayFrom) displayFrom is a model attribute to use for the displayed value
+ * @method ListColumn defaults(string $defaults) defaults specifies a default value when value is empty
+ * @method ListColumn sqlSelect(string $sqlSelect) sqlSelect is a custom SQL for selecting this record display value, the `@` symbol is replaced with the table name.
+ * @method ListColumn relation(string $relation) Relation name, if this column represents a model relationship.
+ * @method ListColumn relationCount(bool $relationCount) Count mode to display the number of related records.
+ * @method ListColumn width(string $width) sets the column width, can be specified in percents (10%) or pixels (50px).
+ * @method ListColumn cssClass(string $cssClass) Specify a CSS class to attach to the list cell element.
+ * @method ListColumn headCssClass(string $headCssClass) Specify a CSS class to attach to the list header cell element.
+ * @method ListColumn format(string $format) Specify a format or style for the column value, such as a Date.
+ * @method ListColumn path(string $path) Specifies a path for partial-type fields.
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
@@ -14,113 +25,28 @@ use October\Rain\Element\Lists\ColumnDefinition;
 class ListColumn extends ColumnDefinition
 {
     /**
-     * @var string valueFrom is a model attribute to use for the accessed value
+     * __construct using old and new interface
      */
-    public $valueFrom;
-
-    /**
-     * @var string displayFrom is a model attribute to use for the displayed value
-     */
-    public $displayFrom;
-
-    /**
-     * @var string defaults specifies a default value when value is empty
-     */
-    public $defaults;
-
-    /**
-     * @var string sqlSelect is a custom SQL for selecting this record display value,
-     * the `@` symbol is replaced with the table name.
-     */
-    public $sqlSelect;
-
-    /**
-     * @var string Relation name, if this column represents a model relationship.
-     */
-    public $relation;
-
-    /**
-     * @var bool Count mode to display the number of related records.
-     */
-    public $relationCount = false;
-
-    /**
-     * @var string sets the column width, can be specified in percents (10%) or pixels (50px).
-     * There could be a single column without width specified, it will be stretched to take the
-     * available space.
-     */
-    public $width;
-
-    /**
-     * @var string Specify a CSS class to attach to the list cell element.
-     */
-    public $cssClass;
-
-    /**
-     * @var string Specify a CSS class to attach to the list header cell element.
-     */
-    public $headCssClass;
-
-    /**
-     * @var string Specify a format or style for the column value, such as a Date.
-     */
-    public $format;
-
-    /**
-     * @var string Specifies a path for partial-type fields.
-     */
-    public $path;
-
-    /**
-     * __construct the column
-     * @todo remove this method if year >= 2023
-     */
-    public function __construct($columnName, $label)
+    public function __construct($config = [], $label = null)
     {
-        parent::__construct((string) $columnName);
+        // @deprecated old API
+        if (!is_array($config)) {
+            return parent::__construct([
+                'columnName' => $config,
+                'label' => $label
+            ]);
+        }
 
-        $this->label((string) $label);
+        parent::__construct($config);
     }
 
     /**
-     * evalConfig from an array and apply them to the object
+     * evalConfig
      */
-    protected function evalConfig(array $config): void
+    public function evalConfig(array $config)
     {
-        parent::evalConfig($config);
-
-        if (isset($config['width'])) {
-            $this->width = $config['width'];
-        }
-        if (isset($config['cssClass'])) {
-            $this->cssClass = $config['cssClass'];
-        }
-        if (isset($config['headCssClass'])) {
-            $this->headCssClass = $config['headCssClass'];
-        }
-        if (isset($config['valueFrom'])) {
-            $this->valueFrom = $config['valueFrom'];
-        }
-        if (isset($config['displayFrom'])) {
-            $this->displayFrom = $config['displayFrom'];
-        }
-        if (isset($config['default'])) {
-            $this->defaults = $config['default'];
-        }
         if (isset($config['select'])) {
-            $this->sqlSelect = $config['select'];
-        }
-        if (isset($config['relation'])) {
-            $this->relation = $config['relation'];
-        }
-        if (isset($config['relationCount'])) {
-            $this->relationCount = (bool) $config['relationCount'];
-        }
-        if (isset($config['format'])) {
-            $this->format = $config['format'];
-        }
-        if (isset($config['path'])) {
-            $this->path = $config['path'];
+            $this->sqlSelect($config['select']);
         }
     }
 
@@ -174,18 +100,7 @@ class ListColumn extends ColumnDefinition
             return $value;
         }
 
-        return $this->relationCount;
-    }
-
-    /**
-     * getConfig returns a raw config item value
-     * @param  string $value
-     * @param  string $default
-     * @return mixed
-     */
-    public function getConfig($value, $default = null)
-    {
-        return array_get($this->config, $value, $default);
+        return (bool) $this->relationCount;
     }
 
     /**

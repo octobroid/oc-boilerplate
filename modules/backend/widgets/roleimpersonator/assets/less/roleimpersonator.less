@@ -1,25 +1,30 @@
+@import "../../../../assets/less/core/boot.less";
+
 .control-roleimpersonator {
-    display: flex;
-    align-items: center;
     min-height: 30px;
-
-    background-color: #fff8d4;
-    color: #586667;
-
-    a {
-        color: #2980B9;
-    }
+    color: white;
 
     .roleimpersonator-left,
+    .roleimpersonator-contents,
     .roleimpersonator-right {
-        align-items: center;
-        height: fit-content;
-        padding: 5px;
+        padding: 5px 10px;
     }
 
     .roleimpersonator-contents {
-        display: flex;
-        flex: 1;
-        justify-content: center;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .roleimpersonator-right {
+        text-align: right;
+    }
+
+    @media (max-width: @screen-xs) {
+        .roleimpersonator-left,
+        .roleimpersonator-contents,
+        .roleimpersonator-right {
+            padding: 5px;
+            text-align: center;
+        }
     }
 }

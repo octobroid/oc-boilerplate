@@ -19,14 +19,14 @@ class Index extends Controller
 {
     use \Backend\Traits\InspectableContainer;
 
-    public $requiredPermissions = ['editor.access_editor'];
+    public $requiredPermissions = ['editor'];
 
     public $implement = [
         \Editor\Behaviors\StateManager::class
     ];
 
     /**
-     * Constructor.
+     * __construct
      */
     public function __construct()
     {
@@ -50,6 +50,7 @@ class Index extends Controller
         $this->addJsBundle('/modules/editor/assets/js/editor.page.js', 'core');
         $this->addJsBundle('/modules/editor/assets/js/editor.extension.base.js', 'core');
         $this->addJsBundle('/modules/editor/assets/js/editor.extension.documentcontroller.base.js', 'core');
+        $this->addJsBundle('/modules/editor/assets/js/editor.extension.filesystemfunctions.js', 'core');
 
         $this->addJsBundle('/modules/editor/assets/js/editor.extension.documentcomponent.base.js', 'core');
 
@@ -83,7 +84,8 @@ class Index extends Controller
         $this->vars['customLogo'] = BrandSetting::getLogo();
 
         $this->vars['initialState'] = $this->makeInitialState([
-            'directModeDocument' => $directEditDocument
+            'directModeDocument' => $directEditDocument,
+            'openDocument' => Request::query('open')
         ]);
     }
 
@@ -100,7 +102,7 @@ class Index extends Controller
         }
 
         try {
-            return ExtensionManager::instance()->runCommand($extension, $command);
+            return ExtensionManager::instance()->runCommand($extension, $command, $this);
         }
         catch (ValidationException $ex) {
             $messages = $ex->getErrors()->getMessages();

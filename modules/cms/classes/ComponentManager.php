@@ -2,6 +2,7 @@
 
 use App;
 use Str;
+use System;
 use Config;
 use System\Classes\PluginManager;
 use SystemException;
@@ -54,24 +55,40 @@ class ComponentManager
      */
     protected function loadComponents()
     {
-        // Load module components
+        // Load external components
         foreach ($this->callbacks as $callback) {
             $callback($this);
         }
 
+        // Load module items
+        foreach (System::listModules() as $module) {
+            if ($provider = App::getProvider($module . '\\ServiceProvider')) {
+                $this->loadComponentsFromArray($provider->registerComponents(), $provider);
+            }
+        }
+
         // Load plugin components
-        $pluginManager = PluginManager::instance();
-        $plugins = $pluginManager->getPlugins();
+        foreach (PluginManager::instance()->getPlugins() as $plugin) {
+            $this->loadComponentsFromArray($plugin->registerComponents(), $plugin);
+        }
 
-        foreach ($plugins as $plugin) {
-            $components = $plugin->registerComponents();
-            if (!is_array($components)) {
-                continue;
-            }
+        // Load app items
+        if ($app = App::getProvider(\App\Provider::class)) {
+            $this->loadComponentsFromArray($app->registerComponents(), $app);
+        }
+    }
 
-            foreach ($components as $className => $code) {
-                $this->registerComponent($className, $code, $plugin);
-            }
+    /**
+     * loadComponentsFromArray helper
+     */
+    protected function loadComponentsFromArray($items, $owner)
+    {
+        if (!is_array($items)) {
+            return;
+        }
+
+        foreach ($items as $className => $code) {
+            $this->registerComponent($className, $code, $owner);
         }
     }
 
@@ -124,7 +141,7 @@ class ComponentManager
                 $this->setComponentOwnerAsPlugin($code, $className, $owner);
             }
             else {
-                $this->setComponentOwnerAsModule($code, $className, $owner);
+                $this->setComponentOwnerAsProvider($code, $className, $owner);
             }
         }
     }
@@ -148,17 +165,17 @@ class ComponentManager
     }
 
     /**
-     * setComponentOwnerAsModule
+     * setComponentOwnerAsProvider
      */
-    protected function setComponentOwnerAsModule(string $code, string $className, $moduleObj): void
+    protected function setComponentOwnerAsProvider(string $code, string $className, $providerObj): void
     {
-        $ownerClass = get_class($moduleObj);
+        $ownerClass = get_class($providerObj);
 
         if (!isset($this->ownerDetailsMap[$ownerClass])) {
-            $moduleName = substr($ownerClass, 0, strrpos($ownerClass, '\\'));
+            $providerName = substr($ownerClass, 0, strrpos($ownerClass, '\\'));
             $this->ownerDetailsMap[$ownerClass] = [
                 'details' => [
-                    'name' => class_basename($moduleName),
+                    'name' => class_basename($providerName),
                     'icon' => 'icon-puzzle-piece'
                 ],
                 'components' => []
@@ -288,7 +305,11 @@ class ComponentManager
             ));
         }
 
-        $component = App::make($className, [$cmsObject, $properties]);
+        $component = App::make($className, [
+            'cmsObject' => $cmsObject,
+            'properties' => $properties
+        ]);
+
         $component->name = $name;
 
         return $component;
@@ -307,21 +328,5 @@ class ComponentManager
         }
 
         return [];
-    }
-
-    /**
-     * findComponentPlugin returns a parent plugin for a specific component object.
-     * @param mixed $component A component to find the plugin for.
-     * @return mixed Returns the plugin object or null.
-     * @deprecated use findComponentOwnerDetails instead
-     */
-    public function findComponentPlugin($component)
-    {
-        $className = Str::normalizeClassName(get_class($component));
-        if (isset($this->ownerMap[$className])) {
-            return PluginManager::instance()->findByNamespace($this->ownerMap[$className]);
-        }
-
-        return null;
     }
 }

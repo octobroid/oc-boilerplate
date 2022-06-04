@@ -6,32 +6,8 @@ if (!class_exists('Model')) {
     class_alias('October\Rain\Database\Model', 'Model');
 }
 
-class ExampleExportModel extends ExportModel
-{
-    public function exportData($columns, $sessionKey = null)
-    {
-        return [
-            [
-                'foo' => 'bar',
-                'bar' => 'foo',
-                'foobar' => 'Hello World!',
-            ],
-            [
-                'foo' => 'bar2',
-                'bar' => 'foo2',
-                'foobar' => 'Hello World2!',
-            ],
-        ];
-    }
-}
-
 class ExportModelTest extends TestCase
 {
-
-    //
-    // Tests
-    //
-
     public function testEncodeArrayValue()
     {
         $model = new ExampleExportModel;
@@ -48,11 +24,14 @@ class ExportModelTest extends TestCase
         $this->assertEquals('art direction-roman empire-sci\-fi', $result);
     }
 
-    public function testDownload()
+    public function testDownloadCsv()
     {
         $model = new ExampleExportModel;
 
-        $csvName = $model->export(['foo' => 'title', 'bar' => 'title2'], []);
+        $csvName = $model->export(
+            ['foo' => 'title', 'bar' => 'title2'],
+            ['file_format' => 'csv']
+        );
 
         $response = $model->download($csvName);
 
@@ -82,5 +61,24 @@ class ExportModelTest extends TestCase
         if (!$fileGotDeleted) {
             unlink($filePath);
         }
+    }
+}
+
+class ExampleExportModel extends ExportModel
+{
+    public function exportData($columns, $sessionKey = null)
+    {
+        return [
+            [
+                'foo' => 'bar',
+                'bar' => 'foo',
+                'foobar' => 'Hello World!',
+            ],
+            [
+                'foo' => 'bar2',
+                'bar' => 'foo2',
+                'foobar' => 'Hello World2!',
+            ],
+        ];
     }
 }

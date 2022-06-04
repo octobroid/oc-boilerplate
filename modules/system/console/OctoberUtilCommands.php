@@ -1,5 +1,6 @@
 <?php namespace System\Console;
 
+use App;
 use Lang;
 use File;
 use Config;
@@ -7,7 +8,6 @@ use System;
 use System\Classes\UpdateManager;
 use System\Classes\CombineAssets;
 use System\Models\File as FileModel;
-use Exception;
 
 /**
  * OctoberUtilCommands is a dedicated class for utility commands
@@ -22,29 +22,16 @@ trait OctoberUtilCommands
      */
     protected function utilSetBuild()
     {
-        $this->output->newLine();
-
-        /*
-         * Skip setting the build number if no database is detected to set it within
-         */
+        // Cannot set without a database.
         if (!System::hasDatabase()) {
-            $this->comment('No database detected - skipping setting the build number.');
             return;
         }
 
-        try {
-            if ($build = $this->option('value')) {
-                UpdateManager::instance()->setBuild((int) $build);
-            }
-            else {
-                $build = UpdateManager::instance()->setBuildNumberManually();
-            }
+        $seeder = App::make(\System\Database\Seeds\SeedSetBuildNumber::class);
 
-            $this->comment('* You are using October CMS version: v' . System::VERSION . '.' . $build);
-        }
-        catch (Exception $ex) {
-            $this->comment('*** Unable to set build: [' . $ex->getMessage() . ']');
-        }
+        $seeder->setCommand($this);
+
+        $seeder->run($this->option('value'));
     }
 
     /**

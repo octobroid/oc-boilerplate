@@ -204,7 +204,9 @@ $.oc.module.register('backend.component.treeview.node', function () {
                 menuId: null,
                 menuButtonId: null,
                 menuLabelId: null,
-                contextMenuVisible: false
+                contextMenuVisible: false,
+                clickCounter: 0,
+                clickTimer: null
             };
         },
         computed: {
@@ -531,7 +533,7 @@ $.oc.module.register('backend.component.treeview.node', function () {
             },
 
             triggerSelected: function triggerSelected(ev) {
-                this.onNodeClick(ev);
+                this.onSingleClick(ev);
             },
 
             onExpandToggleClick: function () {
@@ -544,6 +546,48 @@ $.oc.module.register('backend.component.treeview.node', function () {
             },
 
             onNodeClick: function (event) {
+                var isFolderNode = this.isFolderIcon;
+
+                if (!isFolderNode) {
+                    isFolderNode = (!this.nodeData.selectable || this.isRoot) && this.hasChildNodes;
+                }
+
+                if (!isFolderNode) {
+                    this.onSingleClick(event);
+                    return;
+                }
+
+                this.clickCounter++;
+                if (this.clickCounter == 1) {
+                    var that = this;
+
+                    this.clickTimer = setTimeout(function() {
+                        that.clickCounter = 0;
+                        that.onSingleClick(event);
+                    }, 200);
+           
+                    return;
+                }
+
+                clearTimeout(this.clickTimer);
+                this.clickCounter = 0;
+                this.onDoubleClick(event);
+            },
+
+            onDoubleClick: function (event) {
+                if ($(document.body).hasClass('drag')) {
+                    return;
+                }
+
+                if (this.isFolderIcon) {
+                    this.onExpandToggleClick();
+                    return;
+                }
+
+                this.onSingleClick(event);
+            },
+
+            onSingleClick: function (event) {
                 if ($(document.body).hasClass('drag')) {
                     return;
                 }

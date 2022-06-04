@@ -44,12 +44,14 @@
      * Renders the cell in the normal (no edit) mode
      */
     CheckboxProcessor.prototype.renderCell = function(value, cellContentContainer) {
-        var checkbox = document.createElement('div')
-        checkbox.setAttribute('data-checkbox-element', 'true')
-        checkbox.setAttribute('tabindex', '0')
+        var checkbox = document.createElement('input')
+        checkbox.setAttribute('data-checkbox-element', 'true');
+        checkbox.setAttribute('tabindex', '0');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('class', 'form-check-input');
 
         if (value && value != 0 && value != "false") {
-            checkbox.setAttribute('class', 'checked')
+            checkbox.checked = true;
         }
 
         cellContentContainer.appendChild(checkbox)
@@ -60,16 +62,7 @@
      * is focused (clicked or navigated with the keyboard).
      */
     CheckboxProcessor.prototype.onFocus = function(cellElement, isClick) {
-        cellElement.querySelector('div[data-checkbox-element]').focus()
-    }
-
-    /*
-     * Event handler for the keydown event. The table class calls this method
-     * for all processors.
-     */
-    CheckboxProcessor.prototype.onKeyDown = function(ev) {
-        if (ev.key === '(Space character)' || ev.key === 'Spacebar' || ev.key === ' ')
-            this.onClick(ev)
+        cellElement.querySelector('input[data-checkbox-element]').focus();
     }
 
     /*
@@ -77,54 +70,47 @@
      * for all processors.
      */
     CheckboxProcessor.prototype.onClick = function(ev) {
-        var target = this.tableObj.getEventTarget(ev, 'DIV')
+        var chkElement = ev.target;
 
-        if (target.getAttribute('data-checkbox-element')) {
+        if (chkElement.getAttribute('data-checkbox-element')) {
             // The method is called for all processors, but we should
             // update only the checkbox in the clicked column.
-            var container = this.getCheckboxContainerNode(target)
+            var container = this.getCheckboxContainerNode(chkElement);
             if (container.getAttribute('data-column') !== this.columnName) {
-                return
+                return;
             }
 
-            this.changeState(target)
-            $(ev.target).trigger('change')
+            this.changeState(chkElement);
+            $(chkElement).trigger('change');
         }
     }
 
-    CheckboxProcessor.prototype.changeState = function(divElement) {
-        var cell = divElement.parentNode.parentNode
+    CheckboxProcessor.prototype.changeState = function(chkElement) {
+        var cell = this.getCheckboxContainerNode(chkElement);
 
-        if (divElement.getAttribute('class') == 'checked') {
-            divElement.setAttribute('class', '')
-            this.tableObj.setCellValue(cell, 0)
-        } 
-        else {
-            divElement.setAttribute('class', 'checked')
-            this.tableObj.setCellValue(cell, 1)
-        }
+        this.tableObj.setCellValue(cell, chkElement.checked ? 1 : 0);
     }
 
     CheckboxProcessor.prototype.getCheckboxContainerNode = function(checkbox) {
-        return checkbox.parentNode.parentNode
-    } 
+        return checkbox.parentNode.parentNode;
+    }
 
     /*
      * This method is called when a cell value in the row changes.
      */
     CheckboxProcessor.prototype.onRowValueChanged = function(columnName, cellElement) {
-        if (columnName != this.columnName) {
-            return
+        if (columnName !== this.columnName) {
+            return;
         }
 
-        var checkbox = cellElement.querySelector('div[data-checkbox-element]'),
+        var checkbox = cellElement.querySelector('input[data-checkbox-element]'),
             value = this.tableObj.getCellValue(cellElement)
 
         if (value && value != 0 && value != "false") {
-            checkbox.setAttribute('class', 'checked')
+            checkbox.checked = true;
         }
         else {
-            checkbox.setAttribute('class', '')
+            checkbox.checked = false;
         }
     }
 

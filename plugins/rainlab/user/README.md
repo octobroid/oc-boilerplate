@@ -1,8 +1,5 @@
 # Front-end user plugin
 
-[![Build Status](https://img.shields.io/travis/rainlab/user-plugin.svg?branch=master)](https://travis-ci.org/rainlab/user-plugin)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/rainlab/user-plugin/blob/master/LICENCE.md)
-
 Front-end user management for October CMS.
 
 ## Requirements
@@ -47,7 +44,17 @@ As a security precaution, you may restrict users from having sessions across mul
 
 #### Notifications
 
-When a user is first activated -- either by registration, email confirmation or administrator approval -- they are sent a welcome email. To disable the welcome email, select "Do not send a notification" from the **Welcome mail template** dropdown. The default message template used is `rainlab.user::mail.welcome` and you can customize this by selecting **Mail > Mail Templates** from the settings menu.
+This feature is implemented by the Notify plugin. How to use this feature:
+
+- Install the **RainLab.Notify** plugin
+- Navigate to **Settings > Notification** rules
+- Click **New notification rule**
+- Select **User > Activated**
+- Click **Add action**
+- Select **Compose a mail message**
+- Select **User email address** for the **Send to** field
+- Here you may select the Mail template previously defined in the user settings.
+- Click **Save**
 
 ## Extended features
 
@@ -164,7 +171,7 @@ This plugin makes use of October's [`Flash API`](http://octobercms.com/docs/mark
 The User plugin displays AJAX error messages in a simple ``alert()``-box by default. However, this might scare non-technical users. You can change the default behavior of an AJAX error from displaying an ``alert()`` message, like this:
 
     <script>
-        $(window).on('ajaxErrorMessage', function(event, message){
+        $(window).on('ajaxErrorMessage', function (event, message){
 
             // This can be any custom JavaScript you want
             alert('Something bad happened, mate, here it is: ' + message);
@@ -310,6 +317,8 @@ This plugin will fire some global events that can be useful for interacting with
 - **rainlab.user.deactivate**: The user has opted-out of the site by deactivating their account. This should be used to disable any content the user may want removed.
 - **rainlab.user.reactivate**: The user has reactivated their own account by signing back in. This should revive the users content on the site.
 - **rainlab.user.getNotificationVars**: Fires when sending a user notification to enable passing more variables to the email templates. Passes the `$user` model the template will be for.
+- **rainlab.user.view.extendListToolbar**: Fires when the user listing page's toolbar is rendered.
+- **rainlab.user.view.extendPreviewToolbar**: Fires when the user preview page's toolbar is rendered.
 
 Here is an example of hooking an event:
 

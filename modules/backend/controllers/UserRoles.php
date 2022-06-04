@@ -1,10 +1,9 @@
 <?php namespace Backend\Controllers;
 
-use View;
 use Backend;
-use Response;
 use BackendAuth;
 use Backend\Classes\SettingsController;
+use ForbiddenException;
 
 /**
  * UserRoles controller
@@ -36,54 +35,12 @@ class UserRoles extends SettingsController
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['backend.manage_users'];
+    public $requiredPermissions = ['admins.manage.roles'];
 
     /**
      * @var string settingsItemCode determines the settings code
      */
     public $settingsItemCode = 'adminroles';
-
-    /**
-     * __construct the controller
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        /*
-         * Only super users can access
-         */
-        $this->bindEvent('page.beforeDisplay', function () {
-            if (!$this->user->isSuperUser()) {
-                return Response::make(View::make('backend::access_denied'), 403);
-            }
-        });
-    }
-
-    /**
-     * formExtendFields adds available permission fields to the Role form.
-     */
-    public function formExtendFields($form)
-    {
-        /*
-         * Add permissions tab
-         */
-        $form->addTabFields($this->generatePermissionsField());
-    }
-
-    /**
-     * generatePermissionsField adds the permissions editor widget to the form.
-     */
-    protected function generatePermissionsField(): array
-    {
-        return [
-            'permissions' => [
-                'tab' => 'backend::lang.user.permissions',
-                'type' => \Backend\FormWidgets\PermissionEditor::class,
-                'mode' => 'checkbox'
-            ]
-        ];
-    }
 
     /**
      * onImpersonateRole
@@ -95,5 +52,40 @@ class UserRoles extends SettingsController
         }
 
         return Backend::redirect('');
+    }
+
+    /**
+     * listExtendQuery
+     */
+    public function listExtendQuery($query)
+    {
+        $this->applyRankPermissionsToQuery($query);
+    }
+
+    /**
+     * formExtendQuery
+     */
+    public function formExtendQuery($query)
+    {
+        $this->applyRankPermissionsToQuery($query);
+    }
+
+    /**
+     * applyRankPermissionsToQuery
+     */
+    protected function applyRankPermissionsToQuery($query)
+    {
+        // Super users have no restrictions
+        if ($this->user->isSuperUser()) {
+            return;
+        }
+
+        // User has no role and therefore cannot manage roles
+        if (!$this->user->role || !$this->user->role->sort_order) {
+            $query->whereRaw('1 = 2');
+            return;
+        }
+
+        $query->where('sort_order', '>', $this->user->role->sort_order);
     }
 }

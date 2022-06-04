@@ -13,6 +13,21 @@ use Exception;
 /**
  * FormField definition is a translation of the form field configuration
  *
+ * @method FormField arrayName(string $arrayName) arrayName if the field element names should be contained in an array.
+ * @method FormField idPrefix(string $idPrefix) idPrefix to the field identifier so it can be totally unique.
+ * @method FormField context(string $context) Specifies contextual visibility of this form field.
+ * @method FormField required(bool $required) Specifies if this field is mandatory.
+ * @method FormField stretch(bool $stretch) Specifies if this field stretch to fit the page height.
+ * @method FormField attributes(array $attributes) Contains a list of attributes specified in the field configuration.
+ * @method FormField containerAttributes(array $containerAttributes) Contains a list of attributes for the field container.
+ * @method FormField cssClass(string $cssClass) Specifies a CSS class to attach to the field container.
+ * @method FormField path(string $path) Specifies a path for partial-type fields.
+ * @method FormField dependsOn(array $dependsOn) Other field names this field depends on, when the other fields are modified, this field will update.
+ * @method FormField changeHandler(string $changeHandler) AJAX handler for the change event.
+ * @method FormField trigger(array $trigger) Other field names this field can be triggered by, see the Trigger API documentation.
+ * @method FormField preset(array $preset) Other field names text is converted in to a URL, slug or file name value in this field.
+ * @method FormField permissions(array $permissions) permissions needed to view this field
+ *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
  */
@@ -29,181 +44,33 @@ class FormField extends FieldDefinition
     const HIERARCHY_UP = '^';
 
     /**
-     * @var string If the field element names should be contained in an array. Eg:
-     *
-     *     <input name="nameArray[fieldName]" />
+     * __construct using old and new interface
      */
-    public $arrayName;
-
-    /**
-     * @var string A prefix to the field identifier so it can be totally unique.
-     */
-    public $idPrefix;
-
-    /**
-     * @var string Form field value.
-     */
-    public $value;
-
-    /**
-     * @var string Model attribute to use for the display value.
-     */
-    public $valueFrom;
-
-    /**
-     * @var string Specifies a default value for supported fields.
-     */
-    public $defaults;
-
-    /**
-     * @var string Model attribute to use for the default value.
-     */
-    public $defaultFrom;
-
-    /**
-     * @var string Specifies contextual visibility of this form field.
-     */
-    public $context;
-
-    /**
-     * @var bool Specifies if this field is mandatory.
-     */
-    public $required;
-
-    /**
-     * @var bool autoFocus flags the field to be focused on load.
-     */
-    public $autoFocus = false;
-
-    /**
-     * @var bool Specify if the field is read-only or not.
-     */
-    public $readOnly = false;
-
-    /**
-     * @var bool Specify if the field is disabled or not.
-     */
-    public $disabled = false;
-
-    /**
-     * @var bool Specifies if this field stretch to fit the page height.
-     */
-    public $stretch = false;
-
-    /**
-     * @var array Contains a list of attributes specified in the field configuration.
-     */
-    public $attributes;
-
-    /**
-     * @var string Specifies a CSS class to attach to the field container.
-     */
-    public $cssClass;
-
-    /**
-     * @var string Specifies a path for partial-type fields.
-     */
-    public $path;
-
-    /**
-     * @var array Other field names this field depends on, when the other fields are modified, this field will update.
-     */
-    public $dependsOn;
-
-    /**
-     * @var array Other field names this field can be triggered by, see the Trigger API documentation.
-     */
-    public $trigger;
-
-    /**
-     * @var array Other field names text is converted in to a URL, slug or file name value in this field.
-     */
-    public $preset;
-
-    /**
-     * @var array permissions needed to view this field
-     */
-    public $permissions;
-
-    /**
-     * @var string changeHandler AJAX handler for the change event
-     */
-    public $changeHandler;
-
-    /**
-     * __construct
-     * @todo remove this method if year >= 2023
-     */
-    public function __construct($fieldName, $label)
+    public function __construct($config = [], $label = null)
     {
-        parent::__construct((string) $fieldName);
+        // @deprecated old API
+        if (!is_array($config)) {
+            return parent::__construct([
+                'fieldName' => $config,
+                'label' => $label
+            ]);
+        }
 
-        $this->label((string) $label);
+        parent::__construct($config);
     }
 
     /**
-     * Process options and apply them to this object.
-     * @param array $config
-     * @return array
+     * initDefaultValues for this field
      */
-    protected function evalConfig($config): void
+    protected function initDefaultValues()
     {
-        parent::evalConfig($config);
+        parent::initDefaultValues();
 
-        /*
-         * Standard config:property values
-         */
-        $applyConfigValues = [
-            'changeHandler',
-            'commentHtml',
-            'dependsOn',
-            'required',
-            'autoFocus',
-            'readOnly',
-            'disabled',
-            'cssClass',
-            'stretch',
-            'context',
-            'trigger',
-            'preset',
-            'path',
-        ];
-
-        foreach ($applyConfigValues as $value) {
-            if (array_key_exists($value, $config)) {
-                $this->{$value} = $config[$value];
-            }
-        }
-
-        /*
-         * Custom applicators
-         */
-        if (isset($config['default'])) {
-            $this->defaults = $config['default'];
-        }
-        if (isset($config['defaultFrom'])) {
-            $this->defaultFrom = $config['defaultFrom'];
-        }
-        if (isset($config['attributes'])) {
-            $this->attributes($config['attributes']);
-        }
-        if (isset($config['containerAttributes'])) {
-            $this->attributes($config['containerAttributes'], 'container');
-        }
-        if (isset($config['permissions'])) {
-            $this->permissions = (array) $config['permissions'];
-        }
-
-        if (isset($config['valueFrom'])) {
-            $this->valueFrom = $config['valueFrom'];
-        }
-        else {
-            $this->valueFrom = $this->fieldName;
-        }
+        $this->attributes([]);
     }
 
     /**
-     * Determine if the provided value matches this field's value.
+     * isSelected determines if the provided value matches this field's value.
      * @param string $value
      * @return bool
      */
@@ -217,62 +84,39 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Sets the attributes for this field in a given position.
-     * - field: Attributes are added to the form field element (input, select, textarea, etc)
-     * - container: Attributes are added to the form field container (div.form-group)
-     * @param  array $items
-     * @param  string $position
-     * @return void
-     */
-    public function attributes($items, $position = 'field'): FormField
-    {
-        if (!is_array($items)) {
-            return $this;
-        }
-
-        $multiArray = array_filter($items, 'is_array');
-        if (!$multiArray) {
-            $this->attributes[$position] = $items;
-            return $this;
-        }
-
-        foreach ($items as $_position => $_items) {
-            $this->attributes($_items, $_position);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Checks if the field has the supplied [unfiltered] attribute.
+     * hasAttribute checks if the field has the supplied [unfiltered] attribute.
      * @param  string $name
      * @param  string $position
      * @return bool
      */
     public function hasAttribute($name, $position = 'field')
     {
-        if (!isset($this->attributes[$position])) {
+        $posKey = $position === 'container' ? 'containerAttributes' : 'attributes';
+
+        if (!isset($this->config[$posKey])) {
             return false;
         }
 
-        return array_key_exists($name, $this->attributes[$position]);
+        return array_key_exists($name, $this->config[$posKey]);
     }
 
     /**
-     * Returns the attributes for this field at a given position.
+     * getAttributes returns the attributes for this field at a given position.
      * @param  string $position
      * @return array
      */
     public function getAttributes($position = 'field', $htmlBuild = true)
     {
-        $result = array_get($this->attributes, $position, []);
+        $posKey = $position === 'container' ? 'containerAttributes' : 'attributes';
+
+        $result = $this->config[$posKey] ?? [];
         $result = $this->filterAttributes($result, $position);
 
         return $htmlBuild ? Html::attributes($result) : $result;
     }
 
     /**
-     * Adds any circumstantial attributes to the field based on other
+     * filterAttributes adds any circumstantial attributes to the field based on other
      * settings, such as the 'disabled' option.
      * @param  array $attributes
      * @param  string $position
@@ -305,7 +149,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Adds attributes used specifically by the Trigger API
+     * filterTriggerAttributes adds attributes used specifically by the Trigger API
      * @param  array $attributes
      * @param  string $position
      * @return array
@@ -365,7 +209,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Adds attributes used specifically by the Input Preset API
+     * filterPresetAttributes adds attributes used specifically by the Input Preset API
      * @param  array $attributes
      * @param  string $position
      * @return array
@@ -404,7 +248,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Returns a value suitable for the field name property.
+     * getName returns a value suitable for the field name property.
      * @param  string $arrayName Specify a custom array name
      * @return string
      */
@@ -422,7 +266,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Returns a value suitable for the field id property.
+     * getId returns a value suitable for the field id property.
      * @param  string $suffix Specify a suffix string
      * @return string
      */
@@ -447,18 +291,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Returns a raw config item value.
-     * @param  string $value
-     * @param  string $default
-     * @return mixed
-     */
-    public function getConfig($value, $default = null)
-    {
-        return array_get($this->config, $value, $default);
-    }
-
-    /**
-     * Returns this fields value from a supplied data set, which can be
+     * getValueFromData returns this fields value from a supplied data set, which can be
      * an array or a model or another generic collection.
      * @param mixed $data
      * @param mixed $default
@@ -471,7 +304,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Returns the default value for this field, the supplied data is used
+     * getDefaultFromData returns the default value for this field, the supplied data is used
      * to source data when defaultFrom is specified.
      * @param mixed $data
      * @return mixed
@@ -690,7 +523,7 @@ class FormField extends FieldDefinition
     }
 
     /**
-     * Internal helper for method existence checks.
+     * objectMethodExists is an internal helper for method existence checks.
      *
      * @param  object $object
      * @param  string $method

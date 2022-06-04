@@ -35,13 +35,4 @@ class Cms
 
         return Url::to($path);
     }
-
-    /**
-     * @deprecated Remove if year >= 2023
-     */
-    public static function safeModeEnabled()
-    {
-        traceLog('Cms::safeModeEnabled is deprecated. Please update System::checkSafeMode instead.');
-        return \System::checkSafeMode();
-    }
 }

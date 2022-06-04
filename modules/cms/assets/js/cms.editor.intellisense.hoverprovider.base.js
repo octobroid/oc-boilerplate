@@ -1,11 +1,13 @@
-$.oc.module.register('cms.editor.intellisense.hoverprovider.base', function () {
+$.oc.module.register('cms.editor.intellisense.hoverprovider.base', function() {
     'use strict';
 
-    var HoverProviderBase = function HoverProviderBase(intellisense) {
-        babelHelpers.classCallCheck(this, HoverProviderBase);
+    class HoverProviderBase {
+        intellisense;
 
-        this.intellisense = intellisense;
-    };
+        constructor(intellisense) {
+            this.intellisense = intellisense;
+        }
+    }
 
     return HoverProviderBase;
 });

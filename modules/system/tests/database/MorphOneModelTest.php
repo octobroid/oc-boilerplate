@@ -186,45 +186,41 @@ class MorphOneModelTest extends PluginTestCase
         $this->assertNull($author->meta);
     }
 
-    /**
-     * @deprecated Removing arbitrary models soon unsupported
-     * @see isModelRemovable
-     */
-    // public function testRemovalProtection()
-    // {
-    //     Model::unguard();
-    //     $post = Post::create(['title' => "First post", 'description' => "Yay!!"]);
-    //     $author = Author::create(['name' => 'Stevie', 'email' => 'stevie@email.tld']);
-    //     $meta1 = Meta::create([
-    //         'meta_title' => 'Question',
-    //         'meta_description' => 'Industry',
-    //         'meta_keywords' => 'major',
-    //         'canonical_url' => 'http://google.com/search/jobs',
-    //         'redirect_url' => 'http://google.com',
-    //         'robot_index' => 'index',
-    //         'robot_follow' => 'follow',
-    //     ]);
-    //     $meta2 = Meta::create([
-    //         'meta_title' => 'Comment',
-    //         'meta_description' => 'Social',
-    //         'meta_keywords' => 'startup',
-    //         'canonical_url' => 'http://facebook.com/search/users',
-    //         'redirect_url' => 'http://facebook.com',
-    //         'robot_index' => 'index',
-    //         'robot_follow' => 'follow',
-    //     ]);
-    //     Model::reguard();
+    public function testRemovalProtection()
+    {
+        Model::unguard();
+        $post = Post::create(['title' => "First post", 'description' => "Yay!!"]);
+        $author = Author::create(['name' => 'Stevie', 'email' => 'stevie@email.tld']);
+        $meta1 = Meta::create([
+            'meta_title' => 'Question',
+            'meta_description' => 'Industry',
+            'meta_keywords' => 'major',
+            'canonical_url' => 'http://google.com/search/jobs',
+            'redirect_url' => 'http://google.com',
+            'robot_index' => 'index',
+            'robot_follow' => 'follow',
+        ]);
+        $meta2 = Meta::create([
+            'meta_title' => 'Comment',
+            'meta_description' => 'Social',
+            'meta_keywords' => 'startup',
+            'canonical_url' => 'http://facebook.com/search/users',
+            'redirect_url' => 'http://facebook.com',
+            'robot_index' => 'index',
+            'robot_follow' => 'follow',
+        ]);
+        Model::reguard();
 
-    //     $post->meta()->add($meta1);
-    //     $author->meta()->add($meta2);
-    //     $meta1Id = $meta1->id;
+        $post->meta()->add($meta1);
+        $author->meta()->add($meta2);
+        $meta1Id = $meta1->id;
 
-    //     // Attempt to remove post's meta from author
-    //     $author->meta()->remove($meta1);
+        // Attempt to remove post's meta from author
+        $author->meta()->remove($meta1);
 
-    //     // Removal should fail
-    //     $this->assertNotNull($meta1->taggable_id);
-    //     $this->assertNotNull($meta1->taggable_type);
-    //     $this->assertNotNull($post->meta);
-    // }
+        // Removal should fail
+        $this->assertNotNull($meta1->taggable_id);
+        $this->assertNotNull($meta1->taggable_type);
+        $this->assertNotNull($post->meta);
+    }
 }

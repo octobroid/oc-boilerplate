@@ -1,48 +1,27 @@
 <?php namespace Backend\Elements;
 
+use Backend\Classes\UiElement;
+
 /**
  * Callout
+ *
+ * @method Callout type(string $type) type
+ * @method Callout icon(string $icon) icon
+ * @method Callout label(string $label) label
+ * @method Callout comment(string $comment) comment
+ * @method Callout cssClass(string $cssClass) cssClass
+ *
+ * @package october\backend
+ * @author Alexey Bobkov, Samuel Georges
  */
-class Callout
+class Callout extends UiElement
 {
-    use \Backend\Traits\ElementRenderer;
-
     /**
-     * @var callable|array|string body
+     * initDefaultValues override method
      */
-    protected $body;
-
-    /**
-     * @var string type
-     */
-    protected $type = 'info';
-
-    /**
-     * @var string icon
-     */
-    protected $icon;
-
-    /**
-     * @var string label
-     */
-    protected $label;
-
-    /**
-     * @var string comment
-     */
-    protected $comment;
-
-    /**
-     * @var string cssClass
-     */
-    protected $cssClass;
-
-    /**
-     * __construct
-     */
-    public function __construct(...$body)
+    protected function initDefaultValues()
     {
-        $this->body = $body;
+        $this->type('info');
     }
 
     /**
@@ -62,7 +41,7 @@ class Callout
                             <h3><?= $this->label ?></h3>
                         <?php endif ?>
                         <?php if ($this->comment): ?>
-                            <p><?= $this->comment ?></p>
+                            <?= $this->comment ?>
                         <?php endif ?>
                     </div>
                 <?php endif ?>
@@ -82,7 +61,7 @@ class Callout
     protected function buildCssClass(): string
     {
         $css = [];
-        $css[] = 'callout fade in';
+        $css[] = 'callout fade show';
         $css[] = 'callout-'.$this->type;
 
         if (!$this->icon || !$this->hasHeader()) {
@@ -113,7 +92,7 @@ class Callout
     /**
      * success
      */
-    public function success(): Callout
+    public function success(): static
     {
         $this->type('success');
         $this->icon('icon-check');
@@ -124,7 +103,7 @@ class Callout
     /**
      * danger
      */
-    public function danger(): Callout
+    public function danger(): static
     {
         $this->type('danger');
         $this->icon('icon-exclamation');
@@ -135,7 +114,7 @@ class Callout
     /**
      * warning
      */
-    public function warning(): Callout
+    public function warning(): static
     {
         $this->type('warning');
         $this->icon('icon-flag');
@@ -146,60 +125,10 @@ class Callout
     /**
      * tip
      */
-    public function tip(): Callout
+    public function tip(): static
     {
         $this->type('info');
         $this->icon('icon-info');
-
-        return $this;
-    }
-
-    /**
-     * type
-     */
-    public function type(string $type): Callout
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * icon
-     */
-    public function icon(string $icon): Callout
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * label
-     */
-    public function label(string $label): Callout
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * comment
-     */
-    public function comment(string $comment): Callout
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
-     * cssClass
-     */
-    public function cssClass(string $cssClass): Callout
-    {
-        $this->cssClass = $cssClass;
 
         return $this;
     }

@@ -67,11 +67,8 @@
 In this boilerplate, **we've installed**:
 
 1. [RainLab.User](https://octobercms.com/plugin/rainlab-user)
-1. [RainLab.Debugbar](https://github.com/rainlab/debugbar-plugin)
-1. [RainLab.Pages](https://octobercms.com/plugin/rainlab-pags)
 1. [RainLab.Sitemap](https://octobercms.com/plugin/rainlab-sitemap)
-1. [RainLab.GoogleAnalytics](https://octobercms.com/plugin/rainlab-googleanalytics)
-1. [Bedard.Debugbar](https://octobercms.com/plugin/bedard-debugbar)
+1. [RainLab.Pages](https://octobercms.com/plugin/rainlab-pags)
 1. [Mja.Mail](https://octobercms.com/plugin/mja-mail)
 1. [Jacob.Horizon](https://octobercms.com/plugin/jacob-horizon)
 

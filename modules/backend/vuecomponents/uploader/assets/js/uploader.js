@@ -1,13 +1,13 @@
 $.oc.module.register('backend.component.uploader', function () {
-    var UploaderQueue = $.oc.module.import('backend.vuecomponents.uploader.queue');
-    var UploaderFile = $.oc.module.import('backend.vuecomponents.uploader.file');
+    const UploaderQueue = $.oc.module.import('backend.vuecomponents.uploader.queue');
+    const UploaderFile = $.oc.module.import('backend.vuecomponents.uploader.file');
 
     /*
      *  Universal file uploader implementation
      */
     Vue.component('backend-component-uploader', {
         props: {},
-        data: function data() {
+        data: function() {
             return {
                 files: [],
                 lang: {
@@ -21,7 +21,7 @@ $.oc.module.register('backend.component.uploader', function () {
         },
         computed: {
             numOfFilesInProgress: function computeNumOfFilesInProgress() {
-                return this.files.filter(function (file) {
+                return this.files.filter((file) => {
                     return file.status === 'uploading';
                 }).length;
             },
@@ -39,7 +39,7 @@ $.oc.module.register('backend.component.uploader', function () {
             },
 
             totalProgress: function computeTotalProgress() {
-                var participatingFiles = this.files.filter(function (file) {
+                const participatingFiles = this.files.filter((file) => {
                     return file.participatesInTotal;
                 });
 
@@ -47,8 +47,8 @@ $.oc.module.register('backend.component.uploader', function () {
                     return 100;
                 }
 
-                var total = participatingFiles.reduce(function (total, file) {
-                    return total += file.progress;
+                const total = participatingFiles.reduce((total, file) => {
+                    return (total += file.progress);
                 }, 0);
 
                 return total / participatingFiles.length;
@@ -62,7 +62,7 @@ $.oc.module.register('backend.component.uploader', function () {
             addFile: function addFile(handlerName, file, formFieldName, extraData) {
                 this.markFilesInProgress();
 
-                var newFile = new UploaderFile(this.queue, handlerName, file, formFieldName, extraData);
+                const newFile = new UploaderFile(this.queue, handlerName, file, formFieldName, extraData);
                 this.files.push(newFile);
 
                 return newFile.promise;
@@ -71,14 +71,14 @@ $.oc.module.register('backend.component.uploader', function () {
             addMediaManagerFile: function addMediaManagerFile(file, extraData) {
                 this.markFilesInProgress();
 
-                var newFile = new UploaderFile(this.queue, 'mediamanager', file, 'file_data', extraData);
+                const newFile = new UploaderFile(this.queue, 'mediamanager', file, 'file_data', extraData);
                 this.files.push(newFile);
 
                 return newFile.promise;
             },
 
             markFilesInProgress: function markFilesInProgress() {
-                this.files.forEach(function (file) {
+                this.files.forEach((file) => {
                     file.participatesInTotal = file.status === 'uploading';
                 });
             },
@@ -90,10 +90,11 @@ $.oc.module.register('backend.component.uploader', function () {
             onHeaderButtonClick: function onCloseClick() {
                 if (this.hasFilesInProgress) {
                     this.collapsed = !this.collapsed;
-                } else {
+                }
+                else {
                     this.hidden = true;
                     this.collapsed = false;
-                    for (var index = this.files.length - 1; index >= 0; index--) {
+                    for (let index = this.files.length - 1; index >= 0; index--) {
                         if (this.files[index].status !== 'uploading') {
                             this.files.splice(index, 1);
                         }
@@ -102,7 +103,7 @@ $.oc.module.register('backend.component.uploader', function () {
             },
 
             onRemoveClick: function onRemoveClick(index) {
-                var file = this.files[index];
+                const file = this.files[index];
                 if (file) {
                     file.abort();
                     this.files.splice(index, 1);

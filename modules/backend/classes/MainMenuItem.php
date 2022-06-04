@@ -6,54 +6,30 @@ use October\Rain\Exception\SystemException;
 /**
  * MainMenuItem
  *
+ * @method MainMenuItem owner(string $owner) owner
+ * @method MainMenuItem iconSvg(null|string $iconSvg) iconSvg
+ * @method MainMenuItem counter(mixed $counter) counter
+ * @method MainMenuItem counterLabel(null|string $counterLabel) counterLabel
+ * @method MainMenuItem permissions(array $permissions) permissions
+ * @method MainMenuItem sideMenu(SideMenuItem[] $sideMenu) sideMenu
+ *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
  */
 class MainMenuItem extends ItemDefinition
 {
     /**
-     * @var string owner
+     * initDefaultValues for this scope
      */
-    public $owner;
-
-    /**
-     * @var null|string iconSvg
-     */
-    public $iconSvg;
-
-    /**
-     * @var mixed counter
-     */
-    public $counter;
-
-    /**
-     * @var null|string counterLabel
-     */
-    public $counterLabel;
-
-    /**
-     * @var array permissions
-     */
-    public $permissions = [];
-
-    /**
-     * @var SideMenuItem[] sideMenu
-     */
-    public $sideMenu = [];
-
-    /**
-     * evalConfig
-     */
-    protected function evalConfig($config): void
+    protected function initDefaultValues()
     {
-        parent::evalConfig($config);
+        parent::initDefaultValues();
 
-        $this->owner = $config['owner'] ?? $this->owner;
-        $this->iconSvg = $config['iconSvg'] ?? $this->iconSvg;
-        $this->counter = $config['counter'] ?? $this->counter;
-        $this->counterLabel = $config['counterLabel'] ?? $this->counterLabel;
-        $this->permissions = $config['permissions'] ?? $this->permissions;
-        $this->order = $config['order'] ?? 500;
+        $this
+            ->order(500)
+            ->permissions([])
+            ->sideMenu([])
+        ;
     }
 
     /**
@@ -63,7 +39,7 @@ class MainMenuItem extends ItemDefinition
      */
     public function addPermission(string $permission, array $definition)
     {
-        $this->permissions[$permission] = $definition;
+        $this->config['permissions'][$permission] = $definition;
     }
 
     /**
@@ -72,7 +48,7 @@ class MainMenuItem extends ItemDefinition
      */
     public function addSideMenuItem(SideMenuItem $sideMenu)
     {
-        $this->sideMenu[$sideMenu->code] = $sideMenu;
+        $this->config['sideMenu'][$sideMenu->code] = $sideMenu;
     }
 
     /**
@@ -87,7 +63,7 @@ class MainMenuItem extends ItemDefinition
             throw new SystemException('No sidenavigation item available with code ' . $code);
         }
 
-        return $this->sideMenu[$code];
+        return $this->config['sideMenu'][$code];
     }
 
     /**
@@ -96,6 +72,6 @@ class MainMenuItem extends ItemDefinition
      */
     public function removeSideMenuItem(string $code)
     {
-        unset($this->sideMenu[$code]);
+        unset($this->config['sideMenu'][$code]);
     }
 }

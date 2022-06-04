@@ -31,10 +31,10 @@ class OctoberUpdate extends Command
     {
         $composerBin = env('COMPOSER_BIN', 'composer');
 
-        $this->output->writeln('<info>Updating October CMS...</info>');
+        $this->line('Updating October CMS...');
 
         $this->comment("Executing: {$composerBin} update");
-        $this->output->newLine();
+        $this->line('');
 
         // Composer update
         $errCode = null;
@@ -47,10 +47,10 @@ class OctoberUpdate extends Command
 
         // Migrate database
         $this->comment("Executing: php artisan october:migrate");
-        $this->output->newLine();
+        $this->line('');
 
         $errCode = null;
-        passthru('php artisan october:migrate', $errCode);
+        passthru(PHP_BINARY.' artisan october:migrate', $errCode);
 
         if ($errCode !== 0) {
             $this->output->error('Migration failed. Check output above');

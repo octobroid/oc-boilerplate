@@ -6,16 +6,13 @@ use View;
 use Event;
 use Config;
 use Schema;
-use System;
 use Backend;
 use BackendMenu;
-use BackendAuth;
 use System as SystemHelper;
 use System\Models\EventLog;
 use System\Models\MailSetting;
 use System\Classes\MailManager;
 use System\Classes\ErrorHandler;
-use System\Classes\CombineAssets;
 use System\Classes\UpdateManager;
 use System\Classes\MarkupManager;
 use System\Classes\PluginManager;
@@ -23,6 +20,7 @@ use System\Classes\SettingsManager;
 use System\Twig\Engine as TwigEngine;
 use System\Twig\Loader as TwigLoader;
 use System\Twig\Extension as TwigExtension;
+use Backend\Classes\RoleManager;
 use Backend\Classes\WidgetManager;
 use October\Rain\Support\ModuleServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -44,38 +42,33 @@ class ServiceProvider extends ModuleServiceProvider
         $this->forgetSingletons();
         $this->registerSingletons();
 
-        /*
-         * Register all plugins
-         */
+        // Register all plugins
         PluginManager::instance()->registerAll();
 
-        $this->registerConsole();
         $this->registerErrorHandler();
         $this->registerLogging();
         $this->registerTwigParser();
-        $this->registerMailer();
-        $this->registerMarkupTags();
-        $this->registerAssetBundles();
         $this->registerValidator();
         $this->registerGlobalViewVars();
+        $this->registerConsole();
+        $this->extendMailer();
 
-        /*
-         * Register other module providers
-         */
+        // Register other module providers
         foreach (SystemHelper::listModules() as $module) {
-            if (strtolower(trim($module)) != 'system') {
+            if ($module !== 'System') {
                 App::register('\\' . $module . '\ServiceProvider');
             }
         }
 
-        /*
-         * Backend specific
-         */
+        // Register app service provider
+        if (class_exists(\App\Provider::class)) {
+            App::register(\App\Provider::class);
+        }
+
+        // Backend specific
         if (App::runningInBackend()) {
-            $this->registerBackendNavigation();
-            $this->registerBackendReportWidgets();
-            $this->registerBackendPermissions();
-            $this->registerBackendSettings();
+            $this->extendBackendNavigation();
+            $this->extendBackendSettings();
         }
     }
 
@@ -95,7 +88,7 @@ class ServiceProvider extends ModuleServiceProvider
         }
 
         // Set pagination views
-        Paginator::defaultSimpleView('system::pagination.default');
+        Paginator::defaultView('system::pagination.default');
         Paginator::defaultSimpleView('system::pagination.simple-default');
 
         // Boot plugins
@@ -119,38 +112,21 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerSingletons()
     {
-        App::singleton('cms.helper', function () {
-            return new \Cms\Helpers\Cms;
-        });
-
-        App::singleton('system.helper', function () {
-            return new \System\Helpers\System;
-        });
-
-        App::singleton('backend.helper', function () {
-            return new \Backend\Helpers\Backend;
-        });
-
-        App::singleton('backend.menu', function () {
-            return \Backend\Classes\NavigationManager::instance();
-        });
-
-        App::singleton('backend.auth', function () {
-            return \Backend\Classes\AuthManager::instance();
-        });
-
-        App::singleton('backend.ui', function () {
-            return new \Backend\Helpers\BackendUi;
-        });
+        App::singleton('cms.helper', \Cms\Helpers\Cms::class);
+        App::singleton('system.helper', \System\Helpers\System::class);
+        App::singleton('backend.ui', \Backend\Helpers\BackendUi::class);
+        App::singleton('backend.helper', \Backend\Helpers\Backend::class);
+        App::singleton('backend.menu', function () { return \Backend\Classes\NavigationManager::instance(); });
+        App::singleton('backend.auth', function () { return \Backend\Classes\AuthManager::instance(); });
     }
 
     /**
      * registerMarkupTags
      */
-    protected function registerMarkupTags()
+    public function registerMarkupTags()
     {
-        MarkupManager::instance()->registerCallback(function ($manager) {
-            $manager->registerFunctions([
+        return [
+            'functions' => [
                 // Escaped Functions
                 'input' => ['input', true],
                 'post' => ['post', true],
@@ -178,9 +154,8 @@ class ServiceProvider extends ModuleServiceProvider
                 'url_*' => [\Url::class, '*'],
                 'form_*' => [\Form::class, '*'],
                 'form_macro' => [\Form::class, '__call']
-            ]);
-
-            $manager->registerFilters([
+            ],
+            'filters' => [
                 // Escaped Classes
                 'str_*' => [\Str::class, '*', true],
                 'html_*' => [\Html::class, '*', true],
@@ -198,10 +173,12 @@ class ServiceProvider extends ModuleServiceProvider
                 'studly' => [\Str::class, 'studly'],
                 'md' => [\Markdown::class, 'parse'],
                 'md_safe' => [\Markdown::class, 'parseSafe'],
+                'md_clean' => [\Markdown::class, 'parseClean'],
+                'md_indent' => [\Markdown::class, 'parseIndent'],
                 'time_since' => [\System\Helpers\DateTime::class, 'timeSince'],
                 'time_tense' => [\System\Helpers\DateTime::class, 'timeTense'],
-            ]);
-        });
+            ]
+        ];
     }
 
     /**
@@ -209,28 +186,23 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerConsole()
     {
-        /*
-         * Allow plugins to use the scheduler
-         */
+        // Allow app and plugins to use the scheduler
         Event::listen('console.schedule', function ($schedule) {
-            $plugins = PluginManager::instance()->getPlugins();
-            foreach ($plugins as $plugin) {
-                if (method_exists($plugin, 'registerSchedule')) {
-                    $plugin->registerSchedule($schedule);
-                }
+            foreach (PluginManager::instance()->getPlugins() as $plugin) {
+                $plugin->registerSchedule($schedule);
+            }
+
+            if ($app = App::getProvider(\App\Provider::class)) {
+                $app->registerSchedule($schedule);
             }
         });
 
-        /*
-         * Add CMS based cache clearing to native command
-         */
+        // Add CMS based cache clearing to native command
         Event::listen('cache:cleared', function () {
             \System\Helpers\Cache::clearInternal();
         });
 
-        /*
-         * Register console commands
-         */
+        // Register console commands
         $this->registerConsoleCommand('october.up', \System\Console\OctoberUp::class);
         $this->registerConsoleCommand('october.down', \System\Console\OctoberDown::class);
         $this->registerConsoleCommand('october.migrate', \System\Console\OctoberMigrate::class);
@@ -240,9 +212,6 @@ class ServiceProvider extends ModuleServiceProvider
         $this->registerConsoleCommand('october.fresh', \System\Console\OctoberFresh::class);
         $this->registerConsoleCommand('october.passwd', \System\Console\OctoberPasswd::class);
 
-        $this->registerConsoleCommand('project.set', \System\Console\ProjectSet::class);
-        $this->registerConsoleCommand('project.sync', \System\Console\ProjectSync::class);
-
         $this->registerConsoleCommand('plugin.install', \System\Console\PluginInstall::class);
         $this->registerConsoleCommand('plugin.remove', \System\Console\PluginRemove::class);
         $this->registerConsoleCommand('plugin.disable', \System\Console\PluginDisable::class);
@@ -250,6 +219,8 @@ class ServiceProvider extends ModuleServiceProvider
         $this->registerConsoleCommand('plugin.refresh', \System\Console\PluginRefresh::class);
         $this->registerConsoleCommand('plugin.list', \System\Console\PluginList::class);
         $this->registerConsoleCommand('plugin.check', \System\Console\PluginCheck::class);
+
+        $this->registerConsoleCommand('project.sync', \System\Console\ProjectSync::class);
     }
 
     /**
@@ -283,28 +254,18 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerTwigParser()
     {
-        /*
-         * Register system Twig environment
-         */
+        // Register system Twig environment
         App::singleton('twig.environment', function ($app) {
             $twig = new TwigEnvironment(new TwigLoader, ['auto_reload' => true]);
             $twig->addExtension(new TwigExtension);
 
-            // @deprecated use code below in v3
-            if (env('CMS_SECURITY_POLICY_V2', false)) {
-                $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
-            }
-            else {
+            // @deprecated always use the main policy here
+            if (env('CMS_SECURITY_POLICY_V1', false)) {
                 $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicyLegacy, true));
             }
-
-            // @deprecated always use the main policy here
-            // if (env('CMS_SECURITY_POLICY_V1', false)) {
-            //     $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicyLegacy, true));
-            // }
-            // else {
-            //     $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
-            // }
+            else {
+                $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
+            }
 
             // Desired logic
             // $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
@@ -312,28 +273,18 @@ class ServiceProvider extends ModuleServiceProvider
             return $twig;
         });
 
-        /*
-         * Register Twig for mailer
-         */
+        // Register Twig for mailer
         App::singleton('twig.environment.mailer', function ($app) {
             $twig = new TwigEnvironment(new TwigLoader, ['auto_reload' => true]);
             $twig->addExtension(new TwigExtension);
 
-            // @deprecated use code below in v3
-            if (env('CMS_SECURITY_POLICY_V2', false)) {
-                $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
-            }
-            else {
+            // @deprecated always use the main policy here
+            if (env('CMS_SECURITY_POLICY_V1', false)) {
                 $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicyLegacy, true));
             }
-
-            // @deprecated always use the main policy here
-            // if (env('CMS_SECURITY_POLICY_V1', false)) {
-            //     $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicyLegacy, true));
-            // }
-            // else {
-            //     $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
-            // }
+            else {
+                $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
+            }
 
             // Desired logic
             // $twig->addExtension(new SandboxExtension(new \System\Twig\SecurityPolicy, true));
@@ -342,86 +293,87 @@ class ServiceProvider extends ModuleServiceProvider
             return $twig;
         });
 
-        /*
-         * Register .htm extension for Twig views
-         */
+        // Register .htm extension for Twig views
         App::make('view')->addExtension('htm', 'twig', function () {
             return new TwigEngine(App::make('twig.environment'));
         });
     }
 
     /**
-     * registerMailer templating and settings override.
+     * registerMailLayouts
      */
-    protected function registerMailer()
+    public function registerMailLayouts()
     {
-        /*
-         * Register system layouts
-         */
-        MailManager::instance()->registerCallback(function ($manager) {
-            $manager->registerMailLayouts([
-                'default' => 'system::mail.layout-default',
-                'system' => 'system::mail.layout-system',
-            ]);
+        return [
+            'default' => 'system::mail.layout-default',
+            'system' => 'system::mail.layout-system',
+        ];
+    }
 
-            $manager->registerMailPartials([
-                'header' => 'system::mail.partial-header',
-                'footer' => 'system::mail.partial-footer',
-                'button' => 'system::mail.partial-button',
-                'panel' => 'system::mail.partial-panel',
-                'table' => 'system::mail.partial-table',
-                'subcopy' => 'system::mail.partial-subcopy',
-                'promotion' => 'system::mail.partial-promotion',
-            ]);
-        });
+    /**
+     * registerMailPartials
+     */
+    public function registerMailPartials()
+    {
+        return [
+            'header' => 'system::mail.partial-header',
+            'footer' => 'system::mail.partial-footer',
+            'button' => 'system::mail.partial-button',
+            'panel' => 'system::mail.partial-panel',
+            'table' => 'system::mail.partial-table',
+            'subcopy' => 'system::mail.partial-subcopy',
+            'promotion' => 'system::mail.partial-promotion',
+        ];
+    }
 
-        /*
-         * Override system mailer with mail settings
-         */
+    /**
+     * extendMailer templating and settings override.
+     */
+    protected function extendMailer()
+    {
+        // Override system mailer with mail settings
         Event::listen('mailer.beforeRegister', function () {
             if (MailSetting::isConfigured()) {
                 MailSetting::applyConfigValues();
             }
         });
 
-        /*
-         * Override standard Mailer content with template
-         */
+        // Override standard Mailer content with template
         Event::listen('mailer.beforeAddContent', function ($mailer, $message, $view, $data, $raw, $plain) {
             return !MailManager::instance()->addContentFromEvent($message, $view, $plain, $raw, $data);
         });
     }
 
     /**
-     * registerBackendNavigation
+     * registerNavigation
      */
-    protected function registerBackendNavigation()
+    public function registerNavigation()
     {
-        BackendMenu::registerCallback(function ($manager) {
-            $manager->registerMenuItems('October.System', [
-                'system' => [
-                    'label' => 'system::lang.settings.menu_label',
-                    'icon' => 'icon-cog',
-                    'iconSvg' => 'modules/system/assets/images/cog-icon.svg',
-                    'url' => Backend::url('system/settings'),
-                    'permissions' => [],
-                    'order' => 1000
-                ]
-            ]);
-        });
+        return [
+            'system' => [
+                'label' => 'system::lang.settings.menu_label',
+                'icon' => 'icon-cog',
+                'iconSvg' => 'modules/system/assets/images/cog-icon.svg',
+                'url' => Backend::url('system/settings'),
+                'permissions' => [],
+                'order' => 1000
+            ]
+        ];
+    }
 
-        /*
-         * Register the sidebar for the System main menu
-         */
+    /**
+     * extendBackendNavigation
+     */
+    protected function extendBackendNavigation()
+    {
+        // Register the sidebar for the System main menu
         BackendMenu::registerContextSidenavPartial(
             'October.System',
             'system',
-            '~/modules/system/partials/_system_sidebar.htm'
+            '~/modules/system/partials/_system_sidebar.php'
         );
 
-        /*
-         * Remove the October.System.system main menu item if there is no subpages to display
-         */
+        // Remove the October.System.system main menu item if there is no subpages to display
         Event::listen('backend.menu.extendItems', function ($manager) {
             $systemSettingItems = SettingsManager::instance()->listItems('system');
             $systemMenuItems = $manager->listSideMenuItems('October.System', 'system');
@@ -433,147 +385,136 @@ class ServiceProvider extends ModuleServiceProvider
     }
 
     /**
-     * registerBackendReportWidgets
+     * registerReportWidgets
      */
-    protected function registerBackendReportWidgets()
+    public function registerReportWidgets()
     {
-        WidgetManager::instance()->registerReportWidgets(function ($manager) {
-            $manager->registerReportWidget(\System\ReportWidgets\Status::class, [
-                'label'   => 'backend::lang.dashboard.status.widget_title_default',
+        return [
+            \System\ReportWidgets\Status::class => [
+                'label' => 'backend::lang.dashboard.status.widget_title_default',
                 'context' => 'dashboard'
-            ]);
-        });
+            ],
+        ];
     }
 
     /**
-     * registerBackendPermissions
+     * registerPermissions
      */
-    protected function registerBackendPermissions()
+    public function registerPermissions()
     {
-        BackendAuth::registerCallback(function ($manager) {
-            $manager->registerPermissions('October.System', [
-                'system.manage_updates' => [
-                    'label' => 'system::lang.permissions.manage_software_updates',
-                    'tab' => 'system::lang.permissions.name'
-                ],
-                'system.access_logs' => [
-                    'label' => 'system::lang.permissions.access_logs',
-                    'tab' => 'system::lang.permissions.name'
-                ],
-                'system.manage_mail_settings' => [
-                    'label' => 'system::lang.permissions.manage_mail_settings',
-                    'tab' => 'system::lang.permissions.name'
-                ],
-                'system.manage_mail_templates' => [
-                    'label' => 'system::lang.permissions.manage_mail_templates',
-                    'tab' => 'system::lang.permissions.name'
-                ]
-            ]);
-        });
+        return [
+            // Mail
+            'mail.templates' => [
+                'label' => 'system::lang.permissions.manage_mail_templates',
+                'tab' => 'Mail',
+                'order' => 300
+            ],
+            'mail.settings' => [
+                'label' => 'system::lang.permissions.manage_mail_settings',
+                'tab' => 'Mail',
+                'order' => 900
+            ],
+
+            // Utilities
+            'utilities.logs' => [
+                'label' => 'system::lang.permissions.access_logs',
+                'tab' => 'Utilities',
+                'order' => 400
+            ]
+        ];
     }
 
     /**
-     * registerBackendSettings
+     * registerSettings
      */
-    protected function registerBackendSettings()
+    public function registerSettings()
+    {
+        return [
+            'updates' => [
+                'label' => 'System Updates',
+                'description' => 'Update the system modules and plugins.',
+                'category' => SettingsManager::CATEGORY_SYSTEM,
+                'icon' => 'octo-icon-download',
+                'url' => Backend::url('system/updates'),
+                'permissions' => ['general.backend.perform_updates'],
+                'order' => 300
+            ],
+            'my_updates' => [
+                'label' => 'System Updates',
+                'description' => 'Update the system modules and plugins.',
+                'category' => SettingsManager::CATEGORY_MYSETTINGS,
+                'icon' => 'octo-icon-components',
+                'url' => Backend::url('system/updates'),
+                'permissions' => ['general.backend.perform_updates'],
+                'order' => 520,
+                'context' => 'mysettings'
+            ],
+            'mail_templates' => [
+                'label' => 'system::lang.mail_templates.menu_label',
+                'description' => 'system::lang.mail_templates.menu_description',
+                'category' => SettingsManager::CATEGORY_MAIL,
+                'icon' => 'octo-icon-mail-messages',
+                'url' => Backend::url('system/mailtemplates'),
+                'permissions' => ['mail.templates'],
+                'order' => 610
+            ],
+            'mail_settings' => [
+                'label' => 'system::lang.mail.menu_label',
+                'description' => 'system::lang.mail.menu_description',
+                'category' => SettingsManager::CATEGORY_MAIL,
+                'icon' => 'octo-icon-mail-settings',
+                'class' => 'System\Models\MailSetting',
+                'permissions' => ['mail.settings'],
+                'order' => 620
+            ],
+            'mail_brand_settings' => [
+                'label' => 'system::lang.mail_brand.menu_label',
+                'description' => 'system::lang.mail_brand.menu_description',
+                'category' => SettingsManager::CATEGORY_MAIL,
+                'icon' => 'octo-icon-mail-branding',
+                'url' => Backend::url('system/mailbrandsettings'),
+                'permissions' => ['mail.templates'],
+                'order' => 630
+            ],
+            'event_logs' => [
+                'label' => 'system::lang.event_log.menu_label',
+                'description' => 'system::lang.event_log.menu_description',
+                'category' => SettingsManager::CATEGORY_LOGS,
+                'icon' => 'octo-icon-text-format-ul',
+                'url' => Backend::url('system/eventlogs'),
+                'permissions' => ['utilities.logs'],
+                'order' => 900,
+                'keywords' => 'error exception'
+            ],
+            'request_logs' => [
+                'label' => 'system::lang.request_log.menu_label',
+                'description' => 'system::lang.request_log.menu_description',
+                'category' => SettingsManager::CATEGORY_LOGS,
+                'icon' => 'icon-file-o',
+                'url' => Backend::url('system/requestlogs'),
+                'permissions' => ['utilities.logs'],
+                'order' => 910,
+                'keywords' => '404 error'
+            ],
+            'log_settings' => [
+                'label' => 'system::lang.log.menu_label',
+                'description' => 'system::lang.log.menu_description',
+                'category' => SettingsManager::CATEGORY_LOGS,
+                'icon' => 'octo-icon-log-settings',
+                'class' => 'System\Models\LogSetting',
+                'permissions' => ['system.manage_logs'],
+                'order' => 990
+            ],
+        ];
+    }
+
+    /**
+     * extendBackendSettings
+     */
+    protected function extendBackendSettings()
     {
         Event::listen('system.settings.extendItems', function ($manager) {
             \System\Models\LogSetting::filterSettingItems($manager);
-        });
-
-        SettingsManager::instance()->registerCallback(function ($manager) {
-            $manager->registerSettingItems('October.System', [
-                'updates' => [
-                    'label' => 'system::lang.updates.menu_label',
-                    'description' => 'system::lang.updates.menu_description',
-                    'category' => SettingsManager::CATEGORY_SYSTEM,
-                    'icon' => 'octo-icon-download',
-                    'url' => Backend::url('system/updates'),
-                    'permissions' => ['system.manage_updates'],
-                    'order' => 300
-                ],
-                'my_updates' => [
-                    'label' => 'system::lang.updates.menu_label',
-                    'description' => 'system::lang.updates.menu_description',
-                    'category' => SettingsManager::CATEGORY_MYSETTINGS,
-                    'icon' => 'octo-icon-components',
-                    'url' => Backend::url('system/updates'),
-                    'permissions' => ['system.manage_updates'],
-                    'order' => 520,
-                    'context' => 'mysettings'
-                ],
-                'mail_templates' => [
-                    'label' => 'system::lang.mail_templates.menu_label',
-                    'description' => 'system::lang.mail_templates.menu_description',
-                    'category' => SettingsManager::CATEGORY_MAIL,
-                    'icon' => 'octo-icon-mail-messages',
-                    'url' => Backend::url('system/mailtemplates'),
-                    'permissions' => ['system.manage_mail_templates'],
-                    'order' => 610
-                ],
-                'mail_settings' => [
-                    'label' => 'system::lang.mail.menu_label',
-                    'description' => 'system::lang.mail.menu_description',
-                    'category' => SettingsManager::CATEGORY_MAIL,
-                    'icon' => 'octo-icon-mail-settings',
-                    'class' => 'System\Models\MailSetting',
-                    'permissions' => ['system.manage_mail_settings'],
-                    'order' => 620
-                ],
-                'mail_brand_settings' => [
-                    'label' => 'system::lang.mail_brand.menu_label',
-                    'description' => 'system::lang.mail_brand.menu_description',
-                    'category' => SettingsManager::CATEGORY_MAIL,
-                    'icon' => 'octo-icon-mail-branding',
-                    'url' => Backend::url('system/mailbrandsettings'),
-                    'permissions' => ['system.manage_mail_templates'],
-                    'order' => 630
-                ],
-                'event_logs' => [
-                    'label' => 'system::lang.event_log.menu_label',
-                    'description' => 'system::lang.event_log.menu_description',
-                    'category' => SettingsManager::CATEGORY_LOGS,
-                    'icon' => 'octo-icon-text-format-ul',
-                    'url' => Backend::url('system/eventlogs'),
-                    'permissions' => ['system.access_logs'],
-                    'order' => 900,
-                    'keywords' => 'error exception'
-                ],
-                'request_logs' => [
-                    'label' => 'system::lang.request_log.menu_label',
-                    'description' => 'system::lang.request_log.menu_description',
-                    'category' => SettingsManager::CATEGORY_LOGS,
-                    'icon' => 'icon-file-o',
-                    'url' => Backend::url('system/requestlogs'),
-                    'permissions' => ['system.access_logs'],
-                    'order' => 910,
-                    'keywords' => '404 error'
-                ],
-                'log_settings' => [
-                    'label' => 'system::lang.log.menu_label',
-                    'description' => 'system::lang.log.menu_description',
-                    'category' => SettingsManager::CATEGORY_LOGS,
-                    'icon' => 'octo-icon-log-settings',
-                    'class' => 'System\Models\LogSetting',
-                    'permissions' => ['system.manage_logs'],
-                    'order' => 990
-                ],
-            ]);
-        });
-    }
-
-    /**
-     * registerAssetBundles
-     */
-    protected function registerAssetBundles()
-    {
-        /*
-         * Register asset bundles
-         */
-        CombineAssets::registerCallback(function ($combiner) {
-            $combiner->registerBundle('~/modules/system/assets/js/framework.js');
-            $combiner->registerBundle('~/modules/system/assets/js/framework.combined.js');
-            $combiner->registerBundle('~/modules/system/assets/less/framework.extras.less');
         });
     }
 

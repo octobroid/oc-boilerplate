@@ -90,7 +90,7 @@ $.oc.module.register('backend.component.modal', function () {
                 visible: false,
                 loadingPosition: true,
                 wasResizingOrDragging: false,
-                in: false,
+                fadeIn: false,
                 offset: {
                     left: 0,
                     top: 0
@@ -163,8 +163,8 @@ $.oc.module.register('backend.component.modal', function () {
             containerCssClass: function computeContainerCssClass() {
                 var result = this.modalCssClass;
 
-                if (this.in) {
-                    result += ' in ';
+                if (this.fadeIn) {
+                    result += ' show ';
                 }
 
                 if (!this.isModal) {
@@ -200,7 +200,7 @@ $.oc.module.register('backend.component.modal', function () {
 
                 var that = this;
                 Vue.nextTick(function () {
-                    that.in = true;
+                    that.fadeIn = true;
                     that.loadPosition();
                 });
 
@@ -208,7 +208,7 @@ $.oc.module.register('backend.component.modal', function () {
             },
 
             hide: function hide(byEscape) {
-                this.in = false;
+                this.fadeIn = false;
                 $(document.body).off('keydown', this.onKeyDown);
 
                 var that = this;

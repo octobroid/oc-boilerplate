@@ -1,32 +1,18 @@
 <?php namespace Backend\Elements;
 
 use Backend;
+use Backend\Classes\UiElement;
 
 /**
  * FormToolbar
+ *
+ * @method FormToolbar cancelUrl(string $cancelUrl) cancelUrl
+ *
+ * @package october\backend
+ * @author Alexey Bobkov, Samuel Georges
  */
-class FormToolbar
+class FormToolbar extends UiElement
 {
-    use \Backend\Traits\ElementRenderer;
-
-    /**
-     * @var callable|array|string body
-     */
-    protected $body;
-
-    /**
-     * @var string cancelUrl
-     */
-    protected $cancelUrl;
-
-    /**
-     * __construct
-     */
-    public function __construct(...$body)
-    {
-        $this->body = $body;
-    }
-
     /**
      * render the element
      */
@@ -50,15 +36,5 @@ class FormToolbar
             </div>
 
         <?php };
-    }
-
-    /**
-     * cancelUrl
-     */
-    public function cancelUrl(string $cancelUrl): FormToolbar
-    {
-        $this->cancelUrl = $cancelUrl;
-
-        return $this;
     }
 }

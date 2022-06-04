@@ -1,2 +1,1 @@
-div[data-control="sensitive"] a[data-toggle],
-div[data-control="sensitive"] a[data-copy]{box-shadow:none;border:1px solid #cfd7e1;border-left:0}
+div[data-control=sensitive] a[data-copy],div[data-control=sensitive] a[data-toggle]{border:1px solid #cfd7e1;border-left:0;box-shadow:none}

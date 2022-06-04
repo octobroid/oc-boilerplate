@@ -35,8 +35,7 @@ abstract class PluginTestCase extends TestCase
     }
 
     /**
-     * Perform test case set up.
-     * @return void
+     * setUp test case
      */
     public function setUp(): void
     {
@@ -73,8 +72,7 @@ abstract class PluginTestCase extends TestCase
     }
 
     /**
-     * Flush event listeners and collect garbage.
-     * @return void
+     * tearDown test case will flush event listeners and collect garbage.
      */
     public function tearDown(): void
     {

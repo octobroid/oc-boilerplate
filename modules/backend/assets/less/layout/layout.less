@@ -29,12 +29,12 @@ body.no-select {
 html,
 body {
     height: 100%;
+    font-size: 14px;
+    line-height: 1.42857143;
     /* The html and body elements cannot have any padding or margin. */
 }
 
 body {
-    font-family: @font-family-base;
-    background: @body-bg;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -42,25 +42,6 @@ body {
 #layout-canvas {
     min-height: 100%;
     height: 100%;
-}
-
-//
-// Tabs override for Layout
-// Primary tabs should use inset by default, unless otherwise specified
-// --------------------------------------------------
-
-.control-tabs.primary-tabs {
-    > ul.nav-tabs, > div > ul.nav-tabs, > div > div > ul.nav-tabs {
-        margin-left: -(@padding-standard);
-        margin-right: -(@padding-standard);
-    }
-
-    &.tabs-no-inset {
-        > ul.nav-tabs, > div > ul.nav-tabs, > div > div > ul.nav-tabs {
-            margin-left: 0;
-            margin-right: 0;
-        }
-    }
 }
 
 //

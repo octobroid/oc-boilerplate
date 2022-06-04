@@ -27,7 +27,7 @@ class Market extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['system.manage_updates'];
+    public $requiredPermissions = ['general.backend.perform_updates'];
 
     /**
      * @var System\Widgets\Changelog

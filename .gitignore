@@ -1,11 +1,11 @@
-/bootstrap/compiled.php
-/vendor
+# Common
 composer.phar
 .DS_Store
 .idea
 .env
 .env.*.php
 .env.php
+auth.json
 php_errors.log
 nginx-error.log
 nginx-access.log
@@ -13,13 +13,16 @@ nginx-ssl.access.log
 nginx-ssl.error.log
 php-errors.log
 sftp-config.json
+.ftpconfig
 selenium.php
-yarn-error.log
-/storage/framework/classes.php
-auth.json
-
-# for netbeans
+composer.lock
+package-lock.json
+/node_modules
+_ide_helper.php
+.phpunit.result.cache
 nbproject
 
-# builder plugin
-plugins/rainlab/builder
+# Project
+/bootstrap/compiled.php
+/vendor
+/modules

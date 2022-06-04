@@ -9,7 +9,7 @@ $.oc.module.register('backend.component.uploader.item', function () {
             progress: Number,
             status: String
         },
-        data: function data() {
+        data: function () {
             return {};
         },
         computed: {

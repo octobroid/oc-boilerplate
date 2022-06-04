@@ -55,7 +55,8 @@ class BackendUserFixture extends User
 
         if (is_array($currentPermissions)) {
             $this->setAttribute('permissions', array_replace($currentPermissions, $permission));
-        } else {
+        }
+        else {
             $this->setAttribute('permissions', $permission);
         }
 

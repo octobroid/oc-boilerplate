@@ -1,17 +1,28 @@
 // Basic grid system
-@import "../ui/less/site.less";
-@import "../ui/less/icon.less";
+@import "../../../backend/assets/less/core/boot.less";
+@import "../../../backend/assets/elements/icons/icons.less";
+@import "../../../backend/assets/vendor/bootstrap/bootstrap-lite.css";
 
 @font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 @color-base: #405261;
 @color-warning: #c84530;
-@font-path: "../ui/font"; // For icon fonts
+@font-path: "../../ui/font"; // For icon fonts
+
+html,
+body {
+    font-size: 14px;
+    line-height: 1.42857143;
+}
 
 body {
-    padding-top: 20px;
+    padding-top: 40px;
     font-family: @font-family-base;
     background: #f3f3f3;
     color: @color-base;
+}
+
+code {
+    color: inherit;
 }
 
 h1, h2, h3, h4, h5 {
@@ -126,6 +137,10 @@ table.data-table {
     tbody {
         td, th {
             background-color: white;
+        }
+
+        td.file-column {
+            word-break: break-all;
         }
 
         tr:nth-child(2n) {

@@ -174,9 +174,7 @@ class Theme
         $activeTheme = $activeFromConfig = Config::get('cms.active_theme');
 
         // Backend override
-        // @todo This needs performance review, use a session marker so
-        // normal users are not constantly checking -sg
-        if (App::hasDatabase() && BackendAuth::getUser()) {
+        if (BackendAuth::hasSession() && App::hasDatabase() && BackendAuth::getUser()) {
             try {
                 $prefTheme = UserPreference::forUser()->get(Theme::EDIT_KEY, null);
             }
@@ -568,13 +566,13 @@ class Theme
      */
     protected function writeComposerFile(array $data)
     {
-        $author = strtolower(trim(array_get($data, 'authorCode')));
-        $code = strtolower(trim(array_get($data, 'code')));
-        $description = array_get($data, 'description');
+        $author = strtolower(trim($data['authorCode'] ?? ''));
+        $code = strtolower(trim($data['code'] ?? ''));
+        $description = $data['description'] ?? null;
         $path = $this->getPath();
 
         if (!$description) {
-            $description = array_get($data, 'name');
+            $description = $data['name'] ?? '';
         }
 
         // Abort
@@ -678,11 +676,6 @@ class Theme
     {
         // Globally
         $enableDbLayer = Config::get('cms.database_templates', false);
-
-        // @deprecated
-        if ($enableDbLayer === null) {
-            $enableDbLayer = !Config::get('app.debug', false);
-        }
 
         // Locally
         if (!$enableDbLayer) {

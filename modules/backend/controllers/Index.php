@@ -1,6 +1,7 @@
 <?php namespace Backend\Controllers;
 
 use Redirect;
+use BackendAuth;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Backend\Widgets\ReportContainer;
@@ -76,7 +77,7 @@ class Index extends Controller
      */
     protected function checkPermissionRedirect()
     {
-        if ($this->user->hasAccess('backend.access_dashboard')) {
+        if (BackendAuth::userHasAccess('dashboard')) {
             return;
         }
 

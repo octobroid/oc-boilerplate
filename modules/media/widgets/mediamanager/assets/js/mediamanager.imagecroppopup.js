@@ -130,7 +130,7 @@
         if ($cropToolRoot.height() > height)
             height = $(window).height()
 
-        $cropToolRoot.find('.ruler-container').removeClass('hide')
+        $cropToolRoot.find('.ruler-container').removeClass('oc-hide')
 
         $cropToolRoot.addClass('has-rulers')
 
@@ -364,13 +364,13 @@
 
     MediaManagerImageCropPopup.prototype.updateSelectionSizeLabel = function(width, height) {
         if (width == 0 && height == 0) {
-            this.selectionSizeLabel.setAttribute('class', 'hide')
-            return
+            this.selectionSizeLabel.setAttribute('class', 'oc-hide');
+            return;
         }
 
-        this.selectionSizeLabel.setAttribute('class', '')
-        this.selectionSizeLabel.querySelector('[data-label=selection-width]').textContent = parseInt(width)
-        this.selectionSizeLabel.querySelector('[data-label=selection-height]').textContent = parseInt(height)
+        this.selectionSizeLabel.setAttribute('class', '');
+        this.selectionSizeLabel.querySelector('[data-label=selection-width]').textContent = parseInt(width);
+        this.selectionSizeLabel.querySelector('[data-label=selection-height]').textContent = parseInt(height);
     }
 
     // EVENT HANDLERS

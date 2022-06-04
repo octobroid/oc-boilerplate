@@ -3,9 +3,7 @@
 use Str;
 use Lang;
 use Model;
-use League\Csv\Reader as CsvReader;
-use League\Csv\Statement as CsvStatement;
-use Backend\Behaviors\ImportExportController\TranscodeFilter;
+use SystemException;
 
 /**
  * ImportModel for importing data
@@ -15,23 +13,25 @@ use Backend\Behaviors\ImportExportController\TranscodeFilter;
  */
 abstract class ImportModel extends Model
 {
+    use \Backend\Models\ImportModel\DecodesCsv;
+    use \Backend\Models\ImportModel\DecodesJson;
     use \October\Rain\Database\Traits\Validation;
 
     /**
-     * The attributes that aren't mass assignable.
+     * guarded attributes that aren't mass assignable.
      * @var array
      */
     protected $guarded = [];
 
     /**
-     * Relations
+     * attachOne relations
      */
     public $attachOne = [
         'import_file' => [\System\Models\File::class, 'public' => false],
     ];
 
     /**
-     * @var array Import statistics store.
+     * @var array resultStats is the import statistics store.
      */
     protected $resultStats = [
         'updated' => 0,
@@ -42,7 +42,7 @@ abstract class ImportModel extends Model
     ];
 
     /**
-     * Called when data is being imported.
+     * importData is called when data is being imported.
      * The $results array should be in the format of:
      *
      *    [
@@ -55,7 +55,7 @@ abstract class ImportModel extends Model
     abstract public function importData($results, $sessionKey = null);
 
     /**
-     * Import data based on column names matching header indexes in the CSV.
+     * import data based on column names matching header indexes in the CSV.
      * The $matches array should be in the format of:
      *
      *    [
@@ -69,14 +69,29 @@ abstract class ImportModel extends Model
      */
     public function import($matches, $options = [])
     {
-        $sessionKey = array_get($options, 'sessionKey');
-        $path = $this->getImportFilePath($sessionKey);
+        $sessionKey = $options['sessionKey'] ?? null;
+
+        $importFilePath = $options['importFilePath'] ?? null;
+
+        $path = $importFilePath ?: $this->getImportFilePath($sessionKey);
+
         $data = $this->processImportData($path, $matches, $options);
+
         return $this->importData($data, $sessionKey);
     }
 
     /**
-     * Converts column index to database column map to an array containing
+     * importFile
+     */
+    public function importFile($filePath, $options = [])
+    {
+        $matches = $options['matches'] ?? null;
+
+        return $this->import($matches, ['importFilePath' => $filePath] + $options);
+    }
+
+    /**
+     * processImportData converts column index to database column map to an array containing
      * database column names and values pulled from the CSV file. Eg:
      *
      *   [0 => [first_name], 1 => [last_name]]
@@ -91,106 +106,33 @@ abstract class ImportModel extends Model
      */
     protected function processImportData($filePath, $matches, $options)
     {
-        /*
-         * Parse options
-         */
-        $defaultOptions = [
-            'firstRowTitles' => true,
-            'delimiter' => null,
-            'enclosure' => null,
-            'escape' => null,
-            'encoding' => null
-        ];
-
-        $options = array_merge($defaultOptions, $options);
-
-        /*
-         * Read CSV
-         */
-        $reader = CsvReader::createFromPath($filePath, 'r');
-
-        if ($options['delimiter'] !== null) {
-            $reader->setDelimiter($options['delimiter']);
+        // Prepare output
+        if ($this->file_format === 'json') {
+            $result = $this->processImportDataAsJson($filePath, $matches, $options);
         }
+        else {
+            if (!$matches) {
+                throw new SystemException('Importing as CSV requires column matches definition');
+            }
 
-        if ($options['enclosure'] !== null) {
-            $reader->setEnclosure($options['enclosure']);
-        }
-
-        if ($options['escape'] !== null) {
-            $reader->setEscape($options['escape']);
-        }
-
-        if (
-            $options['encoding'] !== null &&
-            $reader->supportsStreamFilterOnRead()
-        ) {
-            $reader->addStreamFilter(sprintf(
-                '%s%s:%s',
-                TranscodeFilter::FILTER_NAME,
-                strtolower($options['encoding']),
-                'utf-8'
-            ));
-        }
-
-        // Create reader statement
-        $stmt = (new CsvStatement)
-            ->where(function (array $row) {
-                // Filter out empty rows
-                return count($row) > 1 || reset($row) !== null;
-            })
-        ;
-
-        if ($options['firstRowTitles']) {
-            $stmt = $stmt->offset(1);
-        }
-
-        $result = [];
-        $contents = $stmt->process($reader);
-
-        foreach ($contents as $row) {
-            $result[] = $this->processImportRow($row, $matches);
+            $result = $this->processImportDataAsCsv($filePath, $matches, $options);
         }
 
         return $result;
     }
 
     /**
-     * processImportRow converts a single row of CSV data to the column map
-     * @return array
-     */
-    protected function processImportRow($rowData, $matches)
-    {
-        $newRow = [];
-
-        foreach ($matches as $columnIndex => $dbNames) {
-            $value = array_get($rowData, $columnIndex);
-            foreach ((array) $dbNames as $dbName) {
-                $newRow[$dbName] = $value;
-            }
-        }
-
-        return $newRow;
-    }
-
-    /**
-     * decodeArrayValue explodes a string using pipes (|) to a single dimension array
+     * decodeArrayValue prepares an array object for the file type.
      * @return array
      */
     protected function decodeArrayValue($value, $delimeter = '|')
     {
-        if (strpos($value, $delimeter) === false) {
-            return [$value];
+        if ($this->file_format === 'json') {
+            return $this->decodeArrayValueForJson($value);
         }
-
-        $data = preg_split('~(?<!\\\)' . preg_quote($delimeter, '~') . '~', $value);
-        $newData = [];
-
-        foreach ($data as $_value) {
-            $newData[] = str_replace('\\'.$delimeter, $delimeter, $_value);
+        else {
+            return $this->decodeArrayValueForCsv($value, $delimeter);
         }
-
-        return $newData;
     }
 
     /**

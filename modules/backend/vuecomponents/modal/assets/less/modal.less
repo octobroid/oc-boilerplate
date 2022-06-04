@@ -4,7 +4,7 @@
 
 .modal.component-backend-modal {
     &.fade {
-        &:not(.in) {
+        &:not(.show) {
             pointer-events: none;
         }
 
@@ -15,7 +15,7 @@
         }
     }
 
-    &.fade.in {
+    &.fade.show {
         .modal-dialog {
             opacity: 1;
             .transform( ~'scale(1)');

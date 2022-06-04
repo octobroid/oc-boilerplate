@@ -79,12 +79,12 @@ abstract class ComponentBase extends Extendable implements CallsAnyMethod
     protected $externalPropertyNames = [];
 
     /**
-     * Component constructor. Takes in the page or layout code section object
+     * __construct the component, which takes in the page or layout code section object
      * and properties set by the page or layout.
-     * @param null|CodeBase $cmsObject
+     * @param CodeBase|null $cmsObject
      * @param array $properties
      */
-    public function __construct(CodeBase $cmsObject = null, $properties = [])
+    public function __construct($cmsObject = null, $properties = [])
     {
         if ($cmsObject !== null) {
             $this->page = $cmsObject;

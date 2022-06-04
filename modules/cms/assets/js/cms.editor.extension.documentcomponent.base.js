@@ -1,9 +1,9 @@
-$.oc.module.register('cms.editor.extension.documentcomponent.base', function () {
+$.oc.module.register('cms.editor.extension.documentcomponent.base', function() {
     'use strict';
 
-    var EditorDocumentComponentBase = {
+    const EditorDocumentComponentBase = {
         extends: $.oc.module.import('editor.extension.documentcomponent.base'),
-        data: function data() {
+        data: function() {
             return {
                 savingDocument: false,
                 documentSavedMessage: this.trans('cms::lang.template.saved'),
@@ -22,26 +22,24 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                     return false;
                 }
 
-                return this.documentData.components.some(function (component) {
-                    return !component.isHidden;
-                });
+                return this.documentData.components.some((component) => !component.isHidden);
             },
 
             customToolbarButtons: function computeCustomToolbarButtons() {
-                var buttons = this.extension.getCustomToolbarSettingsButtons(this.documentType);
+                const buttons = this.extension.getCustomToolbarSettingsButtons(this.documentType);
 
                 if (!Array.isArray(buttons) || !buttons.length) {
                     return [];
                 }
 
-                var result = [];
+                let result = [];
 
                 result.push({
                     type: 'separator'
                 });
 
-                buttons.forEach(function (button, index) {
-                    var buttonDefinition = {
+                buttons.forEach((button, index) => {
+                    let buttonDefinition = {
                         type: 'button',
                         icon: typeof button.icon === 'string' ? button.icon : undefined,
                         label: button.button,
@@ -67,7 +65,7 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                     return undefined;
                 }
 
-                return this.documentData.components.find(function (component) {
+                return this.documentData.components.find((component) => {
                     return component.className === 'Cms\\Components\\ViewBag';
                 });
             }
@@ -83,52 +81,57 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
             },
 
             getInfoPopupItems: function getInfoPopupItems() {
-                var mtime = this.documentMetadata.mtime;
-                var storage = [this.trans('cms::lang.template.storage_filesystem')];
+                const mtime = this.documentMetadata.mtime;
+                const storage = [this.trans('cms::lang.template.storage_filesystem')];
 
                 if (this.documentMetadata.canResetFromTemplateFile) {
                     storage.push(this.trans('cms::lang.template.storage_database'));
                 }
 
-                return [{
-                    title: this.trans('cms::lang.template.last_modified'),
-                    value: moment.unix(mtime).format('ll LTS')
-                }, {
-                    title: this.trans('cms::lang.template.storage'),
-                    value: storage.join(', ')
-                }, {
-                    title: this.trans('cms::lang.template.template_file'),
-                    value: this.documentMetadata.fullPath
-                }];
+                return [
+                    {
+                        title: this.trans('cms::lang.template.last_modified'),
+                        value: moment.unix(mtime).format('ll LTS')
+                    },
+                    {
+                        title: this.trans('cms::lang.template.storage'),
+                        value: storage.join(', ')
+                    },
+                    {
+                        title: this.trans('cms::lang.template.template_file'),
+                        value: this.documentMetadata.fullPath
+                    }
+                ];
             },
 
             getSaveDocumentData: function getSaveDocumentData(inspectorDocumentData) {
-                var rootProperties = this.getRootProperties();
-                var documentData = inspectorDocumentData ? inspectorDocumentData : this.documentData;
+                const rootProperties = this.getRootProperties();
+                const documentData = inspectorDocumentData ? inspectorDocumentData : this.documentData;
 
-                var data = $.oc.vueUtils.getCleanObject(documentData);
-                var result = {
+                const data = $.oc.vueUtils.getCleanObject(documentData);
+                const result = {
                     settings: {}
                 };
 
                 // Copy root properties
                 //
-                Object.keys(data).forEach(function (property) {
+                Object.keys(data).forEach((property) => {
                     if (property === 'settings') {
                         return;
                     }
 
                     if (rootProperties.indexOf(property) !== -1) {
                         result[property] = data[property];
-                    } else {
+                    }
+                    else {
                         result.settings[property] = data[property];
                     }
                 });
 
                 // Copy custom settings properties
                 //
-                if (babelHelpers.typeof(data.settings) === 'object') {
-                    Object.keys(data.settings).forEach(function (property) {
+                if (typeof data.settings === 'object') {
+                    Object.keys(data.settings).forEach((property) => {
                         if (rootProperties.indexOf(property) === -1 && result.settings[property] === undefined) {
                             result.settings[property] = data.settings[property];
                         }
@@ -151,62 +154,37 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                 return this.documentSavedMessage;
             },
 
-            resetFromTemplateFile: function () {
-                var _ref = babelHelpers.asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                    var result, errorText;
-                    return regeneratorRuntime.wrap(function _callee$(_context) {
-                        while (1) {
-                            switch (_context.prev = _context.next) {
-                                case 0:
-                                    _context.prev = 0;
-                                    _context.next = 3;
-                                    return this.requestDocumentFromServer({
-                                        resetFromTemplateFile: true
-                                    }, true);
-
-                                case 3:
-                                    result = _context.sent;
-
-                                    this.documentCreatedOrLoaded();
-                                    this.documentLoaded(result);
-                                    $.oc.snackbar.show(this.trans('cms::lang.template.reset_from_template_success'));
-                                    _context.next = 13;
-                                    break;
-
-                                case 9:
-                                    _context.prev = 9;
-                                    _context.t0 = _context['catch'](0);
-                                    errorText = _context.t0.responseText;
-
-                                    $.oc.vueComponentHelpers.modalUtils.showAlert(this.trans('editor::lang.common.error'), errorText);
-
-                                case 13:
-                                case 'end':
-                                    return _context.stop();
-                            }
-                        }
-                    }, _callee, this, [[0, 9]]);
-                }));
-
-                function resetFromTemplateFile() {
-                    return _ref.apply(this, arguments);
+            resetFromTemplateFile: async function resetFromTemplateFile() {
+                try {
+                    var result = await this.requestDocumentFromServer(
+                        {
+                            resetFromTemplateFile: true
+                        },
+                        true
+                    );
+                    this.documentCreatedOrLoaded();
+                    this.documentLoaded(result);
+                    $.oc.snackbar.show(this.trans('cms::lang.template.reset_from_template_success'));
+                } catch (error) {
+                    let errorText = error.responseText;
+                    $.oc.vueComponentHelpers.modalUtils.showAlert(this.trans('editor::lang.common.error'), errorText);
                 }
-
-                return resetFromTemplateFile;
-            }(),
+            },
 
             addComponent: function addComponent(componentData) {
                 if (!Array.isArray(this.documentData.components)) {
                     return;
                 }
 
-                var counter = 1,
+                let counter = 1,
                     originalAlias = componentData.alias,
                     alias = componentData.alias;
 
-                while (this.documentData.components.some(function (component) {
-                    return component.alias == alias;
-                })) {
+                while (
+                    this.documentData.components.some((component) => {
+                        return component.alias == alias;
+                    })
+                ) {
                     alias = originalAlias + ++counter;
                 }
 
@@ -218,23 +196,29 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                 return alias;
             },
 
-            postProcessToolbarElements: function postProcessToolbarElements(toolbarElements, noDatabaseTemplateFeatures) {
-                var dbOperationsMenu = undefined;
+            postProcessToolbarElements: function postProcessToolbarElements(
+                toolbarElements,
+                noDatabaseTemplateFeatures
+            ) {
+                let dbOperationsMenu = undefined;
                 if (this.databaseTemplatesEnabled && !noDatabaseTemplateFeatures) {
-                    dbOperationsMenu = [{
-                        type: 'text',
-                        command: 'update-template-file',
-                        label: this.trans('cms::lang.template.update_file'),
-                        disabled: !this.documentMetadata.canUpdateTemplateFile || this.isDocumentChanged
-                    }, {
-                        type: 'text',
-                        command: 'reset-from-template-file',
-                        label: this.trans('cms::lang.template.reset_from_file'),
-                        disabled: !this.documentMetadata.canResetFromTemplateFile || this.isDocumentChanged
-                    }];
+                    dbOperationsMenu = [
+                        {
+                            type: 'text',
+                            command: 'update-template-file',
+                            label: this.trans('cms::lang.template.update_file'),
+                            disabled: !this.documentMetadata.canUpdateTemplateFile || this.isDocumentChanged
+                        },
+                        {
+                            type: 'text',
+                            command: 'reset-from-template-file',
+                            label: this.trans('cms::lang.template.reset_from_file'),
+                            disabled: !this.documentMetadata.canResetFromTemplateFile || this.isDocumentChanged
+                        }
+                    ];
                 }
 
-                toolbarElements.some(function (element) {
+                toolbarElements.some((element) => {
                     if (element.command === 'save') {
                         element.menuitems = dbOperationsMenu;
                         return true;
@@ -242,8 +226,11 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                 });
 
                 if ($.oc.editor.application.isDirectDocumentMode) {
-                    toolbarElements.forEach(function (element) {
-                        if (element.command === 'document:toggleToolbar' || element.command === 'delete' || element.visibilityTag === 'hide-for-direct-document') {
+                    toolbarElements.forEach((element) => {
+                        if (
+                            element.command === 'document:toggleToolbar' ||
+                            element.command === 'delete' ||
+                            element.visibilityTag === 'hide-for-direct-document') {
                             element.hidden = true;
                         }
                     });
@@ -256,75 +243,46 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                 this.application.showEditorDocumentInfoPopup(this.getInfoPopupItems(), this.documentMetadata.typeName);
             },
 
-            expandComponent: function () {
-                var _ref2 = babelHelpers.asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(payload) {
-                    var data;
-                    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                        while (1) {
-                            switch (_context2.prev = _context2.next) {
-                                case 0:
-                                    this.processing = true;
+            expandComponent: async function expandComponent(payload) {
+                this.processing = true;
 
-                                    _context2.prev = 1;
-                                    _context2.next = 4;
-                                    return this.ajaxRequest('onCommand', {
-                                        extension: this.namespace,
-                                        command: 'onExpandCmsComponent',
-                                        documentMetadata: this.documentMetadata,
-                                        documentData: this.documentData,
-                                        componentAlias: payload.alias
-                                    });
+                try {
+                    const data = await this.ajaxRequest('onCommand', {
+                        extension: this.namespace,
+                        command: 'onExpandCmsComponent',
+                        documentMetadata: this.documentMetadata,
+                        documentData: this.documentData,
+                        componentAlias: payload.alias
+                    });
 
-                                case 4:
-                                    data = _context2.sent;
-
-
-                                    this.processing = false;
-                                    this.$refs.editor.replaceAsSnippet(payload.model, payload.range, data.content.trim());
-                                    _context2.next = 13;
-                                    break;
-
-                                case 9:
-                                    _context2.prev = 9;
-                                    _context2.t0 = _context2['catch'](1);
-
-                                    this.processing = false;
-                                    $.oc.vueComponentHelpers.modalUtils.showAlert($.oc.editor.getLangStr('editor::lang.common.error'), _context2.t0.responseText);
-
-                                case 13:
-                                case 'end':
-                                    return _context2.stop();
-                            }
-                        }
-                    }, _callee2, this, [[1, 9]]);
-                }));
-
-                function expandComponent(_x) {
-                    return _ref2.apply(this, arguments);
+                    this.processing = false;
+                    this.$refs.editor.replaceAsSnippet(payload.model, payload.range, data.content.trim());
+                } catch (error) {
+                    this.processing = false;
+                    $.oc.vueComponentHelpers.modalUtils.showAlert(
+                        $.oc.editor.getLangStr('editor::lang.common.error'),
+                        error.responseText
+                    );
                 }
-
-                return expandComponent;
-            }(),
+            },
 
             handleCustomToolbarButton: function handleCustomToolbarButton(command) {
-                var _this = this;
-
-                var parts = command.split('@');
-                var buttonIndex = parts[1];
-                var buttons = this.extension.getCustomToolbarSettingsButtons(this.documentType);
+                const parts = command.split('@');
+                const buttonIndex = parts[1];
+                const buttons = this.extension.getCustomToolbarSettingsButtons(this.documentType);
 
                 if (!buttons[buttonIndex]) {
                     return;
                 }
 
-                var button = buttons[buttonIndex];
-                var settingsProperties = button.properties;
+                const button = buttons[buttonIndex];
+                const settingsProperties = button.properties;
 
-                if ((typeof settingsProperties === 'undefined' ? 'undefined' : babelHelpers.typeof(settingsProperties)) !== 'object') {
+                if (typeof settingsProperties !== 'object') {
                     throw new Error('Custom button properties must be an array');
                 }
 
-                var dataHolder = this.documentData;
+                let dataHolder = this.documentData;
                 if (button.useViewBag) {
                     if (!this.viewBagComponent) {
                         throw new Error('View bag component not found');
@@ -333,32 +291,23 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                     dataHolder = JSON.parse(this.viewBagComponent.propertyValues);
                 }
 
-                $.oc.vueComponentHelpers.inspector.host.showModal(button.popupTitle ? button.popupTitle : this.documentSettingsPopupTitle, dataHolder, settingsProperties, 'cms-custom-settings', {
-                    buttonText: this.trans('backend::lang.form.apply'),
-                    resizableWidth: true,
-                    beforeApplyCallback: function () {
-                        var _ref3 = babelHelpers.asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(updatedDataObj) {
-                            return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                                while (1) {
-                                    switch (_context3.prev = _context3.next) {
-                                        case 0:
-                                            if (button.useViewBag) {
-                                                _this.viewBagComponent.propertyValues = JSON.stringify(updatedDataObj);
-                                            }
-
-                                        case 1:
-                                        case 'end':
-                                            return _context3.stop();
-                                    }
+                $.oc.vueComponentHelpers.inspector.host
+                    .showModal(
+                        button.popupTitle ? button.popupTitle : this.documentSettingsPopupTitle,
+                        dataHolder,
+                        settingsProperties,
+                        'cms-custom-settings',
+                        {
+                            buttonText: this.trans('backend::lang.form.apply'),
+                            resizableWidth: true,
+                            beforeApplyCallback: async (updatedDataObj) => {
+                                if (button.useViewBag) {
+                                    this.viewBagComponent.propertyValues = JSON.stringify(updatedDataObj);
                                 }
-                            }, _callee3, _this);
-                        }));
-
-                        return function beforeApplyCallback(_x2) {
-                            return _ref3.apply(this, arguments);
-                        };
-                    }()
-                }).then($.noop, $.noop);
+                            }
+                        }
+                    )
+                    .then($.noop, $.noop);
             },
 
             onEditorDragDrop: function onDragDrop(editor, ev) {
@@ -368,36 +317,32 @@ $.oc.module.register('cms.editor.extension.documentcomponent.base', function () 
                     return;
                 }
 
-                var currentModelUri = this.$refs.editor.getCurrentModelUri();
+                const currentModelUri = this.$refs.editor.getCurrentModelUri();
                 if (currentModelUri != this.defMarkup.uriString) {
                     return;
                 }
 
-                var componentDefinitionStr = ev.dataTransfer.getData('application/october-component');
+                const componentDefinitionStr = ev.dataTransfer.getData('application/october-component');
                 if (!componentDefinitionStr) {
                     return;
                 }
 
-                var componentDefinition = JSON.parse(componentDefinitionStr);
-                var alias = this.addComponent(componentDefinition);
+                const componentDefinition = JSON.parse(componentDefinitionStr);
+                const alias = this.addComponent(componentDefinition);
 
                 this.$refs.editor.insertText("{% component '" + alias + "' %}");
             },
 
             onComponentRemove: function onComponentRemove(component) {
                 if (this.documentData.markup && this.defMarkup) {
-                    var componentStr = "{% component '" + component.alias + "' %}";
+                    const componentStr = "{% component '" + component.alias + "' %}";
                     this.$refs.editor.replaceText(componentStr, '', this.defMarkup);
                 }
             },
 
             onParentTabSelected: function onParentTabSelected() {
-                var _this2 = this;
-
                 if (this.$refs.editor) {
-                    this.$nextTick(function () {
-                        return _this2.$refs.editor.layout();
-                    });
+                    this.$nextTick(() => this.$refs.editor.layout());
                 }
             },
 

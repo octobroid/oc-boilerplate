@@ -4,55 +4,56 @@
 
 fields:
     step1_section:
-        label: backend::lang.import_export.export_output_format
+        label: "1. Export output format"
         type: section
 
-    format_preset:
-        label: backend::lang.import_export.file_format
+    file_format:
+        label: File Format
         type: dropdown
         default: standard
         options:
-            standard: backend::lang.import_export.standard_format
-            custom: backend::lang.import_export.custom_format
+            json: JSON
+            csv: CSV
+            csv_custom: CSV Custom
         span: left
 
     format_delimiter:
-        label: backend::lang.import_export.delimiter_char
+        label: Delimiter Character
         default: ','
         span: left
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     format_enclosure:
-        label: backend::lang.import_export.enclosure_char
+        label: Enclosure Character
         span: auto
         default: '"'
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     format_escape:
-        label: backend::lang.import_export.escape_char
+        label: Escape Character
         span: auto
         default: '\'
         trigger:
             action: show
-            condition: value[custom]
-            field: format_preset
+            condition: value[csv_custom]
+            field: file_format
 
     step2_section:
-        label: backend::lang.import_export.select_columns
+        label: 2. Select columns to export
         type: section
 
     export_columns:
-        label: backend::lang.import_export.columns
+        label: Columns
         type: partial
-        path: ~/modules/backend/behaviors/importexportcontroller/partials/_export_columns.htm
+        path: ~/modules/backend/behaviors/importexportcontroller/partials/_export_columns.php
         span: left
 
     step3_section:
-        label: backend::lang.import_export.set_export_options
+        label: 3. Set export options
         type: section

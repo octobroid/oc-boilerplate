@@ -27,7 +27,7 @@ class PluginCheck extends Command
      */
     public function handle()
     {
-        $this->output->writeln('<info>Checking Dependencies...</info>');
+        $this->line('Checking Dependencies...');
 
         $this->installRequiredPlugins();
     }
@@ -61,10 +61,10 @@ class PluginCheck extends Command
             // Migrate database
             if (!$this->option('no-migrate')) {
                 $this->comment("Executing: php artisan october:migrate");
-                $this->output->newLine();
+                $this->line('');
 
                 $errCode = null;
-                passthru('php artisan october:migrate', $errCode);
+                passthru(PHP_BINARY.' artisan october:migrate', $errCode);
 
                 if ($errCode !== 0) {
                     $this->output->error('Migration failed. Check output above');
@@ -74,7 +74,7 @@ class PluginCheck extends Command
         }
 
         // Success
-        $this->output->writeln('<info>All dependencies installed</info>');
+        $this->info('All dependencies installed');
     }
 
     /**

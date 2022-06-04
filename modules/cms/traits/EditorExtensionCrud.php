@@ -609,6 +609,7 @@ trait EditorExtensionCrud
             'metadata' => [
                 'mtime' => $template->mtime,
                 'path' => $template->fileName,
+                'fileName' => basename($template->fileName),
                 'fullPath' => $typeDirName.'/'.$template->fileName,
                 'navigatorPath' => $navigatorPath,
                 'uniqueKey' => $template->getFileName(),
@@ -619,6 +620,10 @@ trait EditorExtensionCrud
 
         if ($documentType == EditorExtension::DOCUMENT_TYPE_PAGE) {
             $result['previewUrl'] = $this->getPagePreviewUrl($template, $templateData);
+        }
+
+        if ($documentType == EditorExtension::DOCUMENT_TYPE_ASSET) {
+            $result['fileName'] = $template->fileName;
         }
 
         return $result;

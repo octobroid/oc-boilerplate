@@ -12,6 +12,11 @@ use Exception;
 trait OctoberUtilRefitLang
 {
     /**
+     * @var string refitFinalMessage
+     */
+    protected $refitFinalMessage;
+
+    /**
      * utilRefitLang
      */
     protected function utilRefitLang()
@@ -60,10 +65,12 @@ trait OctoberUtilRefitLang
         foreach ($dirs as $lang) {
             $this->refitLangKeyDelete($fileDir, $lang, $arrPath);
         }
+
+        $this->comment($this->refitFinalMessage);
     }
 
     /**
-     * refitLangKey
+     * refitLangKeyRewrite will add the php lang to the json lang
      */
     protected function refitLangKeyRewrite(string $basePath, string $lang, string $key, string $fileName = null)
     {
@@ -86,12 +93,12 @@ trait OctoberUtilRefitLang
 
         $english = array_get($englishArr, $key);
         if (!$english) {
-            throw new Exception("Missing key for english [{$key}] in [{$englishPath}]");
+            throw new Exception("[!!] Missing key for english [{$key}] in [{$englishPath}]");
         }
 
         $translated = array_get($legacyArr, $key);
         if (!$translated) {
-            $this->comment("Missing key for english [{$key}] in [{$legacyPath}]");
+            $this->comment("[{$lang}] Missing key [{$key}] in [{$legacyPath}]");
             return;
         }
 
@@ -104,16 +111,16 @@ trait OctoberUtilRefitLang
         if ($lang === 'en') {
             $this->comment(PHP_EOL);
             if (strpos($english, "'") !== false) {
-                $this->comment("<?= e(__(\"{$english}\")) ?>");
+                $this->refitFinalMessage = "<?= e(__(\"{$english}\")) ?>";
             }
             else {
-                $this->comment("<?= e(__('{$english}')) ?>");
+                $this->refitFinalMessage = "<?= e(__('{$english}')) ?>";
             }
         }
     }
 
     /**
-     * refitLangKeyDelete
+     * refitLangKeyDelete will delete the php lang key and rewrite the file
      */
     protected function refitLangKeyDelete(string $basePath, string $lang, string $key, string $fileName = null)
     {
@@ -156,7 +163,7 @@ trait OctoberUtilRefitLang
         }
 
         // 2 char to 4 char indent
-        $dump = str_replace('  ', '    ', $dump);
+        // $dump = str_replace('  ', '    ', $dump);
 
         if ($return === true) {
             return $dump;

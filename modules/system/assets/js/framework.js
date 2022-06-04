@@ -164,7 +164,7 @@ if (window.jQuery.request !== undefined) {
                 if (useFlash && data['X_OCTOBER_FLASH_MESSAGES']) {
                     $.each(data['X_OCTOBER_FLASH_MESSAGES'], function(type, message) {
                         requestOptions.handleFlashMessage(message, type);
-                    })
+                    });
                 }
 
                 /*
@@ -176,12 +176,13 @@ if (window.jQuery.request !== undefined) {
                     $triggerEl.trigger('ajaxSuccess', [context, data, textStatus, jqXHR]);
                     options.evalSuccess && $.proxy(new Function('data', options.evalSuccess), $el.get(0))(data);
                     options.afterUpdate.apply(context, [data, textStatus, jqXHR]);
-                })
+                });
 
                 return updatePromise;
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                var errorMsg,
+                var data = {},
+                    errorMsg,
                     updatePromise = $.Deferred();
 
                 if ((window.ocUnloading !== undefined && window.ocUnloading) || errorThrown == 'abort') {
@@ -199,8 +200,9 @@ if (window.jQuery.request !== undefined) {
                  * processed in the same fashion as a successful response.
                  */
                 if (jqXHR.status == 406 && jqXHR.responseJSON) {
+                    data = jqXHR.responseJSON;
                     errorMsg = jqXHR.responseJSON['X_OCTOBER_ERROR_MESSAGE'];
-                    updatePromise = requestOptions.handleUpdateResponse(jqXHR.responseJSON, textStatus, jqXHR);
+                    updatePromise = requestOptions.handleUpdateResponse(data, textStatus, jqXHR);
                 }
                 /*
                  * Standard error with standard response text
@@ -223,7 +225,7 @@ if (window.jQuery.request !== undefined) {
                     /*
                      * Halt here if the data-request-error attribute returns false
                      */
-                    if (options.evalError && $.proxy(new Function(options.evalError), $el.get(0))() === false) {
+                    if (options.evalError && $.proxy(new Function('data', options.evalError), $el.get(0))(data) === false) {
                         return;
                     }
 

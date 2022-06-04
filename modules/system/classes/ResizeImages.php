@@ -372,7 +372,7 @@ class ResizeImages
         $path = base_path($path);
 
         if (!File::isDirectory($path)) {
-            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path, 0755, true, true);
         }
 
         return $path;
@@ -386,7 +386,7 @@ class ResizeImages
         $path = temp_path() . '/resize';
 
         if (!File::isDirectory($path)) {
-            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path, 0755, true, true);
         }
 
         return $path;

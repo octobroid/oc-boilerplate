@@ -13,7 +13,7 @@ $.oc.module.register('backend.component.infotable.item', function () {
                 required: true
             }
         },
-        data: function data() {
+        data: function () {
             return {};
         },
         computed: {},

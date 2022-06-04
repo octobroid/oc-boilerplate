@@ -3,8 +3,10 @@
 use Lang;
 use Event;
 use Flash;
+use BackendAuth;
 use ApplicationException;
 use Backend\Classes\ControllerBehavior;
+use ForbiddenException;
 
 /**
  * ListController adds features for working with backend lists
@@ -81,9 +83,7 @@ class ListController extends ControllerBehavior
     {
         parent::__construct($controller);
 
-        /*
-         * Extract list definitions
-         */
+        // Extract list definitions
         if (is_array($controller->listConfig)) {
             $this->listDefinitions = $controller->listConfig;
             $this->primaryDefinition = key($this->listDefinitions);
@@ -93,9 +93,7 @@ class ListController extends ControllerBehavior
             $this->primaryDefinition = 'list';
         }
 
-        /*
-         * Build configuration
-         */
+        // Build configuration
         $this->setConfig($this->listDefinitions[$this->primaryDefinition], $this->requiredConfig);
     }
 
@@ -124,22 +122,19 @@ class ListController extends ControllerBehavior
 
         $listConfig = $this->config = $this->controller->listGetConfig($definition);
 
-        /*
-         * Create the model
-         */
+        // Create the model
+        //
         $model = $this->createModel();
         $model = $this->controller->listExtendModel($model, $definition);
 
-        /*
-         * Prepare the list widget
-         */
+        // Prepare the list widget
+        //
         $widgetConfig = $this->makeConfig($listConfig->list);
         $widgetConfig->model = $model;
         $widgetConfig->alias = $definition;
 
-        /*
-         * Prepare the columns configuration
-         */
+        // Prepare the columns configuration
+        //
         $configFieldsToTransfer = [
             'recordUrl',
             'recordOnClick',
@@ -160,9 +155,8 @@ class ListController extends ControllerBehavior
             }
         }
 
-        /*
-         * List Widget with extensibility
-         */
+        // List Widget with extensibility
+        //
         $structureConfig = $this->makeListStructureConfig($widgetConfig, $listConfig);
         if ($structureConfig) {
             $widget = $this->makeWidget(\Backend\Widgets\ListStructure::class, $structureConfig);
@@ -209,20 +203,16 @@ class ListController extends ControllerBehavior
 
         $widget->bindToController();
 
-        /*
-         * Prepare the toolbar widget (optional)
-         */
+        // Prepare the toolbar widget (optional)
+        //
         if (isset($listConfig->toolbar)) {
             $toolbarConfig = $this->makeConfig($listConfig->toolbar);
             $toolbarConfig->alias = $widget->alias . 'Toolbar';
             $toolbarWidget = $this->makeWidget(\Backend\Widgets\Toolbar::class, $toolbarConfig);
-            $toolbarWidget->bindToController();
             $toolbarWidget->listWidgetId = $widget->getId();
             $toolbarWidget->cssClasses[] = 'list-header';
 
-            /*
-             * Link the Search Widget to the List Widget
-             */
+            // Link the Search Widget to the List Widget
             if ($searchWidget = $toolbarWidget->getSearchWidget()) {
                 $searchWidget->bindEvent('search.submit', function () use ($widget, $searchWidget) {
                     $widget->setSearchTerm($searchWidget->getActiveTerm(), true);
@@ -239,43 +229,42 @@ class ListController extends ControllerBehavior
                 $widget->setSearchTerm($searchWidget->getActiveTerm());
             }
 
+            // Bind to controller
+            $toolbarWidget->bindToController();
+
             $this->toolbarWidgets[$definition] = $toolbarWidget;
         }
 
-        /*
-         * Prepare the filter widget (optional)
-         */
+        // Prepare the filter widget (optional)
+        //
         if (isset($listConfig->filter)) {
             $widget->cssClasses[] = 'list-flush';
 
             $filterConfig = $this->makeConfig($listConfig->filter);
+            $filterConfig->model = $model;
             $filterConfig->alias = $widget->alias . 'Filter';
             $filterWidget = $this->makeWidget(\Backend\Widgets\Filter::class, $filterConfig);
-            $filterWidget->bindToController();
 
-            /*
-             * Filter the list when the scopes are changed
-             */
+            // Filter the list when the scopes are changed
             $filterWidget->bindEvent('filter.update', function () use ($widget, $filterWidget) {
                 return $widget->onFilter();
             });
 
-            /*
-             * Filter Widget with extensibility
-             */
+            // Filter Widget with extensibility
             $filterWidget->bindEvent('filter.extendScopes', function () use ($filterWidget) {
                 $this->controller->listFilterExtendScopes($filterWidget);
             });
 
-            /*
-             * Extend the query of the list of options
-             */
+            // Extend the query of the list of options
             $filterWidget->bindEvent('filter.extendQuery', function ($query, $scope) {
                 $this->controller->listFilterExtendQuery($query, $scope);
             });
 
             // Apply predefined filter values
             $widget->addFilter([$filterWidget, 'applyAllScopesToQuery']);
+
+            // Bind to controller
+            $filterWidget->bindToController();
 
             $this->filterWidgets[$definition] = $filterWidget;
         }
@@ -325,7 +314,7 @@ class ListController extends ControllerBehavior
     }
 
     /**
-     * Bulk delete records.
+     * index_onDelete bulk deletes records.
      * @return void
      */
     public function index_onDelete()
@@ -334,9 +323,14 @@ class ListController extends ControllerBehavior
             return call_user_func_array([$this->controller, 'onDelete'], func_get_args());
         }
 
-        /*
-         * Validate checked identifiers
-         */
+        // Check conditions for deletion
+        //
+        if (!$this->listCanDeleteRecords()) {
+            throw new ForbiddenException;
+        }
+
+        // Validate checked identifiers
+        //
         $checkedIds = post('checked');
 
         if (!$checkedIds || !is_array($checkedIds) || !count($checkedIds)) {
@@ -344,9 +338,8 @@ class ListController extends ControllerBehavior
             return $this->controller->listRefresh();
         }
 
-        /*
-         * Establish the list definition
-         */
+        // Establish the list definition
+        //
         $definition = post('definition', $this->primaryDefinition);
 
         if (!isset($this->listDefinitions[$definition])) {
@@ -355,24 +348,21 @@ class ListController extends ControllerBehavior
 
         $this->config = $this->controller->listGetConfig($definition);
 
-        /*
-         * Create the model
-         */
+        // Create the model
+        //
         $model = $this->createModel();
         $model = $this->controller->listExtendModel($model, $definition);
 
-        /*
-         * Create the query
-         */
+        // Create the query
+        //
         $query = $model->newQuery();
         $this->controller->listExtendQueryBefore($query, $definition);
 
         $query->whereIn($model->getKeyName(), $checkedIds);
         $this->controller->listExtendQuery($query, $definition);
 
-        /*
-         * Delete records
-         */
+        // Delete records
+        //
         $records = $query->get();
 
         if ($records->count()) {
@@ -390,6 +380,22 @@ class ListController extends ControllerBehavior
     }
 
     /**
+     * listCanDeleteRecords determines if records can be deleted from the list
+     */
+    protected function listCanDeleteRecords(): bool
+    {
+        if (!$this->getConfig('showCheckboxes')) {
+            return false;
+        }
+
+        if ($requiredPermission = $this->getConfig('requiredPermissions[recordDelete]')) {
+            return BackendAuth::userHasAccess($requiredPermission);
+        }
+
+        return true;
+    }
+
+    /**
      * createModel is an internal method used to prepare the list model object.
      * @return October\Rain\Database\Model
      */
@@ -400,7 +406,7 @@ class ListController extends ControllerBehavior
     }
 
     /**
-     * Renders the widget collection.
+     * listRender renders the widget collection.
      * @param  string $definition Optional list definition.
      * @return string Rendered HTML for the list.
      */
@@ -434,7 +440,7 @@ class ListController extends ControllerBehavior
     }
 
     /**
-     * Controller accessor for making partials within this behavior.
+     * listMakePartial is a controller accessor for making partials within this behavior.
      * @param string $partial
      * @param array $params
      * @return string Partial contents
@@ -450,7 +456,7 @@ class ListController extends ControllerBehavior
     }
 
     /**
-     * Refreshes the list container only, useful for returning in custom AJAX requests.
+     * listRefresh refreshes the list container only, useful for returning in custom AJAX requests.
      * @param  string $definition Optional list definition.
      * @return array The list element selector as the key, and the list contents are the value.
      */

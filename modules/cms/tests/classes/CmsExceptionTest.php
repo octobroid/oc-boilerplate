@@ -1,12 +1,8 @@
 <?php
 
-use Cms\Classes\Page;
 use Cms\Classes\Theme;
 use Cms\Classes\Router;
-use Cms\Classes\Layout;
-use Cms\Classes\Controller;
 use Cms\Classes\CmsException;
-use Cms\Classes\CodeParser;
 use October\Rain\Exception\SystemException;
 
 class CmsExceptionTest extends TestCase
@@ -30,8 +26,9 @@ class CmsExceptionTest extends TestCase
         $router = new Router($theme);
         $page = $router->findByUrl('/throw-php');
 
-        $foreignException = new \Symfony\Component\Debug\Exception\FatalErrorException('This is a general error', 100, 1, 'test.php', 20);
+        $foreignException = new ErrorException('This is a general error', 100, 1, 'test.php', 20);
         $this->setProtectedProperty($foreignException, 'file', "/modules/cms/classes/CodeParser.php(165) : eval()'d code line 7");
+        $this->setProtectedProperty($foreignException, 'line', 20);
 
         $exception = new CmsException($page, 300);
         $exception->setMask($foreignException);

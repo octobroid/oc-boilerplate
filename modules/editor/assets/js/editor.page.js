@@ -1,79 +1,67 @@
-$(document).ready(function () {
-    var EditorStore = $.oc.module.import('editor.store');
+$(document).ready(function() {
+    const EditorStore = $.oc.module.import('editor.store');
 
-    var EditorPage = function () {
-        function EditorPage(height, width) {
-            babelHelpers.classCallCheck(this, EditorPage);
-
+    class EditorPage {
+        constructor(height, width) {
             this.store = new EditorStore();
 
             this.init();
         }
 
-        babelHelpers.createClass(EditorPage, [{
-            key: 'init',
-            value: function init() {
-                this.initVue();
-                this.initListeners();
-            }
-        }, {
-            key: 'initVue',
-            value: function initVue() {
-                var initialState = $('#editor-initial-state').html();
-                this.store.setInitialState(JSON.parse(initialState));
+        init() {
+            this.initVue();
+            this.initListeners();
+        }
 
-                // Components need access to the store
-                // during initialization.
-                //
-                $.oc.editor = $.oc.editor || {};
-                $.oc.editor.store = this.getStore();
+        initVue() {
+            const initialState = $('#editor-initial-state').html();
+            this.store.setInitialState(JSON.parse(initialState));
 
-                this.vm = new Vue({
-                    data: {
-                        store: this.store
-                    },
-                    el: '#page-container'
-                });
-            }
-        }, {
-            key: 'initListeners',
-            value: function initListeners() {
-                window.addEventListener('beforeunload', function (event) {
-                    if ($.oc.editor.application.hasChangedTabs()) {
-                        event.preventDefault();
-                        event.returnValue = 'There are unsaved changes.';
-                    }
-                });
-            }
-        }, {
-            key: 'getApplication',
-            value: function getApplication() {
-                return this.vm.$refs.application;
-            }
-        }, {
-            key: 'getLangStr',
-            value: function getLangStr(str) {
-                return this.store.state.lang[str];
-            }
-        }, {
-            key: 'getStore',
-            value: function getStore() {
-                return this.store;
-            }
-        }, {
-            key: 'showAjaxErrorAlert',
-            value: function showAjaxErrorAlert(error, title) {
-                var responseText = error.responseText;
+            // Components need access to the store
+            // during initialization.
+            //
+            $.oc.editor = $.oc.editor || {};
+            $.oc.editor.store = this.getStore();
 
-                if (!responseText && error.status === 0) {
-                    responseText = 'Error connecting to the server.';
+            this.vm = new Vue({
+                data: {
+                    store: this.store
+                },
+                el: '#page-container'
+            });
+        }
+
+        initListeners() {
+            window.addEventListener('beforeunload', function(event) {
+                if ($.oc.editor.application.hasChangedTabs()) {
+                    event.preventDefault();
+                    event.returnValue = 'There are unsaved changes.';
                 }
+            });
+        }
 
-                $.oc.vueComponentHelpers.modalUtils.showAlert(title, responseText);
+        getApplication() {
+            return this.vm.$refs.application;
+        }
+
+        getLangStr(str) {
+            return this.store.state.lang[str];
+        }
+
+        getStore() {
+            return this.store;
+        }
+
+        showAjaxErrorAlert(error, title) {
+            let responseText = error.responseText;
+
+            if (!responseText && error.status === 0) {
+                responseText = 'Error connecting to the server.';
             }
-        }]);
-        return EditorPage;
-    }();
+
+            $.oc.vueComponentHelpers.modalUtils.showAlert(title, responseText);
+        }
+    }
 
     var editorPage = new EditorPage();
 

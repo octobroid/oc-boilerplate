@@ -4,9 +4,7 @@ use File;
 use Lang;
 use Model;
 use Response;
-use League\Csv\Writer as CsvWriter;
 use ApplicationException;
-use SplTempFileObject;
 
 /**
  * ExportModel used for exporting data
@@ -16,8 +14,11 @@ use SplTempFileObject;
  */
 abstract class ExportModel extends Model
 {
+    use \Backend\Models\ExportModel\EncodesCsv;
+    use \Backend\Models\ExportModel\EncodesJson;
+
     /**
-     * Called when data is being exported.
+     * exportData is called when data is being exported.
      * The return value should be an array in the format of:
      *
      *   [
@@ -30,7 +31,7 @@ abstract class ExportModel extends Model
     abstract public function exportData($columns, $sessionKey = null);
 
     /**
-     * Export data based on column names and labels.
+     * export data based on column names and labels.
      * The $columns array should be in the format of:
      *
      *   [
@@ -43,13 +44,15 @@ abstract class ExportModel extends Model
     public function export($columns, $options)
     {
         $sessionKey = array_get($options, 'sessionKey');
+
         $data = $this->exportData(array_keys($columns), $sessionKey);
+
         return $this->processExportData($columns, $data, $options);
     }
 
     /**
-     * Download a previously compiled export file.
-     * @return \Response
+     * download a previously compiled export file.
+     * @return Response
      */
     public function download($name, $outputName = null)
     {
@@ -57,97 +60,53 @@ abstract class ExportModel extends Model
             throw new ApplicationException(Lang::get('backend::lang.import_export.file_not_found_error'));
         }
 
-        $csvPath = temp_path() . '/' . $name;
+        $csvPath = temp_path($name);
         if (!file_exists($csvPath)) {
             throw new ApplicationException(Lang::get('backend::lang.import_export.file_not_found_error'));
         }
 
-        return Response::download($csvPath, $outputName, ['Content-Type' =>'text/csv'])->deleteFileAfterSend(true);
+        $contentType = ends_with($name, 'xjson')
+            ? 'application/json'
+            : 'text/csv';
+
+        return Response::download($csvPath, $outputName, [
+            'Content-Type' => $contentType,
+        ])->deleteFileAfterSend(true);
     }
 
     /**
-     * Converts a data collection to a CSV file.
+     * processExportData converts a data collection to a CSV file.
      */
     protected function processExportData($columns, $results, $options)
     {
-        /*
-         * Validate
-         */
+        // Validate
         if (!$results) {
             throw new ApplicationException(Lang::get('backend::lang.import_export.empty_error'));
         }
 
-        /*
-         * Parse options
-         */
-        $defaultOptions = [
-            'firstRowTitles' => true,
-            'useOutput' => false,
-            'fileName' => 'export.csv',
-            'delimiter' => null,
-            'enclosure' => null,
-            'escape' => null
-        ];
-
-        $options = array_merge($defaultOptions, $options);
+        // Extend columns
         $columns = $this->exportExtendColumns($columns);
 
-        /*
-         * Prepare CSV
-         */
-        $csv = CsvWriter::createFromFileObject(new SplTempFileObject);
+        // Save for download
+        $fileName = uniqid('oc');
 
-        $csv->setOutputBOM(CsvWriter::BOM_UTF8);
-
-        if ($options['delimiter'] !== null) {
-            $csv->setDelimiter($options['delimiter']);
+        // Prepare output
+        if ($this->file_format === 'json') {
+            $fileName .= 'xjson';
+            $output = $this->processExportDataAsJson($columns, $results, $options);
+        }
+        else {
+            $fileName .= 'xcsv';
+            $output = $this->processExportDataAsCsv($columns, $results, $options);
         }
 
-        if ($options['enclosure'] !== null) {
-            $csv->setEnclosure($options['enclosure']);
-        }
+        File::put(temp_path($fileName), $output);
 
-        if ($options['escape'] !== null) {
-            $csv->setEscape($options['escape']);
-        }
-
-        /*
-         * Add headers
-         */
-        if ($options['firstRowTitles']) {
-            $headers = $this->getColumnHeaders($columns);
-            $csv->insertOne($headers);
-        }
-
-        /*
-         * Add records
-         */
-        foreach ($results as $result) {
-            $data = $this->matchDataToColumns($result, $columns);
-            $csv->insertOne($data);
-        }
-
-        /*
-         * Output
-         */
-        if ($options['useOutput']) {
-            $csv->output($options['fileName']);
-        }
-
-        /*
-         * Save for download
-         */
-        $csvName = uniqid('oc');
-        $csvPath = temp_path().'/'.$csvName;
-        $output = $csv->__toString();
-
-        File::put($csvPath, $output);
-
-        return $csvName;
+        return $fileName;
     }
 
     /**
-     * Used to override column definitions at export time.
+     * exportExtendColumns used to override column definitions at export time.
      */
     protected function exportExtendColumns($columns)
     {
@@ -155,7 +114,7 @@ abstract class ExportModel extends Model
     }
 
     /**
-     * Extracts the headers from the column definitions.
+     * getColumnHeaders extracts the headers from the column definitions.
      */
     protected function getColumnHeaders($columns)
     {
@@ -169,7 +128,7 @@ abstract class ExportModel extends Model
     }
 
     /**
-     * Ensures the correct order of the column data.
+     * matchDataToColumns ensures the correct order of the column data.
      */
     protected function matchDataToColumns($data, $columns)
     {
@@ -183,21 +142,20 @@ abstract class ExportModel extends Model
     }
 
     /**
-     * Implodes a single dimension array using pipes (|)
-     * Multi dimensional arrays are not allowed.
-     * @return string
+     * encodeArrayValue prepares an array object for the file type.
+     * @return mixed
      */
     protected function encodeArrayValue($data, $delimeter = '|')
     {
-        $newData = [];
-        foreach ($data as $value) {
-            if (is_array($value)) {
-                $newData[] = 'Array';
-            } else {
-                $newData[] = str_replace($delimeter, '\\'.$delimeter, $value);
-            }
+        if (!is_array($data)) {
+            return '';
         }
 
-        return implode($delimeter, $newData);
+        if ($this->file_format === 'json') {
+            return $this->encodeArrayValueForJson($data);
+        }
+        else {
+            return $this->encodeArrayValueForCsv($data, $delimeter);
+        }
     }
 }

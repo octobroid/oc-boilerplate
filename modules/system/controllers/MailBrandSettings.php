@@ -43,7 +43,7 @@ class MailBrandSettings extends SettingsController
     /**
      * @var array requiredPermissions to view this page.
      */
-    public $requiredPermissions = ['system.manage_mail_templates'];
+    public $requiredPermissions = ['mail.templates'];
 
     /**
      * @var string bodyClass HTML body tag class
@@ -104,8 +104,6 @@ class MailBrandSettings extends SettingsController
      */
     public function onUpdateSampleMessage()
     {
-        $this->pageAction();
-
         $this->formGetWidget()->setFormValues();
 
         return ['previewHtml' => $this->renderSampleMessage()];
@@ -127,7 +125,7 @@ class MailBrandSettings extends SettingsController
 
         $template = new MailTemplate;
         $template->layout = $layout;
-        $template->content_html = File::get(base_path('modules/system/models/mailbrandsetting/sample_template.htm'));
+        $template->content_html = File::get(base_path('modules/system/models/mailbrandsetting/sample_template.php'));
 
         return MailManager::instance()->renderTemplate($template, $data);
     }

@@ -24,6 +24,10 @@ class SectionDefinition
 
     private $childKeyPrefix;
 
+    private $hasApiMenuItems = false;
+
+    private $userData = null;
+
     public function __construct(string $label, string $key)
     {
         $this->label = $label;
@@ -77,6 +81,36 @@ class SectionDefinition
         return $this->createMenuItems->addItem($type, $label, $command);
     }
 
+    /**
+     * Indicates that the section supports API-generated menu items.
+     */
+    public function setHasApiMenuItems(bool $hasApiMenuItems)
+    {
+        $this->hasApiMenuItems = $hasApiMenuItems;
+
+        return $this;
+    }
+
+    /**
+     * Sets optional user data object.
+     */
+    public function setUserData(array $userData)
+    {
+        $this->userData = $userData;
+
+        return $this;
+    }
+
+    public function setUserDataElement(string $key, $value)
+    {
+        if (!is_array($this->userData)) {
+            $this->userData = [];
+        }
+
+        $this->userData[$key] = $value;
+        return $this;
+    }
+
     public function getNodes()
     {
         return $this->nodes;
@@ -88,6 +122,17 @@ class SectionDefinition
             'label' => $this->label,
             'uniqueKey' => $this->key
         ];
+
+        if ($this->hasApiMenuItems) {
+            $result['hasApiMenuItems'] = $this->hasApiMenuItems;
+        }
+        else {
+            $result['hasApiMenuItems'] = false;
+        }
+
+        if ($this->userData) {
+            $result['userData'] = $this->userData;
+        }
 
         $result['nodes'] = [];
 

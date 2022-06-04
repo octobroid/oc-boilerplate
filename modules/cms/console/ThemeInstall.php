@@ -34,14 +34,14 @@ class ThemeInstall extends Command
      */
     public function handle()
     {
-        $this->output->writeln('<info>Installing Theme...</info>');
+        $this->line('Installing Theme...');
 
         $name = $this->argument('name');
 
         $this->assertCanInstallTheme();
 
         if ($src = $this->option('from')) {
-            $this->output->writeln("<info>Added Repo: {$src}</info>");
+            $this->info("Added Repo: {$src}");
             $composerCode = System::octoberToComposerCode(
                 $name,
                 'theme',
@@ -63,7 +63,7 @@ class ThemeInstall extends Command
 
         // Composer install
         $this->comment("Executing: composer require {$requirePackage}");
-        $this->output->newLine();
+        $this->line('');
 
         $composer = new ComposerProcess;
         $composer->setCallback(function($message) { echo $message; });
@@ -71,7 +71,7 @@ class ThemeInstall extends Command
 
         if ($composer->lastExitCode() !== 0) {
             if ($src = $this->option('from')) {
-                $this->output->writeln("<info>Reverted repo change</info>");
+                $this->info("Reverted repo change");
                 $this->removeRepoFromSource($composerCode);
             }
 
@@ -84,7 +84,7 @@ class ThemeInstall extends Command
         }
 
         // Check dependencies
-        passthru('php artisan plugin:check');
+        passthru(PHP_BINARY.' artisan plugin:check');
 
         $this->output->success("Theme '${name}' installed");
     }

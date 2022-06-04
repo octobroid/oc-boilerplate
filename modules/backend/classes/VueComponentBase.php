@@ -10,7 +10,7 @@ use October\Rain\Extension\Extendable;
  *
  * Each component must include two files:
  *   vuecomponents/mycomponents
- *   - partials/mycomponents.htm
+ *   - partials/_mycomponents.php
  *   - assets/js/mycomponents.js
  *
  * The optional CSS file is loaded automatically if presented:

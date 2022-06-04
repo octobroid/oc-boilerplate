@@ -34,7 +34,7 @@ trait EditorExtensionThemesState
                 ->setChecked($themeDir == $currentEditThemeDirName);
         }
 
-        if ($user->hasAnyAccess(['cms.manage_themes', 'cms.manage_theme_options'])) {
+        if ($user->hasAnyAccess(['cms.themes', 'cms.theme_customize'])) {
             if ($themesFound) {
                 $themeMenuItem->addItem(ItemDefinition::TYPE_SEPARATOR);
             }

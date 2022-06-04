@@ -1,12 +1,16 @@
 <?php namespace System\Classes;
 
+use App;
 use View;
 use Lang;
 use System;
 use Cms\Classes\Controller as CmsController;
 use October\Rain\Exception\ErrorHandler as ErrorHandlerBase;
 use October\Rain\Exception\ApplicationException;
+use October\Rain\Exception\ForbiddenException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 use Exception;
 
 /**
@@ -20,7 +24,7 @@ class ErrorHandler extends ErrorHandlerBase
     /**
      * @inheritDoc
      */
-    public function handleException(Exception $proposedException)
+    public function handleException(Throwable $proposedException)
     {
         return parent::handleException($this->prepareException($proposedException));
     }
@@ -34,16 +38,30 @@ class ErrorHandler extends ErrorHandlerBase
     }
 
     /**
-     * handleCustomError looks up an error page using the CMS route "/error". If the route
-     * does not exist, this function will use the error view found in the CMS module.
-     * @return mixed Error page contents.
+     * handleCustomError
      */
-    public function handleCustomError()
+    public function handleCustomError($exception)
     {
-        if (System::checkDebugMode()) {
-            return null;
+        if ($exception instanceof ForbiddenException) {
+            return $this->handleCustomAccessDenied();
         }
 
+        if ($this->isNotFoundException($exception)) {
+            return $this->handleCustomNotFound();
+        }
+
+        if (!System::checkDebugMode()) {
+            return $this->handleCustomGeneralError();
+        }
+    }
+
+    /**
+     * handleCustomGeneralError looks up an error page using the CMS route "/error". If the route
+     * does not exist, this function will use the error view found in the CMS module.
+     * @return mixed
+     */
+    protected function handleCustomGeneralError()
+    {
         if (System::hasModule('Cms')) {
             $result = CmsController::pageError();
         }
@@ -60,11 +78,25 @@ class ErrorHandler extends ErrorHandlerBase
     }
 
     /**
+     * handleCustomAccessDenied checks if running the backend and shows the backend
+     * access denied page.
+     * @return mixed
+     */
+    protected function handleCustomAccessDenied()
+    {
+        if (App::runningInBackend()) {
+            return View::make('backend::access_denied');
+        }
+
+        return View::make('system::error');
+    }
+
+    /**
      * handleCustomNotFound checks if using a custom 404 page, if so return the contents.
      * Return NULL if a custom 404 is not set up.
-     * @return mixed 404 page contents.
+     * @return mixed
      */
-    public function handleCustomNotFound()
+    protected function handleCustomNotFound()
     {
         if (System::hasModule('Cms')) {
             $result = CmsController::pageNotFound();
@@ -83,7 +115,7 @@ class ErrorHandler extends ErrorHandlerBase
 
     /**
      * handleDetailedError displays the detailed system exception page.
-     * @return View Object containing the error page.
+     * @return View
      */
     public function handleDetailedError($exception)
     {
@@ -100,6 +132,16 @@ class ErrorHandler extends ErrorHandlerBase
      */
     public static function getDetailedMessage($exception)
     {
+        // Access denied error
+        if ($exception instanceof ForbiddenException) {
+            return __('Access Denied');
+        }
+
+        // Not found error
+        if ($exception instanceof NotFoundHttpException) {
+            return __('Not Found');
+        }
+
         // ApplicationException never displays a detailed error
         if ($exception instanceof ApplicationException) {
             return $exception->getMessage();
@@ -124,7 +166,7 @@ class ErrorHandler extends ErrorHandlerBase
     /**
      * prepareException
      */
-    protected function prepareException(Exception $exception)
+    protected function prepareException(Throwable $exception)
     {
         if (
             $exception instanceof \Twig\Error\RuntimeError &&

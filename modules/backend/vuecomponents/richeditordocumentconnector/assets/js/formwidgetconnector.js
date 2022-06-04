@@ -9,25 +9,28 @@ $.oc.module.register('backend.component.richeditor.document.connector.formwidget
             },
             options: Object
         },
-        data: function data() {
-            var toolbarExtensionPoint = [];
+        data: function () {
+            const toolbarExtensionPoint = [];
 
             return {
-                toolbarExtensionPoint: toolbarExtensionPoint,
+                toolbarExtensionPoint,
                 fullScreen: false,
                 value: ''
             };
         },
         computed: {
             toolbarElements: function computeToolbarElements() {
-                return [this.toolbarExtensionPoint, {
-                    type: 'button',
-                    icon: this.fullScreen ? 'octo-icon-fullscreen-collapse' : 'octo-icon-fullscreen',
-                    command: 'document:toggleFullscreen',
-                    pressed: this.fullScreen,
-                    fixedRight: true,
-                    tooltip: this.lang.langFullscreen
-                }];
+                return [
+                    this.toolbarExtensionPoint,
+                    {
+                        type: 'button',
+                        icon: this.fullScreen ? 'octo-icon-fullscreen-collapse' : 'octo-icon-fullscreen',
+                        command: 'document:toggleFullscreen',
+                        pressed: this.fullScreen,
+                        fixedRight: true,
+                        tooltip: this.lang.langFullscreen
+                    }
+                ];
             },
 
             toolbarButtons: function computeToolbarButtons() {
@@ -35,7 +38,7 @@ $.oc.module.register('backend.component.richeditor.document.connector.formwidget
                     return [];
                 }
 
-                return this.options.toolbarButtons.split(',').map(function (button) {
+                return this.options.toolbarButtons.split(',').map((button) => {
                     return button.trim();
                 });
             },
@@ -58,12 +61,12 @@ $.oc.module.register('backend.component.richeditor.document.connector.formwidget
                 }
 
                 // Expected format: tailor.app::toolbarExtensionPoint
-                var parts = this.options.externalToolbarAppState.split('::');
+                const parts = this.options.externalToolbarAppState.split('::');
                 if (parts.length !== 2) {
                     throw new Error('Invalid externalToolbarAppState format. Expected format: module.name::stateElementName');
                 }
 
-                var app = $.oc.module.import(parts[0]);
+                const app = $.oc.module.import(parts[0]);
                 return app.state[parts[1]];
             },
 

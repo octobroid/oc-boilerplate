@@ -1,6 +1,6 @@
 Vue.component('editor-document-info-popup', {
     props: {},
-    data: function data() {
+    data: function() {
         return {
             items: [],
             title: ''

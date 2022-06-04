@@ -4,6 +4,7 @@
 
 title: backend::lang.user.list_title
 list: ~/modules/backend/models/user/columns.yaml
+filter: ~/modules/backend/models/user/scopes.yaml
 modelClass: Backend\Models\User
 recordUrl: backend/users/update/:id
 noRecordsMessage: backend::lang.list.no_records
@@ -15,5 +16,3 @@ toolbar:
     buttons: list_toolbar
     search:
         prompt: backend::lang.list.search_prompt
-
-filter: config_filter.yaml

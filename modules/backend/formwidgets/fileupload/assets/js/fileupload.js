@@ -540,7 +540,7 @@
 
     FileUpload.prototype.onClickSuccessObject = function(ev) {
         if ($(ev.target).closest('.meta').length) return;
-        if ($(ev.target).closest('.custom-checkbox-v2').length) return;
+        if ($(ev.target).closest('.form-check').length) return;
 
         var $target = $(ev.target).closest('.upload-object');
 

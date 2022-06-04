@@ -34,10 +34,10 @@ class PluginInstall extends Command
     {
         $name = $this->argument('name');
 
-        $this->output->writeln("<info>Installing Plugin: {$name}</info>");
+        $this->line("Installing Plugin: {$name}");
 
         if ($src = $this->option('from')) {
-            $this->output->writeln("<info>Added Repo: {$src}</info>");
+            $this->info("Added Repo: {$src}");
             $composerCode = System::octoberToComposerCode(
                 $name,
                 'plugin',
@@ -59,7 +59,7 @@ class PluginInstall extends Command
 
         // Composer require
         $this->comment("Executing: composer require {$requirePackage}");
-        $this->output->newLine();
+        $this->line('');
 
         $composer = new ComposerProcess;
         $composer->setCallback(function($message) { echo $message; });
@@ -73,7 +73,7 @@ class PluginInstall extends Command
         // Composer failed
         if ($composer->lastExitCode() !== 0) {
             if ($src = $this->option('from')) {
-                $this->output->writeln("<info>Reverted repo change</info>");
+                $this->info("Reverted repo change");
                 $this->removeRepoFromSource($composerCode);
             }
 
@@ -84,11 +84,11 @@ class PluginInstall extends Command
         // Run migrations
         if (!$this->option('no-migrate')) {
             $this->comment("Executing: php artisan october:migrate");
-            $this->output->newLine();
+            $this->line('');
 
             // Migrate database
             $errCode = null;
-            passthru('php artisan october:migrate', $errCode);
+            passthru(PHP_BINARY.' artisan october:migrate', $errCode);
 
             if ($errCode !== 0) {
                 $this->output->error('Migration failed. Check output above');

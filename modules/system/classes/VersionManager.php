@@ -17,6 +17,7 @@ use Exception;
  */
 class VersionManager
 {
+    use \System\Traits\NoteMaker;
     use \October\Rain\Support\Traits\Singleton;
 
     /**
@@ -29,11 +30,6 @@ class VersionManager
      */
     const HISTORY_TYPE_COMMENT = 'comment';
     const HISTORY_TYPE_SCRIPT = 'script';
-
-    /**
-     * @var \Illuminate\Console\OutputStyle
-     */
-    protected $notesOutput;
 
     /**
      * @var array fileVersions cache of plugin versions as files.
@@ -84,9 +80,10 @@ class VersionManager
 
         // No updates needed
         if ((string) $currentVersion === (string) $databaseVersion) {
-            $this->note('- <info>Nothing to update.</info>');
-            return;
+            return false;
         }
+
+        $this->note($code);
 
         $newUpdates = $this->getNewFileVersions($code, $databaseVersion);
 
@@ -589,35 +586,5 @@ class VersionManager
         }
 
         return [$comments, $scripts];
-    }
-
-    //
-    // Notes
-    //
-
-    /**
-     * note raises a note event for the migrator
-     * @param  string  $message
-     * @return void
-     */
-    protected function note($message)
-    {
-        if ($this->notesOutput !== null) {
-            $this->notesOutput->writeln($message);
-        }
-
-        return $this;
-    }
-
-    /**
-     * setNotesOutput sets an output stream for writing notes
-     * @param  Illuminate\Console\Command $output
-     * @return self
-     */
-    public function setNotesOutput($output)
-    {
-        $this->notesOutput = $output;
-
-        return $this;
     }
 }

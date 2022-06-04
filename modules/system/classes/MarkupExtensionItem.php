@@ -1,5 +1,8 @@
 <?php namespace System\Classes;
 
+use Str;
+use ApplicationException;
+
 /**
  * MarkupExtensionItem class
  *
@@ -135,6 +138,33 @@ class MarkupExtensionItem
         }
 
         return $wildCallback;
+    }
+
+    /**
+     * getTwigCallback returns a callback function suitable for Twig
+     */
+    public function getTwigCallback()
+    {
+        // Handle a wildcard function
+        if (strpos($this->name, '*') !== false && $this->isWildCallable()) {
+            return function ($name) {
+                $arguments = array_slice(func_get_args(), 1);
+                $method = $this->getWildCallback(Str::camel($name));
+                return $method(...$arguments);
+            };
+        }
+
+        // Cannot call item method
+        $callable = $this->callback;
+        if (!is_callable($callable)) {
+            throw new ApplicationException("The markup filter/function for '{$this->name}' is not callable.");
+        }
+
+        // Wrap in a closure to prevent Twig from reflecting facades
+        // when applying its named closure support
+        return function(...$args) use ($callable) {
+            return $callable(...$args);
+        };
     }
 
     /**

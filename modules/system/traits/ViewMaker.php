@@ -3,7 +3,6 @@
 use File;
 use Lang;
 use Block;
-use Config;
 use System;
 use SystemException;
 use Throwable;
@@ -88,9 +87,9 @@ trait ViewMaker
 
         $partialPath = $this->getViewPath($partial);
 
-        if (!File::exists($partialPath)) {
+        if (!$partialPath || !File::exists($partialPath)) {
             if ($throwException) {
-                throw new SystemException(Lang::get('backend::lang.partial.not_found_name', ['name' => $partialPath]));
+                throw new SystemException(Lang::get('backend::lang.partial.not_found_name', ['name' => $partial]));
             }
 
             return false;
@@ -198,44 +197,39 @@ trait ViewMaker
             $viewPath = $this->viewPath;
         }
 
-        // Check in view paths
         if (!is_array($viewPath)) {
             $viewPath = [$viewPath];
         }
 
         // Remove extension from path
-        $fileNameNe = File::anyname($fileName);
+        $fileName = File::anyname($fileName);
 
         // Check in view paths
-        foreach ($viewPath as $path) {
-            $fullPath = File::symbolizePath($path);
+        if (!File::isPathSymbol($fileName)) {
+            foreach ($viewPath as $path) {
+                $fullPath = File::symbolizePath($path);
 
-            foreach ($viewExtensions as $extension) {
-                $_fileName = $fullPath . '/' . $fileNameNe . '.' . $extension;
-                if (File::isFile($_fileName)) {
-                    return $_fileName;
+                foreach ($viewExtensions as $extension) {
+                    $_fileName = $fullPath . '/' . $fileName . '.' . $extension;
+                    if (File::isFile($_fileName)) {
+                        return $_fileName;
+                    }
                 }
             }
         }
 
-        // Check in absolute (exact lookup)
+        // Check in absolute
         $fileName = File::symbolizePath($fileName);
-        if (strpos($fileName, '/') !== false && System::checkBaseDir($fileName)) {
-            return $fileName;
-        }
-
-        // Check with extension applied (v2.2 patch)
         if (strpos($fileName, '/') !== false) {
             foreach ($viewExtensions as $extension) {
-                $_fileName = $fileNameNe . '.' . $extension;
+                $_fileName = $fileName . '.' . $extension;
                 if (System::checkBaseDir($_fileName)) {
                     return $_fileName;
                 }
             }
         }
 
-        // Returns the closest guess, although invalid
-        return $fileName;
+        return '';
     }
 
     /**

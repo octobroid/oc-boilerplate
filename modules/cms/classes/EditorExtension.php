@@ -38,11 +38,11 @@ class EditorExtension extends ExtensionBase
     const ICON_COLOR_ASSET = '#E75252';
 
     const DOCUMENT_TYPE_PERMISSIONS = [
-        EditorExtension::DOCUMENT_TYPE_PAGE => ['cms.manage_pages'],
-        EditorExtension::DOCUMENT_TYPE_PARTIAL => ['cms.manage_partials'],
-        EditorExtension::DOCUMENT_TYPE_LAYOUT => ['cms.manage_layouts'],
-        EditorExtension::DOCUMENT_TYPE_CONTENT => ['cms.manage_content'],
-        EditorExtension::DOCUMENT_TYPE_ASSET => ['cms.manage_assets']
+        EditorExtension::DOCUMENT_TYPE_PAGE => ['editor.cms_pages'],
+        EditorExtension::DOCUMENT_TYPE_PARTIAL => ['editor.cms_partials'],
+        EditorExtension::DOCUMENT_TYPE_LAYOUT => ['editor.cms_layouts'],
+        EditorExtension::DOCUMENT_TYPE_CONTENT => ['editor.cms_content'],
+        EditorExtension::DOCUMENT_TYPE_ASSET => ['editor.cms_assets']
     ];
 
     private $cachedEditTheme = false;
@@ -124,8 +124,6 @@ class EditorExtension extends ExtensionBase
             'cms::lang.asset.rename',
             'cms::lang.asset.delete',
             'cms::lang.asset.new',
-            'cms::lang.asset.delete_confirm',
-            'cms::lang.asset.delete_confirm_single',
             'cms::lang.asset.moving',
             'cms::lang.asset.moved',
             'cms::lang.asset.saved',
@@ -215,11 +213,6 @@ class EditorExtension extends ExtensionBase
         }
     }
 
-    public function listInspectorConfigurations()
-    {
-        return $this->loadAndLocalizeJsonFile(__DIR__.'/editorextension/inspector-configs.json');
-    }
-
     /**
      * getCustomData returns custom state data required for the extension client-side controller
      */
@@ -235,10 +228,10 @@ class EditorExtension extends ExtensionBase
             'pages' => $this->loadPagesForUiLists($theme, $user),
             'content' => $this->loadContentForUiLists($theme, $user),
             'components' => $this->loadComponentsForUiLists(),
-            'canManagePartials' => $user->hasAnyAccess(['cms.manage_partials']),
-            'canManagePages' => $user->hasAnyAccess(['cms.manage_pages']),
-            'canManageAssets' => $user->hasAnyAccess(['cms.manage_assets']),
-            'canManageContent' => $user->hasAnyAccess(['cms.manage_content']),
+            'canManagePages' => $user->hasAnyAccess(['editor.cms_pages']),
+            'canManagePartials' => $user->hasAnyAccess(['editor.cms_partials']),
+            'canManageContent' => $user->hasAnyAccess(['editor.cms_content']),
+            'canManageAssets' => $user->hasAnyAccess(['editor.cms_assets']),
             'editableAssetExtensions' => Asset::getEditableExtensions(),
             'databaseTemplatesEnabled' => $theme ? $theme->secondLayerEnabled() : false,
             'assetExtensionList' => $this->getAssetExtensionListInitialState(),
@@ -319,33 +312,35 @@ class EditorExtension extends ExtensionBase
     {
         $user = BackendAuth::getUser();
 
-        $section->addMenuItem(ItemDefinition::TYPE_TEXT, Lang::get('cms::lang.editor.refresh'), 'cms:refresh-navigator');
+        $section->addMenuItem(ItemDefinition::TYPE_TEXT, Lang::get('cms::lang.editor.refresh'), 'cms:refresh-navigator')
+            ->setIcon('octo-icon-refresh');
 
         $createMenuItem = new ItemDefinition(ItemDefinition::TYPE_TEXT, Lang::get('cms::lang.editor.create'), 'cms:create');
+        $createMenuItem->setIcon('octo-icon-create');
         $menuConfiguration = [
-            'cms.manage_pages' => [
+            'editor.cms_pages' => [
                 'label' => 'cms::lang.editor.page',
                 'document' => EditorExtension::DOCUMENT_TYPE_PAGE
             ],
-            'cms.manage_partials' => [
+            'editor.cms_partials' => [
                 'label' => 'cms::lang.editor.partial',
                 'document' => EditorExtension::DOCUMENT_TYPE_PARTIAL
             ],
-            'cms.manage_layouts' => [
+            'editor.cms_layouts' => [
                 'label' => 'cms::lang.editor.layout',
                 'document' => EditorExtension::DOCUMENT_TYPE_LAYOUT
             ],
-            'cms.manage_content' => [
+            'editor.cms_content' => [
                 'label' => 'cms::lang.editor.content',
                 'document' => EditorExtension::DOCUMENT_TYPE_CONTENT
             ],
-            'cms.manage_assets' => [
+            'editor.cms_assets' => [
                 'label' => 'cms::lang.editor.asset',
                 'document' => EditorExtension::DOCUMENT_TYPE_ASSET
             ]
         ];
 
-        foreach ($menuConfiguration as $permission=>$itemConfig) {
+        foreach ($menuConfiguration as $permission => $itemConfig) {
             if (!$user->hasAnyAccess([$permission])) {
                 continue;
             }

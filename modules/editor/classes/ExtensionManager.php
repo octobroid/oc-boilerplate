@@ -39,7 +39,7 @@ class ExtensionManager
 
         $result = [];
         foreach ($extensions as $extension) {
-            $result += $extension->listVueComponents();
+            $result = array_merge($result, $extension->listVueComponents());
         }
 
         return $result;
@@ -70,17 +70,25 @@ class ExtensionManager
             $result[] = $this->getExtension($className);
         }
 
+        usort($result, function($a, $b) {
+            if ($a->getExtensionSortOrder() >= $b->getExtensionSortOrder()) {
+                return 1;
+            }
+
+            return -1;
+        });
+
         return $result;
     }
 
     /**
      * runCommand
      */
-    public function runCommand($namespace, $command)
+    public function runCommand($namespace, $command, $controller)
     {
         $extension = $this->getExtensionByNamespace($namespace);
 
-        return $extension->runCommand($command);
+        return $extension->runCommand($command, $controller);
     }
 
     /**

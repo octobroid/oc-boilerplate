@@ -1,26 +1,33 @@
-$.oc.module.register('cms.editor.intellisense', function () {
+$.oc.module.register('cms.editor.intellisense', function() {
     'use strict';
 
-    var CompleterOctoberTags = $.oc.module.import('cms.editor.intellisense.completer.octobertags');
-    var CompleterTwigFilters = $.oc.module.import('cms.editor.intellisense.completer.twigfilters');
-    var CompleterOctoberPartials = $.oc.module.import('cms.editor.intellisense.completer.partials');
-    var CompleterAssets = $.oc.module.import('cms.editor.intellisense.completer.assets');
-    var CompleterPages = $.oc.module.import('cms.editor.intellisense.completer.pages');
-    var CompleterContent = $.oc.module.import('cms.editor.intellisense.completer.content');
+    const CompleterOctoberTags = $.oc.module.import('cms.editor.intellisense.completer.octobertags');
+    const CompleterTwigFilters = $.oc.module.import('cms.editor.intellisense.completer.twigfilters');
+    const CompleterOctoberPartials = $.oc.module.import('cms.editor.intellisense.completer.partials');
+    const CompleterAssets = $.oc.module.import('cms.editor.intellisense.completer.assets');
+    const CompleterPages = $.oc.module.import('cms.editor.intellisense.completer.pages');
+    const CompleterContent = $.oc.module.import('cms.editor.intellisense.completer.content');
 
-    var ClickHandlerTemplate = $.oc.module.import('cms.editor.intellisense.clickhandler.template');
-    var ClickHandlerCssImports = $.oc.module.import('cms.editor.intellisense.clickhandler.cssimports');
-    var HoverProviderOctoberTags = $.oc.module.import('cms.editor.intellisense.hoverprovider.octobertags');
-    var HoverProviderTwigFilters = $.oc.module.import('cms.editor.intellisense.hoverprovider.twigfilters');
-    var IntellisenseUtils = $.oc.module.import('cms.editor.intellisense.utils.js');
-    var ActionHandlerExpandComponent = $.oc.module.import('cms.editor.intellisense.actionhandlers.expandcomponent');
+    const ClickHandlerTemplate = $.oc.module.import('cms.editor.intellisense.clickhandler.template');
+    const ClickHandlerCssImports = $.oc.module.import('cms.editor.intellisense.clickhandler.cssimports');
+    const HoverProviderOctoberTags = $.oc.module.import('cms.editor.intellisense.hoverprovider.octobertags');
+    const HoverProviderTwigFilters = $.oc.module.import('cms.editor.intellisense.hoverprovider.twigfilters');
+    const IntellisenseUtils = $.oc.module.import('cms.editor.intellisense.utils.js');
+    const ActionHandlerExpandComponent = $.oc.module.import('cms.editor.intellisense.actionhandlers.expandcomponent');
 
-    var instance = null;
+    let instance = null;
 
-    var CmsIntellisense = function () {
-        function CmsIntellisense(cmsCustomData) {
-            babelHelpers.classCallCheck(this, CmsIntellisense);
+    class CmsIntellisense {
+        customData;
+        completers;
+        globalInitialized;
+        linkProviders;
+        hoverProviders;
+        listeners;
+        utils;
+        actionHandlers;
 
+        constructor(cmsCustomData) {
             this.customData = cmsCustomData.intellisense;
             this.globalInitialized = false;
             this.listeners = new Map();
@@ -61,135 +68,120 @@ $.oc.module.register('cms.editor.intellisense', function () {
             this.actionHandlers = new Map();
         }
 
-        babelHelpers.createClass(CmsIntellisense, [{
-            key: 'getCustomData',
-            value: function getCustomData() {
-                return this.customData;
+        getCustomData() {
+            return this.customData;
+        }
+
+        init(monaco, editor, monacoComponent) {
+            if (!this.globalInitialized) {
+                this.globalInitialized = true;
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.octoberTags);
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.octoberPartials);
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.twigFilters);
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.assets);
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.pages);
+                monaco.languages.registerCompletionItemProvider('twig', this.completers.content);
+
+                monaco.languages.registerLinkProvider('twig', this.linkProviders.octoberTemplates);
+                monaco.languages.registerLinkProvider('less', this.linkProviders.lessImports);
+                monaco.languages.registerLinkProvider('scss', this.linkProviders.scssImports);
+
+                monaco.languages.registerHoverProvider('twig', this.hoverProviders.octoberTags);
+                monaco.languages.registerHoverProvider('twig', this.hoverProviders.twigFilters);
             }
-        }, {
-            key: 'init',
-            value: function init(monaco, editor, monacoComponent) {
-                if (!this.globalInitialized) {
-                    this.globalInitialized = true;
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.octoberTags);
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.octoberPartials);
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.twigFilters);
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.assets);
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.pages);
-                    monaco.languages.registerCompletionItemProvider('twig', this.completers.content);
 
-                    monaco.languages.registerLinkProvider('twig', this.linkProviders.octoberTemplates);
-                    monaco.languages.registerLinkProvider('less', this.linkProviders.lessImports);
-                    monaco.languages.registerLinkProvider('scss', this.linkProviders.scssImports);
+            this.addActionHandler(editor, new ActionHandlerExpandComponent(this, editor, monacoComponent));
+        }
 
-                    monaco.languages.registerHoverProvider('twig', this.hoverProviders.octoberTags);
-                    monaco.languages.registerHoverProvider('twig', this.hoverProviders.twigFilters);
+        trans(key) {
+            return $.oc.editor.getLangStr(key);
+        }
+
+        addActionHandler(editor, handler) {
+            if (this.actionHandlers.has(editor)) {
+                const handlers = this.actionHandlers.get(editor);
+                handlers.push(handler);
+                return;
+            }
+
+            this.actionHandlers.set(editor, [handler]);
+        }
+
+        on(eventType, listener) {
+            this.listeners.set(listener, eventType);
+        }
+
+        off(listener) {
+            this.listeners.delete(listener);
+        }
+
+        emit(eventType, payload) {
+            this.listeners.forEach((listenerEventType, listener) => {
+                if (listenerEventType == eventType) {
+                    listener(payload);
                 }
+            });
+        }
 
-                this.addActionHandler(editor, new ActionHandlerExpandComponent(this, editor, monacoComponent));
+        escapeHtml(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        modelHasTag(model, tag) {
+            if (!model.octoberEditorCmsTags) {
+                return false;
             }
-        }, {
-            key: 'trans',
-            value: function trans(key) {
-                return $.oc.editor.getLangStr(key);
+
+            return model.octoberEditorCmsTags.indexOf(tag) !== -1;
+        }
+
+        getModelCustomAttribute(model, name) {
+            if (model.octoberEditorAttributes === undefined) {
+                return undefined;
             }
-        }, {
-            key: 'addActionHandler',
-            value: function addActionHandler(editor, handler) {
-                if (this.actionHandlers.has(editor)) {
-                    var handlers = this.actionHandlers.get(editor);
-                    handlers.push(handler);
-                    return;
+
+            return model.octoberEditorAttributes[name];
+        }
+
+        disposeForEditor(editor) {
+            this.actionHandlers.forEach((handlers, currentEditor) => {
+                if (currentEditor == editor) {
+                    handlers.forEach((handler) => handler.dispose());
                 }
+            });
+        }
 
-                this.actionHandlers.set(editor, [handler]);
-            }
-        }, {
-            key: 'on',
-            value: function on(eventType, listener) {
-                this.listeners.set(listener, eventType);
-            }
-        }, {
-            key: 'off',
-            value: function off(listener) {
-                this.listeners.delete(listener);
-            }
-        }, {
-            key: 'emit',
-            value: function emit(eventType, payload) {
-                this.listeners.forEach(function (listenerEventType, listener) {
-                    if (listenerEventType == eventType) {
-                        listener(payload);
-                    }
-                });
-            }
-        }, {
-            key: 'escapeHtml',
-            value: function escapeHtml(str) {
-                return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-            }
-        }, {
-            key: 'modelHasTag',
-            value: function modelHasTag(model, tag) {
-                if (!model.octoberEditorCmsTags) {
-                    return false;
+        onContextMenu(payload) {
+            this.actionHandlers.forEach((handlers, editor) => {
+                if (editor == payload.editor) {
+                    handlers.forEach((handler) => {
+                        handler.onContextMenu(payload.editor, payload.target);
+                    });
                 }
+            });
+        }
 
-                return model.octoberEditorCmsTags.indexOf(tag) !== -1;
-            }
-        }, {
-            key: 'getModelCustomAttribute',
-            value: function getModelCustomAttribute(model, name) {
-                if (model.octoberEditorAttributes === undefined) {
-                    return undefined;
+        onFilterSupportedActions(payload) {
+            this.actionHandlers.forEach((handlers, editor) => {
+                if (editor == payload.editor) {
+                    handlers.forEach((handler) => handler.onFilterSupportedActions(payload));
                 }
-
-                return model.octoberEditorAttributes[name];
-            }
-        }, {
-            key: 'disposeForEditor',
-            value: function disposeForEditor(editor) {
-                this.actionHandlers.forEach(function (handlers, currentEditor) {
-                    if (currentEditor == editor) {
-                        handlers.forEach(function (handler) {
-                            return handler.dispose();
-                        });
-                    }
-                });
-            }
-        }, {
-            key: 'onContextMenu',
-            value: function onContextMenu(payload) {
-                this.actionHandlers.forEach(function (handlers, editor) {
-                    if (editor == payload.editor) {
-                        handlers.forEach(function (handler) {
-                            handler.onContextMenu(payload.editor, payload.target);
-                        });
-                    }
-                });
-            }
-        }, {
-            key: 'onFilterSupportedActions',
-            value: function onFilterSupportedActions(payload) {
-                this.actionHandlers.forEach(function (handlers, editor) {
-                    if (editor == payload.editor) {
-                        handlers.forEach(function (handler) {
-                            return handler.onFilterSupportedActions(payload);
-                        });
-                    }
-                });
-            }
-        }]);
-        return CmsIntellisense;
-    }();
+            });
+        }
+    }
 
     return {
-        make: function make(cmsCustomData) {
+        make: function(cmsCustomData) {
             if (instance !== null) {
                 return instance;
             }
 
-            return instance = new CmsIntellisense(cmsCustomData);
+            return (instance = new CmsIntellisense(cmsCustomData));
         }
     };
 });

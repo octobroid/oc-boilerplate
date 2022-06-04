@@ -21,7 +21,7 @@ trait OctoberUtilPatches
             return;
         }
 
-        $this->output->newLine();
+        $this->line('');
         $this->comment('*** Patching DEFERRED BINDINGS table');
 
         if (Schema::hasColumn('deferred_bindings', 'str_slave_id')) {
@@ -64,7 +64,7 @@ trait OctoberUtilPatches
             });
         }
 
-        $this->output->newLine();
+        $this->line('');
         $this->comment('*** Transferring DEFERRED BINDINGS data');
 
         $failedRows = [];
@@ -91,15 +91,15 @@ trait OctoberUtilPatches
         $this->comment('Transfer complete');
 
         if (count($failedRows) > 0) {
-            $this->output->newLine();
+            $this->line('');
             $this->warn('Warning! String values detected for DEFERRED BINDINGS rows:');
             $this->warn(sprintf('[%s]', implode(' ', $failedRows)));
             $this->warn('You must address these columns manually, they have not been transferred.');
             $this->warn('Contact support if you require assistance. Copy these numbers down and do not lose this list.');
-            $this->output->newLine();
+            $this->line('');
         }
 
-        $this->output->newLine();
+        $this->line('');
         $this->comment('*** Patching SYSTEM FILES table');
 
         if (Schema::hasColumn('system_files', 'str_attachment_id')) {
@@ -140,7 +140,7 @@ trait OctoberUtilPatches
             });
         }
 
-        $this->output->newLine();
+        $this->line('');
         $this->comment('*** Transferring SYSTEM FILES data');
 
         $failedRows = [];
@@ -167,12 +167,12 @@ trait OctoberUtilPatches
         $this->comment('Transfer complete');
 
         if (count($failedRows) > 0) {
-            $this->output->newLine();
+            $this->line('');
             $this->warn('Warning! String values detected for SYSTEM FILES rows:');
             $this->warn(sprintf('[%s]', implode(' ', $failedRows)));
             $this->warn('You must address these columns manually, they have not been transferred.');
             $this->warn('Contact support if you require assistance. Copy these numbers down and do not lose this list.');
-            $this->output->newLine();
+            $this->line('');
         }
 
         $this->output->success('October CMS Version 2.0 applied!');

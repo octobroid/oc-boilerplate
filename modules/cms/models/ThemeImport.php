@@ -168,7 +168,7 @@ class ThemeImport extends Model
         $options = FilesystemIterator::SKIP_DOTS;
 
         if (!File::isDirectory($destination)) {
-            File::makeDirectory($destination, 0777, true);
+            File::makeDirectory($destination, 0755, true);
         }
 
         $items = new FilesystemIterator($directory, $options);

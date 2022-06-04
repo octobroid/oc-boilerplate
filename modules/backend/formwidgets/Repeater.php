@@ -461,6 +461,10 @@ class Repeater extends FormWidgetBase
         $groupCode = post('_repeater_group');
         $toIndex = $this->getNextIndex();
 
+        if ($this->useRelation) {
+            $this->duplicateRelationAtIndex($fromIndex, $toIndex, $groupCode);
+        }
+
         $this->prepareVars();
         $this->vars['widget'] = $this->makeItemFormWidget($toIndex, $groupCode, $fromIndex);
         $this->vars['indexValue'] = $toIndex;

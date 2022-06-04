@@ -282,7 +282,7 @@
     ListStructureWidget.prototype.getRecordSortData = function() {
         var sortOrders = [];
 
-        $('[data-tree-id]', this.$tableBody).each(function(){
+        $('[data-tree-id]', this.$tableBody).each(function() {
             sortOrders.push($(this).data('tree-id'))
         });
 

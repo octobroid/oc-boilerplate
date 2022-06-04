@@ -59,7 +59,7 @@ abstract class FormWidgetBase extends WidgetBase
     protected $parentForm = null;
 
     /**
-     * @var string Form field name.
+     * @var string fieldName
      */
     protected $fieldName;
 
@@ -70,9 +70,9 @@ abstract class FormWidgetBase extends WidgetBase
 
     /**
      * __construct
-     * @param $controller Controller Active controller object.
-     * @param $formField FormField Object containing general form field information.
-     * @param $configuration array Configuration the relates to this widget.
+     * @param Controller $controller
+     * @param FormField $formField
+     * @param array $configuration
      */
     public function __construct($controller, $formField, $configuration = [])
     {

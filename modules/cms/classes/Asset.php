@@ -313,7 +313,7 @@ class Asset extends Extendable
 
         $dirPath = $this->theme->getPath().'/'.$this->dirName;
         if (!file_exists($dirPath) || !is_dir($dirPath)) {
-            if (!File::makeDirectory($dirPath, 0777, true, true)) {
+            if (!File::makeDirectory($dirPath, 0755, true, true)) {
                 throw new ApplicationException(Lang::get(
                     'cms::lang.cms_object.error_creating_directory',
                     ['name'=>$dirPath]
@@ -324,7 +324,7 @@ class Asset extends Extendable
         if (($pos = strpos($this->fileName, '/')) !== false) {
             $dirPath = dirname($fullPath);
 
-            if (!is_dir($dirPath) && !File::makeDirectory($dirPath, 0777, true, true)) {
+            if (!is_dir($dirPath) && !File::makeDirectory($dirPath, 0755, true, true)) {
                 throw new ApplicationException(Lang::get(
                     'cms::lang.cms_object.error_creating_directory',
                     ['name'=>$dirPath]

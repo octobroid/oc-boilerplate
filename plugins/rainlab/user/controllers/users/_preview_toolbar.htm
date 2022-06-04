@@ -17,6 +17,17 @@
         <?= e(trans('rainlab.user::lang.users.impersonate_user')) ?>
     </a>
 <?php endif ?>
+
+<?php if ($formModel->isSuspended()): ?>
+    <a
+        href="javascript:;"
+        data-request="onUnsuspendUser"
+        data-request-confirm="<?= e(trans('rainlab.user::lang.users.unsuspend_confirm')) ?>"
+        class="btn btn-default oc-icon-unlock-alt">
+        <?= e(trans('rainlab.user::lang.users.unsuspend')) ?>
+    </a>
+<?php endif ?>
+
 <?php
 /* @todo
 <div class="btn-group">
@@ -37,4 +48,24 @@
     </a>
 </div>
 */
+?>
+
+<?=
+    /**
+     * @event rainlab.user.view.extendPreviewToolbar
+     * Fires when preview user toolbar is rendered.
+     *
+     * Example usage:
+     *
+     *     Event::listen('rainlab.user.view.extendPreviewToolbar', function (
+     *         (RainLab\User\Controllers\Users) $controller,
+     *         (RainLab\User\Models\User) $record
+     *     ) {
+     *         return $controller->makePartial('~/path/to/partial');
+     *     });
+     *
+     */
+    $this->fireViewEvent('rainlab.user.view.extendPreviewToolbar', [
+        'record' => $formModel
+    ]);
 ?>

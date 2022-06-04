@@ -66,12 +66,11 @@ body.breadcrumb-fancy .control-breadcrumb,
                     margin-left: -8px;
                     > li {
                         margin-left: -5px;
-                        top: -3px;
                         padding-top: 3px;
 
                         span.tab-close {
                             top: 14px;
-                            right: -3px;
+                            right: -5px;
                             left: auto;
                             z-index: 110;
                             font-family: sans-serif;
@@ -98,6 +97,7 @@ body.breadcrumb-fancy .control-breadcrumb,
                             color: @color-fancy-master-tabs-inactive-text;
                             padding: 6px 0 0 24px!important;
                             overflow: visible;
+                            text-decoration: none;
 
                             &:hover  {
                                 color: white;
@@ -342,8 +342,8 @@ body.breadcrumb-fancy .control-breadcrumb,
 
                             &:before {
                                 position: absolute;
-                                bottom: 0;
-                                height: 2px;
+                                bottom: -1px;
+                                height: 2.2px;
                                 right: 2px;
                                 left: 2px;
                                 content: ' ';
@@ -446,6 +446,11 @@ body.breadcrumb-fancy .control-breadcrumb,
                                 border-width: 0;
                                 vertical-align: top;
                             }
+                        }
+
+                        &:before {
+                            top: 2px;
+                            bottom: -6px;
                         }
                     }
 

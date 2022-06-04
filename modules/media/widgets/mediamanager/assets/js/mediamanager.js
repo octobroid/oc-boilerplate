@@ -117,10 +117,10 @@
         this.scrollContentElement = this.itemListElement.querySelector('.scroll-wrapper')
 
         if (this.options.bottomToolbar) {
-            this.$el.find('[data-control="bottom-toolbar"]').removeClass('hide')
+            this.$el.find('[data-control="bottom-toolbar"]').removeClass('oc-hide')
 
             if (this.options.cropAndInsertButton)
-                this.$el.find('[data-popup-command="crop-and-insert"]').removeClass('hide')
+                this.$el.find('[data-popup-command="crop-and-insert"]').removeClass('oc-hide')
         }
 
         this.registerHandlers()
@@ -420,7 +420,7 @@
     //
 
     MediaManager.prototype.isPreviewSidebarVisible = function() {
-        return !this.$el.find('[data-control="preview-sidebar"]').hasClass('hide')
+        return !this.$el.find('[data-control="preview-sidebar"]').hasClass('oc-hide')
     }
 
     MediaManager.prototype.toggleSidebar = function(ev) {
@@ -429,12 +429,12 @@
             $button = $(ev.target)
 
         if (!isVisible) {
-            $sidebar.removeClass('hide')
+            $sidebar.removeClass('oc-hide')
             this.updateSidebarPreview()
             $button.removeClass('sidebar-hidden')
         }
         else {
-            $sidebar.addClass('hide')
+            $sidebar.addClass('oc-hide')
             $button.addClass('sidebar-hidden')
         }
 
@@ -505,7 +505,7 @@
 
         // No items are selected
         if (items.length == 0) {
-            this.sidebarPreviewElement.querySelector('[data-control="sidebar-labels"]').setAttribute('class', 'hide')
+            this.sidebarPreviewElement.querySelector('[data-control="sidebar-labels"]').setAttribute('class', 'oc-hide')
         }
         // One item is selected - display the details
         else if (items.length == 1 && !items[0].hasAttribute('data-root')) {
@@ -519,10 +519,12 @@
             previewPanel.querySelector('[data-label="last-modified"]').textContent = lastModified
             previewPanel.querySelector('[data-label="public-url"]').setAttribute('href', item.getAttribute('data-public-url'))
 
-            if (lastModified)
+            if (lastModified) {
                 previewPanel.querySelector('[data-control="last-modified"]').setAttribute('class', '')
-            else
-                previewPanel.querySelector('[data-control="last-modified"]').setAttribute('class', 'hide')
+            }
+            else {
+                previewPanel.querySelector('[data-control="last-modified"]').setAttribute('class', 'oc-hide')
+            }
 
             if (this.isSearchMode()) {
                 previewPanel.querySelector('[data-control="item-folder"]').setAttribute('class', '')
@@ -531,12 +533,12 @@
                 folderNode.setAttribute('data-path', item.getAttribute('data-folder'))
             }
             else {
-                previewPanel.querySelector('[data-control="item-folder"]').setAttribute('class', 'hide')
+                previewPanel.querySelector('[data-control="item-folder"]').setAttribute('class', 'oc-hide')
             }
         }
         // Multiple items are selected or "Go up" is selected
         else {
-            this.sidebarPreviewElement.querySelector('[data-control="sidebar-labels"]').setAttribute('class', 'hide')
+            this.sidebarPreviewElement.querySelector('[data-control="sidebar-labels"]').setAttribute('class', 'oc-hide')
         }
 
         this.updateSidebarMediaPreview(items)
@@ -754,16 +756,16 @@
         this.showUploadUi()
         this.setUploadProgress(0)
 
-        this.$el.find('[data-command="cancel-uploading"]').removeClass('hide')
-        this.$el.find('[data-command="close-uploader"]').addClass('hide')
+        this.$el.find('[data-command="cancel-uploading"]').removeClass('oc-hide')
+        this.$el.find('[data-command="close-uploader"]').addClass('oc-hide')
     }
 
     MediaManager.prototype.showUploadUi = function() {
-        this.$el.find('[data-control="upload-ui"]').removeClass('hide')
+        this.$el.find('[data-control="upload-ui"]').removeClass('oc-hide')
     }
 
     MediaManager.prototype.hideUploadUi = function() {
-        this.$el.find('[data-control="upload-ui"]').addClass('hide')
+        this.$el.find('[data-control="upload-ui"]').addClass('oc-hide')
     }
 
     MediaManager.prototype.uploadUpdateTotalProgress = function(uploadProgress, totalBytes, totalBytesSent) {
@@ -792,8 +794,8 @@
     }
 
     MediaManager.prototype.uploadQueueComplete = function() {
-        this.$el.find('[data-command="cancel-uploading"]').addClass('hide')
-        this.$el.find('[data-command="close-uploader"]').removeClass('hide')
+        this.$el.find('[data-command="cancel-uploading"]').addClass('oc-hide')
+        this.$el.find('[data-command="close-uploader"]').removeClass('oc-hide')
 
         this.refresh()
     }
@@ -817,11 +819,11 @@
     }
 
     MediaManager.prototype.uploadSuccess = function() {
-        this.updateUploadBar('success', 'progress-bar progress-bar-success');
+        this.updateUploadBar('success', 'progress-bar bg-success');
     }
 
     MediaManager.prototype.uploadError = function(file, message) {
-        this.updateUploadBar('error', 'progress-bar progress-bar-danger');
+        this.updateUploadBar('error', 'progress-bar bg-danger');
 
         if (!message) {
             message = 'Error uploading file'
@@ -1188,7 +1190,7 @@
             }
 
             this.updateSidebarPreview()
-            this.selectionMarker.setAttribute('class', 'hide')
+            this.selectionMarker.setAttribute('class', 'oc-hide')
         }
 
         this.selectionStarted = false

@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="modules/system/tests/bootstrap.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
 >
     <testsuites>
         <testsuite name="October CMS Test Suite">
-            <directory>./tests/unit</directory>
-        </testsuite>
-        <testsuite name="October Rain Test Suite">
-            <directory>./vendor/october/rain/tests</directory>
+            <directory>./modules/*/tests</directory>
         </testsuite>
     </testsuites>
+
     <php>
         <env name="APP_ENV" value="testing" />
+        <env name="APP_LOCALE" value="en" />
         <env name="CACHE_DRIVER" value="array" />
         <env name="SESSION_DRIVER" value="array" />
+        <env name="ACTIVE_THEME" value="test" />
+        <env name="CONVERT_LINE_ENDINGS" value="true" />
+        <env name="CMS_SAFE_MODE" value="false" />
+        <env name="CMS_ROUTE_CACHE" value="true" />
+        <env name="CMS_TWIG_CACHE" value="false" />
+        <env name="PLUGINS_PATH" value="modules/system/tests/fixtures/plugins" />
+        <env name="THEMES_PATH" value="modules/cms/tests/fixtures/themes" />
+        <env name="ENABLE_CSRF" value="false" />
+        <env name="DB_CONNECTION" value="sqlite" />
+        <env name="DB_DATABASE" value=":memory:" />
     </php>
 </phpunit>

@@ -38,7 +38,7 @@ class PluginRemove extends Command
      */
     public function handle()
     {
-        $this->output->writeln('<info>Removing Plugin...</info>');
+        $this->line('Removing Plugin...');
 
         if ($this->handleComposer() === true) {
             return;
@@ -58,11 +58,11 @@ class PluginRemove extends Command
 
         // Remove via composer
         if ($composerCode = $manager->getComposerCode($name)) {
-            UpdateManager::instance()->setNotesOutput($this->output)->rollbackPlugin($name);
+            UpdateManager::instance()->setNotesCommand($this)->rollbackPlugin($name);
 
             // Composer remove
             $this->comment("Executing: composer remove {$composerCode}");
-            $this->output->newLine();
+            $this->line('');
 
             $composer = new ComposerProcess;
             $composer->setCallback(function($message) { echo $message; });
@@ -107,7 +107,7 @@ class PluginRemove extends Command
         }
 
         // Rollback plugin
-        UpdateManager::instance()->setNotesOutput($this->output)->rollbackPlugin($name);
+        UpdateManager::instance()->setNotesCommand($this)->rollbackPlugin($name);
 
         return true;
     }

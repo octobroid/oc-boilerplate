@@ -7,7 +7,7 @@ use Twig\Sandbox\SecurityNotAllowedMethodError;
 use Twig\Sandbox\SecurityNotAllowedPropertyError;
 
 /**
- * SecurityPolicyLegacy globally blocks accessibility of certain methods and properties
+ * SecurityPolicy is a security policy using a block-list
  *
  * @deprecated
  * @package october\system
@@ -41,16 +41,29 @@ final class SecurityPolicyLegacy implements SecurityPolicyInterface
      * @var array blockedMethods is a list of forbidden methods
      */
     protected $blockedMethods = [
-        // Prevent magic bypass
+        // Block PHP
         '__call',
+        '__callStatic',
 
-        // Prevent dynamic methods and props
+        // Block October\Rain\Extension\ExtensionTrait
+        'extend',
+        'extensionExtendCallback',
+
+        // Block October\Rain\Extension\ExtendableTrait
+        'extendableCall',
+        'extendableCallStatic',
+        'extendClassWith',
+        'implementClassWith',
         'addDynamicMethod',
         'addDynamicProperty',
 
-        // Prevent binding event logic
+        // Block October\Rain\Support\Traits\Emitter
         'bindEvent',
         'bindEventOnce',
+
+        // Block Illuminate\Support\Traits\Macroable
+        'macro',
+        'mixin',
 
         // General write bans
         'create',
@@ -64,14 +77,6 @@ final class SecurityPolicyLegacy implements SecurityPolicyInterface
      * __construct
      */
     public function __construct()
-    {
-        $this->setBlockedMethods();
-    }
-
-    /**
-     * setBlockedMethods sets the defined blocked methods as lower case
-     */
-    public function setBlockedMethods(): void
     {
         foreach ($this->blockedMethods as $i => $m) {
             $this->blockedMethods[$i] = strtr($m, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz');
@@ -88,7 +93,7 @@ final class SecurityPolicyLegacy implements SecurityPolicyInterface
      * checkSecurity
      * @throws SecurityError
      */
-    public function checkSecurity($tags, $filters, $functions)
+    public function checkSecurity($tags, $filters, $functions): void
     {
     }
 
@@ -96,7 +101,7 @@ final class SecurityPolicyLegacy implements SecurityPolicyInterface
      * checkMethodAllowed
      * @throws SecurityNotAllowedMethodError
      */
-    public function checkMethodAllowed($obj, $method)
+    public function checkMethodAllowed($obj, $method): void
     {
         if ($obj instanceof Template || $obj instanceof Markup) {
             return;
@@ -129,7 +134,7 @@ final class SecurityPolicyLegacy implements SecurityPolicyInterface
      * checkPropertyAllowed
      * @throws SecurityNotAllowedPropertyError
      */
-    public function checkPropertyAllowed($obj, $property)
+    public function checkPropertyAllowed($obj, $property): void
     {
         if (in_array($property, $this->blockedProperties)) {
             $class = get_class($obj);

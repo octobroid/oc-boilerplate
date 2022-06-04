@@ -36,6 +36,6 @@ class PluginList extends Command
             ];
         }
 
-        $this->output->table(['Plugin', 'Version', 'Plugin Enabled'], $tableRows);
+        $this->output->table(['Plugin', 'Version', 'Enabled'], $tableRows);
     }
 }

@@ -1,6 +1,6 @@
 <?php namespace Backend\Models;
 
-use Backend\Classes\AuthManager;
+use Backend\Classes\RoleManager;
 use October\Rain\Auth\Models\Role as RoleBase;
 
 /**
@@ -11,6 +11,8 @@ use October\Rain\Auth\Models\Role as RoleBase;
  */
 class UserRole extends RoleBase
 {
+    use \October\Rain\Database\Traits\Sortable;
+
     const CODE_DEVELOPER = 'developer';
     const CODE_PUBLISHER = 'publisher';
 
@@ -32,6 +34,16 @@ class UserRole extends RoleBase
      */
     public $hasMany = [
         'users' => [User::class, 'key' => 'role_id']
+    ];
+
+    /**
+     * @var array fillable fields
+     */
+    protected $fillable = [
+        'name',
+        'code',
+        'description',
+        'color_background'
     ];
 
     /**
@@ -82,7 +94,7 @@ class UserRole extends RoleBase
             return true;
         }
 
-        return AuthManager::instance()->hasPermissionsForRole($this->code);
+        return RoleManager::instance()->hasPermissionsForRole($this->code);
     }
 
     /**
@@ -90,6 +102,6 @@ class UserRole extends RoleBase
      */
     public function getDefaultPermissions()
     {
-        return AuthManager::instance()->listPermissionsForRole($this->code);
+        return RoleManager::instance()->listPermissionsForRole($this->code);
     }
 }

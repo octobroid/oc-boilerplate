@@ -2,11 +2,14 @@
 
 use Lang;
 use Flash;
+use Config;
 use Backend;
 use Redirect;
 use BackendAuth;
+use Backend\Models\UserRole;
 use Backend\Models\UserGroup;
 use Backend\Classes\SettingsController;
+use ForbiddenException;
 
 /**
  * Users controller for backend users
@@ -38,7 +41,7 @@ class Users extends SettingsController
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['backend.manage_users'];
+    public $requiredPermissions = ['admins.manage'];
 
     /**
      * @var string HTML body tag class
@@ -51,7 +54,7 @@ class Users extends SettingsController
     public $settingsItemCode = 'administrators';
 
     /**
-     * Constructor.
+     * __construct
      */
     public function __construct()
     {
@@ -63,17 +66,60 @@ class Users extends SettingsController
     }
 
     /**
-     * Extends the list query to hide superusers if the current user is not a superuser themselves
+     * formExtendFields adds available permission fields to the User form.
+     * Mark default groups as checked for new Users.
      */
-    public function listExtendQuery($query)
+    public function formExtendFields($form)
     {
+        // Remove permissions on own account
+        if ($form->getContext() === 'myaccount') {
+            return;
+        }
+
+        // Add super user flag
+        if ($this->user->isSuperUser()) {
+            $form->addField('is_superuser')
+                ->context(['create', 'update'])
+                ->tab('backend::lang.user.permissions')
+                ->label('backend::lang.user.superuser')
+                ->comment('backend::lang.user.superuser_comment')
+                ->displayAs('switch');
+        }
+
+        // Manage other admins
+        if ($form->getContext() !== 'create' && !BackendAuth::userHasAccess('admins.manage.other_admins')) {
+            $form->removeField('password');
+            $form->removeField('password_confirmation');
+            $form->getField('email')->disabled();
+        }
+
+        // Filter the role options to those below rank
         if (!$this->user->isSuperUser()) {
-            $query->where('is_superuser', false);
+            $form->getField('role')->options(function() {
+                return $this->getRankedRoleOptions();
+            });
+        }
+
+        // Mark default groups
+        if (!$form->model->exists) {
+            $defaultGroupIds = UserGroup::where('is_new_user_default', true)->pluck('id')->all();
+
+            if ($groupField = $form->getField('groups')) {
+                $groupField->value($defaultGroupIds);
+            }
         }
     }
 
     /**
-     * Prevents non-superusers from even seeing the is_superuser filter
+     * listExtendQuery extends the list query to hide superusers if the current user is not a superuser themselves
+     */
+    public function listExtendQuery($query)
+    {
+        $this->applyRankPermissionsToQuery($query);
+    }
+
+    /**
+     * listFilterExtendScopes prevents non-superusers from even seeing the is_superuser filter
      */
     public function listFilterExtendScopes($filterWidget)
     {
@@ -83,7 +129,7 @@ class Users extends SettingsController
     }
 
     /**
-     * Strike out deleted records
+     * listInjectRowClass strikes out deleted records
      */
     public function listInjectRowClass($record, $definition = null)
     {
@@ -93,20 +139,76 @@ class Users extends SettingsController
     }
 
     /**
-     * Extends the form query to prevent non-superusers from accessing superusers at all
+     * formExtendQuery extends the form query to prevent non-superusers from accessing superusers at all
      */
     public function formExtendQuery($query)
     {
-        if (!$this->user->isSuperUser()) {
-            $query->where('is_superuser', false);
-        }
+        $this->applyRankPermissionsToQuery($query);
 
         // Ensure soft-deleted records can still be managed
         $query->withTrashed();
     }
 
     /**
-     * Update controller
+     * formBeforeSave
+     */
+    public function formBeforeSave($model)
+    {
+        // Prevent outranked roles from being selected
+        if (
+            !$this->user->isSuperUser() &&
+            ($role = UserRole::find(post('User[role]'))) &&
+            $role->sort_order <= $this->user->role->sort_order
+        ) {
+            throw new ForbiddenException;
+        }
+    }
+
+    /**
+     * getRoleOptions returns available role options
+     */
+    protected function getRankedRoleOptions()
+    {
+        $user = BackendAuth::getUser();
+        if (!$user || !$user->role || !$user->role->sort_order) {
+            return [];
+        }
+
+        $result = [];
+        foreach (UserRole::where('sort_order', '>', $user->role->sort_order)->get() as $role) {
+            $result[$role->id] = [$role->name, $role->description];
+        }
+
+        return $result;
+    }
+
+    /**
+     * applyRankPermissionsToQuery
+     */
+    protected function applyRankPermissionsToQuery($query)
+    {
+        // Super users have no restrictions
+        if ($this->user->isSuperUser()) {
+            return;
+        }
+
+        // Hide super users
+        $query->where('is_superuser', false);
+
+        // Hide users above rank, not including self
+        $query->where(function($q) {
+            $q->where('id', $this->user->id);
+
+            if ($this->user->role && $this->user->role->sort_order) {
+                $q->orWhereHas('role', function($q) {
+                    $q->where('sort_order', '>', $this->user->role->sort_order);
+                });
+            }
+        });
+    }
+
+    /**
+     * update controller
      */
     public function update($recordId, $context = null)
     {
@@ -119,7 +221,7 @@ class Users extends SettingsController
     }
 
     /**
-     * Handle restoring users
+     * update_onRestore handles restoring users
      */
     public function update_onRestore($recordId)
     {
@@ -131,83 +233,39 @@ class Users extends SettingsController
     }
 
     /**
-     * My Settings controller
+     * myaccount controller
      */
     public function myaccount()
     {
         // SettingsManager::setContext('October.Backend', 'myaccount');
 
         $this->pageTitle = 'backend::lang.myaccount.menu_label';
+
         return $this->update($this->user->id, 'myaccount');
     }
 
     /**
-     * Proxy update onSave event
+     * myaccount_onSave proxies the update onSave event
      */
     public function myaccount_onSave()
     {
         $result = $this->asExtension('FormController')->update_onSave($this->user->id, 'myaccount');
 
-        /*
-         * If the password or login name has been updated, reauthenticate the user
-         */
+        // If the password or login name has been updated, reauthenticate the user
+        //
         $loginChanged = $this->user->login != post('User[login]');
         $passwordChanged = strlen(post('User[password]'));
         if ($loginChanged || $passwordChanged) {
-            BackendAuth::login($this->user->reload(), true);
+
+            // Determine remember policy
+            $remember = Config::get('backend.force_remember');
+            if ($remember === null) {
+                $remember = BackendAuth::hasRemember();
+            }
+
+            BackendAuth::login($this->user->reload(), (bool) $remember);
         }
 
         return $result;
-    }
-
-    /**
-     * Add available permission fields to the User form.
-     * Mark default groups as checked for new Users.
-     */
-    public function formExtendFields($form)
-    {
-        if ($form->getContext() == 'myaccount') {
-            return;
-        }
-
-        if (!$this->user->isSuperUser()) {
-            $form->removeField('is_superuser');
-        }
-
-        /*
-         * Add permissions tab
-         */
-        $form->addTabFields($this->generatePermissionsField());
-
-        /*
-         * Mark default groups
-         */
-        if (!$form->model->exists) {
-            $defaultGroupIds = UserGroup::where('is_new_user_default', true)->pluck('id')->all();
-
-            $groupField = $form->getField('groups');
-            if ($groupField) {
-                $groupField->value = $defaultGroupIds;
-            }
-        }
-    }
-
-    /**
-     * Adds the permissions editor widget to the form.
-     * @return array
-     */
-    protected function generatePermissionsField()
-    {
-        return [
-            'permissions' => [
-                'tab' => 'backend::lang.user.permissions',
-                'type' => \Backend\FormWidgets\PermissionEditor::class,
-                'trigger' => [
-                    'action' => 'disable',
-                    'field' => 'is_superuser',
-                    'condition' => 'checked'
-                ]
-            ]
-        ];
     }
 }

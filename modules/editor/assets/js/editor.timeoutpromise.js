@@ -1,34 +1,27 @@
-$.oc.module.register('editor.timeoutpromise', function () {
+$.oc.module.register('editor.timeoutpromise', function() {
     'use strict';
     // Guarantees a minimum time for executing an operation.
     //
-
-    var TimeoutPromise = function () {
-        function TimeoutPromise() {
-            babelHelpers.classCallCheck(this, TimeoutPromise);
-
+    class TimeoutPromise {
+        constructor() {
             this.startTime = new Date();
         }
 
-        babelHelpers.createClass(TimeoutPromise, [{
-            key: 'make',
-            value: function make(data) {
-                var timeElapsed = new Date() - this.startTime;
-                var remainingTime = Math.max(0, 300 - timeElapsed);
+        make(data) {
+            const timeElapsed = new Date() - this.startTime;
+            const remainingTime = Math.max(0, 300 - timeElapsed);
 
-                return new Promise(function (resolve, reject, onCancel) {
-                    var timeoutId = setTimeout(function () {
-                        resolve(data);
-                    }, remainingTime);
+            return new Promise((resolve, reject, onCancel) => {
+                const timeoutId = setTimeout(function() {
+                    resolve(data);
+                }, remainingTime);
 
-                    onCancel(function () {
-                        clearTimeout(timeoutId);
-                    });
+                onCancel(function() {
+                    clearTimeout(timeoutId);
                 });
-            }
-        }]);
-        return TimeoutPromise;
-    }();
+            });
+        }
+    }
 
     return TimeoutPromise;
 });

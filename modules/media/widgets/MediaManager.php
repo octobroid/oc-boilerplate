@@ -9,6 +9,7 @@ use Config;
 use Request;
 use Response;
 use Exception;
+use BackendAuth;
 use SystemException;
 use ApplicationException;
 use Backend\Classes\WidgetBase;
@@ -17,6 +18,7 @@ use Media\Classes\MediaLibraryItem;
 use October\Rain\Resize\Resizer;
 use October\Rain\Filesystem\Definitions as FileDefinitions;
 use Form as FormHelper;
+use ForbiddenException;
 
 /**
  * MediaManager widget
@@ -44,17 +46,17 @@ class MediaManager extends WidgetBase
     protected $brokenImageHash;
 
     /**
-     * @var boolean readOnly determines whether the widget is in readonly mode or not.
+     * @var bool readOnly determines whether the widget is in readonly mode or not.
      */
     public $readOnly = false;
 
     /**
-     * @var boolean bottomToolbar determines whether the bottom toolbar is visible.
+     * @var bool bottomToolbar determines whether the bottom toolbar is visible.
      */
     public $bottomToolbar = false;
 
     /**
-     * @var boolean cropAndInsertButton determines whether the Crop & Insert button is visible.
+     * @var bool cropAndInsertButton determines whether the Crop & Insert button is visible.
      */
     public $cropAndInsertButton = false;
 
@@ -80,17 +82,6 @@ class MediaManager extends WidgetBase
     {
         $this->addCss('css/mediamanager.css', 'core');
         $this->addJs('js/mediamanager-browser-min.js', 'core');
-    }
-
-    /**
-     * abortIfReadOnly aborts the request with an access-denied code if readOnly mode is active
-     * @return void
-     */
-    protected function abortIfReadOnly()
-    {
-        if ($this->readOnly) {
-            abort(403);
-        }
     }
 
     /**
@@ -282,7 +273,9 @@ class MediaManager extends WidgetBase
      */
     public function onDeleteItem()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaDelete')) {
+            throw new ForbiddenException;
+        }
 
         $paths = Input::get('paths');
 
@@ -379,7 +372,9 @@ class MediaManager extends WidgetBase
      */
     public function onLoadRenamePopup()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaDelete')) {
+            throw new ForbiddenException;
+        }
 
         $path = Input::get('path');
         $path = MediaLibrary::validatePath($path);
@@ -398,7 +393,9 @@ class MediaManager extends WidgetBase
      */
     public function onApplyName()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaDelete')) {
+            throw new ForbiddenException;
+        }
 
         $newName = trim(Input::get('name'));
         if (!strlen($newName)) {
@@ -481,7 +478,9 @@ class MediaManager extends WidgetBase
      */
     public function onCreateFolder()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
         $name = trim(Input::get('name'));
         if (!strlen($name)) {
@@ -544,7 +543,9 @@ class MediaManager extends WidgetBase
      */
     public function onLoadMovePopup()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaDelete')) {
+            throw new ForbiddenException;
+        }
 
         $exclude = Input::get('exclude', []);
         if (!is_array($exclude)) {
@@ -580,7 +581,9 @@ class MediaManager extends WidgetBase
      */
     public function onMoveItems()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaDelete')) {
+            throw new ForbiddenException;
+        }
 
         $dest = trim(Input::get('dest'));
         if (!strlen($dest)) {
@@ -695,7 +698,9 @@ class MediaManager extends WidgetBase
      */
     public function onLoadImageCropPopup()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
         $path = Input::get('path');
         $path = MediaLibrary::validatePath($path);
@@ -724,7 +729,9 @@ class MediaManager extends WidgetBase
      */
     public function onEndCroppingSession()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
         $cropSessionKey = Input::get('cropSessionKey');
         if (!preg_match('/^[0-9a-z]+$/', $cropSessionKey)) {
@@ -740,7 +747,9 @@ class MediaManager extends WidgetBase
      */
     public function onCropImage()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
         $imageSrcPath = trim(Input::get('img'));
         $selectionData = Input::get('selection');
@@ -777,7 +786,9 @@ class MediaManager extends WidgetBase
      */
     public function onResizeImage()
     {
-        $this->abortIfReadOnly();
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
         $cropSessionKey = Input::get('cropSessionKey');
         if (!preg_match('/^[0-9a-z]+$/', $cropSessionKey)) {
@@ -1271,7 +1282,7 @@ class MediaManager extends WidgetBase
         $path = temp_path() . MediaLibrary::validatePath($mediaFolder, true);
 
         if (!File::isDirectory($path)) {
-            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path, 0755, true, true);
         }
 
         return $path.'/'.$fileName;
@@ -1404,7 +1415,7 @@ class MediaManager extends WidgetBase
         $thumbnailDir = dirname($fullThumbnailPath);
         if (
             !File::isDirectory($thumbnailDir)
-            && File::makeDirectory($thumbnailDir, 0777, true) === false
+            && File::makeDirectory($thumbnailDir, 0755, true) === false
         ) {
             throw new SystemException('Error creating thumbnail directory');
         }
@@ -1458,7 +1469,7 @@ class MediaManager extends WidgetBase
     {
         try {
             $thumbnailDir = dirname($path);
-            if (!File::isDirectory($thumbnailDir) && File::makeDirectory($thumbnailDir, 0777, true) === false) {
+            if (!File::isDirectory($thumbnailDir) && File::makeDirectory($thumbnailDir, 0755, true) === false) {
                 return;
             }
 
@@ -1516,40 +1527,40 @@ class MediaManager extends WidgetBase
             return;
         }
 
-        try {
-            if (!Input::hasFile('file_data')) {
-                throw new ApplicationException('File missing from request');
-            }
+        if (!$this->checkHasPermission('mediaCreate')) {
+            throw new ForbiddenException;
+        }
 
+        if (!Input::hasFile('file_data')) {
+            throw new ApplicationException('File missing from request');
+        }
+
+        try {
             $uploadedFile = Input::file('file_data');
 
             $fileName = $uploadedFile->getClientOriginalName();
 
-            /*
-             * Convert uppcare case file extensions to lower case
-             */
+            // Convert uppercase file extensions to lowercase
+            //
             $extension = strtolower($uploadedFile->getClientOriginalExtension());
             $fileName = File::name($fileName).'.'.$extension;
 
-            /*
-             * File name contains non-latin characters, attempt to slug the value
-             */
+            // File name contains non-latin characters, attempt to slug the value
+            //
             $autoRename = Config::get('media.auto_rename') === 'slug';
             if (!$this->validateFileName($fileName) || $autoRename) {
                 $fileNameClean = $this->slugFileName(File::name($fileName));
                 $fileName = $fileNameClean . '.' . $extension;
             }
 
-            /*
-             * Check for unsafe file extensions
-             */
+            // Check for unsafe file extensions
+            //
             if (!$this->validateFileType($fileName)) {
                 throw new ApplicationException(Lang::get('backend::lang.media.type_blocked'));
             }
 
-            /*
-             * See mime type handling in the asset manager
-             */
+            // See mime type handling in the asset manager
+            //
             if (!$uploadedFile->isValid()) {
                 throw new ApplicationException($uploadedFile->getErrorMessage());
             }
@@ -1558,13 +1569,20 @@ class MediaManager extends WidgetBase
             $path = MediaLibrary::validatePath($path);
             $filePath = $path.'/'.$fileName;
 
-            /*
-             * getRealPath() can be empty for some environments (IIS)
-             */
+            // getRealPath() can be empty for some environments (IIS)
+            //
             $realPath = empty(trim($uploadedFile->getRealPath()))
                 ? $uploadedFile->getPath() . DIRECTORY_SEPARATOR . $uploadedFile->getFileName()
                 : $uploadedFile->getRealPath();
 
+            // Cannot overwrite files
+            //
+            if (!$this->checkHasPermission('mediaDelete') && MediaLibrary::instance()->has($filePath)) {
+                throw new ApplicationException(__('A media file already exists at this location, please upload using a different filename.'));
+            }
+
+            // Write file to disk
+            //
             MediaLibrary::instance()->put(
                 $filePath,
                 File::get($realPath)
@@ -1689,7 +1707,7 @@ class MediaManager extends WidgetBase
         $sessionDirectoryCreated = false;
 
         if (!File::isDirectory($fullSessionDirectoryPath)) {
-            File::makeDirectory($fullSessionDirectoryPath, 0777, true, true);
+            File::makeDirectory($fullSessionDirectoryPath, 0755, true, true);
             $sessionDirectoryCreated = true;
         }
 
@@ -1882,10 +1900,24 @@ class MediaManager extends WidgetBase
     /**
      * isVector detects if image is vector graphic (SVG)
      * @param string $path
-     * @return boolean
+     * @return bool
      */
     protected function isVector($path)
     {
         return pathinfo($path, PATHINFO_EXTENSION) === 'svg';
+    }
+
+    /**
+     * checkHasPermission checks if a custom permission has been specified
+     */
+    protected function checkHasPermission(string $name)
+    {
+        if ($this->readOnly) {
+            return false;
+        }
+
+        $foundKey = $name === 'mediaCreate' ? 'media.library.create' : 'media.library.delete';
+
+        return $foundKey ? BackendAuth::userHasAccess($foundKey) : true;
     }
 }

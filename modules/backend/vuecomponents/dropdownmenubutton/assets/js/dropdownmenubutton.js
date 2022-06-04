@@ -11,7 +11,7 @@ $.oc.module.register('backend.component.dropdownmenubutton', function () {
             preferableMenuPosition: String,
             currentLabelCommand: String
         },
-        data: function data() {
+        data: function () {
             return {
                 menuId: null,
                 buttonId: null,
@@ -20,8 +20,6 @@ $.oc.module.register('backend.component.dropdownmenubutton', function () {
         },
         computed: {
             buttonText: function computeButtonText() {
-                var _this = this;
-
                 if (this.currentLabelCommand === null) {
                     return this.label;
                 }
@@ -30,9 +28,7 @@ $.oc.module.register('backend.component.dropdownmenubutton', function () {
                     return null;
                 }
 
-                var item = this.menuitems.find(function (item) {
-                    return item.command == _this.currentLabelCommand;
-                });
+                const item = this.menuitems.find(item => item.command == this.currentLabelCommand);
                 if (!item) {
                     return null;
                 }

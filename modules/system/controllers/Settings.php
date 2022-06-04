@@ -36,7 +36,7 @@ class Settings extends Controller
         parent::__construct();
 
         if ($this->action == 'backend_preferences') {
-            $this->requiredPermissions = ['backend.manage_preferences'];
+            $this->requiredPermissions = ['preferences'];
         }
 
         $this->addCss('/modules/system/assets/css/settings/settings.css', 'core');

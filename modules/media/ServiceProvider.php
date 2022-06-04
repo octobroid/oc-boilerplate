@@ -5,8 +5,8 @@ use Backend;
 use BackendMenu;
 use BackendAuth;
 use Media\Widgets\MediaManager;
-use System\Classes\CombineAssets;
 use System\Classes\MarkupManager;
+use Backend\Classes\RoleManager;
 use Backend\Classes\WidgetManager;
 use October\Rain\Support\ModuleServiceProvider;
 
@@ -22,16 +22,8 @@ class ServiceProvider extends ModuleServiceProvider
     {
         parent::register('media');
 
-        $this->registerMarkupTags();
-        $this->registerAssetBundles();
-
-        /*
-         * Backend specific
-         */
+        // Backend specific
         if (App::runningInBackend()) {
-            $this->registerBackendNavigation();
-            $this->registerBackendWidgets();
-            $this->registerBackendPermissions();
             $this->registerGlobalInstance();
         }
     }
@@ -45,79 +37,82 @@ class ServiceProvider extends ModuleServiceProvider
     }
 
     /**
-     * registerAssetBundles
+     * registerNavigation
      */
-    protected function registerAssetBundles()
+    public function registerNavigation()
     {
-        CombineAssets::registerCallback(function ($combiner) {
-            $combiner->registerBundle('~/modules/media/widgets/mediamanager/assets/js/mediamanager-browser.js');
-        });
-    }
-
-    /*
-     * Register navigation
-     */
-    protected function registerBackendNavigation()
-    {
-        BackendMenu::registerCallback(function ($manager) {
-            $manager->registerMenuItems('October.Media', [
-                'media' => [
-                    'label' => 'backend::lang.media.menu_label',
-                    'icon' => 'icon-folder',
-                    'iconSvg' => 'modules/media/assets/images/media-icon.svg',
-                    'url' => Backend::url('media'),
-                    'permissions' => ['media.*'],
-                    'order' => 200
-                ]
-            ]);
-        });
-    }
-
-    /*
-     * Register permissions
-     */
-    protected function registerBackendPermissions()
-    {
-        BackendAuth::registerCallback(function ($manager) {
-            $manager->registerPermissions('October.Media', [
-                'media.manage_media' => [
-                    'label' => 'backend::lang.permissions.manage_media',
-                    'tab' => 'system::lang.permissions.name',
-                ]
-            ]);
-        });
-    }
-
-    /*
-     * Register widgets
-     */
-    protected function registerBackendWidgets()
-    {
-        WidgetManager::instance()->registerFormWidgets(function ($manager) {
-            $manager->registerFormWidget(\Media\FormWidgets\MediaFinder::class, 'mediafinder');
-        });
-    }
-
-    /*
-     * Register markup tags
-     */
-    protected function registerMarkupTags()
-    {
-        MarkupManager::instance()->registerCallback(function ($manager) {
-            $manager->registerFilters([
-                'media' => [\Media\Classes\MediaLibrary::class, 'url'],
-            ]);
-        });
+        return [
+            'media' => [
+                'label' => 'backend::lang.media.menu_label',
+                'icon' => 'icon-image',
+                'iconSvg' => 'modules/media/assets/images/media-icon.svg',
+                'url' => Backend::url('media'),
+                'permissions' => ['media.library'],
+                'order' => 200
+            ]
+        ];
     }
 
     /**
-     * Media Manager widget is available on all back-end pages
+     * registerPermissions
+     */
+    public function registerPermissions()
+    {
+        return [
+            'media.library' => [
+                'label' => 'Access the Media Manager',
+                'tab' => 'Media',
+                'order' => 300
+            ],
+            'media.library.create' => [
+                'label' => 'Upload Media',
+                'comment' => 'backend::lang.permissions.manage_media',
+                'tab' => 'Media',
+                'order' => 400
+            ],
+            // 'media.library.update' => [
+            //     'label' => 'Modify Media',
+            //     'comment' => 'Change meta data and other information',
+            //     'tab' => 'Media',
+            //     'order' => 500
+            // ],
+            'media.library.delete' => [
+                'label' => 'Delete Media',
+                'tab' => 'Media',
+                'order' => 600
+            ]
+        ];
+    }
+
+    /**
+     * registerFormWidgets
+     */
+    public function registerFormWidgets()
+    {
+        return [
+            \Media\FormWidgets\MediaFinder::class => 'mediafinder'
+        ];
+    }
+
+    /**
+     * registerMarkupTags
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'media'  => [\Media\Classes\MediaLibrary::class, 'url'],
+            ]
+        ];
+    }
+
+    /**
+     * registerGlobalInstance ensures media Manager widget is available on all backend pages
      */
     protected function registerGlobalInstance()
     {
         \Backend\Classes\Controller::extend(function($controller) {
-            $user = BackendAuth::getUser();
-            if (!$user || !$user->hasAccess('media.*')) {
+            if (!BackendAuth::userHasAccess('media.library')) {
                 return;
             }
 

@@ -17,19 +17,18 @@
                 position: relative;
 
                 .drag-handle {
-                    width: 14px;
-                    height: 14px;
+                    width: 24px;
+                    height: 24px;
                     position: absolute;
-                    left: 15px;
-                    top: 13px;
+                    left: 8px;
+                    top: 12px;
                     opacity: 0;
                     transition: opacity 0.2s;
-                    font-size: 14px;
                     cursor: move;
 
-                    &:before {
-                        .icon(@bars);
-                        color: @color-report-widget-control-inactive;
+                    > i {
+                        font-size: 24px;
+                        line-height: 1;
                     }
                 }
 
@@ -39,7 +38,6 @@
                     width: 15px;
                     height: 15px;
                     color: @color-report-widget-control-inactive;
-                    opacity: 1;
                     outline: none;
 
                     &:hover {
@@ -54,7 +52,7 @@
 
                 .edit-widget {
                     text-indent: -10000em;
-                    right: 15px;
+                    right: 40px;
                     top: 15px;
 
                     &:before {
@@ -64,7 +62,7 @@
                         left: 0;
                         width: 15px;
                         height: 15px;
-                        font-size: 16px;
+                        font-size: 15px;
                     }
 
                     &:hover:before {
@@ -76,9 +74,10 @@
                     }
                 }
 
-                .close {
-                    right: 10px;
-                    top: 15px;
+                .btn-close {
+                    right: 12px;
+                    top: 12px;
+                    font-size: 13px;
                 }
             }
 
@@ -127,7 +126,7 @@
         }
 
         &.add-delete .item .content .edit-widget {
-            right: 30px;
+            right: 40px;
         }
 
         &.wrapped {
@@ -153,7 +152,7 @@
     }
 
     .manage-widgets:hover,
-    .dropdown.open .manage-widgets {
+    .manage-widgets.show {
         background-color: @highlight-hover-bg;
         border-color: transparent;
         color: @highlight-hover-text;

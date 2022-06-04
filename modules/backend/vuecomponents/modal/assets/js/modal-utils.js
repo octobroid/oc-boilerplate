@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(function() {
     var ModalUtils = function() {
         var alertClass = Vue.extend(Vue.options.components['backend-component-modal-alert']),
             confirmClass = Vue.extend(Vue.options.components['backend-component-modal-confirm']);

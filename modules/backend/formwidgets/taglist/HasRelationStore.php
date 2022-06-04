@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Collection;
 use October\Rain\Database\Relations\Relation as RelationBase;
+use SystemException;
 
 /**
  * HasRelationStore contains logic for related tag items
@@ -14,7 +15,7 @@ trait HasRelationStore
     protected function getLoadValueFromRelation($names)
     {
         // Take value from options
-        if ($this->formField->hasOptions()) {
+        if ($this->useOptions) {
             if (!$names) {
                 return [];
             }
@@ -66,7 +67,7 @@ trait HasRelationStore
         $relationModel = $this->getRelationModel();
 
         // Options from form field
-        if ($this->formField->hasOptions()) {
+        if ($this->useOptions) {
             $existingTags = (new Collection($this->formField->options()))
                 ->reject(function($value, $key) use ($names) {
                     return !in_array($value, $names);
@@ -86,6 +87,11 @@ trait HasRelationStore
         // Allow custom tags
         if ($this->customTags) {
             $newTags = array_diff($names, $existingTags);
+
+            // Cannot create new tags when read-only options are supplied
+            if ($newTags && $this->useOptions) {
+                throw new SystemException("[{$this->valueFrom}] Options are read-only so new tags cannot be created. Try setting customTags: false in the field configuration.");
+            }
 
             foreach ($newTags as $newTag) {
                 $newModel = $relationModel->newInstance();

@@ -5,6 +5,7 @@ use Lang;
 use Cache;
 use Config;
 use SystemException;
+use Exception;
 
 /**
  * CodeParser parses the PHP code section of CMS objects.
@@ -179,8 +180,18 @@ class CodeParser
             require_once $data['filePath'];
         }
 
-        if (!class_exists($className) && ($data = $this->handleCorruptCache($data))) {
+        // Handle corrupt cache during concurrent access
+        $count = 0;
+        while (!class_exists($className)) {
+            usleep(rand(50000, 200000));
+
+            $data = $this->handleCorruptCache($data);
             $className = $data['className'];
+
+            if ($count++ > 10) {
+                $path = $data['filePath'] ?? $this->getCacheFilePath();
+                throw new SystemException(Lang::get('system::lang.file.create_fail', ['name'=>$path]));
+            }
         }
 
         return new $className($page, $layout, $controller);
@@ -194,7 +205,7 @@ class CodeParser
      */
     protected function handleCorruptCache($data)
     {
-        $path = array_get($data, 'filePath', $this->getCacheFilePath());
+        $path = $data['filePath'] ?? $this->getCacheFilePath();
 
         if (is_file($path)) {
             if (($className = $this->extractClassFromFile($path)) && class_exists($className)) {
@@ -309,14 +320,17 @@ class CodeParser
      */
     protected function extractClassFromFile($path)
     {
-        $fileContent = file_get_contents($path);
-        $matches = [];
-        $pattern = '/Cms\S+_\S+Class/';
-        preg_match($pattern, $fileContent, $matches);
+        try {
+            $fileContent = File::sharedGet($path);
+            $matches = [];
+            $pattern = '/Cms\S+_\S+Class/';
+            preg_match($pattern, $fileContent, $matches);
 
-        if (!empty($matches[0])) {
-            return $matches[0];
+            if (!empty($matches[0])) {
+                return $matches[0];
+            }
         }
+        catch (Exception $ex) {}
 
         return null;
     }
@@ -372,7 +386,7 @@ class CodeParser
             return;
         }
 
-        while (!is_dir($dir) && !@mkdir($dir, 0777, true)) {
+        while (!is_dir($dir) && !@mkdir($dir, 0755, true)) {
             usleep(rand(50000, 200000));
 
             if ($count++ > 10) {

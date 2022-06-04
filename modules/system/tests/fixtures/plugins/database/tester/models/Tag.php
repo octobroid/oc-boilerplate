@@ -2,6 +2,9 @@
 
 use Model;
 
+/**
+ * Tag
+ */
 class Tag extends Model
 {
     /**
@@ -19,6 +22,9 @@ class Tag extends Model
      */
     protected $fillable = [];
 
+    /**
+     * morphedByMany
+     */
     public $morphedByMany = [
         'authors' => [
             Author::class,
@@ -26,7 +32,7 @@ class Tag extends Model
             'table' => 'database_tester_taggables',
             'pivot' => ['added_by'],
         ],
-        'posts'   => [
+        'posts' => [
             Post::class,
             'name' => 'taggable',
             'table' => 'database_tester_taggables',

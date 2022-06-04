@@ -147,16 +147,16 @@
             }
         }
 
-        .custom-checkbox-v2 {
+        .form-check {
             position: absolute;
             left: 3px;
-            top: 3px;
+            top: 2px;
         }
     }
 
     &.is-preview {
         .upload-object {
-            .custom-checkbox-v2 {
+            .form-check {
                 display: none;
             }
         }
@@ -172,7 +172,7 @@
 
     .upload-object {
         .icon-container:after {
-            background-image: url('../../../../../system/assets/ui/images/loader-transparent.svg');
+            background-image: url('../../../../../backend/assets/images/loader-transparent.svg');
             position: absolute;
             content: ' ';
             width: 40px;
@@ -312,18 +312,14 @@
             .border-top-radius(2px);
         }
 
-        .close {
+        .btn-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #BDC3C7;
-            opacity: .7;
+            top: 10px;
+            right: 10px;
             height: 24px;
             width: 22px;
-
-            &:hover, &:focus {
-                opacity: .9;
-            }
+            border-radius: 100px;
+            background-color: rgba(255, 255, 255, 50%);
         }
     }
 

@@ -3,15 +3,18 @@ Vue.component('editor-component-application', {
         store: Object,
         customLogo: String
     },
-    data: function data() {
+    data: function() {
         return {
-            tabContextMenuItems: [{
-                type: 'text',
-                command: 'reveal-in-sidebar',
-                label: ''
-            }, {
-                type: 'separator'
-            }],
+            tabContextMenuItems: [
+                {
+                    type: 'text',
+                    command: 'reveal-in-sidebar',
+                    label: ''
+                },
+                {
+                    type: 'separator'
+                }
+            ],
             navigatorReadonly: false,
             sidebarHidden: false,
             directDocumentNotFound: false,
@@ -30,29 +33,41 @@ Vue.component('editor-component-application', {
 
         isDirectDocumentMode: function computeIsDirectDocumentMode() {
             return !!this.directDocumentName;
+        },
+
+        documentNameToOpen: function computeDocumentNameToOpen() {
+            if (typeof this.store.state.params.openDocument !== 'string') {
+                return null;
+            }
+
+            return this.store.state.params.openDocument;
+        },
+
+        isDocumentNameToOpenProvided: function isDocumentNameToOpenProvided() {
+            return !!this.documentNameToOpen;
         }
     },
     methods: {
         ajaxRequest: function ajaxRequest(handler, requestData) {
-            return new Promise(function (resolve, reject, onCancel) {
-                var request = $.request(handler, {
+            return new Promise(function(resolve, reject, onCancel) {
+                const request = $.request(handler, {
                     data: requestData,
-                    success: function success(data) {
+                    success: function(data) {
                         resolve(data);
                     },
-                    error: function error(data) {
+                    error: function(data) {
                         reject(data);
                     }
                 });
 
-                onCancel(function () {
+                onCancel(function() {
                     request.abort();
                 });
             });
         },
 
         openTab: function openTab(tabData) {
-            var key = this.store.tabManager.createTab(tabData);
+            const key = this.store.tabManager.createTab(tabData);
             this.$refs.tabs.selectTab(key);
         },
 
@@ -64,10 +79,9 @@ Vue.component('editor-component-application', {
             this.$refs.navigator.openDocument(documentUriStr);
         },
 
-        setNavigatorReadonly: function setNavigatorReadonly(value) {
+        setNavigatorReadonly(value) {
             this.navigatorReadonly = value;
         },
-
 
         hasChangedTabs: function hasChangedTabs() {
             return this.store.tabManager.hasChangedTabs();
@@ -81,12 +95,24 @@ Vue.component('editor-component-application', {
             return this.$refs.tabs.getSelectedTabComponent();
         },
 
+        getAllOpenDocumentComponents: function getAllOpenDocumentComponents() {
+            const tabKeys = this.store.tabManager.getTabKeys();
+            const result = [];
+
+            tabKeys.forEach((tabKey) => {
+                const component = this.$refs.tabs.getTabComponent(tabKey);
+                component && result.push(component);
+            });
+
+            return result;
+        },
+
         navigatorNodeKeyChanged: function navigatorNodeKeyChanged(oldValue, newValue) {
             this.$refs.navigator.navigatorNodeKeyChanged(oldValue, newValue);
         },
 
         runCurrentDocumentComponentCommand: function runCurrentDocumentComponentCommand(command, payload) {
-            var component = this.getCurrentDocumentComponent();
+            const component = this.getCurrentDocumentComponent();
             if (!component) {
                 return;
             }
@@ -113,7 +139,7 @@ Vue.component('editor-component-application', {
         },
 
         onTabClose: function onTabClose(tabKey, ev) {
-            var index = this.$refs.tabs.getTabIndex(tabKey);
+            const index = this.$refs.tabs.getTabIndex(tabKey);
             this.store.tabManager.closeTab(index);
         },
 
@@ -155,26 +181,34 @@ Vue.component('editor-component-application', {
             }
         }
     },
-    mounted: function mounted() {
-        var _this = this;
-
-        Vue.nextTick(function () {
-            if (!_this.isDirectDocumentMode) {
-                var tabKeys = _this.store.tabManager.getPersistentTabKeys();
+    mounted: function() {
+        Vue.nextTick(() => {
+            if (!this.isDirectDocumentMode) {
+                let tabKeys = this.store.tabManager.getPersistentTabKeys();
                 if (tabKeys.length) {
-                    tabKeys = _this.$refs.navigator.openTabs(tabKeys);
-
-                    _this.store.tabManager.setPersistentTabKeys(tabKeys);
+                    tabKeys = this.$refs.navigator.openTabs(tabKeys);
+    
+                    this.store.tabManager.setPersistentTabKeys(tabKeys);
                 }
-            } else {
-                if (!_this.$refs.navigator.openTabs([_this.directDocumentName]).length) {
-                    _this.directDocumentNotFound = true;
+
+                if (this.isDocumentNameToOpenProvided) {
+                    if (this.$refs.navigator.openTabs([this.documentNameToOpen]).length) {
+                        this.revealNavigatorNode(this.documentNameToOpen);
+                    }
+                    let url = window.location.href;
+                    url = url.split("?")[0];
+                    window.history.replaceState({}, "", url);
+                }
+            }
+            else {
+                if (!this.$refs.navigator.openTabs([this.directDocumentName]).length) {
+                    this.directDocumentNotFound = true;
                 }
             }
         });
 
-        var menuUtils = $.oc.module.import('backend.component.dropdownmenu.utils');
-        var item = menuUtils.findMenuItem(this.tabContextMenuItems, ['reveal-in-sidebar'], 'command');
+        const menuUtils = $.oc.module.import('backend.component.dropdownmenu.utils');
+        const item = menuUtils.findMenuItem(this.tabContextMenuItems, ['reveal-in-sidebar'], 'command');
         if (item) {
             item.label = this.$el.getAttribute('data-lang-reveal-in-sidebar');
         }

@@ -43,7 +43,7 @@ class ThemeRemove extends Command
             $themeExists = Theme::exists($name);
         }
 
-        $this->output->writeln('<info>Removing Plugin...</info>');
+        $this->line('Removing Plugin...');
 
         if (!$themeExists || !$name) {
             return $this->output->error("Unable to find theme '${suppliedName}'");
@@ -58,7 +58,7 @@ class ThemeRemove extends Command
 
             // Composer remove
             $this->comment("Executing: composer remove {$composerCode}");
-            $this->output->newLine();
+            $this->line('');
 
             $composer = new ComposerProcess;
             $composer->setCallback(function($message) { echo $message; });

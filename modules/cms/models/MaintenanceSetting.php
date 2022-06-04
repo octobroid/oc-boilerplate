@@ -55,7 +55,27 @@ class MaintenanceSetting extends Model
      */
     public static function isEnabled(): bool
     {
-        if (!System::hasDatabase() || BackendAuth::getUser()) {
+        if (!System::hasDatabase()) {
+            return false;
+        }
+
+        if (BackendAuth::userHasAccess('general.view_offline')) {
+            return false;
+        }
+
+        return self::get('is_enabled', false);
+    }
+
+    /**
+     * isEnabledForBackend
+     */
+    public static function isEnabledForBackend(): bool
+    {
+        if (!System::hasDatabase()) {
+            return false;
+        }
+
+        if (BackendAuth::userHasAccess('general.backend.view_offline')) {
             return false;
         }
 

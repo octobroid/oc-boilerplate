@@ -5,8 +5,7 @@ use Config;
 use October\Rain\Router\Helper as RouterHelper;
 
 /**
- * Skin Base class
- * Used for defining skins.
+ * Skin Base class is used for defining skins.
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
@@ -19,32 +18,32 @@ abstract class Skin
     abstract public function skinDetails();
 
     /**
-     * @var string The absolute path to this skin.
+     * @var string skinPath is the absolute path to this skin.
      */
     public $skinPath;
 
     /**
-     * @var string The public path to this skin.
+     * @var string publicSkinPath to this skin.
      */
     public $publicSkinPath;
 
     /**
-     * @var string The default skin path, usually the root level of modules/backend.
+     * @var string defaultSkinPath, usually the root level of modules/backend.
      */
     public $defaultSkinPath;
 
     /**
-     * @var string The default public skin path.
+     * @var string defaultPublicSkinPath
      */
     public $defaultPublicSkinPath;
 
     /**
-     * @var Self Cache of the active skin.
+     * @var Skin skinCache of the active skin.
      */
     private static $skinCache;
 
     /**
-     * Constructor.
+     * __construct
      */
     public function __construct()
     {
@@ -65,7 +64,7 @@ abstract class Skin
     }
 
     /**
-     * Looks up a path to a skin-based file, if it doesn't exist, the default path is used.
+     * getPath looks up a path to a skin-based file, if it doesn't exist, the default path is used.
      * @param  string  $path
      * @param  boolean $isPublic
      * @return string
@@ -87,7 +86,7 @@ abstract class Skin
     }
 
     /**
-     * Returns an array of paths where skin layouts can be found.
+     * getLayoutPaths returns an array of paths where skin layouts can be found.
      * @return array
      */
     public function getLayoutPaths()
@@ -96,7 +95,7 @@ abstract class Skin
     }
 
     /**
-     * Returns the active skin.
+     * getActive returns the active skin.
      */
     public static function getActive()
     {

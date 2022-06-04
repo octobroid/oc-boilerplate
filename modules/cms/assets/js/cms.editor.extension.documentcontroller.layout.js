@@ -1,63 +1,52 @@
-$.oc.module.register('cms.editor.extension.documentcontroller.layout', function () {
+$.oc.module.register('cms.editor.extension.documentcontroller.layout', function() {
     'use strict';
 
-    var DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
+    const DocumentControllerBase = $.oc.module.import('editor.extension.documentcontroller.base');
 
-    var treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
+    const treeviewUtils = $.oc.vueComponentHelpers.treeviewUtils;
 
-    var DocumentControllerLayout = function (_DocumentControllerBa) {
-        babelHelpers.inherits(DocumentControllerLayout, _DocumentControllerBa);
-
-        function DocumentControllerLayout() {
-            babelHelpers.classCallCheck(this, DocumentControllerLayout);
-            return babelHelpers.possibleConstructorReturn(this, (DocumentControllerLayout.__proto__ || Object.getPrototypeOf(DocumentControllerLayout)).apply(this, arguments));
+    class DocumentControllerLayout extends DocumentControllerBase {
+        get documentType() {
+            return 'cms-layout';
         }
 
-        babelHelpers.createClass(DocumentControllerLayout, [{
-            key: 'initListeners',
-            value: function initListeners() {
-                this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
-            }
-        }, {
-            key: 'getAllLayoutFilenames',
-            value: function getAllLayoutFilenames() {
-                if (this.cachedLayoutList) {
-                    return this.cachedLayoutList;
-                }
+        get vueEditorComponentName() {
+            return 'cms-editor-component-layout-editor';
+        }
 
-                var layoutsNavigatorNode = treeviewUtils.findNodeByKeyInSections(this.parentExtension.state.navigatorSections, 'cms:cms-layout');
+        initListeners() {
+            this.on('cms:navigator-nodes-updated', this.onNavigatorNodesUpdated);
+        }
 
-                var layoutList = [];
+        getAllLayoutFilenames() {
+            if (this.cachedLayoutList) {
+                return this.cachedLayoutList;
+            }
 
-                if (layoutsNavigatorNode) {
-                    layoutList = treeviewUtils.getFlattenNodes(layoutsNavigatorNode.nodes).map(function (layoutNode) {
-                        return layoutNode.userData.filename;
-                    });
-                } else {
-                    layoutList = this.parentExtension.state.customData.layouts;
-                }
+            const layoutsNavigatorNode = treeviewUtils.findNodeByKeyInSections(
+                this.parentExtension.state.navigatorSections,
+                'cms:cms-layout'
+            );
 
-                this.cachedLayoutList = layoutList;
-                return layoutList;
+            let layoutList = [];
+
+            if (layoutsNavigatorNode) {
+                layoutList = treeviewUtils.getFlattenNodes(layoutsNavigatorNode.nodes).map((layoutNode) => {
+                    return layoutNode.userData.filename;
+                });
             }
-        }, {
-            key: 'onNavigatorNodesUpdated',
-            value: function onNavigatorNodesUpdated(cmd) {
-                this.cachedLayoutList = null;
+            else {
+                layoutList = this.parentExtension.state.customData.layouts;
             }
-        }, {
-            key: 'documentType',
-            get: function get() {
-                return 'cms-layout';
-            }
-        }, {
-            key: 'vueEditorComponentName',
-            get: function get() {
-                return 'cms-editor-component-layout-editor';
-            }
-        }]);
-        return DocumentControllerLayout;
-    }(DocumentControllerBase);
+
+            this.cachedLayoutList = layoutList;
+            return layoutList;
+        }
+
+        onNavigatorNodesUpdated(cmd) {
+            this.cachedLayoutList = null;
+        }
+    }
 
     return DocumentControllerLayout;
 });

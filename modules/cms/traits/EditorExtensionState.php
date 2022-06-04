@@ -127,7 +127,8 @@ trait EditorExtensionState
         ;
 
         $pagesNode->addRootMenuItem(ItemDefinition::TYPE_TEXT,
-            Lang::get('cms::lang.page.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_PAGE);
+            Lang::get('cms::lang.page.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_PAGE)
+            ->setIcon('octo-icon-create');
         $pagesNode->addRootMenuItem(ItemDefinition::TYPE_SEPARATOR);
 
         $sortingItem = $pagesNode->addRootMenuItem(ItemDefinition::TYPE_TEXT,
@@ -194,7 +195,8 @@ trait EditorExtensionState
         ;
 
         $layoutsNode->addRootMenuItem(ItemDefinition::TYPE_TEXT,
-            Lang::get('cms::lang.layout.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_LAYOUT);
+            Lang::get('cms::lang.layout.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_LAYOUT)
+            ->setIcon('octo-icon-create');
 
         foreach ($layouts as $layout) {
             $layoutPath = dirname($layout->fileName);
@@ -228,7 +230,8 @@ trait EditorExtensionState
             ->setChildKeyPrefix(EditorExtension::DOCUMENT_TYPE_PARTIAL.':');
 
         $partialsNode->addRootMenuItem(ItemDefinition::TYPE_TEXT,
-            Lang::get('cms::lang.partial.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_PARTIAL);
+            Lang::get('cms::lang.partial.create_new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_PARTIAL)
+            ->setIcon('octo-icon-create');
 
         foreach ($partials as $partial) {
             $partialPath = dirname($partial->fileName);
@@ -262,7 +265,8 @@ trait EditorExtensionState
             ->setChildKeyPrefix(EditorExtension::DOCUMENT_TYPE_CONTENT.':');
 
         $contentNode->addRootMenuItem(ItemDefinition::TYPE_TEXT,
-            Lang::get('cms::lang.content.new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_CONTENT);
+            Lang::get('cms::lang.content.new'), 'cms:create-document@'.EditorExtension::DOCUMENT_TYPE_CONTENT)
+            ->setIcon('octo-icon-create');
 
         foreach ($contents as $contentFile) {
             $contentPath = dirname($contentFile->fileName);
@@ -286,7 +290,7 @@ trait EditorExtensionState
      */
     private function loadLayoutsForUiLists($theme, $user)
     {
-        if ($user->hasAnyAccess(['cms.manage_layouts'])) {
+        if ($user->hasAnyAccess(['editor.cms_layouts'])) {
             // Use layout list from Navigator
             return [];
         }
@@ -306,7 +310,7 @@ trait EditorExtensionState
      */
     private function loadPartialsForUiLists($theme, $user)
     {
-        if ($user->hasAnyAccess(['cms.manage_partials'])) {
+        if ($user->hasAnyAccess(['editor.cms_partials'])) {
             // Use partial list from Navigator
             return [];
         }
@@ -326,7 +330,7 @@ trait EditorExtensionState
      */
     private function loadContentForUiLists($theme, $user)
     {
-        if ($user->hasAnyAccess(['cms.manage_content'])) {
+        if ($user->hasAnyAccess(['editor.cms_content'])) {
             // Use content file list from Navigator
             return [];
         }
@@ -346,7 +350,7 @@ trait EditorExtensionState
      */
     private function loadPagesForUiLists($theme, $user)
     {
-        if ($user->hasAnyAccess(['cms.manage_pages'])) {
+        if ($user->hasAnyAccess(['editor.cms_pages'])) {
             // Use page list from Navigator
             return [];
         }

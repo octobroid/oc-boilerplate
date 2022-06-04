@@ -79,8 +79,7 @@ class Relation extends FormWidgetBase
             $this->sqlSelect = $this->config->select;
         }
 
-        // @deprecated the default value should be true
-        $this->useController = $this->evalUseController($this->config->useController ?? false);
+        $this->useController = $this->evalUseController($this->config->useController ?? true);
     }
 
     /**
@@ -154,7 +153,7 @@ class Relation extends FormWidgetBase
 
         // It is safe to assume that if the model and related model are of
         // the exact same class, then it cannot be related to itself
-        if ($model->exists && (get_class($model) == get_class($relationModel))) {
+        if ($model->exists && ($relationModel->getTable() === $model->getTable())) {
             $query->where($relationModel->getKeyName(), '<>', $model->getKey());
         }
 

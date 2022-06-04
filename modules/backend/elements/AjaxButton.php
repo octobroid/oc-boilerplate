@@ -2,38 +2,17 @@
 
 /**
  * AjaxButton
+ *
+ * @method AjaxButton ajaxHandler(string $ajaxHandler) ajaxHandler
+ * @method AjaxButton ajaxData(array $ajaxData) ajaxData
+ * @method AjaxButton confirmMessage(string $confirmMessage) confirmMessage
+ * @method AjaxButton loadingMessage(string $loadingMessage) loadingMessage
+ *
+ * @package october\backend
+ * @author Alexey Bobkov, Samuel Georges
  */
 class AjaxButton extends Button
 {
-    /**
-     * @var string ajaxHandler
-     */
-    protected $ajaxHandler;
-
-    /**
-     * @var array ajaxData
-     */
-    protected $ajaxData;
-
-    /**
-     * @var string confirmMessage
-     */
-    protected $confirmMessage;
-
-    /**
-     * @var string loadingMessage
-     */
-    protected $loadingMessage;
-
-    /**
-     * __construct
-     */
-    public function __construct(string $label, string $ajaxHandler)
-    {
-        $this->label = $label;
-        $this->ajaxHandler = $ajaxHandler;
-    }
-
     /**
      * buildAttributes
      */
@@ -59,51 +38,11 @@ class AjaxButton extends Button
     }
 
     /**
-     * ajaxHandler
-     */
-    public function handler(string $ajaxHandler): AjaxButton
-    {
-        $this->ajaxHandler = $ajaxHandler;
-
-        return $this;
-    }
-
-    /**
-     * data
-     */
-    public function data(array $ajaxData): AjaxButton
-    {
-        $this->ajaxData = $ajaxData;
-
-        return $this;
-    }
-
-    /**
-     * confirmMessage
-     */
-    public function confirmMessage(string $confirmMessage): AjaxButton
-    {
-        $this->confirmMessage = $confirmMessage;
-
-        return $this;
-    }
-
-    /**
-     * loadingMessage
-     */
-    public function loadingMessage(string $loadingMessage): AjaxButton
-    {
-        $this->loadingMessage = $loadingMessage;
-
-        return $this;
-    }
-
-    /**
      * formDeleteButton
      */
-    public function formDeleteButton()
+    public function formDeleteButton(): static
     {
-        $this->label = '';
+        $this->label('');
 
         $this->replaceCssClass('oc-icon-trash-o btn-icon danger pull-right');
 

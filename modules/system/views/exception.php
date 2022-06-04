@@ -34,7 +34,7 @@
 
             <pre class="brush: php"><?php foreach ($exception->getHighlightLines() as $line): ?><?= $line ?><?php endforeach ?></pre>
 
-            <h3><i class="icon-code-fork warning"></i> Stack trace</h3>
+            <h3><i class="icon-code-fork warning"></i> Stack Trace</h3>
 
             <table class="data-table">
                 <thead>
@@ -52,7 +52,7 @@
                             <td>
                                 <?= $stackItem->code ?>(<?php if ($stackItem->args): ?><abbr title="<?= $stackItem->args ?>">&hellip;</abbr><?php endif ?>)
                             </td>
-                            <td><?= $stackItem->file ?></td>
+                            <td class="file-column"><?= $stackItem->file ?></td>
                             <td class="right"><?= $stackItem->line ?></td>
                         </tr>
                     <?php endforeach ?>
