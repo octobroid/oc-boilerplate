@@ -16,13 +16,15 @@
 1. Clone to your base project directory.
 
 	```
-	git clone https://github.com/octobroid/oc-boilerplate.git <project-name>
+	git clone --depth 1 https://github.com/octobroid/oc-boilerplate.git <project-name>
 	```
 
-2. Don't forget to remove `.git` folder, create your own repository.
+2. Go to the project folder and don't forget to remove `.git` folder. Create your own repository.
 
 	```
-	rm -rf !$/.git
+    cd <project-name>
+	rm -rf ./.git
+    git init
 	```
     
 3. Put the `auth.json` to the root directory for your access to download the October CMS library. Don't forget to remove it from `.gitignore` if you already set up the project.
