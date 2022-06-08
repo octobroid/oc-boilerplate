@@ -1,10 +1,7 @@
 <?php namespace Editor;
 
-use App;
 use Backend;
-use BackendMenu;
 use Backend\Models\UserRole;
-use Backend\Classes\RoleManager;
 use October\Rain\Support\ModuleServiceProvider;
 
 /**

@@ -71,7 +71,7 @@ class ComposerScript
             'storage/framework/packages.php',
             'storage/framework/classes.php',
             'storage/framework/services.php',
-            'storage/cms/disabled.json'
+            'storage/cms/manifest.php'
         ];
 
         foreach ($metaFiles as $filePath) {

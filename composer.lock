@@ -58,16 +58,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.224.3",
+            "version": "3.224.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "52f45dfe0d1e5a77f33c050bde5134901fc54a57"
+                "reference": "00719404b6a7f29d7fb183211dfbef7f7f22a0c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/52f45dfe0d1e5a77f33c050bde5134901fc54a57",
-                "reference": "52f45dfe0d1e5a77f33c050bde5134901fc54a57",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/00719404b6a7f29d7fb183211dfbef7f7f22a0c0",
+                "reference": "00719404b6a7f29d7fb183211dfbef7f7f22a0c0",
                 "shasum": ""
             },
             "require": {
@@ -143,94 +143,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.5"
             },
-            "time": "2022-06-02T18:22:57+00:00"
-        },
-        {
-            "name": "barryvdh/laravel-debugbar",
-            "version": "v3.6.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "b96f9820aaf1ff9afe945207883149e1c7afb298"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/b96f9820aaf1ff9afe945207883149e1c7afb298",
-                "reference": "b96f9820aaf1ff9afe945207883149e1c7afb298",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/routing": "^6|^7|^8|^9",
-                "illuminate/session": "^6|^7|^8|^9",
-                "illuminate/support": "^6|^7|^8|^9",
-                "maximebf/debugbar": "^1.17.2",
-                "php": ">=7.2",
-                "symfony/debug": "^4.3|^5|^6",
-                "symfony/finder": "^4.3|^5|^6"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.3.3",
-                "orchestra/testbench-dusk": "^4|^5|^6|^7",
-                "phpunit/phpunit": "^8.5|^9.0",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.6-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Barryvdh\\Debugbar\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Debugbar": "Barryvdh\\Debugbar\\Facades\\Debugbar"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Barryvdh\\Debugbar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "PHP Debugbar integration for Laravel",
-            "keywords": [
-                "debug",
-                "debugbar",
-                "laravel",
-                "profiler",
-                "webprofiler"
-            ],
-            "support": {
-                "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.6.7"
-            },
-            "funding": [
-                {
-                    "url": "https://fruitcake.nl",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/barryvdh",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-02-09T07:52:32+00:00"
+            "time": "2022-06-07T18:15:41+00:00"
         },
         {
             "name": "brick/math",
@@ -370,16 +285,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "0f43aa1652c447a6bc7c9217ec133313b1d32e72"
+                "reference": "10cd375cf85dede2ff417ceab517ef9a0dc55407"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/0f43aa1652c447a6bc7c9217ec133313b1d32e72",
-                "reference": "0f43aa1652c447a6bc7c9217ec133313b1d32e72",
+                "url": "https://api.github.com/repos/composer/composer/zipball/10cd375cf85dede2ff417ceab517ef9a0dc55407",
+                "reference": "10cd375cf85dede2ff417ceab517ef9a0dc55407",
                 "shasum": ""
             },
             "require": {
@@ -422,6 +337,11 @@
             "extra": {
                 "branch-alias": {
                     "dev-main": "2.3-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "phpstan/rules.neon"
+                    ]
                 }
             },
             "autoload": {
@@ -455,7 +375,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.3.6"
+                "source": "https://github.com/composer/composer/tree/2.3.7"
             },
             "funding": [
                 {
@@ -471,7 +391,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-01T19:57:13+00:00"
+            "time": "2022-06-06T14:43:28+00:00"
         },
         {
             "name": "composer/installers",
@@ -2330,16 +2250,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.16.0",
+            "version": "v9.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dbad869e737542734c48d36d4cb87ee90455c4b8"
+                "reference": "091e287678ac723c591509ca6374e4ded4a99b1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dbad869e737542734c48d36d4cb87ee90455c4b8",
-                "reference": "dbad869e737542734c48d36d4cb87ee90455c4b8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/091e287678ac723c591509ca6374e4ded4a99b1c",
+                "reference": "091e287678ac723c591509ca6374e4ded4a99b1c",
                 "shasum": ""
             },
             "require": {
@@ -2505,7 +2425,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-06-02T18:13:11+00:00"
+            "time": "2022-06-07T15:09:32+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2713,16 +2633,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "6eddb90a9e4a1a8c5773226068fcfb48cb36812a"
+                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/6eddb90a9e4a1a8c5773226068fcfb48cb36812a",
-                "reference": "6eddb90a9e4a1a8c5773226068fcfb48cb36812a",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/0da1dca5781dd3cfddbe328224d9a7a62571addc",
+                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc",
                 "shasum": ""
             },
             "require": {
@@ -2815,7 +2735,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-03T14:07:39+00:00"
+            "time": "2022-06-07T21:28:26+00:00"
         },
         {
             "name": "league/config",
@@ -3245,72 +3165,6 @@
                 "source": "https://github.com/linkorb/jsmin-php/tree/1.0.0"
             },
             "time": "2013-03-15T13:16:35+00:00"
-        },
-        {
-            "name": "maximebf/debugbar",
-            "version": "v1.18.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6",
-                "reference": "0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1|^8",
-                "psr/log": "^1|^2|^3",
-                "symfony/var-dumper": "^2.6|^3|^4|^5|^6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.5.20 || ^9.4.2",
-                "twig/twig": "^1.38|^2.7|^3.0"
-            },
-            "suggest": {
-                "kriswallsmith/assetic": "The best way to manage assets",
-                "monolog/monolog": "Log using Monolog",
-                "predis/predis": "Redis storage"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.17-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DebugBar\\": "src/DebugBar/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Bouroumeau-Fuseau",
-                    "email": "maxime.bouroumeau@gmail.com",
-                    "homepage": "http://maximebf.com"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Debug bar in the browser for php application",
-            "homepage": "https://github.com/maximebf/php-debugbar",
-            "keywords": [
-                "debug",
-                "debugbar"
-            ],
-            "support": {
-                "issues": "https://github.com/maximebf/php-debugbar/issues",
-                "source": "https://github.com/maximebf/php-debugbar/tree/v1.18.0"
-            },
-            "time": "2021-12-27T18:49:48+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3827,12 +3681,12 @@
         },
         {
             "name": "october/backend",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/backend/october-backend-v3.0.42-4f36f9.zip",
-                "reference": "7b2de2b830585972e68c7c77e60f6cf30b83227f",
-                "shasum": "ed00d9c0af21969f29c69e0de108d2ed0f70b702"
+                "url": "https://gateway.octobercms.com/composer/dist/october/backend/october-backend-v3.0.43-d20840.zip",
+                "reference": "da01830ca7766f58ec188804912e6cfb46dac821",
+                "shasum": "3094f004bd202e0f3226c605eb4998a4881e0ac6"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -3855,16 +3709,16 @@
                 "october",
                 "october cms"
             ],
-            "time": "2022-06-01T06:51:25+00:00"
+            "time": "2022-06-02T04:53:27+00:00"
         },
         {
             "name": "october/cms",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/cms/october-cms-v3.0.42-c635b5.zip",
-                "reference": "677dc016f54eadceb4605acaec96e8b8a7d93852",
-                "shasum": "58dae2f80c4e1d86acd4ab63c1734d0b7bc57286"
+                "url": "https://gateway.octobercms.com/composer/dist/october/cms/october-cms-v3.0.43-b485d6.zip",
+                "reference": "5f7ae8baf58b70fc67340f2a9b8de2792b1c9714",
+                "shasum": "c1abbf24e2ecc320a2a2f65045daf08ac1df3ac8"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -3887,16 +3741,16 @@
                 "october",
                 "october cms"
             ],
-            "time": "2022-06-01T08:00:42+00:00"
+            "time": "2022-06-02T05:49:46+00:00"
         },
         {
             "name": "october/editor",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/editor/october-editor-v3.0.42-bab0e4.zip",
-                "reference": "a2b18d26da2eeec355f105c27c059f0764541ef1",
-                "shasum": "161009025bb32ab45887843250b03461a113f4d5"
+                "url": "https://gateway.octobercms.com/composer/dist/october/editor/october-editor-v3.0.43-5b6eb5.zip",
+                "reference": "abfc8388715a63e92887accbcc66920bbd0d54ff",
+                "shasum": "55ac664fd661e4e0cba3c4b4e1487db2942b854a"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -3919,16 +3773,16 @@
                 "october",
                 "october cms"
             ],
-            "time": "2022-06-01T06:26:57+00:00"
+            "time": "2022-06-02T04:53:27+00:00"
         },
         {
             "name": "october/media",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/media/october-media-v3.0.42-689543.zip",
-                "reference": "714e6b0765bc4b2e1ee4d147af07f90fc670ace7",
-                "shasum": "953d97a767ef17511fba1796961f75c615a600c0"
+                "url": "https://gateway.octobercms.com/composer/dist/october/media/october-media-v3.0.43-e86cdd.zip",
+                "reference": "c27e20c0dcb28fb0c5a83b1af0ae277b2c1198bd",
+                "shasum": "7481b412fd7b8d8e1aa6e2e72845c57bdb1b8abe"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -3951,20 +3805,20 @@
                 "october",
                 "october cms"
             ],
-            "time": "2022-06-01T06:26:57+00:00"
+            "time": "2022-06-02T04:53:27+00:00"
         },
         {
             "name": "october/rain",
-            "version": "v3.0.43",
+            "version": "v3.0.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/octobercms/library.git",
-                "reference": "01d13db6762d9305c9cba9238550075f3b98977c"
+                "reference": "b710e8d9059394b01d41f6a508c7cb3c82131f1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/octobercms/library/zipball/01d13db6762d9305c9cba9238550075f3b98977c",
-                "reference": "01d13db6762d9305c9cba9238550075f3b98977c",
+                "url": "https://api.github.com/repos/octobercms/library/zipball/b710e8d9059394b01d41f6a508c7cb3c82131f1e",
+                "reference": "b710e8d9059394b01d41f6a508c7cb3c82131f1e",
                 "shasum": ""
             },
             "require": {
@@ -3985,6 +3839,7 @@
             "require-dev": {
                 "laravel/framework": "^9.0",
                 "meyfa/phpunit-assert-gd": "^2.0.0|^3.0.0",
+                "phpbench/phpbench": "^1.2",
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "type": "library",
@@ -4030,18 +3885,18 @@
                 "rain"
             ],
             "support": {
-                "source": "https://github.com/octobercms/library/tree/v3.0.43"
+                "source": "https://github.com/octobercms/library/tree/v3.0.44"
             },
-            "time": "2022-06-01T07:58:23+00:00"
+            "time": "2022-06-02T12:14:56+00:00"
         },
         {
             "name": "october/system",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/system/october-system-v3.0.42-64e652.zip",
-                "reference": "6d9975dc853bb01609aeabaca6085e8308407967",
-                "shasum": "aa5b3a79750e534ad06a9a2fe8b0c6c393f59821"
+                "url": "https://gateway.octobercms.com/composer/dist/october/system/october-system-v3.0.43-11443a.zip",
+                "reference": "46b79278f29ef4e89eee193e490901b44c94c911",
+                "shasum": "69eb89eadde0d49ca6985347604a14a4b28634f2"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -4064,16 +3919,16 @@
                 "october cms",
                 "system"
             ],
-            "time": "2022-06-01T06:26:57+00:00"
+            "time": "2022-06-02T04:53:27+00:00"
         },
         {
             "name": "october/tailor",
-            "version": "v3.0.42",
+            "version": "v3.0.43",
             "dist": {
                 "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/october/tailor/october-tailor-v3.0.42-603d03.zip",
-                "reference": "af7e9d7157cdaa0e65e03c8cd3983c5c4175c9df",
-                "shasum": "b1377b19a29b1a9430a927df2a44aafe2ff10ef5"
+                "url": "https://gateway.octobercms.com/composer/dist/october/tailor/october-tailor-v3.0.43-62df88.zip",
+                "reference": "c9c73aba3f1eb3a8c0b83d44e4e2e7692bbbac41",
+                "shasum": "a2bb56ca952c11798903a542b01f2d01ffe3bdf9"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -4096,7 +3951,7 @@
                 "october cms",
                 "tailor"
             ],
-            "time": "2022-06-01T06:26:57+00:00"
+            "time": "2022-06-02T06:33:55+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5435,74 +5290,6 @@
                 }
             ],
             "time": "2022-01-02T09:55:41+00:00"
-        },
-        {
-            "name": "symfony/debug",
-            "version": "v4.4.41",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/debug.git",
-                "reference": "6637e62480b60817b9a6984154a533e8e64c6bd5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/6637e62480b60817b9a6984154a533e8e64c6bd5",
-                "reference": "6637e62480b60817b9a6984154a533e8e64c6bd5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "psr/log": "^1|^2|^3"
-            },
-            "conflict": {
-                "symfony/http-kernel": "<3.4"
-            },
-            "require-dev": {
-                "symfony/http-kernel": "^3.4|^4.0|^5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Debug\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides tools to ease debugging PHP code",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/debug/tree/v4.4.41"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-04-12T15:19:55+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

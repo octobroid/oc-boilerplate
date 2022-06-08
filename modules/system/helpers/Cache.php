@@ -34,6 +34,8 @@ class Cache
         $instance = self::instance();
         $instance->clearCombiner();
         $instance->clearCache();
+        $instance->clearThemeCache();
+        $instance->clearBlueprintCache();
 
         if (Config::get('cms.enable_twig_cache', true)) {
             $instance->clearTwig();
@@ -73,11 +75,39 @@ class Cache
     }
 
     /**
+     * clearThemeCache
+     */
+    public function clearThemeCache()
+    {
+        collect(File::files(cache_path('cms')))
+            ->reject(function($file) {
+                return !starts_with($file->getFilename(), 'theme-');
+            })
+            ->each(function($file) {
+                File::delete(cache_path('cms/'.$file->getFilename()));
+            });
+    }
+
+    /**
+     * clearBlueprintCache
+     */
+    public function clearBlueprintCache()
+    {
+        collect(File::files(cache_path('cms')))
+            ->reject(function($file) {
+                return !starts_with($file->getFilename(), 'blueprint-');
+            })
+            ->each(function($file) {
+                File::delete(cache_path('cms/'.$file->getFilename()));
+            });
+    }
+
+    /**
      * clearMeta
      */
     public function clearMeta()
     {
-        File::delete(storage_path().'/cms/disabled.json');
+        File::delete(cache_path('cms/manifest.php'));
 
         File::delete(App::getCachedClassesPath());
 

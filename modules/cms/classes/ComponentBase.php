@@ -94,7 +94,7 @@ abstract class ComponentBase extends Extendable implements CallsAnyMethod
         $this->properties = $this->validateProperties($properties);
 
         $className = Str::normalizeClassName(get_called_class());
-        $this->dirName = strtolower(str_replace('\\', '/', $className));
+        $this->dirName = '/'.strtolower(str_replace('\\', '/', $className));
         $this->assetPath = $this->getComponentAssetPath();
 
         parent::__construct();

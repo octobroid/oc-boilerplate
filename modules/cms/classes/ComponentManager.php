@@ -131,9 +131,7 @@ class ComponentManager
         }
 
         $className = Str::normalizeClassName($className);
-
         $this->codeMap[$code] = $className;
-
         $this->classMap[$className] = $code;
 
         if ($owner !== null) {

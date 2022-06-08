@@ -92,34 +92,31 @@ class BackendController extends ControllerBase
             }
         }, 1);
 
-        /*
-         * Database check
-         */
+        // Database check
+        //
         if (!App::hasDatabase()) {
             return System::checkDebugMode()
                 ? Response::make(View::make('backend::no_database'), 200)
                 : $this->runCmsPage($url);
         }
 
-        /*
-         * Look for a Module controller
-         */
+        // Look for a Module controller
+        //
         $module = $params[0] ?? 'backend';
         $controller = $params[1] ?? 'index';
         self::$action = $action = isset($params[2]) ? $this->parseAction($params[2]) : 'index';
         self::$params = $controllerParams = array_slice($params, 3);
-        $controllerClass = '\\'.$module.'\Controllers\\'.$controller;
+        $controllerClass = "${module}\\Controllers\\${controller}";
         if ($controllerObj = $this->findController(
             $controllerClass,
             $action,
-            base_path().'/modules'
+            base_path('modules')
         )) {
             return $controllerObj->run($action, $controllerParams);
         }
 
-        /*
-         * Look for a Plugin controller
-         */
+        // Look for a Plugin controller
+        //
         if (count($params) >= 2) {
             [$author, $plugin] = $params;
 
@@ -131,7 +128,7 @@ class BackendController extends ControllerBase
             $controller = $params[2] ?? 'index';
             self::$action = $action = isset($params[3]) ? $this->parseAction($params[3]) : 'index';
             self::$params = $controllerParams = array_slice($params, 4);
-            $controllerClass = '\\'.$author.'\\'.$plugin.'\Controllers\\'.$controller;
+            $controllerClass = "${author}\\${plugin}\Controllers\\${controller}";
             if ($controllerObj = $this->findController(
                 $controllerClass,
                 $action,
@@ -141,9 +138,8 @@ class BackendController extends ControllerBase
             }
         }
 
-        /*
-         * Fall back to CMS controller
-         */
+        // Fall back to CMS controller
+        //
         return $this->runCmsPage($url);
     }
 
@@ -161,8 +157,7 @@ class BackendController extends ControllerBase
          * Workaround: Composer does not support case insensitivity.
          */
         if (!class_exists($controller)) {
-            $controller = Str::normalizeClassName($controller);
-            $controllerFile = $inPath.strtolower(str_replace('\\', '/', $controller)) . '.php';
+            $controllerFile = $inPath.'/'.strtolower(str_replace('\\', '/', $controller)) . '.php';
             if (
                 strpos($controllerFile, '..') !== false ||
                 strpos($controllerFile, './') !== false ||

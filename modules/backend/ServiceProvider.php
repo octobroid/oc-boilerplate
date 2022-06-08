@@ -1,15 +1,9 @@
 <?php namespace Backend;
 
-use App;
-use Event;
 use Backend;
-use BackendMenu;
-use BackendAuth;
 use System\Classes\MailManager;
 use System\Classes\CombineAssets;
 use System\Classes\SettingsManager;
-use Backend\Classes\RoleManager;
-use Backend\Classes\WidgetManager;
 use Backend\Models\UserRole;
 use October\Rain\Auth\AuthException;
 use October\Rain\Support\ModuleServiceProvider;
@@ -37,14 +31,6 @@ class ServiceProvider extends ModuleServiceProvider
     {
         parent::boot('backend');
 
-        $this->bootAuth();
-    }
-
-    /**
-     * bootAuth boots authentication based logic.
-     */
-    protected function bootAuth(): void
-    {
         AuthException::setDefaultErrorMessage('backend::lang.auth.invalid_login');
     }
 
@@ -53,7 +39,7 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerMailer()
     {
-        MailManager::instance()->registerCallback(function ($manager) {
+        MailManager::registerCallback(function ($manager) {
             $manager->registerMailTemplates([
                 'backend::mail.invite',
                 'backend::mail.restore',

@@ -1,8 +1,6 @@
 <?php namespace System;
 
 use Db;
-use App;
-use View;
 use Event;
 use Config;
 use Schema;
@@ -14,14 +12,11 @@ use System\Models\MailSetting;
 use System\Classes\MailManager;
 use System\Classes\ErrorHandler;
 use System\Classes\UpdateManager;
-use System\Classes\MarkupManager;
 use System\Classes\PluginManager;
 use System\Classes\SettingsManager;
 use System\Twig\Engine as TwigEngine;
 use System\Twig\Loader as TwigLoader;
 use System\Twig\Extension as TwigExtension;
-use Backend\Classes\RoleManager;
-use Backend\Classes\WidgetManager;
 use October\Rain\Support\ModuleServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Twig\Environment as TwigEnvironment;
@@ -49,24 +44,25 @@ class ServiceProvider extends ModuleServiceProvider
         $this->registerLogging();
         $this->registerTwigParser();
         $this->registerValidator();
-        $this->registerGlobalViewVars();
+        $this->registerManifest();
         $this->registerConsole();
-        $this->extendMailer();
+        $this->extendViewService();
+        $this->extendMailerService();
 
         // Register other module providers
         foreach (SystemHelper::listModules() as $module) {
             if ($module !== 'System') {
-                App::register('\\' . $module . '\ServiceProvider');
+                $this->app->register('\\' . $module . '\ServiceProvider');
             }
         }
 
         // Register app service provider
         if (class_exists(\App\Provider::class)) {
-            App::register(\App\Provider::class);
+            $this->app->register(\App\Provider::class);
         }
 
         // Backend specific
-        if (App::runningInBackend()) {
+        if ($this->app->runningInBackend()) {
             $this->extendBackendNavigation();
             $this->extendBackendSettings();
         }
@@ -112,12 +108,13 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerSingletons()
     {
-        App::singleton('cms.helper', \Cms\Helpers\Cms::class);
-        App::singleton('system.helper', \System\Helpers\System::class);
-        App::singleton('backend.ui', \Backend\Helpers\BackendUi::class);
-        App::singleton('backend.helper', \Backend\Helpers\Backend::class);
-        App::singleton('backend.menu', function () { return \Backend\Classes\NavigationManager::instance(); });
-        App::singleton('backend.auth', function () { return \Backend\Classes\AuthManager::instance(); });
+        $this->app->singleton('cms.helper', \Cms\Helpers\Cms::class);
+        $this->app->singleton('system.helper', \System\Helpers\System::class);
+        $this->app->singleton('system.manifest', \System\Classes\ManifestCache::class);
+        $this->app->singleton('backend.ui', \Backend\Helpers\BackendUi::class);
+        $this->app->singleton('backend.helper', \Backend\Helpers\Backend::class);
+        $this->app->singleton('backend.menu', function () { return \Backend\Classes\NavigationManager::instance(); });
+        $this->app->singleton('backend.auth', function () { return \Backend\Classes\AuthManager::instance(); });
     }
 
     /**
@@ -182,6 +179,16 @@ class ServiceProvider extends ModuleServiceProvider
     }
 
     /**
+     * registerManifest
+     */
+    protected function registerManifest()
+    {
+        $this->app->after(function() {
+            $this->app->make('system.manifest')->build();
+        });
+    }
+
+    /**
      * registerConsole command line specifics
      */
     protected function registerConsole()
@@ -192,7 +199,7 @@ class ServiceProvider extends ModuleServiceProvider
                 $plugin->registerSchedule($schedule);
             }
 
-            if ($app = App::getProvider(\App\Provider::class)) {
+            if ($app = $this->app->getProvider(\App\Provider::class)) {
                 $app->registerSchedule($schedule);
             }
         });
@@ -211,6 +218,7 @@ class ServiceProvider extends ModuleServiceProvider
         $this->registerConsoleCommand('october.mirror', \System\Console\OctoberMirror::class);
         $this->registerConsoleCommand('october.fresh', \System\Console\OctoberFresh::class);
         $this->registerConsoleCommand('october.passwd', \System\Console\OctoberPasswd::class);
+        $this->registerConsoleCommand('october.optimize', \System\Console\OctoberOptimize::class);
 
         $this->registerConsoleCommand('plugin.install', \System\Console\PluginInstall::class);
         $this->registerConsoleCommand('plugin.remove', \System\Console\PluginRemove::class);
@@ -255,7 +263,7 @@ class ServiceProvider extends ModuleServiceProvider
     protected function registerTwigParser()
     {
         // Register system Twig environment
-        App::singleton('twig.environment', function ($app) {
+        $this->app->singleton('twig.environment', function ($app) {
             $twig = new TwigEnvironment(new TwigLoader, ['auto_reload' => true]);
             $twig->addExtension(new TwigExtension);
 
@@ -274,7 +282,7 @@ class ServiceProvider extends ModuleServiceProvider
         });
 
         // Register Twig for mailer
-        App::singleton('twig.environment.mailer', function ($app) {
+        $this->app->singleton('twig.environment.mailer', function ($app) {
             $twig = new TwigEnvironment(new TwigLoader, ['auto_reload' => true]);
             $twig->addExtension(new TwigExtension);
 
@@ -291,11 +299,6 @@ class ServiceProvider extends ModuleServiceProvider
 
             $twig->addTokenParser(new \System\Twig\MailPartialTokenParser);
             return $twig;
-        });
-
-        // Register .htm extension for Twig views
-        App::make('view')->addExtension('htm', 'twig', function () {
-            return new TwigEngine(App::make('twig.environment'));
         });
     }
 
@@ -324,24 +327,6 @@ class ServiceProvider extends ModuleServiceProvider
             'subcopy' => 'system::mail.partial-subcopy',
             'promotion' => 'system::mail.partial-promotion',
         ];
-    }
-
-    /**
-     * extendMailer templating and settings override.
-     */
-    protected function extendMailer()
-    {
-        // Override system mailer with mail settings
-        Event::listen('mailer.beforeRegister', function () {
-            if (MailSetting::isConfigured()) {
-                MailSetting::applyConfigValues();
-            }
-        });
-
-        // Override standard Mailer content with template
-        Event::listen('mailer.beforeAddContent', function ($mailer, $message, $view, $data, $raw, $plain) {
-            return !MailManager::instance()->addContentFromEvent($message, $view, $plain, $raw, $data);
-        });
     }
 
     /**
@@ -524,10 +509,8 @@ class ServiceProvider extends ModuleServiceProvider
     protected function registerValidator()
     {
         $this->app->resolving('validator', function ($validator) {
-            /*
-             * Allowed file extensions, as opposed to mime types.
-             * - extensions: png,jpg,txt
-             */
+            // Allowed file extensions, as opposed to mime types.
+            // - extensions: png,jpg,txt
             $validator->extend('extensions', function ($attribute, $value, $parameters) {
                 $extension = strtolower($value->getClientOriginalExtension());
                 return in_array($extension, $parameters);
@@ -537,14 +520,6 @@ class ServiceProvider extends ModuleServiceProvider
                 return strtr($message, [':values' => implode(', ', $parameters)]);
             });
         });
-    }
-
-    /**
-     * registerGlobalViewVars
-     */
-    protected function registerGlobalViewVars()
-    {
-        View::share('appName', Config::get('app.name'));
     }
 
     /**
@@ -564,5 +539,39 @@ class ServiceProvider extends ModuleServiceProvider
         }
 
         Schema::defaultStringLength((int) $defaultStrLen);
+    }
+
+    /**
+     * extendViewService
+     */
+    protected function extendViewService()
+    {
+        $this->app->resolving('view', function($view) {
+            // Register .htm extension for Twig views
+            $view->addExtension('htm', 'twig', function () {
+                return new TwigEngine($this->app->make('twig.environment'));
+            });
+
+            // Share app name
+            $view->share('appName', Config::get('app.name'));
+        });
+    }
+
+    /**
+     * extendMailerService templating and settings override.
+     */
+    protected function extendMailerService()
+    {
+        // Override system mailer with mail settings
+        Event::listen('mailer.beforeRegister', function () {
+            if (MailSetting::isConfigured()) {
+                MailSetting::applyConfigValues();
+            }
+        });
+
+        // Override standard Mailer content with template
+        Event::listen('mailer.beforeAddContent', function ($mailer, $message, $view, $data, $raw, $plain) {
+            return !MailManager::instance()->addContentFromEvent($message, $view, $plain, $raw, $data);
+        });
     }
 }

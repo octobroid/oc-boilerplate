@@ -1,6 +1,5 @@
 <?php namespace Cms;
 
-use App;
 use Event;
 use Backend;
 use Cms\Models\ThemeLog;
@@ -9,10 +8,7 @@ use Cms\Classes\CmsObject;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\ThemeManager;
 use Cms\Classes\CmsObjectCache;
-use Cms\Classes\ComponentManager;
 use Backend\Models\UserRole;
-use Backend\Classes\RoleManager;
-use Backend\Classes\WidgetManager;
 use System\Classes\SettingsManager;
 use October\Rain\Support\ModuleServiceProvider;
 
@@ -60,6 +56,8 @@ class ServiceProvider extends ModuleServiceProvider
         $this->registerConsoleCommand('theme.copy', \Cms\Console\ThemeCopy::class);
         $this->registerConsoleCommand('theme.check', \Cms\Console\ThemeCheck::class);
         $this->registerConsoleCommand('theme.seed', \Cms\Console\ThemeSeed::class);
+        $this->registerConsoleCommand('theme.clear', \Cms\Console\ThemeClear::class);
+        $this->registerConsoleCommand('theme.cache', \Cms\Console\ThemeCache::class);
     }
 
     /**
@@ -88,7 +86,7 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerCombinerEvents()
     {
-        if (App::runningInBackend() || App::runningInConsole()) {
+        if ($this->app->runningInBackend() || $this->app->runningInConsole()) {
             return;
         }
 
@@ -107,8 +105,8 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerThemeTranslations()
     {
-        App::afterResolving('translator', function() {
-            if (App::runningInBackend()) {
+        $this->app->afterResolving('translator', function() {
+            if ($this->app->runningInBackend()) {
                 ThemeManager::instance()->bootAllBackend();
             }
             else {

@@ -104,7 +104,7 @@ class CombineAssets
     /**
      * @var array Cache of registration callbacks.
      */
-    private static $callbacks = [];
+    protected static $callbacks = [];
 
     /**
      * init is a singleton constructor

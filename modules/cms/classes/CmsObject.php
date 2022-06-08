@@ -118,7 +118,7 @@ class CmsObject extends HalcyonModel implements CmsObjectContract
     }
 
     /**
-     * Returns the list of objects in the specified theme.
+     * listInTheme returns the list of objects in the specified theme.
      * This method is used internally by the system.
      * @param \Cms\Classes\Theme $theme Specifies a parent theme.
      * @param boolean $skipCache Indicates if objects should be reloaded from the disk bypassing the cache.

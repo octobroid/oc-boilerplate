@@ -1,13 +1,9 @@
 <?php namespace Media;
 
-use App;
 use Backend;
-use BackendMenu;
 use BackendAuth;
 use Media\Widgets\MediaManager;
-use System\Classes\MarkupManager;
-use Backend\Classes\RoleManager;
-use Backend\Classes\WidgetManager;
+use Backend\Classes\Controller as BackendController;
 use October\Rain\Support\ModuleServiceProvider;
 
 /**
@@ -23,7 +19,7 @@ class ServiceProvider extends ModuleServiceProvider
         parent::register('media');
 
         // Backend specific
-        if (App::runningInBackend()) {
+        if ($this->app->runningInBackend()) {
             $this->registerGlobalInstance();
         }
     }
@@ -111,7 +107,7 @@ class ServiceProvider extends ModuleServiceProvider
      */
     protected function registerGlobalInstance()
     {
-        \Backend\Classes\Controller::extend(function($controller) {
+        BackendController::extend(function($controller) {
             if (!BackendAuth::userHasAccess('media.library')) {
                 return;
             }

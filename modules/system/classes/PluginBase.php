@@ -90,6 +90,14 @@ class PluginBase extends ServiceProviderBase implements OctoberPackage
     /**
      * @inheritDoc
      */
+    public function registerContentFields()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function registerNavigation()
     {
         $configuration = $this->getConfigurationFromYaml();

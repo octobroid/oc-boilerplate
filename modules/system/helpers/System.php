@@ -4,6 +4,7 @@ use App;
 use File;
 use Config;
 use Schema;
+use Manifest;
 
 /**
  * System Helper
@@ -14,6 +15,11 @@ use Schema;
  */
 class System
 {
+    /**
+     * @var const keys for manifest storage
+     */
+    const MANIFEST_MODULES = 'modules.all';
+
     /**
      * @var bool hasDatabaseCache helps multiple calls to hasDatabase()
      */
@@ -31,6 +37,11 @@ class System
     {
         if ($this->listModulesCache !== null) {
             return $this->listModulesCache;
+        }
+
+        // Check manifest
+        if (Manifest::has(self::MANIFEST_MODULES)) {
+            return (array) Manifest::get(self::MANIFEST_MODULES);
         }
 
         $loadModules = Config::get('system.load_modules');
@@ -54,6 +65,9 @@ class System
 
         // System comes first
         $result = array_unique(array_merge(['System'], $result));
+
+        // Store result
+        Manifest::put(self::MANIFEST_MODULES, $result);
 
         return $this->listModulesCache = $result;
     }

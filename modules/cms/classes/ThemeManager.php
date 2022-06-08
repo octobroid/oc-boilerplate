@@ -23,14 +23,19 @@ class ThemeManager
     use \October\Rain\Support\Traits\Singleton;
 
     /**
-     * @var array themes is for storing installed themes cache
+     * @var array installedThemes is for storing installed themes cache
      */
     protected $themes;
 
     /**
-     * @var array themes is for storing installed themes cache
+     * @var array installedThemes is for storing installed themes cache
      */
-    protected $themeDirs;
+    protected $installedThemes;
+
+    /**
+     * @var array installedThemeDirs is for storing installed themes cache
+     */
+    protected $installedThemeDirs;
 
     /**
      * bootAllFrontend
@@ -81,21 +86,37 @@ class ThemeManager
     }
 
     /**
-     * getInstalled returns a collection of themes installed
-     *
-     * ['RainLab.Vanilla' => '1.0.0', ...]
+     * getThemes returns all themes in the filesystem
      */
-    public function getInstalled(): array
+    public function getThemes(): array
     {
         if ($this->themes !== null) {
             return $this->themes;
         }
 
         $result = [];
-
         foreach (CmsTheme::all() as $theme) {
             $dirName = $theme->getDirName();
+            $result[$dirName] = $theme;
+        }
 
+        return $this->themes = $result;
+    }
+
+    /**
+     * getInstalled returns a collection of themes installed
+     *
+     * ['RainLab.Vanilla' => '1.0.0', ...]
+     */
+    public function getInstalled(): array
+    {
+        if ($this->installedThemes !== null) {
+            return $this->installedThemes;
+        }
+
+        $result = [];
+
+        foreach ($this->getThemes() as $dirName => $theme) {
             // Check composer file
             if (!$octoberCode = $this->getProductCode($dirName)) {
                 continue;
@@ -111,7 +132,7 @@ class ThemeManager
             $result[$publishedCode] = $this->getLatestVersion($dirName);
         }
 
-        return $this->themes = $result;
+        return $this->installedThemes = $result;
     }
 
     /**
@@ -121,15 +142,13 @@ class ThemeManager
      */
     protected function getInstalledDirectories(): array
     {
-        if ($this->themeDirs !== null) {
-            return $this->themeDirs;
+        if ($this->installedThemeDirs !== null) {
+            return $this->installedThemeDirs;
         }
 
         $result = [];
 
-        foreach (CmsTheme::all() as $theme) {
-            $dirName = $theme->getDirName();
-
+        foreach ($this->getThemes() as $dirName => $theme) {
             // Check composer file
             if (!$octoberCode = $this->getProductCode($dirName)) {
                 continue;
@@ -138,7 +157,7 @@ class ThemeManager
             $result[$octoberCode] = $dirName;
         }
 
-        return $this->themeDirs = $result;
+        return $this->installedThemeDirs = $result;
     }
 
     /**
@@ -406,7 +425,7 @@ class ThemeManager
 
         $missing = [];
 
-        foreach (CmsTheme::all() as $theme) {
+        foreach ($this->getThemes() as $theme) {
             $required = $theme->getConfigValue('require', false);
             if (!$required || !is_array($required)) {
                 continue;
@@ -446,8 +465,7 @@ class ThemeManager
             return false;
         };
 
-        foreach (CmsTheme::all() as $theme) {
-            $dirName = $theme->getDirName();
+        foreach ($this->getThemes() as $dirName => $theme) {
             $composerCode = $this->getComposerCode($dirName);
             if (!$composerCode || !$crossCheckPackage($composerCode, $packages)) {
                 continue;

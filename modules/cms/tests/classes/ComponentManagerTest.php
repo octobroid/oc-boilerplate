@@ -74,10 +74,10 @@ class ComponentManagerTest extends TestCase
         $manager = ComponentManager::instance();
 
         $component = $manager->resolve('testArchive');
-        $this->assertEquals('\October\Tester\Components\Archive', $component);
+        $this->assertEquals('October\Tester\Components\Archive', $component);
 
         $component = $manager->resolve('testPost');
-        $this->assertEquals('\October\Tester\Components\Post', $component);
+        $this->assertEquals('October\Tester\Components\Post', $component);
     }
 
     public function testHasComponent()

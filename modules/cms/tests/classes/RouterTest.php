@@ -30,36 +30,10 @@ class RouterTest extends TestCase
         return $property;
     }
 
-    public function testLoadUrlMap()
-    {
-        $method = self::getMethod('loadUrlMap');
-        $property = self::getProperty('urlMap');
-        $router = new Router(self::$theme);
-
-        /*
-         * The first time the map should be loaded from the disk
-         */
-        $value = $method->invoke($router);
-        $this->assertFalse($value);
-        $map = $property->getValue($router);
-
-        $this->assertIsArray($map);
-        $this->assertGreaterThanOrEqual(4, count($map));
-
-        /*
-         * The second time the map should be loaded from the disk
-         */
-        $value = $method->invoke($router);
-        $this->assertTrue($value);
-        $map = $property->getValue($router);
-        $this->assertIsArray($map);
-        $this->assertGreaterThanOrEqual(4, count($map));
-    }
-
     public function testUrlListCaching()
     {
         $router = new Router(self::$theme);
-        $method = self::getMethod('getCachedUrlFileName');
+        $method = self::getMethod('getUrlRouteCache');
         $urlList = [];
 
         /*
